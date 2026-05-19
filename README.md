@@ -274,12 +274,15 @@ machine-learning/
 │   └── 08-law-and-governance/                  # 法学与治理
 │
 ├── learning-materials/                         # 学习资料
-│   ├── 01-books/                               # 书籍
-│   ├── 02-courses-and-lectures/                # 课程与讲座
-│   ├── 04-blogs-and-technical-guides/          # 博客与技术指南
-│   ├── 05-tools-and-frameworks/                # 工具与框架快速入门
-│   ├── 06-datasets/                            # 数据集
-│   └── 07-community-and-events/                # 社区与活动
+│   ├── interview/                              # 面试资料
+│   ├── backlog.md                              # 技术项待办
+│   ├── books.md                                # 书籍推荐
+│   ├── courses.md                              # 课程与讲座
+│   ├── papers.md                               # 论文与综述
+│   ├── blogs.md                                # 博客与技术指南
+│   ├── tools.md                                # 工具与框架
+│   ├── datasets.md                             # 数据集
+│   └── community.md                            # 社区与活动
 │
 └── assets/                                     # 资源文件
 ```
