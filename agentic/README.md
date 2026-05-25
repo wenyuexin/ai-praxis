@@ -71,6 +71,7 @@ agentic/
 │   ├── langgraph/                   # LangGraph
 │   ├── autogen/                     # AutoGen
 │   ├── crewai/                      # CrewAI
+│   ├── claude-code/                 # Claude Code
 │   ├── skill-based-agents/          # 基于技能的Agent
 │   └── projects/                    # 实际项目
 │       └── hermes-agent/            # Hermes Agent
@@ -85,7 +86,7 @@ agentic/
 
 | 内容类型 | 放入目录 | 示例 |
 |---------|---------|------|
-| 智能体框架 | `06-frameworks-and-tools/` | LangGraph, AutoGen, CrewAI |
+| 智能体框架 | `06-frameworks-and-tools/` | LangGraph, AutoGen, CrewAI, Claude Code |
 | 单智能体架构模式 | `02-single-agent/patterns/` | ReAct, RA-AID, AutoGPT |
 | 多智能体协作系统 | `03-multi-agent/` | MetaGPT, ChatDev |
 | 实际 Agent 项目 | `06-frameworks-and-tools/projects/` | Hermes Agent |
