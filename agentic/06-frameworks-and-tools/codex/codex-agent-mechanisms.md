@@ -113,6 +113,10 @@ Codex 通过两种互补机制扩展能力边界：**MCP（Model Context Protoco
 | **Codex 角色** | 负责推理和决策 |
 | **MCP Server 角色** | 负责提供外部能力（数据库、SaaS API、浏览器等） |
 | **官方插件** | 90+（Jira、CircleCI、GitLab、Slack 等），2026.4.16 发布 |
+| **协议传输形态（仓库证据）** | 基于 `https://github.com/openai/codex` 仓库核验，MCP 配置类型明确是 `stdio`（本地进程）与 `streamable_http`（远程）。⚠️ 仓库内大量 SSE 代码更多属于响应流层，不能直接等同 MCP transport 分类 |
+| **配置约束（仓库证据）** | `stdio` 与 `streamable_http` 字段互斥：`command` 分支不可带 `url`/HTTP 认证字段，`url` 分支不可带 `args/env/cwd`；非法组合会报 `invalid transport` |
+| **远程 stdio 约束** | 当 `environment_id` 非默认值时，remote stdio MCP server 必须提供绝对路径 `cwd` |
+| **源码锚点（便于核验）** | `README.md`（CLI/App/Web 边界）；`codex-rs/cli/src/main.rs`（`mcp-server`/`sandbox`/`cloud` 子命令）；`codex-rs/config/src/mcp_types.rs`（transport 与字段约束） |
 | **社区生态** | 快速增长中，热门 Server 含 postgres、filesystem、github、brave-search 等 |
 
 ### 7.2 Skills（工作流封装）
@@ -141,6 +145,9 @@ Codex 通过两种互补机制扩展能力边界：**MCP（Model Context Protoco
 
 - 2026-05-25：从原"原理与机制"文档收敛为 Agent 本体机制版。
 - 2026-05-26：补充治理层详解（权限/沙箱/审计）、Token 效率对比、MCP/Skills 扩展机制。
+- 2026-05-28：补充 MCP 传输形态边界说明（HTTP/SSE 与 stdio 属于协议层；产品形态能力需按官方页面分别核验）。
+- 2026-05-28：根据外部联网复核结果，更新 MCP 双传输形态表述并保留产品形态边界约束。
+- 2026-05-28：结合 `https://github.com/openai/codex` 仓库核验结果，将 MCP 传输术语精确为 `stdio + streamable_http`（并区分 SSE 响应流语义）。
 
 
 ## 参考来源
@@ -151,4 +158,4 @@ Codex 通过两种互补机制扩展能力边界：**MCP（Model Context Protoco
 - https://platform.openai.com/docs/models/gpt-4o
 - https://platform.openai.com/docs/guides/rag
 
-*最后更新: 2026-05-26*
+*最后更新: 2026-05-28*

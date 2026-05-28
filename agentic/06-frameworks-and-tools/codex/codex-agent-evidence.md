@@ -26,6 +26,8 @@
 
 ### 关键事实结论
 
+- 官方实践案例（OpenAI 团队使用 Codex）显示：高频收益主要来自重构迁移、性能优化、测试补齐和任务异步派发（证据等级：A，经验型实践证据）。
+
 | 结论 | 证据等级 |
 |------|---------|
 | Token 效率高，同任务消耗约 150 万 token | B |
@@ -69,6 +71,7 @@
 
 - 2026-05-25：合并核验、术语、时间轴与失败案例素材为单一证据文档。
 - 2026-05-26：补充 Benchmark 数据表，扩展时间轴至 2026.4。后续移除跨框架对比内容，聚焦 Codex 自身证据。
+- 2026-05-28：新增 OpenAI 官方实践案例作为经验型 A 级证据来源。
 
 ## 参考来源
 
@@ -77,8 +80,9 @@
 - https://platform.openai.com/docs/models/gpt-4o
 - https://openai.com/index/introducing-agents-sdk/
 - https://openai.com/index/introducing-the-openai-cli/
+- https://openai.com/zh-Hans-CN/business/guides-and-resources/how-openai-uses-codex/
 - https://docs.github.com/en/copilot/managing-copilot/managing-github-copilot-for-your-organization
 - https://www.swebench.com/
 - https://arxiv.org/abs/2406.01939
 
-*最后更新: 2026-05-26*
+*最后更新: 2026-05-28*

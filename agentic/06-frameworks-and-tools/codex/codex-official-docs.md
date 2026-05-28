@@ -47,8 +47,10 @@ developers.openai.com/codex
 │   │   ├── codex review（代码审查模式）
 │   │   ├── codex login/logout（认证）
 │   │   ├── codex mcp（MCP 服务器管理）
+│   │   ├── codex mcp-server（stdio MCP server）
 │   │   ├── codex app-server（App Server 模式）
 │   │   ├── codex sandbox（沙箱操作）
+│   │   ├── codex doctor（本地诊断）
 │   │   ├── codex resume / fork（会话管理）
 │   │   ├── codex apply（应用 diff）
 │   │   └── codex cloud（云端执行）
@@ -124,10 +126,34 @@ Codex Desktop App（macOS / Windows）的界面分为 **左侧边栏 + 主工作
 
 ---
 
+## 四、边界澄清：Codex 与 Code Interpreter 不可混用
+
+> 本节用于解决 `conflict.md` 中的冲突 4，避免把不同产品线的结论混写到 Codex 文档。
+
+- `developers.openai.com/codex` 这套文档描述的是 **Codex CLI / App**（含 Worktrees、MCP、Automations、Skills）。
+- `platform.openai.com/docs/guides/code-interpreter` 描述的是 **Code Interpreter Python 工具环境**。
+- 两者都可能出现“沙箱”与“工具调用”术语，但**执行边界不应直接互相外推**。
+- 对“本地执行 Python 脚本 / 本地 MCP”这类问题，若证据来自 Code Interpreter 页面，应标注为“旁证”，不能直接作为 Codex 结论。
+- 若官方后续新增 Codex 专页（如 Local MCP 连接形态说明），应优先用 Codex 官方页覆盖旧结论。
+- 在工程实践上，可先采用“协议层可支持本地/远程传输，产品层按 CLI/Web/App 分别核验”的双层口径，避免把某一产品形态的结论扩展到全部形态。
+- 术语精度建议：仓库实现层优先使用 `stdio + streamable_http`；若引用外部资料出现 `HTTP/SSE` 表述，应显式注明其与仓库实现术语可能存在映射差异。
+
+### 4.1 术语映射（避免混用）
+
+- MCP transport（实现层）：`stdio`（本地进程） / `streamable_http`（远程）。
+- 外部文案中的 `HTTP/SSE`：可作为高层表述，但不应直接替换仓库实现术语。
+- SSE（仓库常见语义）：更多用于响应流/事件流，不等同于 MCP transport 分类。
+- 实践原则：写机制文档时优先“实现层术语”，写对外综述时可补“文案层术语”并标注映射关系。
+
+> 建议：涉及“本地/远程执行边界”的结论，先在 `conflict.md` 登记并核验，再回写主线文档。
+
+---
+
 ## 参考来源
 
 - https://developers.openai.com/codex
 - https://openai.com/index/introducing-upgrades-to-codex/
 - https://openai.com/index/introducing-the-codex-app/
+- https://platform.openai.com/docs/guides/code-interpreter
 
-*最后更新: 2026-05-26*
+*最后更新: 2026-05-28*

@@ -48,8 +48,31 @@
 
 ---
 
+## 冲突 4："本地执行 Python 工具 / 本地 MCP"能力口径冲突
+
+| 字段 | 内容 |
+|------|------|
+| **冲突描述** | 基于 `https://github.com/openai/codex` 仓库核验，旧冲突已部分收敛：Codex CLI 存在明确本地执行路径，MCP 在代码配置层明确为 `stdio` + `streamable_http`。当前主要剩余的是术语精度问题（是否写成 HTTP/SSE）与 App 边界说明不足。 |
+| **涉及文档** | `README.md`（`openai/codex`）；`codex-rs/config/src/mcp_types.rs`；`codex-rs/cli/src/main.rs`；`codex-rs/core/src/tools/handlers/shell.rs`；`overview.md` 第 219 行后；`codex-agent-mechanisms.md` 第 108 行后 |
+| **冲突类型** | **术语 + 边界** — 事实冲突已显著下降，重点转为“传输术语精确化”和“产品形态边界补证” |
+| **当前证据** | `openai/codex` 仓库给出一手证据：1) CLI README 明确本地运行；2) MCP 类型为 `Stdio` 与 `StreamableHttp`；3) CLI 子命令含 `exec`、`sandbox`、`app`、`cloud`；4) shell handler 与多平台 shell 测试证明本地命令执行是设计能力。 |
+| **临时检索摘要** | 1) 可将“CLI 本地执行”从候选结论升级为主线事实；2) 可将“MCP 双形态”升级为主线事实，但表述建议用 `stdio + streamable_http`；3) Code Interpreter 不可外推到 CLI 的边界结论继续成立；4) App 执行细节仍弱证据，避免写死。 |
+| **待核验问题** | 1) Codex App 的执行模型是否有独立官方文档可直接引用；2) MCP 是否在官方对外文案中将 `streamable_http` 进一步表述为 HTTP/SSE；3) local socket（非 stdio）是否被官方支持。 |
+| **建议处理方向** | 将冲突 4 下调为“低强度未决项”：主线吸收已核实事实（CLI 本地执行、MCP `stdio + streamable_http`、CI 不可外推），仅保留 App 边界与术语映射问题在冲突区继续追踪。 |
+| **已解决项（2026-05-28）** | 1) CLI 是否存在本地执行路径：已解决；2) MCP 是否仅远程：已解决（仓库证据为 `stdio + streamable_http`）；3) Code Interpreter 结论能否外推 CLI：已解决（不可直接外推）。 |
+| **未解决项（持续跟踪）** | 1) Codex App 执行模型的一手官方定义仍不足；2) 外部文案 `HTTP/SSE` 与仓库术语 `streamable_http` 的映射关系需持续核验；3) local socket（非 stdio）是否被官方支持仍待证据。 |
+| **App 边界证据清单** | **已证实**：CLI 本地执行、Web 云端 agent、`codex app` 为桌面入口。**未证实**：App 执行模型是否与 CLI 完全一致、App 是否开放独立 MCP 连接模式。 |
+
+---
+
 ## 变更记录
 
 - 2026-05-26：初始创建，记录 3 个已识别的冲突点。
+- 2026-05-27：新增冲突 4（本地执行 Python 工具 / 本地 MCP 能力口径冲突），来源外部联网检索结果。
+- 2026-05-28：根据外部检索新版报告更新冲突 4，加入“结论反转与证据稳定性”核验要求。
+- 2026-05-28：冲突 4 建议处理方向补充“部分落地状态”（主线已并入双层口径，结论仍待逐链接复核）。
+- 2026-05-28：根据外部检索覆盖版报告更新冲突 4 状态：主线可吸收稳定结论，冲突收敛为“边界细节待完善”。
+- 2026-05-28：引入 `https://github.com/openai/codex` 一手证据，冲突 4 进一步收敛为“低强度未决项”（重点跟踪 App 边界与术语映射）。
+- 2026-05-28：为冲突 4 增加“已解决项/未解决项”清单，便于后续维护与增量核验。
 
-*最后更新: 2026-05-26*
+*最后更新: 2026-05-28*

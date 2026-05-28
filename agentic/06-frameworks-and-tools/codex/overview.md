@@ -149,7 +149,11 @@ async fn main() -> Result<()> {
 | `/plan` | 先出计划再动手（**高手必备**） |
 | `/review` | 以 reviewer 视角审查自己写的代码 |
 | `codex mcp` | 管理 MCP 服务器 |
-| `codex cloud` | 云端执行（隔离环境，适合长任务） |
+| `codex mcp-server` | 以 stdio 形态启动 MCP server |
+| `codex sandbox` | 在本地沙箱内运行命令 |
+| `codex doctor` | 诊断本地安装/配置/认证/运行健康度 |
+| `codex app` | 打开桌面 App（若缺失则引导安装） |
+| `codex cloud` | 云端任务浏览与本地应用变更 |
 | `codex resume` | 恢复之前的会话 |
 
 ---
@@ -223,6 +227,8 @@ Done Criteria
 | **本质** | 让 Codex 连接外部工具/服务的协议 |
 | **Codex 本体** | 负责推理 |
 | **MCP Server** | 负责提供外部能力（访问数据库、文档服务等） |
+| **协议传输形态（仓库证据）** | 基于 `https://github.com/openai/codex` 仓库核验，MCP 配置类型明确是 `stdio`（本地进程）与 `streamable_http`（远程） |
+| **产品形态边界** | 本地仓库 README 将 CLI、Desktop App、Codex Web（cloud-based agent）分层展示；Code Interpreter 的云端沙箱结论不可直接外推到 Codex CLI |
 | **配置位置** | `~/.codex/config.toml` 中 `mcp_servers` 部分 |
 | **建议数量** | MCP + Skills 合计维持 **2-3 个**，多了上下文被稀释 |
 
@@ -347,4 +353,4 @@ Done Criteria
 
 > **一句话总结**：Codex 的定位不是"更聪明的代码补全"，而是一个 **能读仓库、改文件、跑命令、做审查的 AI 编程代理**。以上内容综合了官方文档和社区材料，部分细节仍需实际使用验证。
 
-*最后更新: 2026-05-26*
+*最后更新: 2026-05-28*
