@@ -208,11 +208,13 @@ machine-learning/
 │   ├── 01-foundations/                         # 基础概念
 │   │   ├── definition-and-taxonomy/            # 定义与分类
 │   │   ├── reactive-vs-deliberative/           # 反应式vs审慎式
-│   │   └── cognitive-architectures/            # 认知架构总论
+│   │   ├── cognitive-architectures/            # 认知架构总论
+│   │   └── agent-system-models/                # Agent系统模型
 │   ├── 02-single-agent/                        # 单智能体
 │   │   ├── planning/                           # 规划
 │   │   ├── memory/                             # 记忆
 │   │   ├── tool-use/                           # 工具使用
+│   │   ├── reasoning-and-acting/               # 推理与行动
 │   │   ├── self-reflection/                    # 自我反思
 │   │   └── patterns/                           # 架构模式（ReAct、AutoGPT等）
 │   ├── 03-multi-agent/                         # 多智能体
@@ -220,11 +222,32 @@ machine-learning/
 │   │   ├── competition/                        # 竞争
 │   │   ├── organizational/                     # 组织架构
 │   │   ├── shared-memory/                      # 共享记忆
-│   │   └── coordination/                       # 协调与通信
+│   │   ├── coordination/                       # 协调机制
+│   │   └── communication-protocols/            # 通信协议
 │   ├── 04-human-agent-interaction/             # 人机交互
+│   │   ├── human-in-the-loop/                  # 人在回路
+│   │   ├── agent-ui/                           # Agent界面
+│   │   ├── delegation-and-control/             # 委托与控制
+│   │   └── trust-and-alignment/                # 信任与对齐
 │   ├── 05-environments/                        # 环境与仿真
+│   │   ├── simulated-environments/             # 仿真环境
+│   │   ├── browser-environments/               # 浏览器环境
+│   │   ├── code-execution-environments/        # 代码执行环境
+│   │   ├── sandboxing-and-safety/              # 沙箱与安全
+│   │   └── benchmarking-frameworks/            # 基准环境
 │   ├── 06-frameworks-and-tools/                # 框架与工具
+│   │   ├── 01-frameworks/                      # 通用框架与SDK
+│   │   ├── 02-coding-tools/                    # 编码Agent工具
+│   │   ├── 03-project-studies/                 # 项目案例研究
+│   │   ├── 04-skill-and-tool-systems/          # 技能与工具系统
+│   │   └── 05-comparisons/                     # 对比与选型
 │   └── 07-evaluation/                          # 评估与可靠性
+│       ├── task-completion-metrics/            # 任务完成度
+│       ├── agent-benchmarks/                   # 通用Agent基准
+│       ├── swe-benchmarks/                     # 软件工程基准
+│       ├── safety-and-robustness/              # 安全与鲁棒性
+│       ├── human-evaluation/                   # 人工评估
+│       └── observability-and-debugging/        # 可观测性与调试
 │
 ├── knowledge-graph/                            # 知识图谱
 │   ├── 01-foundations/                         # 基础

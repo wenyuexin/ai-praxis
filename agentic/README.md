@@ -1,95 +1,121 @@
 # AI 智能体 (Agentic AI)
 
-LLM 驱动的自主智能系统：从单智能体到多智能体协作的认知能力、架构模式与工程实践。
+LLM 驱动的自主智能系统：从基础概念、单智能体、多智能体，到人机交互、环境、框架工具与评估体系。
 
 ## 分类依据
 
-Agentic 目录按抽象层级组织：从基础概念到单智能体、多智能体，再到人机交互、环境、工具与评估：
+Agentic 目录按抽象层级组织：先建立 Agent 的基础概念与系统模型，再分别沉淀单智能体能力、多智能体关系、人机交互、环境约束、工程生态与评估方法。
 
-- **01（基础）**：定义、分类、反应式 vs 审慎式、认知架构总论
-- **02（单智能体）**：规划、记忆、工具使用、自我反思、架构模式
-- **03（多智能体）**：协作、竞争、组织架构、共享记忆、协调与通信
-- **04（人机交互）**：人与智能体的交互模式
-- **05（环境）**：仿真环境、沙箱与安全、基准框架
-- **06（框架与工具）**：开发框架、工具、实际项目
-- **07（评估）**：任务完成度、安全与鲁棒性、人工评估
+- **01（基础）**：定义、分类、反应式 vs 审慎式、认知架构、系统模型
+- **02（单智能体）**：规划、记忆、工具使用、推理行动、自我反思、架构模式
+- **03（多智能体）**：协作、竞争、组织架构、共享记忆、协调、通信协议
+- **04（人机交互）**：人在回路、Agent UI、委托控制、信任与对齐
+- **05（环境）**：仿真环境、浏览器环境、代码执行环境、沙箱安全、基准环境
+- **06（框架与工具）**：具体框架、编码工具、项目案例、技能工具系统、对比选型
+- **07（评估）**：任务完成度、通用 Agent 基准、SWE 基准、安全鲁棒、人工评估、可观测性
 
 ## 边界说明
 
 | 内容 | 归属 | 说明 |
 |------|------|------|
-| 单智能体认知能力（planning/memory/tool-use/reflection） | `02-single-agent/` | 认知能力是架构的组成部分，不是独立层 |
-| 多智能体特有问题（共享记忆、协调） | `03-multi-agent/` | 与单智能体的认知能力有本质区别 |
+| Agent 基础定义、分类法、系统模型 | `01-foundations/` | 建立跨主题的概念底座 |
+| 单智能体认知能力（planning/memory/tool-use/reflection） | `02-single-agent/` | 认知能力是架构组成部分，不放入框架工具层重复建设 |
+| 多智能体特有问题（协作、协调、通信、共享状态） | `03-multi-agent/` | 关注多 Agent 关系、组织与交互机制 |
+| 人与 Agent 的任务委托、控制与交互体验 | `04-human-agent-interaction/` | 关注人机协作边界与交互模式 |
+| Agent 运行、交互和评测所依赖的环境 | `05-environments/` | 关注环境建模、沙箱、浏览器与代码执行上下文 |
+| 具体框架、工具、产品、开源项目 | `06-frameworks-and-tools/` | 只承载工程生态对象与实现案例，不重建底层能力体系 |
+| Agent 评估方法、benchmark、可观测性 | `07-evaluation/` | 关注评估、调试和可靠性判断 |
 | Agent 驱动的 RAG | `../rag/03-advanced-patterns/agentic-rag/` | RAG 视角 |
 | LLM 推理优化 | `../llm/04-serving/` | Agent 底层引擎 |
 
 ## 目录结构
 
-```
+```text
 agentic/
 ├── 01-foundations/                  # 基础概念
-│   ├── definition-and-taxonomy/     # 定义与分类
-│   ├── reactive-vs-deliberative/    # 反应式vs审慎式
-│   └── cognitive-architectures/     # 认知架构总论
+│   ├── definition-and-taxonomy/      # 定义与分类
+│   ├── reactive-vs-deliberative/     # 反应式 vs 审慎式
+│   ├── cognitive-architectures/      # 认知架构总论
+│   └── agent-system-models/          # Agent 系统模型
 │
-├── 02-single-agent/                 # 单智能体
-│   ├── planning/                    # 规划
-│   │   ├── task-decomposition/      # 任务分解
-│   │   ├── plan-and-execute/        # 计划与执行
-│   │   └── tree-of-thoughts/        # 思维树
-│   ├── memory/                      # 记忆
-│   │   ├── short-term-memory/       # 短期记忆
-│   │   ├── long-term-memory/        # 长期记忆
-│   │   └── retrieval-methods/       # 检索方法
-│   ├── tool-use/                    # 工具使用
-│   │   ├── api-calling/             # API调用
-│   │   ├── code-interpreter/        # 代码解释器
-│   │   └── web-browsing/            # 网页浏览
-│   ├── self-reflection/             # 自我反思
-│   │   ├── critique-models/         # 批评模型
-│   │   └── iterative-refinement/    # 迭代优化
-│   └── patterns/                    # 单agent架构模式
-│       ├── react/                   # ReAct
-│       ├── ra-aid/                  # RA-AID
-│       └── autogpt-pattern/         # AutoGPT模式
+├── 02-single-agent/                  # 单智能体
+│   ├── planning/                     # 规划
+│   │   ├── task-decomposition/       # 任务分解
+│   │   ├── plan-and-execute/         # 计划与执行
+│   │   └── tree-of-thoughts/         # 思维树
+│   ├── memory/                       # 记忆
+│   │   ├── short-term-memory/        # 短期记忆
+│   │   ├── long-term-memory/         # 长期记忆
+│   │   └── retrieval-methods/        # 检索方法
+│   ├── tool-use/                     # 工具使用
+│   │   ├── api-calling/              # API 调用
+│   │   ├── code-interpreter/         # 代码解释器
+│   │   └── web-browsing/             # 网页浏览
+│   ├── reasoning-and-acting/         # 推理与行动
+│   ├── self-reflection/              # 自我反思
+│   │   ├── critique-models/          # 批评模型
+│   │   └── iterative-refinement/     # 迭代优化
+│   └── patterns/                     # 单 Agent 架构模式
+│       ├── react/                    # ReAct
+│       ├── ra-aid/                   # RA-AID
+│       └── autogpt-pattern/          # AutoGPT 模式
 │
-├── 03-multi-agent/                  # 多智能体
-│   ├── collaboration/               # 协作模式
-│   ├── competition/                 # 竞争模式
-│   ├── organizational/              # 组织架构
-│   ├── shared-memory/               # 共享记忆
-│   └── coordination/                # 协调与通信
+├── 03-multi-agent/                   # 多智能体
+│   ├── collaboration/                # 协作模式
+│   ├── competition/                  # 竞争模式
+│   ├── organizational/               # 组织架构
+│   ├── shared-memory/                # 共享记忆
+│   ├── coordination/                 # 协调机制
+│   └── communication-protocols/      # 通信协议
 │
-├── 04-human-agent-interaction/      # 人机交互
+├── 04-human-agent-interaction/       # 人机交互
+│   ├── human-in-the-loop/            # 人在回路
+│   ├── agent-ui/                     # Agent 界面
+│   ├── delegation-and-control/       # 委托与控制
+│   └── trust-and-alignment/          # 信任与对齐
 │
-├── 05-environments/                 # 环境与仿真
-│   ├── simulated-environments/      # 仿真环境
-│   ├── sandboxing-and-safety/       # 沙箱与安全
-│   └── benchmarking-frameworks/     # 基准框架
+├── 05-environments/                  # 环境与仿真
+│   ├── simulated-environments/       # 仿真环境
+│   ├── browser-environments/         # 浏览器环境
+│   ├── code-execution-environments/  # 代码执行环境
+│   ├── sandboxing-and-safety/        # 沙箱与安全
+│   └── benchmarking-frameworks/      # 基准环境
 │
-├── 06-frameworks-and-tools/         # 框架与工具
-│   ├── langgraph/                   # LangGraph
-│   ├── autogen/                     # AutoGen
-│   ├── crewai/                      # CrewAI
-│   ├── claude-code/                 # Claude Code
-│   ├── skill-based-agents/          # 基于技能的Agent
-│   └── projects/                    # 实际项目
-│       └── hermes-agent/            # Hermes Agent
+├── 06-frameworks-and-tools/          # 框架与工具
+│   ├── 01-frameworks/                # 通用框架与 SDK
+│   │   ├── autogen/
+│   │   ├── crewai/
+│   │   └── langchain-agents/
+│   ├── 02-coding-tools/              # 编码 Agent 工具
+│   │   ├── claude-code/
+│   │   ├── claw-code/
+│   │   └── codex/
+│   ├── 03-project-studies/           # 项目案例研究
+│   │   └── hermes-agent/
+│   ├── 04-skill-and-tool-systems/    # 技能与工具系统
+│   │   └── skill-based-agents/
+│   └── 05-comparisons/               # 对比与选型
 │
-└── 07-evaluation/                   # 评估与可靠性
-    ├── task-completion-metrics/     # 任务完成度
-    ├── safety-and-robustness/       # 安全与鲁棒性
-    └── human-evaluation/            # 人工评估
+└── 07-evaluation/                    # 评估与可靠性
+    ├── task-completion-metrics/      # 任务完成度
+    ├── agent-benchmarks/             # 通用 Agent 基准
+    ├── swe-benchmarks/               # 软件工程基准
+    ├── safety-and-robustness/        # 安全与鲁棒性
+    ├── human-evaluation/             # 人工评估
+    ├── observability-and-debugging/  # 可观测性与调试
+    └── papers/                       # 评估相关论文
 ```
 
 ## 开源仓库与工具存放指南
 
 | 内容类型 | 放入目录 | 示例 |
 |---------|---------|------|
-| 智能体框架 | `06-frameworks-and-tools/` | LangGraph, AutoGen, CrewAI, Claude Code |
+| 通用 Agent 框架 / SDK / 编排框架 | `06-frameworks-and-tools/01-frameworks/` | LangGraph, AutoGen, CrewAI |
+| 编码 Agent 工具 / 产品 | `06-frameworks-and-tools/02-coding-tools/` | Claude Code, Codex, OpenHands |
+| 完整 Agent 系统或开源项目案例 | `06-frameworks-and-tools/03-project-studies/` | Hermes Agent, OpenClaw |
+| Skill / Tool / 插件生态实现 | `06-frameworks-and-tools/04-skill-and-tool-systems/` | Skill-based agents |
 | 单智能体架构模式 | `02-single-agent/patterns/` | ReAct, RA-AID, AutoGPT |
-| 多智能体协作系统 | `03-multi-agent/` | MetaGPT, ChatDev |
-| 实际 Agent 项目 | `06-frameworks-and-tools/projects/` | Hermes Agent |
+| 多智能体协作系统与模式 | `03-multi-agent/` | MetaGPT, ChatDev |
 | 评估基准与论文 | `07-evaluation/` | AgentBench, SWE-bench |
 | 环境仿真平台 | `05-environments/` | WebArena, OSWorld |
 
@@ -105,6 +131,7 @@ flowchart TD
     C --> E
     B --> F[06-frameworks-and-tools<br/>框架与工具]
     C --> F
+    D --> F
     E --> G[07-evaluation<br/>评估与可靠性]
     F --> G
 ```
@@ -118,4 +145,4 @@ flowchart TD
 
 ---
 
-*最后更新: 2026-05-11*
+*最后更新: 2026-05-31*
