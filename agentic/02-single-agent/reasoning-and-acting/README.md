@@ -1,5 +1,26 @@
-# Reasoning and Acting（推理与行动）
+# Reasoning and Acting
 
-本目录用于沉淀单智能体中推理、行动、观察反馈循环及其组合范式，连接 planning、tool-use 与 self-reflection。
+> 适用范围：单智能体中的推理—行动—观察循环研究
+> 阶段状态：调研优先，暂不收敛实现方案
 
-*最后更新: 2026-05-31*
+## 一句话定位
+
+本目录用于整理单智能体在任务执行中如何进行推理、采取行动、接收观察并更新后续决策的核心机制。
+
+## 快速入口
+
+- 结合上层 `../README.md` 理解本主题与 planning、tool-use、self-reflection 的关系。
+- 如后续需要整体综述，可在本目录补充 `overview.md`。
+- 如出现术语、机制或版本口径冲突，记录到 `../../temp/conflict.md`。
+
+## 边界说明
+
+- 放在这里：ReAct 及其变体、推理-行动循环、观察反馈、执行轨迹组织。
+- 不放在这里：纯规划方法（放 `../planning/`）、工具协议本身（放 `../tool-use/`）、反思与自我批评（放 `../self-reflection/`）。
+
+## 同目录导航
+
+- 如后续需要整体综述，使用 `overview.md`。
+- 如需要记录内容缺口，使用 `backlog.md`。
+- 如需要学习或建设顺序，使用 `roadmap.md`。
+- 如发现目录范围内冲突，使用 `conflict.md`。
