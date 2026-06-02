@@ -25,5 +25,6 @@
 - 当前主干专题：`workspace-traceability.md`，用于展开日志、轨迹、artifact 归因与审计边界。
 - 当前主干专题：`traceability-object-model.md`，用于讨论 traceability 的最小必要对象集、对象关系与归因结构。
 - 当前主干专题：`rollback-recovery-design-paths.md`，用于比较 checkpoint restore、overlay revert、replay 与逻辑重建等恢复路径。
+- 当前主干专题：`workspace-lifecycle.md`，用于讨论 workspace 与 runtime / sandbox / session 的生命周期关系，以及 per-task isolation、shared baseline + overlay、git worktree 等共享模型。
 - 相关上位主题：`../overview.md`，用于回到环境层的三层框架与最小安全组合。
 - 如发现代码执行环境相关结论冲突，优先记录到 `../conflict.md`。

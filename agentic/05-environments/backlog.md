@@ -39,29 +39,29 @@
 
 - **关联目录**：`overview.md`、`sandboxing-and-safety/`、`code-execution-environments/`
 - **为什么重要**：主干已经形成“permission / execution / observability-recovery / governance”的工作性结构，但 environment 的外延如果没有停线规则，后续很容易把 tool executor、policy engine、evaluation、交互层全部重新混写回来。
-- **当前状态**：`conflict.md` 已把 `Environment 是否等于 Execution Container` 收敛为“已有稳定认识 + 剩余边界问题”，但还缺少一篇专门处理 environment 停线规则的正文或综述段落。
-- **建议产物**：可先在 `overview.md` 扩一小节，或后续补专门的 boundary 主题。
+- **当前状态**：`overview.md` 已补入 environment boundary stop-line 的工作性定义，能够稳定表达“environment 不等于 execution container”，但 environment 与 tool executor、policy system、evaluation 的长期边界仍值得继续补证。
+- **建议产物**：后续如证据继续积累，可再拆出独立的 boundary 专题，而不是长期只放在综述段落里。
 
 ### 2.2 Workspace Lifecycle Binding / Sharing Model
 
 - **关联目录**：`code-execution-environments/`
 - **为什么重要**：workspace 已被稳定定义为 task-specific working context，但它是否与 runtime 生命周期绑定、subtask 如何共享、overlay 是否应作为一等模型，仍是后续工程判断的关键。
-- **当前状态**：`workspace-structure.md` 已把问题提出，但尚未单列后续专题系统展开。
-- **建议产物**：可继续补 `workspace-lifecycle.md` 或 `workspace-sharing-models.md`。
+- **当前状态**：`workspace-lifecycle.md` 已形成独立主干专题，系统梳理了 workspace 与 runtime / sandbox / session 的关系，以及 per-task isolation、shared baseline + overlay、git worktree 三类共享模型；后续重点转向更多产品案例、多 agent 共享边界与成本比较。
+- **建议产物**：如后续材料继续增厚，可再拆出 `workspace-sharing-models.md`，专门展开跨产品共享模式对照。
 
 ### 2.3 Traceability Object Model
 
 - **关联目录**：`code-execution-environments/`
 - **为什么重要**：`workspace-traceability.md` 已建立 event-first、artifact-centric、task-centric、hybrid 四种视角，但“最小必要对象集是什么、对象之间如何关联”仍未收敛。
-- **当前状态**：`conflict.md` 已把它提升为单独冲突条目，但正文还没有专门讨论 object model。
-- **建议产物**：可继续补 `traceability-object-model.md` 或在 `workspace-traceability.md` 中扩出专节。
+- **当前状态**：`traceability-object-model.md` 已形成独立主干专题，开始把视角问题下沉为对象集与关系集；但不同系统是否真的共享这一最小对象模型，仍需继续补证。
+- **建议产物**：后续优先补跨系统对象映射与关系强度比较，而不是重复重写定义。
 
 ### 2.4 Safety Composition: Policy + Isolation + Recovery
 
 - **关联目录**：`sandboxing-and-safety/`、`overview.md`
 - **为什么重要**：现在已经能稳定说明“Docker sandbox 不足以单独定义 Agent 安全”，但不同安全维度最小应如何组合，仍缺一个更成体系的比较框架。
-- **当前状态**：相关认识已分散在 `permission-policy.md`、`permission-vs-execution-boundary.md`、`sandbox-layers.md` 与 `conflict.md`。
-- **建议产物**：可后续补 `safety-composition.md`，或在 `overview.md` 中增加“最小安全组合”总结段。
+- **当前状态**：`safety-composition.md` 与 `overview.md` 已形成最小安全组合的主干表达，能够稳定区分 permission、execution isolation、recovery-traceability 与 governance；后续重点转向不同产品形态下这四层如何调参，而不是是否需要这四层本身。
+- **建议产物**：后续更适合补充安全姿态比较和任务分层，而不是重复补一篇定义性正文。
 
 ---
 

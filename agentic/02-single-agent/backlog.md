@@ -26,22 +26,22 @@
 
 - **关联目录**：`tool-use/`
 - **为什么重要**：工具能力本身并不等于调用可靠性，参数构造、失败恢复、结果校验与约束遵守往往才是单智能体系统真正的不稳定来源。
-- **现状**：已被 `tool-orchestration.md` 间接触及，但仍缺少专门从可靠性角度梳理的问题框架。
-- **建议产物**：`tool-invocation-reliability.md`
+- **现状**：`tool-invocation-reliability.md` 已形成独立主干专题，稳定写下 schema、前置条件、结果校验与失败恢复是可靠性的核心环节；后续更多是补不同 agent 类型下的 failure mode 分布，而不是再证明这条主轴是否存在。
+- **建议产物**：后续更适合补 invocation reliability checklist、failure taxonomy 对照与跨场景案例。
 
 ### 2.2 Reflection Trigger Design
 
 - **关联目录**：`self-reflection/`
 - **为什么重要**：即便已经明确 reflection 存在收益/成本 trade-off，系统仍需要决定触发信号来自任务复杂度、风险等级，还是外部失败反馈。
-- **现状**：`reflection-cost-tradeoff.md` 已覆盖收益边界，但触发机制与 stopping logic 仍缺少独立整理。
-- **建议产物**：`reflection-trigger-design.md`
+- **现状**：`reflection-trigger-design.md` 已形成独立主干专题，能够稳定表达 trigger、stopping rule 与 recovery routing 的关系；后续仍需补证不同任务类型下哪些触发信号最常带来净收益。
+- **建议产物**：后续更适合补 trigger checklist、risk-aware policy 与 task-specific trigger pattern。
 
 ### 2.3 Bilevel Planning for Tool Navigation
 
 - **关联目录**：`planning/`、`tool-use/`
 - **为什么重要**：为大规模工具生态中的 planning/execution 解耦提供新设计点，也能把 planner 与 orchestration 的中间层表达得更清楚。
-- **现状**：`planning-vs-execution.md` 与 `tool-orchestration.md` 已提供上位框架，但 bilevel / hierarchical tool navigation 仍停留在线索层。
-- **建议产物**：`bilevel-planning-tool-navigation.md`
+- **现状**：`bilevel-planning-tool-navigation.md` 已形成独立主干专题，能够稳定表达高层任务结构与低层工具导航的分层价值；后续重点转向哪些失败应在低层消化、哪些应升级到高层 replanning。
+- **建议产物**：后续更适合补分层接口、失败升级边界与跨 agent 类型案例，而不是重复补定义。
 
 ---
 

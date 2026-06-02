@@ -237,6 +237,7 @@ workspace 容纳的 artifact 越丰富，后续恢复、审计和复用越方便
 
 - 与 `../overview.md`：本文件展开其中的 `workspace artifact management` 问题，强调 workspace 是 execution 与 observability/recovery 的桥梁。
 - 与 `../conflict.md`：对应 `Workspace 是否等于 Sandbox 内文件系统路径` 这一核心冲突条目。
+- 与后续 `workspace-lifecycle.md`：后者进一步讨论 workspace 与 runtime / sandbox / session 的生命周期关系，以及 shared / isolated / hybrid 的共享模型。
 - 与后续 `workspace-checkpoint.md`：后者将进一步讨论 snapshot、rollback 与恢复路径，不再重复本文件中的结构定义。
 - 与后续 `workspace-traceability.md`：后者将继续展开日志、轨迹、artifact 归因与审计边界。
 - 与 `../sandboxing-and-safety/sandbox-layers.md`：本文件可视为其中 `state / recovery layer` 与 `execution layer` 的桥梁专题。

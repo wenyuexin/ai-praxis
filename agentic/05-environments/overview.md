@@ -88,6 +88,27 @@
 
 只有把这些维度组合起来，才更接近 Agent 系统中的真实安全结构。
 
+### 2.5 Environment Boundary Stop-Line
+
+在 Agent 语境里，`environment` 不应被简化成 execution container，也不应无限膨胀为一切运行相关概念。
+
+一个更稳妥的停线规则是：environment 至少覆盖以下四类边界条件——agent 能看到什么、能做什么、实际在哪里执行、失败后如何被追踪和恢复；但不应把 tool executor 之外的所有控制逻辑都吞进去。
+
+因此可以把以下内容视为 environment 的稳定组成部分：
+
+- **observation boundary**：agent 能读取哪些文件、页面、状态与上下文
+- **action space under permission**：agent 在授权约束下可调用哪些工具、命令、接口
+- **execution isolation**：动作在本地进程、容器、microVM 还是 remote runtime 中发生
+- **state persistence / recovery hooks**：checkpoint、traceability、rollback / recovery 如何支撑持续执行
+
+与之相对，以下内容更适合作为与 environment 紧耦合但不应直接混同的外围层：
+
+- 独立的 policy engine
+- 更高层的 evaluation logic
+- 面向交互层的 UI / conversation orchestration
+
+这样处理的好处是：既能稳定写下 `environment != execution container`，又能避免把 environment 扩张成“模型之外的一切”。
+
 ---
 
 ## 三、核心子主题如何落位

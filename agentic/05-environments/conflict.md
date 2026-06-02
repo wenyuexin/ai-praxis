@@ -8,11 +8,11 @@
 ### 1.1 Docker Sandbox 是否足以保证 Agent 安全
 
 - **冲突类型**：结论
-- **当前较稳定结论**：container / VM / remote runtime 这类 execution isolation 只能覆盖 agent 安全的一部分；它们可以限制运行位置与破坏半径，但不能替代 permission policy、capability control、rollback / recovery、traceability 与 audit 这些环境层机制。
-- **仍待核验部分**：system isolation、capability safety、anti-jailbreak sanitation、恢复机制与审计能力之间的最小必要组合是什么；哪些安全要求必须在 policy layer、governance layer 或 recovery layer 解决，哪些才是 sandbox 自身职责。
-- **涉及范围**：`sandboxing-and-safety/permission-policy.md`、`sandboxing-and-safety/permission-vs-execution-boundary.md`、`sandboxing-and-safety/sandbox-layers.md`、`overview.md`
+- **当前较稳定结论**：Docker / VM / remote runtime 这类 execution isolation 只能覆盖 agent 安全的一部分；它们可以限制动作发生的位置与破坏半径，但不能替代 permission policy、capability control、rollback / recovery、traceability、audit 与 governance。`safety-composition.md` 已将该问题收敛为 permission / execution isolation / recovery-traceability / governance 的最小安全组合，而不是“是否使用 Docker”的单点问题。
+- **仍待核验部分**：不同任务形态下四层安全组合如何调参；哪些能力必须由 permission / governance 解决，哪些属于 sandbox 自身职责；不同隔离实现（local process、container、microVM、remote runtime）在成本、恢复能力和风险边界上的真实差异。
+- **涉及范围**：`sandboxing-and-safety/safety-composition.md`、`sandboxing-and-safety/permission-policy.md`、`sandboxing-and-safety/permission-vs-execution-boundary.md`、`sandboxing-and-safety/sandbox-layers.md`、`overview.md`
 - **为什么重要**：会决定 `05-environments/` 是否只把 environment 理解为执行容器，还是扩展为权限层、执行层、可观测/恢复层与治理层的多层结构。
-- **建议处理方向**：主干已可把“Docker sandbox 不足以单独定义 Agent 安全”写成稳定认识；后续重点转向不同安全维度的职责切分，而不是继续把它写成单轴对立。
+- **建议处理方向**：不再继续讨论“Docker 是否足够”这个二选一问题；后续重点比较不同安全层的职责切分、组合方式和适用场景。
 
 ### 1.2 Environment 是否等于 Execution Container
 
@@ -21,25 +21,25 @@
 - **仍待核验部分**：environment 的外延应在什么位置停止，哪些内容仍应归入 tool executor、policy engine、evaluation layer 或交互层，而不是无限扩张成一切运行相关概念。
 - **涉及范围**：`overview.md`、`sandboxing-and-safety/sandbox-layers.md`、`sandboxing-and-safety/permission-vs-execution-boundary.md`、`code-execution-environments/`
 - **为什么重要**：会直接影响 `05-environments/` 的组织框架，以及该目录是否能准确体现 agent environment 与传统 runtime 的差别。
-- **建议处理方向**：主干已可把“environment 不等于 execution container”写成稳定认识；后续研究重点应转向 environment 与 tool executor、policy system、evaluation 的边界停在哪里。
+- **建议处理方向**：主干已可把“environment 不等于 execution container”写成稳定认识；`overview.md` 已补入 boundary stop-line 的工作性定义。后续研究重点应转向 environment 与 tool executor、policy system、evaluation 的边界停在哪里。
 
 ### 1.3 Workspace 是否等于 Sandbox 内文件系统路径
 
 - **冲突类型**：术语 / 概念
 - **当前较稳定结论**：`workspace` 更适合被定义为 task-specific working context，而不是单纯的 sandbox 内目录路径；目录挂载只是常见实现方式，不应反过来充当概念本体。
-- **仍待核验部分**：workspace 生命周期是否应与 runtime / sandbox 生命周期绑定，以及在多任务、多 subtask、overlay workspace 场景下应如何表达共享与隔离边界。
-- **涉及范围**：`code-execution-environments/workspace-structure.md`、`code-execution-environments/workspace-checkpoint.md`、`code-execution-environments/workspace-traceability.md`、`overview.md`
+- **仍待核验部分**：workspace 生命周期在什么条件下应与 runtime / sandbox 强绑定、在什么条件下应部分解耦，以及 shared / isolated / hybrid workspace 在多任务、多 subtask、多 agent 场景下的取舍边界。
+- **涉及范围**：`code-execution-environments/workspace-structure.md`、`code-execution-environments/workspace-lifecycle.md`、`code-execution-environments/workspace-checkpoint.md`、`code-execution-environments/workspace-traceability.md`、`overview.md`
 - **为什么重要**：这会直接影响 workspace、checkpoint、traceability 和 artifact 的组织方式；若概念混淆，恢复与归因边界会持续混乱。
-- **建议处理方向**：主干已可把“workspace 不等于 sandbox 内路径”写成稳定认识；后续调研重点转向生命周期绑定、共享模型与实现成本比较。
+- **建议处理方向**：主干已可把“workspace 不等于 sandbox 内路径”写成稳定认识；`workspace-lifecycle.md` 已把问题进一步收窄到生命周期绑定、共享模型与实现成本比较。
 
 ### 1.4 Rollback 的合理路径是否唯一
 
 - **冲突类型**：设计选择 / 事实
-- **当前较稳定结论**：rollback / recovery 不应被预设为单一路径；checkpoint-based、transactional snapshot、redo/replay log、logical reconstructability 等机制都可能成立，但服务的状态粒度与恢复语义不同。
-- **仍待核验部分**：不同恢复路径分别适合哪些任务形态，以及 full snapshot、diff checkpoint、logical checkpoint 在代码任务中的恢复成本、审计能力与实现复杂度差异。
-- **涉及范围**：`code-execution-environments/workspace-checkpoint.md`、`code-execution-environments/`、`sandboxing-and-safety/`
+- **当前较稳定结论**：rollback / recovery 不应被预设为单一路径；`workspace-checkpoint.md` 与 `rollback-recovery-design-paths.md` 已将 checkpoint resume、snapshot recovery、overlay revert、replay / logical reconstruction 等路径区分开来。它们服务的状态粒度和恢复语义不同，不能用“是否能精确回到过去”作为唯一评价标准。
+- **仍待核验部分**：不同恢复路径分别适合哪些任务形态；full snapshot、diff checkpoint、logical checkpoint、overlay revert 在代码任务中的恢复成本、审计能力与实现复杂度差异；哪些场景需要保留失败后的中间产物，哪些场景应直接回到干净基线。
+- **涉及范围**：`code-execution-environments/workspace-checkpoint.md`、`code-execution-environments/rollback-recovery-design-paths.md`、`code-execution-environments/workspace-traceability.md`、`sandboxing-and-safety/`
 - **为什么重要**：rollback / recovery 是 agent 环境的重要组成部分，若不记录冲突，容易过早把某一路径当成标准答案。
-- **建议处理方向**：保留该条目，但把研究重点从“是否只有一种路径”转向“不同路径如何映射不同任务语义与成本边界”。
+- **建议处理方向**：不再继续讨论“是否只有一种合理路径”；后续重点转向恢复语义、任务形态、审计要求与实现成本之间的映射关系。
 
 ### 1.5 Workspace Traceability 应以什么为核心组织单位
 
@@ -48,7 +48,7 @@
 - **涉及范围**：`code-execution-environments/workspace-traceability.md`、`code-execution-environments/workspace-checkpoint.md`、`overview.md`
 - **为什么重要**：会直接影响 workspace 中日志、文件变化、artifact lineage、task trace 与 auditability 的组织方式；若核心单位不清晰，trace 体系容易停留在原始日志堆积。
 - **待核验问题**：workspace traceability 的最小必要对象集应包含哪些实体？command trace、artifact attribution、checkpoint metadata 与 task trace 之间应如何关联？
-- **建议处理方向**：优先把该问题作为 `workspace-traceability.md` 的后续补证主线，比较 event-first、artifact-centric、task-centric 与 hybrid 四类组织路径。
+- **建议处理方向**：`traceability-object-model.md` 已把它下沉为独立主干专题；后续重点转向比较 event-first、artifact-centric、task-centric 与 hybrid 四类组织路径在真实系统中的映射强度，而不是停留在是否需要对象模型。
 
 ### 1.6 Headless Autonomy 与 Interactive Safety 是否可兼得
 

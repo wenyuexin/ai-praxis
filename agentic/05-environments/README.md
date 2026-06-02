@@ -10,7 +10,7 @@
 ## 快速入口
 
 - 从 `overview.md` 进入整体理解框架，先把 `permission / execution / observability-recovery` 三层结构与 `minimal safety composition` 的总览建立起来。
-- 从 `code-execution-environments/` 进入代码执行与依赖隔离问题，优先阅读 `code-execution-environments/workspace-structure.md`、`code-execution-environments/workspace-checkpoint.md`、`code-execution-environments/workspace-traceability.md`。
+- 从 `code-execution-environments/` 进入代码执行与依赖隔离问题，优先阅读 `code-execution-environments/workspace-structure.md`、`code-execution-environments/workspace-lifecycle.md`、`code-execution-environments/workspace-checkpoint.md`、`code-execution-environments/workspace-traceability.md`。
 - 从 `sandboxing-and-safety/` 进入权限控制与安全边界问题，优先阅读 `sandboxing-and-safety/permission-policy.md`、`sandboxing-and-safety/permission-vs-execution-boundary.md`、`sandboxing-and-safety/sandbox-layers.md`、`sandboxing-and-safety/safety-composition.md`。
 - 从 `browser-environments/`、`simulated-environments/` 了解特定任务环境，并从 `benchmarking-frameworks/` 进入环境评测与复现基座问题。
 - 如遇证据冲突或版本口径不一致，统一记录到 `conflict.md`；若只影响临时判断，再回写 `../temp/conflict.md`。
@@ -48,7 +48,8 @@
 ├── browser-environments/
 │   └── README.md
 ├── code-execution-environments/
-│   └── README.md
+│   ├── README.md
+│   └── workspace-lifecycle.md
 ├── sandboxing-and-safety/
 │   └── README.md
 └── simulated-environments/
