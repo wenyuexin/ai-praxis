@@ -11,7 +11,7 @@
 
 - 结合上层 `../README.md` 理解 sandboxing-and-safety 在环境体系中的位置。
 - 重点关注进程/容器/远程环境隔离、文件系统与网络权限、凭证管理、资源限制与回滚。
-- 如出现安全模型、隔离假设或版本口径冲突，记录到 `../../temp/conflict.md`。
+- 如出现安全模型、隔离假设或版本口径冲突，优先记录到 `../conflict.md`；仅临时判断再落到 `../../temp/conflict.md`。
 
 ## 边界说明
 
@@ -20,10 +20,10 @@
 
 ## 同目录导航
 
-- 当前主干专题：`permission-policy.md`，用于区分权限策略与执行沙箱的边界。
+- 当前主干专题：`permission-policy.md`，用于建立权限策略作为环境层一等主题的基本框架。
+- 当前主干专题：`permission-vs-execution-boundary.md`，用于细化 permission layer 与 execution layer 的职责边界与常见混淆。
 - 当前主干专题：`sandbox-layers.md`，用于系统拆分 sandbox 的多层结构与作用边界。
+- 当前主干专题：`safety-composition.md`，用于讨论 permission、isolation、recovery 与 governance 如何形成最小安全组合。
 - 相关专题：`autonomy-vs-confirmation.md`，用于展开默认自治与人工确认之间的环境层冲突。
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 相关上位主题：`../overview.md`，用于回到环境层的三层框架与最小安全组合。
+- 如发现 sandboxing-and-safety 相关结论冲突，优先记录到 `../conflict.md`。

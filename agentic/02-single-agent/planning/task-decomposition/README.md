@@ -20,7 +20,5 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 建议结合 `../plan-and-execute/README.md` 查看拆解后的子任务如何进入执行流程。
+- 建议结合 `../tree-of-thoughts/README.md` 对比任务分解与多分支搜索两类规划展开方式。

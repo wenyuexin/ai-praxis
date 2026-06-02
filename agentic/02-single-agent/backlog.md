@@ -20,35 +20,28 @@
 
 ---
 
-## 二、P0：高优先级缺口
+## 二、P0：当前高优先级缺口
 
-### 2.1 Planning 与 Execution 的耦合/解耦
+### 2.1 Tool Invocation Reliability
 
-- **关联目录**：`planning/`、`tool-use/`、`reasoning-and-acting/`
-- **为什么重要**：当前主干已经覆盖 planning 和 tool use，但二者之间的接口问题还没有形成独立专题。`ReAct` 式紧耦合与 bilevel / decoupled orchestration 是 single-agent 扩展复杂任务时的关键分岔。
-- **现状**：在 `overview.md` 中已被识别为核心矛盾，但缺少专门文档。
-- **建议产物**：`planning-vs-execution.md` 或 `tool-orchestration.md`
+- **关联目录**：`tool-use/`
+- **为什么重要**：工具能力本身并不等于调用可靠性，参数构造、失败恢复、结果校验与约束遵守往往才是单智能体系统真正的不稳定来源。
+- **现状**：已被 `tool-orchestration.md` 间接触及，但仍缺少专门从可靠性角度梳理的问题框架。
+- **建议产物**：`tool-invocation-reliability.md`
 
-### 2.2 Memory Taxonomy 冲突与统一框架
-
-- **关联目录**：`memory/`
-- **为什么重要**：当前 memory 分类体系并不稳定，`short-term / long-term` 不能覆盖所有当代 agent memory 设计。若不单独梳理，后续 `memory/` 子目录容易被误读为“稳定 taxonomy”。
-- **现状**：已进入 `overview.md` 和 `temp/conflict.md`，但尚无专门综述。
-- **建议产物**：`memory/overview.md` 或 `memory-taxonomy-conflicts.md`
-
-### 2.3 Tool-Centric Design vs Monolithic Agent
-
-- **关联目录**：`tool-use/`、`patterns/`
-- **为什么重要**：这是 single-agent 组织能力的根本 trade-off，影响工具调用、上下文组织、状态管理与可组合性。
-- **现状**：已有高层提醒，但缺少横向比较。
-- **建议产物**：`tool-centric-vs-monolithic.md`
-
-### 2.4 Reflection 的收益边界
+### 2.2 Reflection Trigger Design
 
 - **关联目录**：`self-reflection/`
-- **为什么重要**：reflection 已被广泛采用，但收益/成本边界仍不稳定。当前主干需要有地方专门记录“何时值得反思、何时只是增加 token cost”。
-- **现状**：冲突已识别，证据分散。
-- **建议产物**：`reflection-cost-tradeoff.md`
+- **为什么重要**：即便已经明确 reflection 存在收益/成本 trade-off，系统仍需要决定触发信号来自任务复杂度、风险等级，还是外部失败反馈。
+- **现状**：`reflection-cost-tradeoff.md` 已覆盖收益边界，但触发机制与 stopping logic 仍缺少独立整理。
+- **建议产物**：`reflection-trigger-design.md`
+
+### 2.3 Bilevel Planning for Tool Navigation
+
+- **关联目录**：`planning/`、`tool-use/`
+- **为什么重要**：为大规模工具生态中的 planning/execution 解耦提供新设计点，也能把 planner 与 orchestration 的中间层表达得更清楚。
+- **现状**：`planning-vs-execution.md` 与 `tool-orchestration.md` 已提供上位框架，但 bilevel / hierarchical tool navigation 仍停留在线索层。
+- **建议产物**：`bilevel-planning-tool-navigation.md`
 
 ---
 
@@ -58,26 +51,26 @@
 
 - **关联目录**：`tool-use/`
 - **为什么值得关注**：提示单智能体 tool usage 的瓶颈未必在 model 内部，也可能在输入组织和上下文准备。
-- **当前状态**：前沿线索，证据较新，需二次核验。
-- **不宜直接定论的原因**：目前主要来自较新的单篇研究。
+- **当前状态**：已有前沿线索，但证据仍偏新，需要继续核验其是否能形成稳定主题。
+- **不宜直接定论的原因**：目前主要来自较新的单篇研究，尚需更多系统级复现或横向比较。
 
-### 3.2 Bilevel Planning for Tool Navigation
-
-- **关联目录**：`planning/`、`tool-use/`
-- **为什么值得关注**：为大规模工具生态中的 planning/execution 解耦提供新设计点。
-- **当前状态**：值得追踪，但尚不足以写成主流范式。
-
-### 3.3 Long Context vs External Memory
+### 3.2 Memory Writeback and Contamination Control
 
 - **关联目录**：`memory/`
-- **为什么值得关注**：长上下文窗口是否削弱独立 memory system 的必要性，是当前非常重要但未收敛的问题。
-- **当前状态**：适合作为长期冲突专题。
+- **为什么值得关注**：即便已经明确 long context 与 external memory 的边界，系统仍需要决定什么信息该写回、如何修订、如何防止污染与过时状态扩散。
+- **当前状态**：`memory/README.md` 中已有提醒，`long-context-vs-external-memory.md` 也已触及，但还没有围绕 writeback governance 的独立整理。
 
-### 3.4 Tool Selection vs Tool Orchestration
+### 3.3 State Persistence vs Workspace State
 
-- **关联目录**：`tool-use/`
-- **为什么值得关注**：当前很多文档只讨论“选哪个工具”，却忽略多工具调用序列如何被组织与约束。
-- **当前状态**：主题尚未被显式建模。
+- **关联目录**：`memory/`、`../05-environments/`
+- **为什么值得关注**：single-agent 的 memory、artifact、workspace state 与 environment traceability 边界容易混写，尤其在 coding / browser agent 场景中更明显。
+- **当前状态**：`long-context-vs-external-memory.md` 与 `05-environments/` 已分别提供局部视角，但跨目录边界仍值得持续梳理。
+
+### 3.4 Agent Definition Boundary Drift
+
+- **关联目录**：`overview.md`、`conflict.md`
+- **为什么值得关注**：即使已经补出 `agent-vs-tool-workflow-boundary.md`，市场与研究对 agent 的定义口径仍在变化，后续仍需持续记录新的分层方式与边界漂移。
+- **当前状态**：已有基础主干，但不适合过早写成永久稳定结论。
 
 ---
 
@@ -88,16 +81,16 @@
 - **关联目录**：`patterns/`
 - **说明**：如 `RA.Aid`、AutoGPT 衍生模式等，适合持续观察其是否只是产品包装差异，还是确实代表新的能力组合方式。
 
-### 4.2 Agent 定义边界的持续变化
+### 4.2 新型 long-context / memory interaction pattern
 
-- **关联目录**：`overview.md`、`conflict.md`
-- **说明**：市场与学术界对“什么才算 agent”的定义仍在变化，适合持续记录而不是一次性写死。
+- **关联目录**：`memory/`、`tool-use/`
+- **说明**：随着更长上下文模型与新型 memory runtime 出现，值得持续观察它们到底是在替代 external memory，还是只是在重组 retrieval 与 state persistence 方式。
 
 ---
 
 ## 五、与现有材料的关系
 
-- `overview.md` 已提供单智能体的高层组织框架。
-- `temp/web-search/2.md` 提供了本 backlog 的重要输入线索。
-- `temp/conflict.md` 用于存放 taxonomy、definition、trade-off 等尚未收敛的问题。
+- `overview.md` 已提供单智能体的高层组织框架，其中早期最关键的几条主轴已拆成独立专题。
+- `conflict.md` 继续承担术语、结论与边界冲突的记录职责；本 backlog 现在更多保留“已识别但尚未充分展开”的下一批主题。
+- `temp/web-search/2.md` 仍是部分前沿线索的输入来源，但不应替代后续专题化整理。
 - 后续若某条线索经过充分核验，应拆分进入对应子目录专题，而不是长期停留在 backlog。

@@ -11,7 +11,7 @@
 
 - 结合上层 `../README.md` 理解 tool-use 与 reasoning-and-acting、memory、environments 的关系。
 - 重点关注 API 调用、代码解释器、MCP、网页浏览与工具错误恢复。
-- 如出现工具协议、接口边界或版本口径冲突，记录到 `../../temp/conflict.md`。
+- 如出现工具协议、接口边界或版本口径冲突，优先记录到 `../conflict.md`；仅临时判断再落到 `../../temp/conflict.md`。
 
 ## 边界说明
 
@@ -20,10 +20,12 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 相关主干专题：`tool-orchestration.md`，用于展开多工具调用序列的组织、约束与失败恢复。
+- 相关主干专题：`tool-invocation-reliability.md`，用于展开工具调用中的参数构造、结果校验、失败分类与恢复路径。
+- 相关跨目录专题：`../planning/bilevel-planning-tool-navigation.md`，用于展开复杂工具生态下 planner 与 tool navigation 的中间层结构。
+- 相关上位主轴：`../tool-centric-vs-monolithic.md`，用于比较工具中心化路径与统一模型路径的系统组织差异。
+- 相关边界专题：`../agent-vs-tool-workflow-boundary.md`，用于区分 tool-use 能力与真正形成执行闭环的 agent 系统。
+- 如发现工具相关结论冲突，优先记录到 `../conflict.md`。
 
 ## 目录结构
 
@@ -34,5 +36,7 @@ tool-use/
 ├── code-interpreter/
 ├── mcp/
 │   └── README.md
+├── tool-invocation-reliability.md
+├── tool-orchestration.md
 └── web-browsing/
 ```

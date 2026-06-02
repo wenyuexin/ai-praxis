@@ -21,7 +21,5 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 当前已包含论文笔记：`AgentDisCo_2605.11732.md`。
+- 建议结合 `../coordination/README.md` 对比任务分工与调度控制的区别。

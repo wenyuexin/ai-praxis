@@ -20,7 +20,5 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 建议结合 `../collaboration/README.md` 查看协议结构如何支撑角色协作。
+- 建议结合 `../shared-memory/README.md` 区分消息交换与共享状态同步的边界。

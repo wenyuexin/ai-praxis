@@ -11,7 +11,7 @@
 
 - 结合上层 `../README.md` 理解 AutoGPT pattern 在 patterns 体系中的位置。
 - 重点关注目标维持、自循环执行、工具调用扩展、上下文膨胀与失控风险。
-- 如出现模式定义、历史版本差异或项目口径冲突，记录到 `../../../temp/conflict.md`。
+- 如出现模式定义、历史版本差异或项目口径冲突，优先记录到 `../../conflict.md`；仅临时判断再落到 `../../../temp/conflict.md`。
 
 ## 边界说明
 
@@ -20,7 +20,6 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 相关上位主轴：`../../agent-vs-tool-workflow-boundary.md`，用于判断 AutoGPT 风格循环何时只是工具工作流，何时已经形成 agent 闭环。
+- 相关上位主轴：`../../tool-centric-vs-monolithic.md`，用于理解其工具扩展路径与统一模型路径的组织差异。
+- 如发现 AutoGPT pattern 相关结论冲突，优先记录到 `../../conflict.md`。

@@ -10,12 +10,14 @@
 ## 快速入口
 
 - 从 `../01-foundations/` 获取基础概念与认知框架。
-- 从 `tool-use/`、`planning/`、`memory/` 进入单体能力的核心主题。
-- 如遇证据冲突或版本不一致，统一记录到 `../temp/conflict.md`。
+- 从 `tool-use/`、`planning/`、`memory/`、`self-reflection/` 进入单体能力的核心主题。
+- 如遇证据冲突或版本不一致，优先记录到 `conflict.md`；仅临时判断再落到 `../temp/conflict.md`。
 
 ## 分类依据
 
 本目录按单智能体执行闭环中的关键能力划分：记忆、规划、推理与行动、工具使用、自我反思，以及典型工作流模式。
+
+同时保留少量跨目录主轴专题，用来承接那些无法自然塞进某一个子目录、但会影响整个 single-agent 认知框架的结构性问题。
 
 ## 边界说明
 
@@ -24,36 +26,40 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 当前跨目录主干专题：`planning-vs-execution.md`、`tool-centric-vs-monolithic.md`、`agent-vs-tool-workflow-boundary.md`。
+- 核心主题入口：`planning/`、`tool-use/`、`memory/`、`self-reflection/`、`reasoning-and-acting/`、`patterns/`。
 
 ## 目录结构
 
 ```text
 02-single-agent/
 ├── README.md
+├── backlog.md
+├── conflict.md
+├── overview.md
 ├── memory/
-│   ├── images/
+│   ├── README.md
 │   ├── long-term-memory/
 │   ├── retrieval-methods/
 │   └── short-term-memory/
 ├── patterns/
+│   ├── README.md
 │   ├── autogpt-pattern/
-│   ├── images/
 │   ├── ra-aid/
 │   └── react/
 ├── planning/
+│   ├── README.md
 │   ├── plan-and-execute/
 │   ├── task-decomposition/
 │   └── tree-of-thoughts/
 ├── reasoning-and-acting/
 │   └── README.md
 ├── self-reflection/
+│   ├── README.md
 │   ├── critique-models/
 │   └── iterative-refinement/
 └── tool-use/
+    ├── README.md
     ├── api-calling/
     ├── code-interpreter/
     ├── mcp/

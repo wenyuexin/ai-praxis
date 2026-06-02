@@ -11,7 +11,7 @@
 
 - 结合上层 `../README.md` 理解 RA.Aid 在 patterns 体系中的位置。
 - 重点关注任务辅助流程、知识组织、工具协作、用户交互与执行约束。
-- 如出现模式定义、项目口径或边界判断冲突，记录到 `../../../temp/conflict.md`。
+- 如出现模式定义、项目口径或边界判断冲突，优先记录到 `../../conflict.md`；仅临时判断再落到 `../../../temp/conflict.md`。
 
 ## 边界说明
 
@@ -20,7 +20,6 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 相关边界专题：`../../agent-vs-tool-workflow-boundary.md`，用于判断任务辅助型 workflow 与 agent 闭环之间的最小边界。
+- 相关上位主轴：`../../tool-centric-vs-monolithic.md`，用于理解其工具协作导向的系统组织方式。
+- 如发现 RA.Aid 相关结论冲突，优先记录到 `../../conflict.md`。

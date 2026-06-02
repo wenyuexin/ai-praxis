@@ -20,57 +20,76 @@
 
 ---
 
-## 二、P0：高优先级缺口
+## 二、P0：当前高优先级缺口
 
-### 2.1 Sandboxing Layers
+最近一轮已经补上了一批环境层主干专题：
 
-- **关联目录**：`sandboxing-and-safety/`
-- **为什么重要**：当前“sandbox”很容易被简化为 container / VM 选择，但 agent 环境中的 sandbox 至少涉及执行隔离、权限控制、恢复机制和自治约束四个维度。
-- **现状**：`overview.md` 已提出三层框架，但还没有专题展开。
-- **建议产物**：`sandbox-layers.md`
+- `sandboxing-and-safety/sandbox-layers.md`
+- `sandboxing-and-safety/permission-policy.md`
+- `sandboxing-and-safety/permission-vs-execution-boundary.md`
+- `sandboxing-and-safety/autonomy-vs-confirmation.md`
+- `code-execution-environments/workspace-structure.md`
+- `code-execution-environments/workspace-checkpoint.md`
+- `code-execution-environments/workspace-traceability.md`
+- `code-execution-environments/rollback-recovery-design-paths.md`
 
-### 2.2 Permission Policy as First-Class Topic
+因此，backlog 的重点不再是“先把这些专题补出来”，而是收敛为仍缺正文或仍需继续补证的高价值问题。
 
-- **关联目录**：`sandboxing-and-safety/`
-- **为什么重要**：agent 环境安全不只是“在哪里执行”，还包括“允许做什么”。若不单列 permission policy，环境文档容易退化为纯 runtime 讨论。
-- **现状**：在 overview 中已强调，但尚无独立承接位置。
-- **建议产物**：`permission-policy.md`
+### 2.1 Environment Boundary Stop-Line
 
-### 2.3 Workspace / Checkpoint / Traceability 拆分
+- **关联目录**：`overview.md`、`sandboxing-and-safety/`、`code-execution-environments/`
+- **为什么重要**：主干已经形成“permission / execution / observability-recovery / governance”的工作性结构，但 environment 的外延如果没有停线规则，后续很容易把 tool executor、policy engine、evaluation、交互层全部重新混写回来。
+- **当前状态**：`conflict.md` 已把 `Environment 是否等于 Execution Container` 收敛为“已有稳定认识 + 剩余边界问题”，但还缺少一篇专门处理 environment 停线规则的正文或综述段落。
+- **建议产物**：可先在 `overview.md` 扩一小节，或后续补专门的 boundary 主题。
+
+### 2.2 Workspace Lifecycle Binding / Sharing Model
 
 - **关联目录**：`code-execution-environments/`
-- **为什么重要**：workspace 结构、恢复机制和审计能力是不同问题，混写会导致目录边界混乱。
-- **现状**：主题已显现，但目录层尚未拆清。
-- **建议产物**：`workspace-structure.md`、`workspace-checkpoint.md`、`workspace-traceability.md`
+- **为什么重要**：workspace 已被稳定定义为 task-specific working context，但它是否与 runtime 生命周期绑定、subtask 如何共享、overlay 是否应作为一等模型，仍是后续工程判断的关键。
+- **当前状态**：`workspace-structure.md` 已把问题提出，但尚未单列后续专题系统展开。
+- **建议产物**：可继续补 `workspace-lifecycle.md` 或 `workspace-sharing-models.md`。
 
-### 2.4 Headless Autonomy vs Interactive Safety
+### 2.3 Traceability Object Model
 
-- **关联目录**：`sandboxing-and-safety/`
-- **为什么重要**：这是 agent 环境与传统交互式安全模型之间的深层冲突，当前产品和研究界取向差异很大。
-- **现状**：已被外部调研明确提出，但主干尚无专题位置。
-- **建议产物**：`autonomy-vs-confirmation.md`
+- **关联目录**：`code-execution-environments/`
+- **为什么重要**：`workspace-traceability.md` 已建立 event-first、artifact-centric、task-centric、hybrid 四种视角，但“最小必要对象集是什么、对象之间如何关联”仍未收敛。
+- **当前状态**：`conflict.md` 已把它提升为单独冲突条目，但正文还没有专门讨论 object model。
+- **建议产物**：可继续补 `traceability-object-model.md` 或在 `workspace-traceability.md` 中扩出专节。
+
+### 2.4 Safety Composition: Policy + Isolation + Recovery
+
+- **关联目录**：`sandboxing-and-safety/`、`overview.md`
+- **为什么重要**：现在已经能稳定说明“Docker sandbox 不足以单独定义 Agent 安全”，但不同安全维度最小应如何组合，仍缺一个更成体系的比较框架。
+- **当前状态**：相关认识已分散在 `permission-policy.md`、`permission-vs-execution-boundary.md`、`sandbox-layers.md` 与 `conflict.md`。
+- **建议产物**：可后续补 `safety-composition.md`，或在 `overview.md` 中增加“最小安全组合”总结段。
 
 ---
 
 ## 三、P1：值得持续跟踪的专题
 
-### 3.1 Transactional Filesystem Snapshot
+### 3.1 Transactional Filesystem Snapshot / Overlay Revert
 
 - **关联目录**：`code-execution-environments/`、`sandboxing-and-safety/`
-- **为什么值得关注**：为 rollback / recovery 提供不同于传统 checkpoint 的路径。
-- **当前状态**：有启发，但通用性和成熟度仍需观察。
+- **为什么值得关注**：为 rollback / recovery 提供不同于传统 checkpoint restore 的路径，也和 shared baseline + isolated write layer 模式高度相关。
+- **当前状态**：`rollback-recovery-design-paths.md` 已把它纳入主流恢复路径之一，但通用性和成熟度仍需继续观察。
 
 ### 3.2 Workspace Sharing vs Isolation
 
 - **关联目录**：`code-execution-environments/`
 - **为什么值得关注**：subtask 是否共享 workspace、是否只读共享、是否完全隔离，是长期会反复出现的环境设计问题。
-- **当前状态**：缺少系统化总结。
+- **当前状态**：`workspace-structure.md` 已提出 shared / isolated / hybrid 三类模型，但还缺更系统的长期维护成本比较。
 
 ### 3.3 Browser Safety Beyond Automation
 
 - **关联目录**：`browser-environments/`
 - **为什么值得关注**：浏览器环境的风险不只是自动化能力，还包括 prompt injection、会话污染、页面级权限与数据泄露。
 - **当前状态**：适合在后续补专题，而非直接写成成熟共识。
+
+### 3.4 Default-Safe to Staged Autonomy
+
+- **关联目录**：`sandboxing-and-safety/`
+- **为什么值得关注**：permission profile、confirmation gate、execution upgrade 与 rollback-backed autonomy 如何组合，决定系统能否在安全与流畅之间渐进放权。
+- **当前状态**：`permission-policy.md` 与 `autonomy-vs-confirmation.md` 已提供基础框架，但还缺更偏策略演进的专题总结。
 
 ---
 

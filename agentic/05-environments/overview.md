@@ -69,6 +69,25 @@
 
 这一层对长期任务、自动化修改、代码执行和自治系统尤其关键。
 
+### 2.4 Minimal Safety Composition
+
+如果只停留在“permission / execution / observability-recovery”三层结构，仍容易产生一个误解：好像只要某一层做得足够强，系统就已经安全。
+
+更稳妥的理解是，Agent 环境通常需要一个**最小安全组合**：
+
+- **permission / capability control**：限制哪些动作被允许发生
+- **execution isolation**：限制动作一旦发生，副作用能扩散到哪里
+- **recovery / traceability**：保证失败后能解释发生了什么，并恢复到可继续状态
+- **governance / mode control**：决定系统默认何时自动执行、何时停下来请求人类确认
+
+其中前三层仍可视为 `05-environments/` 的基础分析框架；而 `governance` 更适合作为一个横跨它们的工作模式维度。也就是说：
+
+- 安全不只是“把代码放进容器里跑”
+- 安全不只是“给高风险动作加确认”
+- 安全也不只是“出了问题可以回滚”
+
+只有把这些维度组合起来，才更接近 Agent 系统中的真实安全结构。
+
 ---
 
 ## 三、核心子主题如何落位
@@ -176,10 +195,20 @@ permission layer
 
 ## 八、当前最值得补齐的专题
 
+最近一轮已经优先补上了 `workspace` 相关主线：
+
+- `code-execution-environments/workspace-structure.md`：澄清 workspace 是 task-specific working context，而不只是 sandbox 内目录路径
+- `code-execution-environments/workspace-checkpoint.md`：展开 snapshot、checkpoint、rollback 与 recovery 的状态粒度问题
+- `code-execution-environments/workspace-traceability.md`：展开日志、轨迹、artifact 归因与 auditability 边界
+
+因此，`workspace / checkpoint / traceability` 这一组主题已从“待补齐”推进为“已有主干骨架，后续继续补证”。
+
+当前更值得继续补齐的专题包括：
+
 - permission layer 与 execution layer 的边界
 - sandbox layers 的系统拆分
-- workspace / checkpoint / traceability 的关系
 - headless autonomy vs interactive safety
 - rollback / recovery 设计路径比较
+- workspace lifecycle binding、shared vs overlay workspace、traceability object model 等后续补证问题
 
-这些更适合先进入专题文档、`backlog.md` 与 `conflict.md`，再逐步反哺主干。
+这些更适合按“已形成主干专题”与“仍需继续补证的问题”分开推进：前者继续完善正文，后者优先进入 `conflict.md`、`backlog.md` 与后续专题补证清单，再逐步反哺主干。

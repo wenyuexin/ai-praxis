@@ -20,7 +20,5 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 建议结合 `../communication-protocols/README.md` 区分共享状态与消息协议的职责边界。
+- 建议结合 `../../02-single-agent/memory/README.md` 对比单智能体记忆与多智能体共享记忆的差异。

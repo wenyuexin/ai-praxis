@@ -20,7 +20,6 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 相关边界专题：`../../explicit-planning-necessity.md`，用于说明 plan-and-execute 代表显式 planning 路径，但不是唯一标准答案。
+- 建议结合 `../task-decomposition/README.md` 查看任务拆解如何进入完整规划流程。
+- 建议结合 `../tree-of-thoughts/README.md` 对比线性计划执行与搜索式规划扩展。

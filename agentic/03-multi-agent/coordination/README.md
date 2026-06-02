@@ -23,7 +23,6 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 当前专题：`topology.md`，用于比较 centralized / decentralized / hybrid / independent 等协调拓扑。
+- 当前专题：`failure-modes.md`，用于整理多智能体协调中的典型失败模式与问题地图。
+- 当前专题：`when-multi-agent-helps.md`，用于判断多智能体何时相对单智能体更可能带来净收益。

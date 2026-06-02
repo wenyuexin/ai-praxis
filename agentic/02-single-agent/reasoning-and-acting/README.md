@@ -10,8 +10,8 @@
 ## 快速入口
 
 - 结合上层 `../README.md` 理解本主题与 planning、tool-use、self-reflection 的关系。
-- 如后续需要整体综述，可在本目录补充 `overview.md`。
-- 如出现术语、机制或版本口径冲突，记录到 `../../temp/conflict.md`。
+- 重点关注推理—行动—观察循环如何承接规划、触发工具调用并吸收反馈。
+- 如出现术语、机制或版本口径冲突，优先记录到 `../conflict.md`；仅临时判断再落到 `../../temp/conflict.md`。
 
 ## 边界说明
 
@@ -20,7 +20,7 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 相关边界专题：`../agent-vs-tool-workflow-boundary.md`，用于理解 reasoning-action-observation loop 为什么是 agent 边界的关键组成。
+- 相关上位主轴：`../planning-vs-execution.md`，用于理解局部推理循环与显式规划之间的耦合关系。
+- 相关模式入口：`../patterns/react/README.md`，用于查看该执行循环在 `ReAct` 模式中的典型展开。
+- 如发现 reasoning-and-acting 相关结论冲突，优先记录到 `../conflict.md`。

@@ -20,7 +20,5 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 建议结合 `../collaboration/README.md` 对比合作收益与竞争激励的两种系统动力。
+- 建议结合 `../organizational/README.md` 查看组织结构如何改变竞争与博弈形态。

@@ -43,11 +43,6 @@
 | `04-skill-and-tool-systems/` | Skill、Tool、插件、能力注册等工程实现对象 | Skill-based agents |
 | `05-comparisons/` | 框架选型、产品对比、生态地图 | framework selection, coding tools comparison |
 
-## 同目录导航
-
-- [overview.md](overview.md) — 框架与工具生态综述
-- [backlog.md](backlog.md) — 候选对象、调研线索与内容缺口
-- [conflict.md](conflict.md) — 口径冲突与待核验问题
 
 ---
 

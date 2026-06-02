@@ -10,8 +10,9 @@
 ## 快速入口
 
 - 结合上层 `../README.md` 理解 self-reflection 与 planning、reasoning-and-acting 的关系。
-- 重点关注 critique model、iterative refinement、自检触发条件与修正收益。
-- 如出现反思定义、评价标准或论文结论冲突，记录到 `../../temp/conflict.md`。
+- 先看 `reflection-cost-tradeoff.md`，建立“reflection 不是默认净收益能力”的主线判断。
+- 再看 critique model、iterative refinement、自检触发条件与修正收益等具体机制。
+- 如出现反思定义、评价标准或论文结论冲突，优先记录到 `../conflict.md`；仅临时判断再落到 `../../temp/conflict.md`。
 
 ## 边界说明
 
@@ -20,10 +21,9 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 当前主干专题：`reflection-cost-tradeoff.md`，用于展开 self-reflection 的收益边界、触发条件与成本结构。
+- 当前主干专题：`reflection-trigger-design.md`，用于展开 reflection 的触发信号、停止条件与分流设计。
+- 如发现 reflection 相关结论冲突，优先记录到 `../conflict.md`。
 
 ## 目录结构
 
@@ -31,5 +31,7 @@
 self-reflection/
 ├── README.md
 ├── critique-models/
-└── iterative-refinement/
+├── iterative-refinement/
+├── reflection-cost-tradeoff.md
+└── reflection-trigger-design.md
 ```

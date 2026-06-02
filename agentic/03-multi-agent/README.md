@@ -24,11 +24,8 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
-
+- 核心主题入口：`collaboration/`、`coordination/`、`communication-protocols/`、`shared-memory/`、`organizational/`、`competition/`。
+- 建议优先从协作、协调与通信协议三条主线建立多智能体的基本结构。
 ## 目录结构
 
 ```text

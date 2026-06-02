@@ -11,7 +11,7 @@
 
 - 结合上层 `../README.md` 理解 patterns 与 planning、tool-use、reasoning-and-acting 的联系。
 - 重点关注 ReAct、AutoGPT 风格流程、RA.Aid 等可迁移模式。
-- 如出现模式定义、机制边界或项目口径冲突，记录到 `../../temp/conflict.md`。
+- 如出现模式定义、机制边界或项目口径冲突，优先记录到 `../conflict.md`；仅临时判断再落到 `../../temp/conflict.md`。
 
 ## 边界说明
 
@@ -20,10 +20,9 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 相关上位主轴：`../tool-centric-vs-monolithic.md`，用于理解不同 workflow pattern 背后到底是统一模型主导，还是工具链主导。
+- 相关边界专题：`../agent-vs-tool-workflow-boundary.md`，用于区分 pattern、tool-use workflow 与 agent 执行闭环的边界。
+- 如发现 patterns 相关结论冲突，优先记录到 `../conflict.md`。
 
 ## 目录结构
 

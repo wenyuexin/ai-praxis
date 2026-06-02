@@ -11,7 +11,7 @@
 
 - 结合上层 `../README.md` 理解浏览器环境在执行环境体系中的位置。
 - 重点关注 DOM 观测、事件交互、会话状态、权限边界与失败恢复。
-- 如出现版本差异、工具口径或安全约束冲突，记录到 `../../temp/conflict.md`。
+- 如出现版本差异、工具口径或安全约束冲突，优先记录到 `../conflict.md`；仅临时判断再落到 `../../temp/conflict.md`。
 
 ## 边界说明
 
@@ -20,7 +20,5 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 相关邻近主题：`../sandboxing-and-safety/README.md`，用于查看浏览器权限边界与通用沙箱治理之间的关系。
+- 建议结合 `../code-execution-environments/README.md` 对比页面交互环境与通用代码执行环境的差异。

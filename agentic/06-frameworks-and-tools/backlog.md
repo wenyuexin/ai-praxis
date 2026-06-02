@@ -92,7 +92,7 @@
 | `ATOM` | Multi-agent collaboration | 将预算控制作为多 Agent 协作一等设计目标 | 理论归 `03-multi-agent/coordination/` |
 | `Fault-Tolerant Sandboxing` | Execution safety | 事务性沙箱，把回滚和安全拦截引入 Agent 执行环境 | 主归属 `05-environments/sandboxing-and-safety/` |
 | `AG-UI` | Agent UI protocol | Agent 与 UI 的交互协议标准化方向 | 主归属 `04-human-agent-interaction/agent-ui/` |
-| `Code as Agent Harness` | Methodology | 将代码视为 Agent harness 的方法论框架 | 主归属 `01-foundations/agent-system-models/` |
+| `Code as Agent Harness` | Methodology | 将代码视为 Agent harness 的方法论框架；相关待研究对象见 `../01-foundations/agent-system-models/research-queue.md` | 主归属 `01-foundations/agent-system-models/` |
 
 ### 3.2 P1：一般观察
 

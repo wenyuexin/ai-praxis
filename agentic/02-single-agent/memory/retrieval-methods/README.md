@@ -20,7 +20,5 @@
 
 ## 同目录导航
 
-- 如后续需要整体综述，使用 `overview.md`。
-- 如需要记录内容缺口，使用 `backlog.md`。
-- 如需要学习或建设顺序，使用 `roadmap.md`。
-- 如发现目录范围内冲突，使用 `conflict.md`。
+- 建议结合 `../long-term-memory/README.md` 查看长期记忆内容如何进入检索流程。
+- 建议结合 `../short-term-memory/README.md` 对比外部召回与上下文内工作记忆的不同职责。
