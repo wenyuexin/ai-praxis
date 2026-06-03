@@ -28,11 +28,8 @@
 
 ```text
 memory/
-├── README.md
 ├── images/
-├── long-context-vs-external-memory.md
 ├── long-term-memory/
-├── memory-taxonomy-conflicts.md
 ├── retrieval-methods/
 └── short-term-memory/
 ```

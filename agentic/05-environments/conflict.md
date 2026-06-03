@@ -44,11 +44,11 @@
 ### 1.5 Workspace Traceability 应以什么为核心组织单位
 
 - **冲突类型**：术语 / 设计选择
-- **冲突描述**：一类实现以 command / event log 为核心组织 trace；另一类更强调 artifact-centric attribution 或 step / task-centric traceability。不同视角都能提供可观测性，但未必都足以支持恢复判断、错误归因与审计。
-- **涉及范围**：`code-execution-environments/workspace-traceability.md`、`code-execution-environments/workspace-checkpoint.md`、`overview.md`
+- **当前较稳定结论**：workspace traceability 不应只以 command / event log 为核心；更稳妥的主干口径是同时显式建模 task / step、action、workspace state / checkpoint、artifact、actor / executor 与 decision / authorization context。`workspace-traceability.md` 已区分 event-first、artifact-centric、task-centric 与 hybrid 四类组织视角，`traceability-object-model.md` 已进一步把问题下沉为最小对象集与关系集。
+- **仍待核验部分**：主流 agent 系统是否真的显式建模这些对象；不同系统更偏 event-first、artifact-first、task-first 还是 hybrid；causality、lineage、validity、containment 等关系中哪些最值得优先建模。
+- **涉及范围**：`code-execution-environments/workspace-traceability.md`、`code-execution-environments/traceability-object-model.md`、`code-execution-environments/workspace-checkpoint.md`、`overview.md`
 - **为什么重要**：会直接影响 workspace 中日志、文件变化、artifact lineage、task trace 与 auditability 的组织方式；若核心单位不清晰，trace 体系容易停留在原始日志堆积。
-- **待核验问题**：workspace traceability 的最小必要对象集应包含哪些实体？command trace、artifact attribution、checkpoint metadata 与 task trace 之间应如何关联？
-- **建议处理方向**：`traceability-object-model.md` 已把它下沉为独立主干专题；后续重点转向比较 event-first、artifact-centric、task-centric 与 hybrid 四类组织路径在真实系统中的映射强度，而不是停留在是否需要对象模型。
+- **建议处理方向**：不再继续讨论“是否需要对象模型”；后续重点转向跨系统对象映射、关系强度比较，以及不同任务形态下最小对象集是否需要扩展。
 
 ### 1.6 Headless Autonomy 与 Interactive Safety 是否可兼得
 

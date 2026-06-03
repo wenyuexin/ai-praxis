@@ -28,7 +28,6 @@
 
 ```text
 patterns/
-├── README.md
 ├── autogpt-pattern/
 ├── images/
 ├── ra-aid/

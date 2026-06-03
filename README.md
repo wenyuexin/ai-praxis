@@ -46,7 +46,7 @@
 
 支撑资源：
 ├── learning-materials/          # 学习资料与书籍推荐
-└── assets/                      # 图片、脚本等资源文件
+└── docs/                        # 仓库建设、贡献规则与文档模板
 ```
 
 ## 知识体系
@@ -307,7 +307,10 @@ machine-learning/
 │   ├── datasets.md                             # 数据集
 │   └── community.md                            # 社区与活动
 │
-└── assets/                                     # 资源文件
+└── docs/                                       # 仓库建设、贡献规则与文档模板
+    ├── contributing/                           # 贡献、文档治理、证据与可追溯性规则
+    ├── templates/                              # 文档模板
+    └── test/                                   # Markdown 与 Mermaid 渲染测试
 ```
 
 ## 声明

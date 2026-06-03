@@ -17,10 +17,3 @@
 
 - 放在这里：页面浏览、DOM/页面状态观察、导航流程、信息提取。
 - 不放在这里：一般 API 调用（放 `../api-calling/`）、统一工作流组织（放 `../tool-orchestration.md`）、浏览器运行环境隔离（放 `../../05-environments/`）。
-
-## 目录结构
-
-```text
-web-browsing/
-└── README.md
-```

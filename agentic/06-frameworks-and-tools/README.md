@@ -18,19 +18,11 @@
 
 ```text
 06-frameworks-and-tools/
-├── 01-frameworks/                 # 通用 Agent 框架、SDK 与编排框架
-│   ├── autogen/
-│   ├── crewai/
-│   └── langchain-agents/
-├── 02-coding-tools/               # 面向软件工程任务的 Agent 工具与产品
-│   ├── claude-code/
-│   ├── claw-code/
-│   └── codex/
-├── 03-project-studies/            # 完整 Agent 系统或开源项目案例研究
-│   └── hermes-agent/
-├── 04-skill-and-tool-systems/     # Skill、Tool、插件与能力系统
-│   └── skill-based-agents/
-└── 05-comparisons/                # 横向对比、选型与生态地图
+├── 01-frameworks/
+├── 02-coding-tools/
+├── 03-project-studies/
+├── 04-skill-and-tool-systems/
+└── 05-comparisons/
 ```
 
 ## 子目录说明

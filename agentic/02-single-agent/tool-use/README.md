@@ -31,12 +31,8 @@
 
 ```text
 tool-use/
-├── README.md
 ├── api-calling/
 ├── code-interpreter/
 ├── mcp/
-│   └── README.md
-├── tool-invocation-reliability.md
-├── tool-orchestration.md
 └── web-browsing/
 ```

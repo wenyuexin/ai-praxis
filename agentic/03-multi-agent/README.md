@@ -30,10 +30,8 @@
 
 ```text
 03-multi-agent/
-├── README.md
 ├── collaboration/
 ├── communication-protocols/
-│   └── README.md
 ├── competition/
 ├── coordination/
 ├── organizational/

@@ -2,6 +2,13 @@
 
 本目录用于沉淀 Skill、Tool、插件、能力注册与工具生态相关的工程实现对象。
 
+## 目录结构
+
+```text
+04-skill-and-tool-systems/
+└── skill-based-agents/
+```
+
 ## 收录范围
 
 适合放入本目录的内容：

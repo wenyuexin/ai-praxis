@@ -28,12 +28,15 @@
 - `sandboxing-and-safety/permission-policy.md`
 - `sandboxing-and-safety/permission-vs-execution-boundary.md`
 - `sandboxing-and-safety/autonomy-vs-confirmation.md`
+- `sandboxing-and-safety/safety-composition.md`
 - `code-execution-environments/workspace-structure.md`
+- `code-execution-environments/workspace-lifecycle.md`
 - `code-execution-environments/workspace-checkpoint.md`
 - `code-execution-environments/workspace-traceability.md`
+- `code-execution-environments/traceability-object-model.md`
 - `code-execution-environments/rollback-recovery-design-paths.md`
 
-因此，backlog 的重点不再是“先把这些专题补出来”，而是收敛为仍缺正文或仍需继续补证的高价值问题。
+因此，backlog 的重点不再是“先把这些专题补出来”，而是收敛为仍缺正文、仍需跨系统证据，或需要从既有主干继续拆分的高价值问题。
 
 ### 2.1 Environment Boundary Stop-Line
 
@@ -52,7 +55,7 @@
 ### 2.3 Traceability Object Model
 
 - **关联目录**：`code-execution-environments/`
-- **为什么重要**：`workspace-traceability.md` 已建立 event-first、artifact-centric、task-centric、hybrid 四种视角，但“最小必要对象集是什么、对象之间如何关联”仍未收敛。
+- **为什么重要**：`workspace-traceability.md` 已建立 event-first、artifact-centric、task-centric、hybrid 四种视角，`traceability-object-model.md` 已进一步提出 task / step、action、workspace state / checkpoint、artifact、actor、decision context 等最小对象候选；后续关键不再是补定义，而是验证不同系统是否共享类似对象模型。
 - **当前状态**：`traceability-object-model.md` 已形成独立主干专题，开始把视角问题下沉为对象集与关系集；但不同系统是否真的共享这一最小对象模型，仍需继续补证。
 - **建议产物**：后续优先补跨系统对象映射与关系强度比较，而不是重复重写定义。
 
@@ -77,7 +80,7 @@
 
 - **关联目录**：`code-execution-environments/`
 - **为什么值得关注**：subtask 是否共享 workspace、是否只读共享、是否完全隔离，是长期会反复出现的环境设计问题。
-- **当前状态**：`workspace-structure.md` 已提出 shared / isolated / hybrid 三类模型，但还缺更系统的长期维护成本比较。
+- **当前状态**：`workspace-structure.md` 已提出 shared / isolated / hybrid 三类模型，`workspace-lifecycle.md` 已进一步区分 per-task isolation、shared baseline + overlay、git worktree / branch isolation；后续仍缺跨产品长期维护成本比较。
 
 ### 3.3 Browser Safety Beyond Automation
 

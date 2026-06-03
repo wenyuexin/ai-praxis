@@ -17,10 +17,3 @@
 
 - 放在这里：HTTP / RPC / function-style API 调用、请求参数、返回结构、接口约束。
 - 不放在这里：浏览器环境交互（放 `../web-browsing/`）、代码执行环境（放 `../code-interpreter/`）、统一工具工作流组织（放 `../tool-orchestration.md`）。
-
-## 目录结构
-
-```text
-api-calling/
-└── README.md
-```

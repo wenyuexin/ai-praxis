@@ -17,10 +17,3 @@
 
 - 放在这里：self-critique、separate critic、评审角色分工、批评输出结构。
 - 不放在这里：整体反思收益评估（放 `../reflection-cost-tradeoff.md`）、触发策略（放 `../reflection-trigger-design.md`）、初始规划逻辑（放 `../../planning/`）。
-
-## 目录结构
-
-```text
-critique-models/
-└── README.md
-```

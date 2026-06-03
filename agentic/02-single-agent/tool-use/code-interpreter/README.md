@@ -17,10 +17,3 @@
 
 - 放在这里：代码执行器、脚本运行、执行反馈、运行时结果消费。
 - 不放在这里：工具工作流整体组织（放 `../tool-orchestration.md`）、浏览器交互（放 `../web-browsing/`）、执行环境隔离（放 `../../05-environments/`）。
-
-## 目录结构
-
-```text
-code-interpreter/
-└── README.md
-```

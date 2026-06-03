@@ -2,6 +2,15 @@
 
 本目录用于沉淀通用 Agent 框架、SDK 与编排框架的资料，重点关注具体框架如何组织 Agent、工具、状态、编排与运行时。
 
+## 目录结构
+
+```text
+01-frameworks/
+├── autogen/
+├── crewai/
+└── langchain-agents/
+```
+
 ## 收录范围
 
 适合放入本目录的对象：

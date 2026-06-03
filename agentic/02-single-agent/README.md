@@ -33,37 +33,12 @@
 
 ```text
 02-single-agent/
-├── README.md
-├── backlog.md
-├── conflict.md
-├── overview.md
 ├── memory/
-│   ├── README.md
-│   ├── long-term-memory/
-│   ├── retrieval-methods/
-│   └── short-term-memory/
 ├── patterns/
-│   ├── README.md
-│   ├── autogpt-pattern/
-│   ├── ra-aid/
-│   └── react/
 ├── planning/
-│   ├── README.md
-│   ├── plan-and-execute/
-│   ├── task-decomposition/
-│   └── tree-of-thoughts/
 ├── reasoning-and-acting/
-│   └── README.md
 ├── self-reflection/
-│   ├── README.md
-│   ├── critique-models/
-│   └── iterative-refinement/
 └── tool-use/
-    ├── README.md
-    ├── api-calling/
-    ├── code-interpreter/
-    ├── mcp/
-    └── web-browsing/
 ```
 
 ## 与其他目录的关系

@@ -2,22 +2,6 @@
 
 Claude Code 相关资料与实践笔记，覆盖总览、Skills/Agent、MCP、配置、最佳实践与架构拆解。
 
-## 目录结构
-
-```text
-claude-code/
-├── README.md                    # 目录导览（L1 定向）
-├── claude-code-guide.md         # 官方文档与最佳实践总索引
-├── overview.md                  # Claude Code 总览
-├── skills-agent.md              # Skills / Agent 规范与模板
-├── mcp-custom-tools.md          # MCP 工具接入与安全
-├── claude-md-config.md          # CLAUDE.md 配置与继承
-├── best-practices.md            # 最佳实践（2025-2026）
-├── architecture-deep-dive.md    # 底层架构与执行链路
-├── official-vs-community.md     # 官方规范 vs 社区习惯
-└── plugin-development.md        # 插件开发与发布
-```
-
 ## 阅读建议
 
 1. 先读 `overview.md` 建立整体认识

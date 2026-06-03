@@ -2,6 +2,15 @@
 
 本目录用于沉淀面向软件工程任务的 Agent 工具与产品，包括 IDE、CLI、云端编码 Agent 与代码自动化工作流。
 
+## 目录结构
+
+```text
+02-coding-tools/
+├── claude-code/
+├── claw-code/
+└── codex/
+```
+
 ## 为什么独立成类
 
 Coding Agent / SWE Agent 已形成独立问题域：它们面向仓库级软件工程任务，依赖代码定位、补丁生成、测试验证、版本控制、IDE/CLI 集成和 PR 流程，评估上也有 SWE-bench、SWE-Gym、SWE Atlas 等专门基准。

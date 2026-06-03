@@ -17,10 +17,3 @@
 
 - 放在这里：多轮 revise、渐进优化、反思后修补、局部改进循环。
 - 不放在这里：触发与 stopping policy（放 `../reflection-trigger-design.md`）、critic 角色设计（放 `../critique-models/`）、更高层重规划（放 `../../planning/`）。
-
-## 目录结构
-
-```text
-iterative-refinement/
-└── README.md
-```

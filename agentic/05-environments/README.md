@@ -39,21 +39,11 @@
 
 ```text
 05-environments/
-├── README.md
-├── overview.md
-├── backlog.md
-├── conflict.md
 ├── benchmarking-frameworks/
-│   └── README.md
 ├── browser-environments/
-│   └── README.md
 ├── code-execution-environments/
-│   ├── README.md
-│   └── workspace-lifecycle.md
 ├── sandboxing-and-safety/
-│   └── README.md
 └── simulated-environments/
-    └── README.md
 ```
 
 ## 与其他目录的关系

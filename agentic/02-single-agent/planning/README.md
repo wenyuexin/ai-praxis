@@ -28,9 +28,6 @@
 
 ```text
 planning/
-├── README.md
-├── bilevel-planning-tool-navigation.md
-├── explicit-planning-necessity.md
 ├── plan-and-execute/
 ├── task-decomposition/
 └── tree-of-thoughts/

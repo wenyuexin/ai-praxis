@@ -2,6 +2,14 @@
 
 本目录用于沉淀完整 Agent 系统或开源项目的系统化拆解，关注真实项目如何组合 agentic 各层能力并落地为工程系统。
 
+## 目录结构
+
+```text
+03-project-studies/
+├── hermes-agent/
+└── openclaw/
+```
+
 ## 收录范围
 
 适合放入本目录的对象：

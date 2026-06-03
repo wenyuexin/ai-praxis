@@ -29,9 +29,6 @@
 
 ```text
 self-reflection/
-├── README.md
 ├── critique-models/
-├── iterative-refinement/
-├── reflection-cost-tradeoff.md
-└── reflection-trigger-design.md
+└── iterative-refinement/
 ```
