@@ -32,7 +32,7 @@
 
 - **关联目录**：`agent-system-models/`
 - **为什么重要**：`harness` 正在从工程术语演化为理解 agent runtime substrate、observability、execution control 的上位模型。
-- **现状**：已有 `agent-system-models/research-queue.md` 收集 harness 方向的待研究对象，但尚未沉淀为 foundations 层正式专题。
+- **现状**：已有 `agent-system-models/candidates.md` 收集 harness 方向的候选研究对象，当前它提供上游对象输入，但尚未沉淀为 foundations 层正式专题。
 
 ### 2.3 Cognitive Architecture vs Orchestration Architecture
 
@@ -80,6 +80,6 @@
 
 ## 五、与现有材料的关系
 
-- `agent-system-models/research-queue.md` 当前保留 harness 方向的待研究对象输入，但不替代 foundations backlog 本身。
+- `agent-system-models/candidates.md` 当前保留 harness 方向的候选研究对象输入，但不替代 foundations backlog 本身。
 - `definition-and-taxonomy/orchestration-paradigms.md` 已提供部分流程范式材料，后续可继续反哺 foundations 层边界整理。
 - 后续若某条线索证据充分，应下沉为对应子目录的正式专题，而不是长期停留在 backlog。

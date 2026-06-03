@@ -37,20 +37,24 @@
 
 ## 二、目录与文件命名
 
-- 一级目录：英文短名，语义自解释
-- 二级及以下目录：`编号-英文短名` 格式（如 `01-foundations/`），编号保证排序稳定
-- 目录名不使用中文
-- 笔记文件：英文短名，语义自解释（如 `lora.md`、`rlhf-overview.md`）
-- 论文笔记：`论文简称_arXiv编号.md`（如 `ReAct_2210.03629.md`）或 `论文简称_会议年份.md`（如 `BeingH05_ICLR2026.md`）
+- 层级称呼：仓库根目录不计入编号层级；`agentic/`、`llm/`、`rag/` 这类仓库根目录下的直接子目录称为一级目录，也可称顶层领域目录；`agentic/01-foundations/`、`agentic/06-frameworks-and-tools/` 这类一级目录下的子目录称为二级目录；`agentic/06-frameworks-and-tools/02-coding-tools/` 这类二级目录下的子目录称为三级目录，依此类推。
+- 一级目录（顶层领域目录）：英文短名，语义自解释，不使用数字前缀；一级目录表达领域分区，不表达线性阅读顺序。
+- 二级及以下目录：只有当同一组目录存在明确阅读顺序、阶段顺序、流程顺序或稳定分类顺序时，才使用 `编号-英文短名` 格式（如 `01-foundations/`）；数字前缀只表达稳定顺序，不表达临时优先级或任务进度。
+- 不需要编号的目录：并列领域、具体对象、产品、框架、论文、项目、工具名称目录原则上不使用数字前缀，例如 `autogen/`、`codex/`、`claude-code/`。
+- 目录名不使用中文。
+- 笔记文件：英文短名，语义自解释（如 `lora.md`、`rlhf-overview.md`）。
+- 有明确阅读顺序、阶段顺序或流程顺序的一组正文文件，可以使用 `01-xxx-yyy.md`、`02-xxx-yyy.md`；数字前缀只表达稳定顺序，不表达临时优先级或任务进度。
+- 独立专题、元信息文件、规则文件、论文笔记原则上不使用数字前缀；不要为了目录整齐批量重命名已有无编号文件。
+- 论文笔记：`论文简称_arXiv编号.md`（如 `ReAct_2210.03629.md`）或 `论文简称_会议年份.md`（如 `BeingH05_ICLR2026.md`）。
 
 ## 三、README 规范
 
 README 的详细规则见 [`docs/contributing/readme-rules.md`](./docs/contributing/readme-rules.md)。本文件只保留仓库级强约束：
 
-- 每个一级目录下必须有 `README.md`。
+- 每个一级目录（顶层领域目录）下必须有 `README.md`。
 - 二级及更深层目录仅在存在或未来可能容纳子目录时必须写 README；纯文件目录不需要。
-- README 必须包含目录结构，但按所在层级控制展开深度：根 README 按内容活跃度展开；一级目录 README 允许展开到三级子目录；二级及更深层 README 默认只记录直接子目录。
-- 目录树原则上只展示目录，不展示内容文件；README 导航不主动列出 `overview.md`、`backlog.md`、`research-queue.md`、`roadmap.md`、`conflict.md` 等元信息文件。
+- README 必须包含目录结构，但按所在层级控制展开深度：根 README 按内容活跃度展开；一级目录（顶层领域目录）README 允许展开到三级子目录；二级及更深层 README 默认只记录直接子目录。
+- 目录树原则上只展示目录，不展示内容文件；README 导航不主动列出 `overview.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 等元信息文件。
 - 如需标注 `最后更新`、来源、适用范围、状态等元信息，统一放在标题下方、正文开始之前。
 
 ## 四、元信息文件模型
@@ -63,7 +67,7 @@ README 的详细规则见 [`docs/contributing/readme-rules.md`](./docs/contribut
 | L2 发现 | Discover | `index.md` | “我要的文件/主题在哪？” | 可选；文件/子目录较多，或主题交叉关系复杂时创建 |
 | L3 理解 | Understand | `overview.md` | “这个领域的全貌和现状是什么？” | 该目录代表一个需要建立整体认知的领域 |
 | L4 推进 | Track | `backlog.md` | “这个领域还有什么没被覆盖？” | 目录处于活跃建设期，内容有明显缺口 |
-| L5 选题 | Queue | `research-queue.md` | “接下来值得研究哪些对象？” | 可选；需要持续跟踪论文、仓库、官方文档、产品、协议、benchmark 等待研究对象时创建 |
+| L5 选题 | Queue | `candidates.md` | “接下来值得研究哪些对象？” | 可选；需要持续跟踪论文、仓库、官方文档、产品、协议、benchmark 等候选研究对象时创建 |
 | L6 规划 | Plan | `roadmap.md` | “从哪开始、按什么顺序阅读/建设？” | 可选；有明确的内容组织顺序或学习路径时创建 |
 | L7 校验 | Reconcile | `conflict.md` | “这里是否存在定义冲突或口径不一致？” | 仅当发现冲突时创建 |
 
@@ -88,7 +92,7 @@ README 的详细规则见 [`docs/contributing/readme-rules.md`](./docs/contribut
 详细流程见 [`docs/contributing/documentation-workflow.md`](./docs/contributing/documentation-workflow.md)。本文件只保留仓库级执行原则：
 
 - **先判断，再落位，最后写正文**：新材料进入主线前，先判断材料类型、Evidence 状态、目标落位和临时落点。
-- **正文不承接未稳定材料**：正文负责表达经过整理和判断后的知识；`overview.md`、`backlog.md`、`research-queue.md`、`conflict.md` 等元信息文件负责承接尚未稳定、尚待分流、尚待核验的材料。
+- **正文不承接未稳定材料**：正文负责表达经过整理和判断后的知识；`overview.md`、`backlog.md`、`candidates.md`、`conflict.md` 等元信息文件负责承接尚未稳定、尚待分流、尚待核验的材料。
 - **外部材料先分级分流**：`temp/`、网页搜索、外部 AI 调研、博客摘录、issue/PR 讨论等默认只是上游输入或候选证据，不直接写成主线结论。
 - **证据状态必须显式判断**：从外部材料回流主线时，先区分 `Verified`、`Observed`、`Inferred`、`Unverified`、`Conflicting`、`Deprecated`；完整规则见 [`docs/contributing/evidence-rules.md`](./docs/contributing/evidence-rules.md)。
 - **链路字段按需保留**：涉及迁移、回流、冲突处理或外部来源时，应能说明 `Source / Decision / Placement / Gap`；完整规则见 [`docs/contributing/traceability-rules.md`](./docs/contributing/traceability-rules.md)。

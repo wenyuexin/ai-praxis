@@ -10,7 +10,7 @@
 
 本文件回答：仓库中哪些文件属于元信息文件、它们分别服务什么认知任务、应该在什么情况下出现。
 
-- 它是参考手册，用于查清 `README.md`、`overview.md`、`backlog.md`、`research-queue.md` 等文件的职责边界。
+- 它是参考手册，用于查清 `README.md`、`overview.md`、`backlog.md`、`candidates.md` 等文件的职责边界。
 - 它不负责给出材料处理流程；拿到新材料后如何分级、分流和落地，应查看 [`documentation-workflow.md`](./documentation-workflow.md)。
 - 它不讨论单篇正文如何写得更清楚；那属于写作表达规则。
 
@@ -24,13 +24,15 @@
 
 其中 `index.md`、`roadmap.md` 属于**预定义能力位**：仓库允许它们存在，也保留统一命名和职责边界；但只有当目录确实出现发现、路径指引需求时才创建。不要因为模型中定义了 L2/L6，就为每个目录机械补齐。
 
+Evidence registry 不属于七层元信息文件模型的默认层级。证据优先写在正文 `## Evidence`、`backlog.md`、`candidates.md` 或 `conflict.md` 的条目内部；只有当某个主题的证据对照本身成为稳定维护对象时，才按 [`Evidence 规则`](./evidence-rules.md) 启用主题级 registry。
+
 | 层级 | 认知任务 | 文件名 | 职责 | 出现条件 | 典型内容 |
 |:---|:---|:---|:---|:---|:---|
 | L1 定向 | Orient | `README.md` | “这是什么地方？跟我有什么关系？” | 目录存在或未来可能容纳子目录时必选；纯叶子目录（仅含文件，无子目录可能）不需要 | 一句话定位、快速入口、目录树 |
 | L2 发现 | Discover | `index.md` | “我要的文件/主题在哪？” | 可选；文件/子目录 > ~10，或主题交叉关系复杂时才创建 | 关键词索引、反向映射、问题-文档对照表 |
 | L3 理解 | Understand | `overview.md` | “这个领域的全貌和现状是什么？” | 该目录代表一个需要建立整体认知的领域 | 技术分类、代表工作、能力边界、关键 trade-off |
 | L4 推进 | Track | `backlog.md` | “这个领域还有什么没被覆盖？” | 目录处于活跃建设期，内容有明显缺口 | 已知空白、待填补主题、与现有内容的关联 |
-| L5 选题 | Queue | `research-queue.md` | “接下来值得研究哪些对象？” | 可选；需要持续跟踪论文、仓库、官方文档、产品、协议、benchmark 等待研究对象，且对象列表不宜塞进 `backlog.md` 时创建 | 待研究对象、对象类型、关联问题、研究理由、当前状态、产出链接 |
+| L5 选题 | Queue | `candidates.md` | “接下来值得研究哪些对象？” | 可选；需要持续跟踪论文、仓库、官方文档、产品、协议、benchmark 等候选研究对象，且对象列表不宜塞进 `backlog.md` 时创建 | 待研究对象、对象类型、关联问题、研究理由、当前状态、产出链接 |
 | L6 规划 | Plan | `roadmap.md` | “从哪开始、按什么顺序阅读/建设？” | 可选；有明确的内容组织顺序或学习路径时才创建 | 阶段划分、推荐顺序、前置依赖 |
 | L7 校验 | Reconcile | `conflict.md` | “这里是否存在定义冲突或口径不一致？” | 仅当发现冲突时可选创建 | 冲突点、涉及文档、冲突类型、待核验问题 |
 
@@ -61,7 +63,7 @@ L3 的标准文件名为 `overview.md`。
 - 论文列表
 - 长篇学科导论
 
-如需提供导航，不要在 README 中主动列出 `overview.md`、`backlog.md`、`research-queue.md`、`roadmap.md`、`conflict.md` 等元信息文件。
+如需提供导航，不要在 README 中主动列出 `overview.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 等元信息文件。
 
 ## 5. L2 index：发现
 
@@ -121,14 +123,14 @@ L3 的标准文件名为 `overview.md`。
 
 它不是任务列表：不分配责任人、不设 deadline、不追踪完成状态。
 
-与 `research-queue.md` 的边界：
+与 `candidates.md` 的边界：
 
 - `backlog.md` 记录问题缺口
-- `research-queue.md` 记录待研究对象
+- `candidates.md` 记录候选研究对象
 
-## 8. L5 research-queue：待研究对象队列
+## 8. L5 candidates：候选研究对象队列
 
-`research-queue.md` 记录该领域下一步值得研究的对象。
+`candidates.md` 记录该领域下一步值得研究的候选对象。
 
 对象包括：
 
@@ -151,7 +153,7 @@ L3 的标准文件名为 `overview.md`。
 
 按需创建：仅当对象队列已形成稳定维护需求，且不适合塞进 `backlog.md` 时使用。
 
-不确定时的默认判断：先问“我现在掌握的是一个问题，还是一个对象？”问题进 `backlog.md`，对象进 `research-queue.md`。
+不确定时的默认判断：先问“我现在掌握的是一个问题，还是一个对象？”问题进 `backlog.md`，对象进 `candidates.md`。
 
 ## 9. L6 roadmap：路径指引
 
@@ -193,6 +195,7 @@ L3 的标准文件名为 `overview.md`。
 - 不要为每个目录机械创建所有 L1-L7 元信息文件。
 - 元信息文件按需出现，服务具体认知任务。
 - `index.md`、`roadmap.md` 是预定义能力位，不是默认必建文件。
+- `evidence.md` / `evidence-registry.md` 不是默认元信息文件；只有证据对照本身成为稳定维护对象时，才按主题启用。
 - 拿不准是否该新建正文专题时，优先补 README、backlog 或 conflict。
-- 拿不准是问题还是对象时，问题进 `backlog.md`，对象进 `research-queue.md`。
+- 拿不准是问题还是对象时，问题进 `backlog.md`，对象进 `candidates.md`。
 - 拿不准是否存在冲突时，先记录到 `conflict.md`，不要直接改写正文定论。

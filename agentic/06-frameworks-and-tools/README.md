@@ -35,6 +35,11 @@
 | `04-skill-and-tool-systems/` | Skill、Tool、插件、能力注册等工程实现对象 | Skill-based agents |
 | `05-comparisons/` | 框架选型、产品对比、生态地图 | framework selection, coding tools comparison |
 
+## 开源项目研究组织原则
+
+系统性开源项目研究优先集中放在 `03-project-studies/<project>/`，提供项目级的完整阅读体验；其他专题目录只在需要支撑某个机制、证据或对比时克制回填，不复制完整项目分析。
+
+例如 OpenHands 的整体研究应集中到 `03-project-studies/openhands/`；`05-environments/` 只回填 workspace / runtime / sandbox 相关证据，`02-single-agent/` 或 `03-multi-agent/` 只在确有专题需要时引用对应机制。
 
 ---
 

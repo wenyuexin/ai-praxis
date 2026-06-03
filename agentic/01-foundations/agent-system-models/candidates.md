@@ -1,11 +1,11 @@
-# Agent System Models Research Queue
+# Agent System Models Candidates
 
-> 适用范围：`agent-system-models/` 方向的待研究对象清单
-> 使用原则：本文件记录下一步值得研究的论文、文档与对象，不替代 `01-foundations/backlog.md` 的问题缺口职责；对象研究完成后，应转化为正式专题或论文笔记
+> 适用范围：`agent-system-models/` 方向的候选研究对象清单
+> 使用原则：本文件记录下一步值得研究的论文、文档与候选对象，不替代 `01-foundations/backlog.md` 的问题缺口职责；对象研究完成后，应转化为正式专题或论文笔记
 
 ## 一、当前主题
 
-当前队列聚焦 `Agent Harness as System Model`，用于跟踪将 harness / runtime substrate / harness engineering 上升为 foundations 层系统模型的研究对象。
+当前队列聚焦 `Agent Harness as System Model`，用于跟踪将 harness / runtime substrate / harness engineering 上升为 foundations 层系统模型的候选研究对象。
 
 ## 二、待研究对象
 
@@ -27,6 +27,6 @@
 
 ## 四、与其他文件的关系
 
-- `../../01-foundations/backlog.md` 记录 foundations 层的问题缺口；本文件只记录待研究对象。
+- `../../01-foundations/backlog.md` 记录 foundations 层的问题缺口；本文件只记录候选研究对象。
 - `../cognitive-architectures/Externalization_2604.08224.md` 提供 harness 进入外部化认知架构框架后的上位解释，可作为本队列对象的理论参照。
 - 后续若 `agent-system-models/` 下形成正式 harness 总论，相关条目应继续下沉，不长期停留在队列里。

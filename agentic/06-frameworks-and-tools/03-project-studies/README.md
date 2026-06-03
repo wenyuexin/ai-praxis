@@ -7,7 +7,8 @@
 ```text
 03-project-studies/
 ├── hermes-agent/
-└── openclaw/
+├── openclaw/
+└── openhands/
 ```
 
 ## 收录范围
@@ -23,6 +24,7 @@
 
 - `hermes-agent/`
 - `openclaw/`
+- `openhands/`
 
 ## 与框架目录的区别
 
@@ -31,4 +33,4 @@
 
 因此，Hermes Agent、OpenClaw 这类对象更适合作为项目案例，而不是底层能力目录或通用框架目录。
 
-*最后更新: 2026-05-31*
+*最后更新: 2026-06-03*

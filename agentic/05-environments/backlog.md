@@ -50,6 +50,10 @@
 - **关联目录**：`code-execution-environments/`
 - **为什么重要**：workspace 已被稳定定义为 task-specific working context，但它是否与 runtime 生命周期绑定、subtask 如何共享、overlay 是否应作为一等模型，仍是后续工程判断的关键。
 - **当前状态**：`workspace-lifecycle.md` 已形成独立主干专题，系统梳理了 workspace 与 runtime / sandbox / session 的关系，以及 per-task isolation、shared baseline + overlay、git worktree 三类共享模型；后续重点转向更多产品案例、多 agent 共享边界与成本比较。
+- **Status**：Inferred / Observed；已形成正文专题，继续补证。
+- **Source / Trace**：由 `agentic/temp/web-search/4.md` 的 workspace lifecycle / sharing model 线索回流到 `code-execution-environments/workspace-lifecycle.md`，并与既有 workspace / checkpoint / traceability 专题保持边界互补。
+- **Evidence need**：更多产品案例、overlay / worktree / remote runtime 的成本比较、多 agent 场景下 shared / isolated / hybrid workspace 的共享边界。
+- **Candidates**：补证对象已登记到 `candidates.md`，当前优先跟踪 `OpenHands`、`SWE-agent`、`LangGraph checkpoint`、`Claude Code / Git worktree parallel agents`、`AgentFS / astrid-vfs / overlay filesystem cases`。
 - **建议产物**：如后续材料继续增厚，可再拆出 `workspace-sharing-models.md`，专门展开跨产品共享模式对照。
 
 ### 2.3 Traceability Object Model

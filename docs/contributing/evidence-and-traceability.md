@@ -49,7 +49,7 @@ Evidence 和 Traceability 分别维护细则，但在执行时不应割裂。
 
 如果无法说明 Source，默认不要写成正文定论。
 
-如果无法说明 Placement 理由，优先放入 `backlog.md` 或 `research-queue.md`。
+如果无法说明 Placement 理由，优先放入 `backlog.md` 或 `candidates.md`。
 
 ## 4. 最小字段组合
 
@@ -72,7 +72,7 @@ Evidence 和 Traceability 分别维护细则，但在执行时不应割裂。
 `temp/` 内容默认只是输入材料，不是主线知识。只有同时满足以下条件，才可以迁移出 `temp/`：
 
 - **材料类型已明确**：已经判断它是整体认知、主题缺口、待研究对象、冲突问题，还是正文专题材料。
-- **目标落位已明确**：已经知道应进入 `overview.md`、`backlog.md`、`research-queue.md`、`conflict.md`，还是某篇正文专题。
+- **目标落位已明确**：已经知道应进入 `overview.md`、`backlog.md`、`candidates.md`、`conflict.md`，还是某篇正文专题。
 - **Evidence 状态已明确**：至少能标为 `Observed` 或 `Inferred`；如果只能标为 `Unverified`，不得写成正文定论。
 - **Trace 字段已明确**：能写清 `Source / Decision / Placement / Gap`。
 - **缺口已明确**：如果证据不足，必须写明还缺论文、官方文档、开源实现、社区观察或跨系统比较中的哪一类。
@@ -82,7 +82,7 @@ Evidence 和 Traceability 分别维护细则，但在执行时不应割裂。
 - `Verified`：可进入 `overview.md` 或正文专题，仍需保留来源说明。
 - `Observed`：可进入正文，但必须保留观察对象、适用范围和限制；不应写成通用规律。
 - `Inferred`：可进入正文作为结构化归纳或主线草稿，但必须显式标注推断依据和待补证方向。
-- `Unverified`：不得进入正文定论；优先留在 `temp/`，或转入 `backlog.md` / `research-queue.md` 作为待验证线索。
+- `Unverified`：不得进入正文定论；优先留在 `temp/`，或转入 `backlog.md` / `candidates.md` 作为待验证线索。
 - `Conflicting`：优先进入 `conflict.md`，等待核验后再决定是否修改正文。
 - `Deprecated`：不回流正文定论，只能作为历史说明或废弃记录。
 
@@ -103,7 +103,7 @@ Evidence 和 Traceability 分别维护细则，但在执行时不应割裂。
 - `docs/contributing/`：承接 Evidence、Traceability、README、文档工作流等细则。
 - `overview.md`：沉淀领域全貌和相对稳定的结构化判断。
 - `backlog.md`：记录待补主题、待验证方向和证据缺口。
-- `research-queue.md`：记录值得研究的具体对象。
+- `candidates.md`：记录值得研究的具体对象。
 - `conflict.md`：记录冲突来源和待核验问题。
 - `temp/`：保留尚未分级、尚未验证、尚未落位的临时材料。
 

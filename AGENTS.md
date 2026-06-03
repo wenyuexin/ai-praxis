@@ -26,7 +26,7 @@
 
 1. 判断材料类型：整体认知、主题缺口、待研究对象、冲突问题，还是正文专题材料。
 2. 判断 Evidence 状态：`Verified`、`Observed`、`Inferred`、`Unverified`、`Conflicting`、`Deprecated`。
-3. 判断目标落位：`overview.md`、`backlog.md`、`research-queue.md`、`conflict.md`，还是正文专题。
+3. 判断目标落位：`overview.md`、`backlog.md`、`candidates.md`、`conflict.md`，还是正文专题。
 4. 必要时记录轻量 Trace：`Source / Decision / Placement / Gap`。
 5. 最后再写入正文或元信息文件。
 
@@ -42,10 +42,10 @@
 
 ## 5. README 与元信息文件
 
-- README 负责定向和目录导航，不主动列出 `overview.md`、`backlog.md`、`research-queue.md`、`roadmap.md`、`conflict.md` 等元信息文件。
+- README 负责定向和目录导航，不主动列出 `overview.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 等元信息文件。
 - README 目录树原则上只展示目录，不展示内容文件。
 - 根 README、一级目录 README、二级及更深层 README 的展开深度不同，按 `readme-rules.md` 执行。
-- `index.md`、`research-queue.md`、`roadmap.md` 是按需启用文件，不要为每个目录机械创建。
+- `index.md`、`candidates.md`、`roadmap.md` 是按需启用文件，不要为每个目录机械创建。
 - `conflict.md` 仅在发现术语、事实、版本、适用边界或结论力度冲突时创建。
 
 ## 6. 修改范围控制
@@ -62,7 +62,7 @@
 
 - 链接是否仍然有效。
 - 是否残留旧路径，例如根级 `assets/` 的旧引用。
-- 是否残留旧术语，例如 `证据强度`、`Unverified / Unreliable`、`主干正文`、`回流主干`。
+- 是否残留旧术语，例如已废弃的“证据强度”表述、`Unverified / Unreliable`、`主干正文`、`回流主干`。
 - 新增 Markdown 文件是否使用 LF 行尾。
 - README 是否违反“不主动列出元信息文件”的规则。
 - 是否把未验证材料写成了主线定论。

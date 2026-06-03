@@ -91,7 +91,9 @@ agentic/
 │   │   ├── claw-code/
 │   │   └── codex/
 │   ├── 03-project-studies/           # 项目案例研究
-│   │   └── hermes-agent/
+│   │   ├── hermes-agent/
+│   │   ├── openclaw/
+│   │   └── openhands/
 │   ├── 04-skill-and-tool-systems/    # 技能与工具系统
 │   │   └── skill-based-agents/
 │   └── 05-comparisons/               # 对比与选型

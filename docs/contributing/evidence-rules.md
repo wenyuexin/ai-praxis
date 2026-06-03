@@ -13,7 +13,7 @@ Evidence 负责回答：**这条知识凭什么成立？**
 - `overview.md` 中的领域判断、分类体系、关键 trade-off
 - 正文专题中的定义、机制解释、方法分类、评价结论
 - `backlog.md` 中的待补主题和缺口判断
-- `research-queue.md` 中的待研究对象和研究理由
+- `candidates.md` 中的待研究对象和研究理由
 - `conflict.md` 中的冲突记录、证据与待核验问题
 
 不要求对以下内容做完整 Evidence 标注：
@@ -119,7 +119,7 @@ Evidence 是支持 Claim 的材料或观察。
 
 - 不能写成稳定定论
 - 应明确标注待验证方向
-- 优先放入 `backlog.md`、`research-queue.md` 或正文的 `Open Questions`
+- 优先放入 `backlog.md`、`candidates.md` 或正文的 `Open Questions`
 
 ### Conflicting
 
@@ -208,11 +208,42 @@ Evidence 不默认新增独立元信息文档。
 
 - 正文专题：在同一篇正文文档中写 `## Evidence` 小节。
 - `overview.md`：在文档末尾写 `## Evidence` 小节，支撑其中的关键分类、判断和 trade-off。
-- `backlog.md` / `research-queue.md`：在具体条目内部用字段标注 evidence need 或 status。
+- `backlog.md` / `candidates.md`：在具体条目内部用字段标注 evidence need 或 status。
 - `conflict.md`：在具体冲突条目中记录当前证据、冲突来源和待核验问题。
 - README：一般不写 Evidence，除非 README 中包含实质性判断，而不只是目录导航。
 
 只有当某个主题的证据记录变多、正文 `## Evidence` 小节明显过长时，才考虑新增主题级 evidence registry。当前不要求为每个目录机械创建 evidence 元信息文档。
+
+### 6.1 主题级 evidence registry 的启用条件
+
+Evidence registry 不是默认元信息文件，也不是每个目录都要补齐的第八层模型。它只在证据治理本身已经成为主题维护负担时按需出现。
+
+可以考虑启用的条件：
+
+- 单篇正文的 `## Evidence` 已超过约 10 条关键 Claim，继续放在正文中会明显影响阅读
+- 多篇正文反复引用同一批论文、官方文档、源码、benchmark 或产品案例
+- 同一主题需要长期维护来源版本、commit、发布日期、适用范围或证据废弃状态
+- 某个主题存在多组证据冲突，需要集中维护 claim-source matrix 或 cross-system evidence table
+- 证据对照本身已经成为读者需要查询的对象，而不只是正文结论的附属说明
+
+不应启用的情况：
+
+- 只有少量来源可以直接写在正文 `## Evidence` 小节中
+- 只是发现了待补证方向，应优先写入 `backlog.md` 或 `candidates.md`
+- 只是存在定义、事实或适用边界冲突，应优先写入 `conflict.md`
+- 只是为了让目录结构更完整而机械创建 `evidence.md`
+
+命名建议：
+
+- 优先使用具体主题名，例如 `workspace-evidence.md`、`evaluation-evidence.md`
+- 如果作用范围覆盖整个目录，可使用 `evidence-registry.md`
+- 不建议把通用 `evidence.md` 作为所有目录的默认文件名，除非该目录已经明确把 evidence registry 作为稳定维护对象
+
+使用要求：
+
+- registry 中的每条证据仍应标注 `Status / Sources / Trace / Needs` 或等价字段
+- 正文中的关键 Claim 应反向引用 registry 中的相关条目，避免证据与结论脱钩
+- registry 只承接证据索引与对照，不替代正文解释、`backlog.md`、`candidates.md` 或 `conflict.md`
 
 ## 7. Evidence 放在文档什么位置
 
@@ -268,7 +299,7 @@ Evidence: Observed; examples needed from open-source coding agents and official 
 
 局部标注应短，不展开长表格；详细来源仍可放到文末 `## Evidence`。
 
-### 7.3 条目位置：写在 backlog / research-queue / conflict 条目内部
+### 7.3 条目位置：写在 backlog / candidates / conflict 条目内部
 
 对于元信息文件，不再额外建全局 Evidence 小节，而是在条目内部标注。
 
@@ -290,7 +321,7 @@ Claim 应写在它支撑的知识文档里，位置取决于文档类型：
 | 正文专题 | `## Evidence` 小节中的 Claim 表格或摘要 bullet | 文档末尾集中写，必要时局部短标注 |
 | `overview.md` | 支撑核心分类、边界、trade-off 的 Claim 列表 | 文档末尾 `## Evidence` |
 | `backlog.md` | 待验证主题不是稳定 Claim，写成 `Topic` + `Status` + `Evidence need` | 条目内部 |
-| `research-queue.md` | 研究理由不是稳定 Claim，写成对象条目的 `Why` / `Evidence need` | 条目内部 |
+| `candidates.md` | 研究理由不是稳定 Claim，写成对象条目的 `Why` / `Evidence need` | 条目内部 |
 | `conflict.md` | 冲突双方都可以是 Claim，写明来源和冲突类型 | 冲突条目内部 |
 
 ## 9. Claim 怎么写
