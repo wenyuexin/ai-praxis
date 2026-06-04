@@ -1,11 +1,9 @@
 # Codex 文档冲突记录
 
-> **校验文档**（L6）。本文是 codex 目录下**冲突清单的统一收口点**。涉及术语歧义、分数可比性、沙箱定义差异等问题，各主线文档将以本文为准。本文记录当前已识别的知识冲突和待核验项，不是最终结论。解决冲突后应更新相关文档并同步调整本文件。
+> **校验文档**（L7）。本文是 `codex/` 目录下**冲突清单的统一收口点**。涉及术语歧义、分数可比性、沙箱定义差异等问题时，可先在此登记并收敛核验方向。本文记录当前已识别的知识冲突和待核验项，不是最终结论。冲突解决后应更新相关文档并同步调整本文件。
 
-
-
-> 根据 CONTRIBUTING.md L6 规范，记录 codex 目录范围内已识别的内容冲突。
-> 本文件是**研究与修订输入**，冲突解决后应在相关文档修正并同步更新或移除对应记录。
+> 根据 `CONTRIBUTING.md` 与 `metadata-files.md` 的 `conflict.md` 规则，记录 `codex/` 目录范围内已识别的内容冲突。
+> 本文件是**研究与修订输入**，不替代主线综述、专题结论或问题缺口列表。
 
 ---
 
@@ -22,16 +20,19 @@
 
 ---
 
-## 冲突 2："沙箱"术语过载
+## 冲突 2：`沙箱` 术语仍有残余歧义，但主线已基本对齐
 
 | 字段 | 内容 |
 |------|------|
-| **冲突描述** | 两个文档使用同一术语"沙箱"指代两种不同的隔离模型：`codex-agent-mechanisms.md` 说沙箱是 OS 内核级（Landlock+Seccomp/Seatbelt），`codex-cloud-sandbox.md` 说 Cloud 沙箱是完全远程隔离。前者是本地进程隔离，后者是云端容器隔离，安全保证和适用场景不同。读者可能误以为两者的安全等级一致 |
-| **涉及文档** | `codex-agent-mechanisms.md` 第 28-32 行（沙箱隔离节）、`codex-cloud-sandbox.md` 第 48-56 行（Cloud vs 本地沙箱对比表） |
-| **冲突类型** | **术语** — 同名概念指代不同实体 |
-| **当前证据** | 本地沙箱：OS 内核级（Landlock+Seccomp+bubblewrap / Seatbelt / ACL+WFP），按任务粒度。Cloud 沙箱：完全远程隔离，Setup 阶段有网络，Agent 阶段默认关闭，任务结束后销毁 |
-| **待核验问题** | Cloud 沙箱底层的具体技术是什么？也是 Linux 内核隔离，还是容器化方案（如 Firecracker）？ |
-| **建议处理方向** | 在 `codex-agent-mechanisms.md` 的沙箱节末尾增加说明："Cloud 沙箱与本地的隔离模型不同，详见 `codex-cloud-sandbox.md`"。两个文档都写上"注意：`沙箱` 一词涵盖两种隔离模式——详见 `conflict.md`" |
+| **冲突描述** | 旧版本文档曾用同一术语`沙箱`混指两种隔离模型：本地 OS 级受限执行边界，与 Cloud 远程托管容器边界。当前主线文档已显式拆分这两层含义，但读者仍可能把两者误解为同一种安全模型。 |
+| **涉及文档** | `codex-agent-mechanisms.md` 第 17 行后（治理层 / 沙箱与执行边界）、`codex-cloud-sandbox.md` 第 25 行后（Cloud 容器与本地沙箱边界） |
+| **冲突类型** | **术语** — 同名概念曾指代不同实体，现已部分收敛为低强度未决项 |
+| **当前证据** | 当前较稳的一手口径已对齐：1) 本地执行路径由 OS-level mechanisms 约束，默认无网络、默认只允许写活动 workspace；2) Cloud 运行在 `isolated OpenAI-managed containers` 中；3) Cloud 采用 `setup → agent phase` 两阶段，Setup 可联网，Agent 默认离线，Secrets 仅在 Setup 阶段可用。 |
+| **临时检索摘要** | 1) `codex-agent-mechanisms.md` 已不再把 Cloud 写成本地 OS 沙箱的同类实现；2) `codex-cloud-sandbox.md` 已把 Cloud / Local / Worktree 的运行位置与边界拆开；3) 当前剩余问题主要是 Cloud 底层容器/虚拟化技术与更细数据留存规格尚未公开打实。 |
+| **待核验问题** | 1) Cloud 沙箱底层具体技术是否有公开说明；2) 环境销毁、缓存寿命、数据留存是否有更明确官方规格；3) App 本地执行路径是否有比产品页更细的一手定义。 |
+| **建议处理方向** | 将本冲突下调为“低强度未决项”：主线继续沿用“本地 OS 级边界 vs Cloud 远程容器边界”的双层口径；冲突区仅继续跟踪底层实现、留存规格与 App 边界。 |
+| **已解决项（2026-06-04）** | 1) `codex-agent-mechanisms.md` 与 `codex-cloud-sandbox.md` 已完成主边界对齐；2) `approval policy` 与 `sandbox mode` 已在机制文档中分开写；3) Local / Worktree / Cloud 的运行位置已在 Cloud 专题中明确拆开。 |
+| **未解决项（持续跟踪）** | 1) Cloud 底层隔离技术名称；2) 缓存寿命、环境销毁与数据留存的稳定公开规格；3) App 本地执行模型的更细一手定义。 |
 
 ---
 
@@ -53,9 +54,9 @@
 | 字段 | 内容 |
 |------|------|
 | **冲突描述** | 基于 `https://github.com/openai/codex` 仓库核验，旧冲突已部分收敛：Codex CLI 存在明确本地执行路径，MCP 在代码配置层明确为 `stdio` + `streamable_http`。当前主要剩余的是术语精度问题（是否写成 HTTP/SSE）与 App 边界说明不足。 |
-| **涉及文档** | `README.md`（`openai/codex`）；`codex-rs/config/src/mcp_types.rs`；`codex-rs/cli/src/main.rs`；`codex-rs/core/src/tools/handlers/shell.rs`；`overview.md` 第 219 行后；`codex-agent-mechanisms.md` 第 108 行后 |
+| **涉及文档** | `https://github.com/openai/codex`（重点核验 `README.md`、`codex-rs/config/src/mcp_types.rs`、`codex-rs/cli/src/main.rs`、`codex-rs/core/src/tools/handlers/shell.rs`）；`agentic/06-frameworks-and-tools/02-coding-tools/codex/overview.md`；`agentic/06-frameworks-and-tools/02-coding-tools/codex/codex-agent-mechanisms.md` |
 | **冲突类型** | **术语 + 边界** — 事实冲突已显著下降，重点转为“传输术语精确化”和“产品形态边界补证” |
-| **当前证据** | `openai/codex` 仓库给出一手证据：1) CLI README 明确本地运行；2) MCP 类型为 `Stdio` 与 `StreamableHttp`；3) CLI 子命令含 `exec`、`sandbox`、`app`、`cloud`；4) shell handler 与多平台 shell 测试证明本地命令执行是设计能力。 |
+| **当前证据** | `https://github.com/openai/codex` 仓库给出一手证据：1) CLI README 明确本地运行；2) MCP 类型为 `Stdio` 与 `StreamableHttp`；3) CLI 子命令含 `exec`、`sandbox`、`app`、`cloud`；4) shell handler 与多平台 shell 测试证明本地命令执行是设计能力。 |
 | **临时检索摘要** | 1) 可将“CLI 本地执行”从候选结论升级为主线事实；2) 可将“MCP 双形态”升级为主线事实，但表述建议用 `stdio + streamable_http`；3) Code Interpreter 不可外推到 CLI 的边界结论继续成立；4) App 执行细节仍弱证据，避免写死。 |
 | **待核验问题** | 1) Codex App 的执行模型是否有独立官方文档可直接引用；2) MCP 是否在官方对外文案中将 `streamable_http` 进一步表述为 HTTP/SSE；3) local socket（非 stdio）是否被官方支持。 |
 | **建议处理方向** | 将冲突 4 下调为“低强度未决项”：主线吸收已核实事实（CLI 本地执行、MCP `stdio + streamable_http`、CI 不可外推），仅保留 App 边界与术语映射问题在冲突区继续追踪。 |
@@ -74,5 +75,6 @@
 - 2026-05-28：根据外部检索覆盖版报告更新冲突 4 状态：主线可吸收稳定结论，冲突收敛为“边界细节待完善”。
 - 2026-05-28：引入 `https://github.com/openai/codex` 一手证据，冲突 4 进一步收敛为“低强度未决项”（重点跟踪 App 边界与术语映射）。
 - 2026-05-28：为冲突 4 增加“已解决项/未解决项”清单，便于后续维护与增量核验。
+- 2026-06-04：根据 `codex-agent-mechanisms.md` 与 `codex-cloud-sandbox.md` 的新一轮对齐结果，收紧冲突 2；将其从主线冲突下调为低强度未决项，继续只跟踪 Cloud 底层技术与留存规格问题。
 
-*最后更新: 2026-05-28*
+*最后更新: 2026-06-04*

@@ -1,6 +1,8 @@
 # Codex Agent 原理与机制
 
 > 目标：解释 Codex Agent 如何形成“从理解到执行”的能力闭环。
+>
+> 本文默认会与 `overview.md` 在治理、环境、能力闭环等结论上存在适度重复；区别在于，`overview.md` 负责给出读者可快速吸收的整体判断，本文负责把这些判断拆成机制层结构、执行条件与证据边界。
 
 ## 1. 核心机制：三层模型
 
@@ -14,28 +16,36 @@
 
 治理层是 Codex 区别于“补全工具”的关键工程能力，核心组件如下：
 
-**权限模型（approval_policy 四级）**
+**权限模型（approval policy）**
 
-| 级别 | 行为 | 风险 |
-|------|------|------|
-| untrusted（默认） | 所有操作需确认 | 最低 |
-| on-failure | 仅在操作失败时需确认 | 中低 |
-| on-request | 仅在特定类型操作时确认（如写文件、跑命令） | 中 |
-| never | 完全自动，无需确认 | 最高 |
+官方 `agent-approvals-security` 页面当前可直接确认：Codex 的治理控制来自两层——**sandbox mode** 决定技术边界，**approval policy** 决定什么时候必须先征得用户同意。
 
-**沙箱隔离**
+| 级别 | 当前可保守理解的行为 | 风险 |
+|------|----------------------|------|
+| `untrusted` | 更偏严格确认；高风险动作通常需要先确认 | 最低 |
+| `on-failure` | 更偏在失败或越界时触发确认 | 中低 |
+| `on-request` | 更偏在特定类型操作或离开当前边界时确认 | 中 |
+| `never` | 尽量不等待人工确认 | 最高 |
 
-Codex 采用 OS 内核级沙箱（非应用层模拟），技术选型因平台而异：
-- Linux：Landlock + Seccomp + bubblewrap
-- macOS：Seatbelt
-- Windows：ACL + WFP
-- 隔离粒度：**按任务**（每个任务独立环境，结束后交还结果）
-- ⚠️ 此描述适用于本地沙箱。Cloud 沙箱采用不同的隔离模型（远程容器），安全保证与本地不同。详见 `codex-cloud-sandbox.md` 和 `conflict.md`
+> 更稳妥的理解是：approval policy 控制“何时询问”，sandbox mode 控制“技术上能做什么”。二者相关，但不是同一个概念。
 
-**审计日志**
-- 记录内容：执行命令、修改文件、决策过程
-- Agent 状态机：7 种状态（PendingInit → Running → Interrupted → Completed → Errored → Shutdown → NotFound）
-- 回滚原因（TurnAbortReason）：4 种（Interrupted / Replaced / ReviewEnded / BudgetLimited）。
+**沙箱与执行边界**
+
+当前更稳的一手口径应分成本地与 Cloud 两类，而不是笼统写成一种“统一沙箱”模型：
+
+- **Codex CLI / IDE extension / 本地执行路径**：官方文档明确是 **OS-level mechanisms** 在执行本地沙箱策略；默认无网络、默认只允许写活动 workspace。
+- **Codex Cloud**：运行在 `isolated OpenAI-managed containers` 中，属于远程托管容器边界，不应与本地 OS 级沙箱混写。
+- **Cloud 运行时模型**：采用 `setup → agent phase` 两阶段；Setup 可联网安装依赖，Agent 阶段默认离线，只有为环境显式开启 internet access 时才可联网。
+- **Cloud Secrets**：仅在 Setup 阶段可用，Agent 阶段开始前移除。
+
+因此，这里更适合把 Codex 的治理层写成：**本地受限执行边界 + Cloud 远程容器边界 + approval policy 协同控制**。
+
+> ⚠️ `沙箱` 一词在 Codex 语境里至少覆盖两种不同实体：本地 OS 级沙箱，与 Cloud 远程容器隔离。两者安全属性和适用场景不同，交叉口径见 `codex-cloud-sandbox.md` 与 `conflict.md`。
+
+**审计与可回溯性**
+- 从官方治理口径看，重点不只是“能否执行”，还包括审批流、事件记录与异常操作回看。
+- 现有资料可支撑“执行命令、修改文件、审批/越界事件应可审计”这一治理方向。
+- Agent 状态机、回滚原因等更细内部状态名仍更接近仓库/实现层线索，不宜在没有逐项源码锚点时过度外推为统一产品规格。
 
 ## 2. 执行闭环最小条件
 
@@ -70,22 +80,22 @@ Codex Agent 的上下文常由三部分构成：
 
 ### 4.1 Token 效率设计
 
-Codex 在上下文管理上的设计哲学是**任务拆分并行，多会话独立**，避免上下文污染。核心思路：
+可暂时把 Codex 的上下文管理理解为一种**偏任务拆分、偏会话隔离**的工程取向。当前较稳妥的理解是：
 
-- 复杂任务拆分为多个独立子任务，分别在独立沙箱中执行
-- 每个子任务使用独立的会话上下文，不互相污染
-- 并行执行完成后由聚合器合并结果
+- 复杂任务往往会被拆成更小的执行单元
+- 不同任务单元倾向于在相对独立的上下文中运行
+- 最终结果需要再经过聚合或人工审查
 
-这种设计的优势：
-- **Token 效率高**：同任务消耗约 150 万 token（社区实测），远低于在单一会话中反复探索的做法
-- **上下文干净**：每个子任务只看到自己的上下文，不会因累积信息导致推理退化
-- **失败影响小**：一个子任务失败不影响其他子任务
+可能的收益：
+- **Token 使用更可控**：部分社区样本显示，拆分式执行有助于减少单会话反复探索带来的额外消耗
+- **上下文更干净**：相互独立的任务单元更不容易累积无关噪声
+- **失败影响可局部化**：单个子任务失败时，理论上更容易局部重试
 
-代价：
-- **长任务稳定性受限**：超过 50 轮交互的会话可能出现上下文丢失
-- **跨文件关联**：需要全局理解的任务难以充分利用分散的上下文
+已知代价或风险：
+- **长任务稳定性仍有限**：关于“超过多少轮会话后明显衰减”的数字，目前更多来自社区观察，不宜写成硬阈值
+- **跨文件 / 全局关联更难**：需要整体理解的大任务，未必能充分受益于拆分式上下文
 
-相关数据见 `codex-agent-evidence.md` 的 Benchmark 表。
+相关数字与案例见 `codex-agent-evidence.md`，使用时应结合其 Evidence 分级理解，不宜把社区样本直接外推为稳定产品特性。
 
 ## 5. 关键 trade-off
 
@@ -141,6 +151,13 @@ Codex 通过两种互补机制扩展能力边界：**MCP（Model Context Protoco
 - Skills 放"流程"（按需触发）
 - MCP 放"能力"（外部连接）
 
+## Evidence
+
+- Status: Inferred
+- Sources: OpenAI function calling / Agents SDK / CLI 相关官方文档，`https://github.com/openai/codex` 仓库代码与 README，`https://developers.openai.com/codex/agent-approvals-security`、`https://developers.openai.com/codex/cloud/internet-access`、`https://developers.openai.com/codex/app/features`，`codex-agent-evidence.md` 的 benchmark 汇总，`conflict.md` 中关于沙箱与 MCP 口径的未决项。
+- Trace: 本文将模型能力、执行编排、工程治理整理为三层机制框架；其中权限模型、MCP transport、CLI 本地执行路径与 Cloud / Local 主边界已补入更直接的官方锚点，App 执行模型细节与部分 token / 稳定性数字仍属综合判断。
+- Needs: 对高风险段落继续补一手来源锚点，尤其是 Cloud 环境更细规格、App 执行边界，以及社区 token / 轮次数据的适用条件。
+
 ## 8. 版本变更记录
 
 - 2026-05-25：从原"原理与机制"文档收敛为 Agent 本体机制版。
@@ -158,4 +175,4 @@ Codex 通过两种互补机制扩展能力边界：**MCP（Model Context Protoco
 - https://platform.openai.com/docs/models/gpt-4o
 - https://platform.openai.com/docs/guides/rag
 
-*最后更新: 2026-05-28*
+*最后更新: 2026-06-04*

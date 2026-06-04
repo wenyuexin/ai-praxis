@@ -1,20 +1,20 @@
 # OpenHands Official Docs Study
 
-> 阶段：官方资料原文复核完成，待进入源码阶段
-> Evidence 状态：以 `Observed / Inferred / Unclear` 为主；只有官方直接明说的 Claim 才标 `Verified by official docs`
+> 阶段：官方资料阶段结论归档完成；后续源码核验结论已转入 `runtime-and-sandbox.md`
+> Evidence 状态：以 `Verified` / `Observed` / `Inferred` / `Unverified` 为主；只有官方直接明说的 Claim 才标 `Verified`，并在来源中明确其依据来自官方文档
 > 上游材料：`agentic/temp/web-search/6.md`
 
 ## 一、定位
 
-本文件只整理 OpenHands 官方资料阶段可直接保留的证据地图，用于支撑后续源码研究。
+本文件只整理 OpenHands 官方资料阶段可直接保留的证据地图，并作为 `runtime-and-sandbox.md` 之前的上游资料归档。
 
 使用原则：
 
 - 官方文档、官方 GitHub README / docs、release notes、官方博客或维护者正式说明优先。
 - DeepWiki、第三方博客、部署平台文档、二手教程只能作为旁证或源码线索，不能作为核心官方证据。
-- 如果官方原文没有直接说明，不能标 `Verified by official docs`。
-- 如果结论需要拼接多个官方段落才能得到，统一降级为 `Inferred from official docs`。
-- 如果当前官方资料没有回答，统一标为 `Unclear / requires source code`。
+- 如果官方原文没有直接说明，不能标 `Verified`。
+- 如果结论需要拼接多个官方段落才能得到，统一降级为 `Inferred`，并在说明中明确其依据来自官方文档拼接。
+- 如果当前官方资料没有回答，统一标为 `Unverified`，并说明仍需进入源码阶段核验。
 
 ## 二、本轮实际复核的官方 URL
 
@@ -59,7 +59,7 @@
 - V1 明确强调：sandboxing should be opt-in, not universal。
 - V1 明确强调：stateless by default，唯一可变状态是 conversation state。
 
-Evidence 状态：`Verified by official docs`
+Evidence 状态：`Verified`
 
 来源：
 
@@ -73,7 +73,7 @@ Evidence 状态：`Verified by official docs`
 - 官方直接给出了 Local vs Remote 的对比：`Process-level` vs `Container/VM-level` isolation。
 - Conversation factory 会根据 workspace 类型选择 LocalConversation 或 RemoteConversation。
 
-Evidence 状态：`Verified by official docs`
+Evidence 状态：`Verified`
 
 来源：
 
@@ -86,7 +86,7 @@ Evidence 状态：`Verified by official docs`
 - 示例直接说明：进入 `with DockerWorkspace(...)` 时容器处于运行状态；退出后容器会被自动停止和清理。
 - 用 `DockerWorkspace` 创建 `Conversation(...)` 时，示例断言其为 `RemoteConversation`。
 
-Evidence 状态：`Verified by official docs`
+Evidence 状态：`Verified`
 
 来源：
 
@@ -99,7 +99,7 @@ Evidence 状态：`Verified by official docs`
 - “switching is just changing the workspace argument; your Conversation code stays the same” 是官方直接表述。
 - 官方将 workspace 描述为 isolated environment（local、Docker、或 remote VM）where the agent code runs。
 
-Evidence 状态：`Verified by official docs`
+Evidence 状态：`Verified`
 
 来源：
 
@@ -112,7 +112,7 @@ Evidence 状态：`Verified by official docs`
 - 当前页面把 `base_state.json` 描述为保存 agent configuration、execution status、statistics、secrets、agent_state。
 - 当前页面把 `events/event-*.json` 描述为保存 message history、tool calls、observations、all conversation events。
 
-Evidence 状态：`Verified by official docs`
+Evidence 状态：`Verified`
 
 来源：
 
@@ -124,7 +124,7 @@ Evidence 状态：`Verified by official docs`
 - `SANDBOX_VOLUMES`：mount host directories into the sandbox。
 - 一些部署仍使用 legacy `RUNTIME` 环境变量选择 sandbox provider：`docker` / `process` / `remote`。
 
-Evidence 状态：`Verified by official docs`
+Evidence 状态：`Verified`
 
 来源：
 
@@ -138,7 +138,7 @@ Evidence 状态：`Verified by official docs`
 
 但不应再写成过强的“官方唯一定位定义”。
 
-Evidence 状态：`Observed from official docs`
+Evidence 状态：`Observed`
 
 原因：多页文档共同形成这个认识，但当前复核页中缺少单一页面对整个平台定位的统一、强定义式陈述。
 
@@ -151,7 +151,7 @@ Evidence 状态：`Observed from official docs`
 - “V0 将于 2026 年 4 月移除”
 - “已经确认完整迁移时间线”
 
-Evidence 状态：`Observed / Inferred from official docs`
+Evidence 状态：`Observed / Inferred`
 
 原因：设计页明确说这是 V1 effort，但本轮复核的官方页面没有直接给出你当前文档里那种具体迁移时间线承诺。
 
@@ -169,7 +169,7 @@ Evidence 状态：`Observed / Inferred from official docs`
 - “workspace 就是 sandbox 的代码层等价物”
 - “runtime 与 sandbox 在 V1 中已经一一替换完毕”
 
-Evidence 状态：`Inferred from official docs`
+Evidence 状态：`Inferred`
 
 原因：官方页面支持“术语重心迁移”和“legacy runtime knob 仍存在”，但没有直接给出完整替代关系图。
 
@@ -184,7 +184,7 @@ Evidence 状态：`Inferred from official docs`
 - pause / resume、checkpoint、rollback、snapshot 是否存在。
 - workspace、sandbox、conversation / session 之间的完整生命周期绑定关系。
 
-这些内容统一降为：`Unclear / requires source code`。
+这些内容统一降为：`Unverified`，并标明仍需进入源码阶段核验。
 
 ## 五、DeepWiki / 第三方资料的降级处理
 
@@ -205,7 +205,7 @@ Evidence 状态：`Inferred from official docs`
 - Workspace 至少是执行与文件操作的抽象接口；Local 与 Remote 的隔离级别由官方页面直接给出。
 - DockerWorkspace 是通过 agent-server 运行的 docker-based remote workspace，并带有自动容器生命周期管理示例。
 
-Evidence 状态：`Observed / Verified by official docs`
+Evidence 状态：`Observed / Verified`
 
 ### 6.2 Persistence / Recovery
 
@@ -216,7 +216,7 @@ Evidence 状态：`Observed / Verified by official docs`
 - 当前页面没有直接把 pause / resume、checkpoint、rollback、snapshot 列为正式功能。
 - 当前页面也没有直接给出“保存完整 workspace 文件系统状态”的明确原文。
 
-Evidence 状态：`Verified / Unclear`
+Evidence 状态：`Verified / Unverified`
 
 ### 6.3 Workspace Lifecycle / Sharing
 
@@ -225,6 +225,7 @@ Evidence 状态：`Verified / Unclear`
 - Conversation 与 workspace 存在直接关系。
 - DockerWorkspace / LocalWorkspace / RemoteWorkspace 的生命周期行为可能不同。
 - `SANDBOX_VOLUMES` 提供宿主目录挂载到 sandbox 的官方配置入口。
+- 官方架构页与 API Reference 已把 `BaseWorkspace` / `LocalWorkspace` / `RemoteWorkspace` / `Workspace` 作为 SDK 层对象公开；官方架构页还把 `DockerWorkspace`、`RemoteAPIWorkspace` 标到 `openhands-workspace` 包路径。结合候选 SDK 仓库中 `openhands-sdk/openhands/sdk/workspace/__init__.py`、`workspace.py`、`remote/base.py`、`remote/async_remote_workspace.py` 与 `openhands-workspace/openhands/workspace/__init__.py`、`docker/workspace.py`、`remote_api/workspace.py` 的公开源码，可进一步确认这些对象的包级分布、工厂分派关系，以及基础 `RemoteWorkspace` / `AsyncRemoteWorkspace` 更偏向 agent-server client、而 Docker / Runtime API 工作区作为 `RemoteWorkspace` 子类承担远端执行载体生命周期接入；但完整生命周期与绑定关系仍需继续读源码。
 
 当前不能保留为定论：
 
@@ -232,34 +233,38 @@ Evidence 状态：`Verified / Unclear`
 - 是否支持跨 session / cross-task / cross-agent workspace 共享。
 - 是否存在 overlay、copy-on-write、git worktree 级共享模型。
 
-Evidence 状态：`Observed / Unclear`
+Evidence 状态：`Observed / Unverified`
 
 ## 七、源码阶段待核验问题
 
 源码阶段应优先核验：
 
 1. V1 中 workspace、sandbox、runtime、conversation / session 的核心类、接口与依赖关系。
-2. `DockerWorkspace` / `RemoteWorkspace` / `LocalWorkspace` 的创建、销毁、复用与清理逻辑。
+2. `DockerWorkspace` / `RemoteWorkspace` / `LocalWorkspace` 的创建、销毁、复用与清理逻辑；当前已定位到候选 SDK 仓库 `https://github.com/OpenHands/software-agent-sdk`，后续应优先在该仓库中核验 `openhands-sdk` 与 `openhands-workspace` 包。官方架构页目前把 `DockerWorkspace` 标到 `openhands-workspace/openhands/workspace/docker`，把 `RemoteAPIWorkspace` 标到 `openhands-workspace/openhands/workspace/remote_api`。
 3. `SANDBOX_VOLUMES`、工作目录、容器挂载与宿主路径映射的真实实现。
 4. `persistence_dir` / `OH_PERSISTENCE_DIR` 保存的状态范围，尤其是否包含真实文件系统内容，还是仅 conversation state / events。
-5. conversation 恢复时 sandbox / workspace 是否重建、复用或重新挂载。
+5. conversation 恢复时 sandbox / workspace 是否重建、复用或重新挂载；当前已在上游仓库 `https://github.com/OpenHands/OpenHands` 的前端与 `app_server` V1 路由中补到一部分 reopen 入口证据：既有会话页会先走 `GET /api/v1/app-conversations?ids=...` 读取持久化 metadata，再用 `conversation_url` / `session_api_key` 直连既有 agent-server，若 `sandbox_status === "PAUSED"` 则页面初次打开或标签重新可见时实际先走 `POST /api/v1/sandboxes/{sandbox_id}/resume`。进一步看底层实现，Docker 路径是复用同一容器、`working_dir` 与 volume mounts，Remote runtime 路径是复用同一 `sandbox_id` / `session_id` 并按既有 `runtime_id` 调 `/resume`；当前仓库内尚未看到“单靠事件回放重建完整文件系统状态”的直接证据。
 6. event / trajectory 是否能够支撑 action → observation → artifact 的可追溯链。
 7. 是否存在 pause / resume、checkpoint、rollback、snapshot、overlay / copy-on-write 机制。
 8. V0 runtime 与 V1 sandbox / workspace 的迁移关系到底是术语迁移还是架构重组。
 
-## 八、对 `runtime-and-sandbox.md` 的处理建议
+## 八、官方资料阶段对 `runtime-and-sandbox.md` 的历史建议
 
-当前官方资料仍不足以支撑稳定的 runtime / sandbox / workspace 生命周期结论。
+本节记录的是本文件形成时的阶段性判断：当时官方资料仍不足以支撑稳定的 runtime / sandbox / workspace 生命周期结论。
 
-因此：
+因此当时建议：
 
-- `runtime-and-sandbox.md` 不应在本阶段扩写成稳定分析文档。
-- 该文件更适合继续作为源码阶段占位，并只保留更清晰的待核验问题。
+- `runtime-and-sandbox.md` 不应在官方资料阶段扩写成稳定分析文档。
+- 该文件更适合先作为源码阶段占位，并只保留更清晰的待核验问题。
 
-## 九、对环境主线的最小回填建议
+补充说明：上述建议对应的是官方资料阶段判断；当前 `runtime-and-sandbox.md` 已基于 `https://github.com/OpenHands/OpenHands` 中 `openhands/app_server/` 及关联已核验范围的源码核验升级为专题结果文档。
 
-当前阶段建议只做以下最小回填：
+## 九、官方资料阶段对环境主线的最小回填建议
+
+本节记录的是本文件形成时的阶段性回填建议：
 
 - 在 `agentic/05-environments/candidates.md` 中把 OpenHands 状态更新为“官方原文复核完成，待源码核验”。
-- 暂不大改 `workspace-lifecycle.md`；等源码阶段核验后，再把具体 Claim 回填到 `## Evidence`。
-- 如果源码阶段发现 workspace 与 sandbox / runtime 的关系和当前主干分类冲突，再更新 `agentic/05-environments/conflict.md`。
+- 暂不大改 `workspace-lifecycle.md`；等 `openhands/app_server/` 之外的后续源码范围继续核验后，再把具体 Claim 回填到 `## Evidence`。
+- 如果后续源码阶段发现 workspace 与 sandbox / runtime 的关系和当前主干分类冲突，再更新 `agentic/05-environments/conflict.md`。
+
+补充说明：其中第一条建议已完成；`candidates.md` 现已更新为“`openhands/app_server/` 层源码核验完成，SDK 层 workspace 待补充”。

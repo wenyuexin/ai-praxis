@@ -92,7 +92,7 @@ README 的详细规则见 [`docs/contributing/readme-rules.md`](./docs/contribut
 详细流程见 [`docs/contributing/documentation-workflow.md`](./docs/contributing/documentation-workflow.md)。本文件只保留仓库级执行原则：
 
 - **先判断，再落位，最后写正文**：新材料进入主线前，先判断材料类型、Evidence 状态、目标落位和临时落点。
-- **正文不承接未稳定材料**：正文负责表达经过整理和判断后的知识；`overview.md`、`backlog.md`、`candidates.md`、`conflict.md` 等元信息文件负责承接尚未稳定、尚待分流、尚待核验的材料。
+- **正文不承接未稳定材料**：正文负责表达经过整理和判断后的知识；`overview.md` 承接领域全貌和现状理解，`backlog.md`、`candidates.md`、`conflict.md` 等元信息文件承接尚未稳定、尚待分流、尚待核验的缺口、对象和冲突材料。
 - **外部材料先分级分流**：`temp/`、网页搜索、外部 AI 调研、博客摘录、issue/PR 讨论等默认只是上游输入或候选证据，不直接写成主线结论。
 - **证据状态必须显式判断**：从外部材料回流主线时，先区分 `Verified`、`Observed`、`Inferred`、`Unverified`、`Conflicting`、`Deprecated`；完整规则见 [`docs/contributing/evidence-rules.md`](./docs/contributing/evidence-rules.md)。
 - **链路字段按需保留**：涉及迁移、回流、冲突处理或外部来源时，应能说明 `Source / Decision / Placement / Gap`；完整规则见 [`docs/contributing/traceability-rules.md`](./docs/contributing/traceability-rules.md)。

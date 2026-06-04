@@ -28,11 +28,11 @@
 - **对象类型**：开源 coding agent / runtime 系统
 - **关联问题**：runtime / sandbox / workspace 的绑定关系；per-task runtime 与 workspace 状态边界；多轮执行中的工作域延续方式
 - **为什么值得研究**：它直接涉及 agent 执行环境、runtime client、sandbox service、workspace 组织与 action execution，适合补 `workspace-lifecycle.md` 中“workspace 是否必须绑定 runtime / sandbox”的证据
-- **当前状态**：官方原文复核完成，待源码核验
-- **Evidence need / 证据优先级**：GitHub 源码、runtime / workspace / sandbox 相关实现、release notes；官方文档阶段仍不足以确认生命周期、持久化范围与恢复边界
-- **当前产出**：`../06-frameworks-and-tools/03-project-studies/openhands/official-docs.md`、`../06-frameworks-and-tools/03-project-studies/openhands/runtime-and-sandbox.md`
-- **预期产出**：源码阶段继续增强 `code-execution-environments/workspace-lifecycle.md` 中 workspace 与 runtime / sandbox 绑定关系的 Evidence；必要时补 `conflict.md` 中 lifecycle 绑定边界
-- **Source / Decision / Placement / Gap**：来源于 `agentic/temp/web-search/4.md`、`agentic/temp/web-search/6.md` 与 `workspace-lifecycle.md` 当前 Needs；官方资料阶段已集中沉淀到 `agentic/06-frameworks-and-tools/03-project-studies/openhands/`，本文件只保留候选对象状态和环境层补证指针；仍缺源码级证据对 runtime、workspace、sandbox、persistence 与 replay 边界做交叉核验
+- **当前状态**：`openhands/app_server/` 层源码核验完成；SDK 层已确认 `Workspace` 工厂分派、基础 `RemoteWorkspace` / `AsyncRemoteWorkspace` 的 client / transport 角色，以及 `DockerWorkspace` / `APIRemoteWorkspace` 对远端执行载体生命周期的接入方式；app_server 启动链路也已确认会把 `SandboxInfo` 转成 `AsyncRemoteWorkspace` 后继续 repo/setup/skills/conversation 启动，并具备“显式 `sandbox_id` 直连 / `PAUSED` 时 resume / 无 `sandbox_id` 时优先复用运行中 sandbox / 否则新建”的分支；对子会话还会在未显式指定 `sandbox_id` 时继承父会话环境；已持久化 conversation 的读取 / send-message 路径也会直接按持久化 `sandbox_id` 查找 sandbox；前端 reopen 入口现已补到一层：既有会话页会先走 `GET /api/v1/app-conversations?ids=...` 读取 metadata，再把 `conversation_url` / `session_api_key` 交给 WebSocket provider 直接重连既有 agent-server，若 `sandbox_status === "PAUSED"` 则页面初次打开或标签重新可见时实际先走 `POST /api/v1/sandboxes/{sandbox_id}/resume`；当前还能更具体地确认两类连续性线索：Docker 路径依赖同一容器 + `working_dir` + volume mounts，Remote runtime 路径依赖同一 `sandbox_id` / `session_id` 与既有 `runtime_id` 的 `/resume`；当前仓库内尚未看到“通过事件回放重建完整工作区文件系统”的直接证据
+- **Evidence need / 证据优先级**：GitHub 源码、runtime / workspace / sandbox 相关实现、release notes；当前已完成 `https://github.com/OpenHands/OpenHands` 中 `openhands/app_server/` 及关联已核验范围的源码核验；SDK 层（`openhands.sdk.workspace`）仍缺跨 `app_server`、agent-server 与 runtime/container 的端到端 workspace ↔ sandbox 绑定关系证据，当前已定位到候选 SDK 仓库 `https://github.com/OpenHands/software-agent-sdk`
+- **当前产出**：`../06-frameworks-and-tools/03-project-studies/openhands/official-docs.md`、`../06-frameworks-and-tools/03-project-studies/openhands/runtime-and-sandbox.md`（已从占位升级为 `openhands/app_server/` 相关源码核验结果）
+- **预期产出**：继续增强 SDK 层 workspace ↔ sandbox 绑定关系的 Evidence；`runtime-and-sandbox.md` 已补充 V1 SandboxService 体系、三种沙箱实现、事件持久化路径等当前核验范围内的源码级结论，并进一步确认 `https://github.com/OpenHands/software-agent-sdk` 中 `RemoteWorkspace` / `AsyncRemoteWorkspace` 主要承担 agent-server client / transport 职责，而 `DockerWorkspace` / `APIRemoteWorkspace` 负责容器或 Runtime API 驱动的远端执行载体接入；后续仍需继续核验跨层绑定与生命周期语义
+- **Source / Decision / Placement / Gap**：来源于 `agentic/temp/web-search/4.md`、`agentic/temp/web-search/6.md` 与 `workspace-lifecycle.md` 当前 Needs；官方资料阶段与 `openhands/app_server/` 层源码核验结果已集中沉淀到 `agentic/06-frameworks-and-tools/03-project-studies/openhands/`，本文件只保留候选对象状态和环境层补证指针；仍缺跨 SDK 与其他未核验范围的源码级证据，对 runtime、workspace、sandbox、persistence 与 replay 边界做交叉核验
 
 ### 2.2 SWE-agent
 

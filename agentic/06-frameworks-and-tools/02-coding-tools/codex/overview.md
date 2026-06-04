@@ -1,356 +1,242 @@
-# Codex（全方位调研指南）
+# Codex 领域综述
 
-> ⚠️ **本文档是综合性调研材料**，不是主线文档。主线阅读路径请从 `codex-agent-overview.md` 开始。
-> 以下内容整合了 OpenAI 官方文档、开源社区实战经验、架构分析，按 **认知 → 架构 → 使用 → 进阶 → 资源** 五层组织。
-
----
-
-## 一、Codex 到底是什么？（5W1H 速览）
-
-| 维度 | 内容 |
-|------|------|
-| **What** | OpenAI 面向软件开发场景的 **AI 编程代理（Coding Agent）**，不是"代码补全玩具"，而是能读仓库、改文件、跑命令、做审查的"工程级协作者" |
-| **Why** | 开发者日常 47% 时间在等待工具串行处理，Codex 通过并发引擎将多任务执行时间缩短 60%+ |
-| **Who** | 适合：需快速理解陌生代码库 / 重复性编码交给代理 / 终端直接改代码跑结果 / IDE 边写边改 |
-| **When** | 命令模式 → CI/CD 自动化、快速生成代码；交互模式 → 开发项目、重构调试、长任务（**强烈推荐交互模式**） |
-| **Where** | CLI 终端 / IDE 插件（VS Code / Cursor / Windsurf）/ 桌面 App / Web Cloud |
-| **How** | 自然语言 Prompt → 模型推理 → 调用工具（读写文件/运行命令/检索资源）→ 迭代输出。以上流程为官方和社区综合描述 |
+> 本文面向希望快速理解 `Codex` 全貌的读者，目标是在不逐篇阅读所有关联文档的前提下，建立对其产品形态、能力边界、运行环境、工作机制和开源边界的整体认知。
 
 ---
 
-## 二、架构与核心实现（重点）
+## 一、Codex 可以怎样理解
 
-### 2.1 整体技术栈
+可以先把 `Codex` 理解为 OpenAI 面向软件开发场景提供的一组 **代码 Agent 能力与产品形态**。
 
-| 层级 | 技术选型 |
-|------|----------|
-| **语言** | Rust 2024 Edition（性能 + 安全性） |
-| **运行时** | Tokio 异步运行时（轻量级任务，非 OS 线程） |
-| **构建系统** | Cargo 工作区（统一管理 48+ 内部 crate）+ just |
-| **协议** | MCP（Model Context Protocol）连接外部工具 |
-| **模型** | GPT-5-Codex（2025 年中发布）+ 可切换其他模型 |
+它和传统代码补全工具的差别，不只在于“能生成代码”，而在于它更强调围绕真实工程任务形成执行闭环，例如：
 
-📌 开源仓库（镜像）：`https://gitcode.com/GitHub_Trending/codex31/codex`
+- 读取和理解仓库结构
+- 修改文件并解释改动
+- 运行命令、测试或构建步骤
+- 调用外部工具与服务
+- 在更长任务中持续迭代而不是只回答单轮问题
 
----
-
-### 2.2 并发引擎架构（5 大核心组件）
-
-这是 Codex 区别于传统 AI 编程工具的核心设计之一——将"请求-响应"同步模式转为 **"多生产者-多消费者"异步模式**。
-
-```
-用户请求
-   │
-   ▼
-┌─────────────────────────┐
-│  ① 任务解析与拆分器       │  codex-rs/core/src/tasks/task_parser.rs
-│  递归下降算法，按依赖关系   │  将复杂任务拆为可并行子任务
-│  拆分为 TaskGraph        │  例："分析代码并生成文档" → 语法分析/结构提取/文档生成
-└───────────┬─────────────┘
-            ▼
-┌─────────────────────────┐
-│  ② 优先级调度器           │  codex-rs/core/src/scheduler/priority_scheduler.rs
-│  多级反馈队列算法          │  动态分配：IO 密集型→独立线程池，CPU 密集型→优先执行
-│  考虑优先级 + 系统负载     │
-└───────────┬─────────────┘
-            ▼
-┌─────────────────────────┐
-│  ③ 资源隔离沙箱           │  codex-rs/core/src/sandboxing/resource_isolation.rs
-│  命名空间 + 资源限制       │  每个任务独立环境：CPU limit=1, Memory limit=512MB
-│  防止任务间资源竞争        │
-└───────────┬─────────────┘
-            ▼
-┌─────────────────────────┐
-│  ④ 异步通信层             │  codex-rs/core/src/communication/async_channel.rs
-│  Tokio Channel (mpsc)     │  多生产者-多消费者，结果实时流式传输
-│  任务间高效数据流转        │
-└───────────┬─────────────┘
-            ▼
-┌─────────────────────────┐
-│  ⑤ 结果聚合器             │  codex-rs/core/src/aggregator/result_aggregator.rs
-│  收集子任务结果 → 合并     │  部分失败 → 重试 + 结果补偿 → 保证完整性
-└─────────────────────────┘
-```
-
-**关键代码片段（任务拆分）**：
-```rust
-pub fn parse_task(request: &str) -> Result<TaskGraph> {
-    let mut parser = TaskParser::new(request);
-    let root_task = parser.parse()?;
-    let task_graph = split_into_concurrent_tasks(root_task);
-    // 根据依赖关系和资源需求拆分任务
-}
-```
-
-**关键代码片段（Tokio 异步任务）**：
-```rust
-#[tokio::main]
-async fn main() -> Result<()> {
-    let stdin_handle = tokio::spawn(stdin_processor.run());
-    let processor_handle = tokio::spawn(message_processor.run());
-}
-```
+因此，理解 `Codex` 时更适合把它看成“围绕软件工程任务组织起来的 Agent 系统”，而不是单一的补全模型或聊天入口。
 
 ---
 
-### 2.3 多智能体系统（Manager-Subagent 架构）
+## 二、产品形态与入口边界
 
-| 角色 | 职责 |
-|------|------|
-| **Manager（指挥官）** | 任务拆解、冲突仲裁、上下文路由 |
-| **Subagent（执行者）** | 独立编码、并行开发，利用 **git worktree** 物理隔离环境 |
+从当前资料看，`Codex` 不是单一入口，而是一组不同运行位置、不同交互方式的产品形态。
 
-任务流转本质是 **有向无环图（DAG）分发与执行**。
+### 2.1 常见入口
 
----
+- **CLI**：本地终端入口，更适合直接在项目目录中协作式开发、调试、批量修改和自动化调用
+- **Desktop App / App**：桌面形态，承接更图形化的交互体验与部分本地能力
+- **Web / Cloud**：云端代理形态，适合远程执行、云环境任务和部分托管工作流
+- **IDE / 编辑器集成**：强调边写边协作的工作方式，但其开源边界与产品边界不能简单等同于 CLI
 
-## 三、使用方式（从入门到精通）
+### 2.2 理解入口时要注意的边界
 
-### 3.1 安装方式对比
-
-| 方式 | 命令 | 推荐度 | 适用场景 |
-|------|------|--------|----------|
-| **npm 全局安装（CLI）** | `npm install -g @openai/codex` | ⭐⭐⭐⭐⭐ | 开发者首选，终端直接用 |
-| **Homebrew（Mac）** | `brew install --cask codex` | ⭐⭐⭐⭐ | Mac 用户，不想装 Node.js |
-| **GitHub Release 二进制** | 下载 `codex-x86_64-unknown-linux-musl.tar.gz` 等 | ⭐⭐⭐ | 不想用 npm |
-| **IDE 插件** | VS Code / Cursor / Windsurf 插件市场搜 "Codex" | ⭐⭐⭐⭐ | 边写边改，上下文天然在编辑器 |
-| **桌面 App** | `https://openai.com/zh-Hans-CN/codex` | ⭐⭐⭐⭐ | 图形界面，快速体验 |
-
-> ⚠️ Node.js 建议 20+，国内用户可用 `--registry=https://registry.npmmirror.com` 加速
+- 不同入口不等于完全相同能力的不同皮肤
+- “本地执行”“云端执行”“工作树隔离”“桌面入口”是不同层面的概念，不能混写
+- 对某一入口成立的说法，不能自动外推到所有入口
 
 ---
 
-### 3.2 两种使用模式（核心认知！）
+## 三、Codex 的核心能力面
 
-| | 命令模式（一次性调用） | 交互模式（Agent，强烈推荐） |
-|---|---|---|
-| **用法** | `codex "帮我写一个 FastAPI 接口"` | 输入 `codex` 进入对话界面 |
-| **本质** | 一次输入 → 一次输出 → 结束 | 持续对话，能读项目、改文件、跑命令 |
-| **适合** | CI/CD、快速生成代码、脚本 | 开发项目、重构调试、长任务 |
-| **缺点** | 无上下文、不能迭代、每次重说需求 | 需要学习成本 |
+如果把 `Codex` 作为一个代码 Agent 来看，它的大致能力面可以分成几类。
 
-**一句话总结：命令模式是"调用 AI"，交互模式是"雇一个 AI"**
+### 3.1 代码与仓库理解
 
----
+- 理解项目结构、模块关系和关键文件
+- 沿调用链、依赖关系或任务目标定位修改点
+- 结合目录约束、项目规则和上下文进行回答
 
-### 3.3 核心命令速查
+### 3.2 工程执行闭环
 
-| 命令 | 功能 |
-|------|------|
-| `codex` | 启动交互模式 |
-| `codex exec "xxx"` | 非交互执行（CI/自动化） |
-| `codex --auto-edit` | 自动修改文件模式 |
-| `codex --full-auto` | 全自动模式（自动执行所有操作） |
-| `/model` | 切换模型 / 查看可用模型 |
-| `/fast` | 切换 fast mode |
-| `/permissions` | 控制是否允许修改文件/执行命令 |
-| `/status` | 查看当前模型、目录、权限、MCP 状态 |
-| `/init` | 自动生成 AGENTS.md 起始版 |
-| `/plan` | 先出计划再动手（**高手必备**） |
-| `/review` | 以 reviewer 视角审查自己写的代码 |
-| `codex mcp` | 管理 MCP 服务器 |
-| `codex mcp-server` | 以 stdio 形态启动 MCP server |
-| `codex sandbox` | 在本地沙箱内运行命令 |
-| `codex doctor` | 诊断本地安装/配置/认证/运行健康度 |
-| `codex app` | 打开桌面 App（若缺失则引导安装） |
-| `codex cloud` | 云端任务浏览与本地应用变更 |
-| `codex resume` | 恢复之前的会话 |
+- 读写文件
+- 运行命令
+- 调用构建、测试、格式化或检查流程
+- 在执行结果反馈后继续调整方案
+
+### 3.3 工具与扩展能力
+
+- 通过 `MCP` 等机制连接外部服务与工具
+- 在项目级规则、技能、自动化入口之间形成较稳定的工作流
+- 在部分场景下支持更复杂的工具链编排，而不是只停留在文本生成
+
+### 3.4 自动化与长任务协作
+
+- 非交互调用适合脚本化、批处理或自动化入口
+- 交互式协作适合重构、排障、长链路开发任务
+- 某些产品形态进一步提供 cloud、remote connection、computer use 等延展能力
 
 ---
 
-### 3.4 三种安全/审批模式
+## 四、运行环境与执行边界
 
-| 模式 | 行为 |
-|------|------|
-| **Suggest（默认）** | 只建议修改，需你确认 |
-| **Auto Edit** | 自动修改文件 |
-| **Full Auto** | 自动执行所有操作（含跑命令） |
+`Codex` 的一个关键理解点是：它不是只在“聊天窗口”里工作，而是和执行环境强相关。
 
-底层由 `config.toml` 中的 `approval_policy` 控制：`untrusted` / `on-failure` / `on-request` / `never`
+### 4.1 三个容易混淆的层次
 
----
+- **Local**：在本地机器或当前项目目录中工作
+- **Worktree / 工作树**：围绕代码隔离与并行修改组织出的工作域
+- **Cloud**：在远程托管环境或隔离容器中运行
 
-## 四、工程化配置（这才是高手和新手的分水岭）
+这三者不是同义词，也不是简单的强弱关系，而是不同运行位置与隔离方式。
 
-### 4.1 配置文件层级（优先级：命令行 > 项目级 > 用户级）
+### 4.2 为什么环境边界重要
 
-```
-~/.codex/config.toml          ← 全局配置（默认模型、审批偏好、MCP）
-项目根目录/AGENTS.md          ← 项目级长期说明（必须掌握！）
-子目录/.agents/skills/        ← 技能库
-~/.codex/rules/*.rules        ← 规则文件（允许/提示/禁止的命令）
-```
+运行位置会直接影响：
 
----
+- 能否访问本地文件和本地工具链
+- 网络、权限、审批和审计边界
+- secrets 的可见范围
+- 长任务恢复、缓存、持久化和环境生命周期
 
-### 4.2 AGENTS.md（最重要的文件，没有之一）
-
-**作用**：不是替代 prompt，而是把 **每次都应遵守的工程规则固定下来**，让 Agent 每次开工前先读取。
-
-**推荐模板**：
-```markdown
-# AGENTS.md
-Project Overview
-This is a Spring Boot monorepo for HRMS-related services.
-
-Important Directories
-- adapter/: controllers and API entrypoints
-- app/: application services
-- domain/: domain models and domain services
-- infrastructure/: persistence and external integrations
-
-Commands
-- Build: mvn clean install -DskipTests
-- Test: mvn test
-- Run: mvn spring-boot:run
-
-Rules
-- Do not change public API contracts unless explicitly asked.
-- Prefer minimal changes.
-- Add tests for bug fixes when feasible.
-- Keep SQL compatible with MySQL 8.
-
-Done Criteria
-- Code compiles
-- Tests pass
-- No unrelated refactors
-```
-
-> 💡 用 `/init` 快速生成起始版，但生成后 **必须自己改一遍**。当 Agent 反复犯同一个错时，把教训总结成规则写进 AGENTS.md——"你在一点点训练它"。
+因此，凡是涉及“它能不能执行”“它在哪执行”“它为什么被限制”之类问题，本质上都离不开环境模型。
 
 ---
 
-### 4.3 MCP（Model Context Protocol）
+## 五、机制治理：Agent 是如何被约束的
 
-| 概念 | 说明 |
-|------|------|
-| **本质** | 让 Codex 连接外部工具/服务的协议 |
-| **Codex 本体** | 负责推理 |
-| **MCP Server** | 负责提供外部能力（访问数据库、文档服务等） |
-| **协议传输形态（仓库证据）** | 基于 `https://github.com/openai/codex` 仓库核验，MCP 配置类型明确是 `stdio`（本地进程）与 `streamable_http`（远程） |
-| **产品形态边界** | 本地仓库 README 将 CLI、Desktop App、Codex Web（cloud-based agent）分层展示；Code Interpreter 的云端沙箱结论不可直接外推到 Codex CLI |
-| **配置位置** | `~/.codex/config.toml` 中 `mcp_servers` 部分 |
-| **建议数量** | MCP + Skills 合计维持 **2-3 个**，多了上下文被稀释 |
+除了能力本身，`Codex` 的另一个核心维度是治理机制。
 
----
+### 5.1 审批与沙箱不是一回事
 
-### 4.4 Skills vs AGENTS.md（别搞混！）
+可以把这两类约束区分开理解：
 
-| | AGENTS.md | Skills |
-|---|---|---|
-| **放什么** | 规则（无条件执行） | 流程（按需触发） |
-| **例** | "提交信息必须用英文" | "分析这批日志" / "生成 Release notes" |
-| **更新方式** | 手动写 / Agent 犯错后你加进去 | 用 `$skill-creator` 让 Agent 帮你生成 |
-| **存储** | 仓库根目录 | `$HOME/.agents/skills`（个人）/ `.agents/skills`（团队） |
-| **创建门槛** | 随时 | 只有任务反复出现才建 |
+- **approval / 审批策略**：控制“什么时候需要询问用户”
+- **sandbox / 沙箱或环境限制**：控制“技术上允许它做什么”
 
----
+前者更偏交互治理，后者更偏执行边界。两者共同决定 Agent 的真实行为范围。
 
-### 4.5 Automations（调度）
+### 5.2 项目规则与可复用流程
 
-- Skills 决定"做什么"，Automations 决定"什么时候做"
-- 例：每天扫 lint 警告、每周生成站会代码摘要
-- ⚠️ **不稳定的流程千万别自动化**，先跑稳再加调度
+围绕长期协作，还会出现几类稳定约束：
+
+- **项目级规则**：例如 `AGENTS.md` 这类长期上下文与验收要求
+- **技能 / Skills**：可复用流程、专题工作流、模板化任务能力
+- **Automations**：偏触发与调度层的能力
+
+这说明 `Codex` 不只是一个“回答问题”的模型接口，而是可逐步组织成工程化协作系统的工作平台。
 
 ---
 
-## 五、OpenAI 内部最佳实践（7 大场景）
+## 六、专题能力的几条主线
 
-| 场景 | 用法示例 |
-|------|----------|
-| **理解陌生代码** | "总结一下请求从入口到返回响应在整个服务中如何流转" |
-| **重构迁移** | "把这个文件按功能拆分成独立模块，并为每个模块生成测试" |
-| **性能优化** | "优化这个循环提升内存效率，并解释为什么更快" |
-| **提升测试覆盖** | "为这个函数编写单元测试，包含边缘案例和失败路径" |
-| **修复 Bug** | 用 **Ask mode**："这个验证流程在哪里？" 粘贴 stack trace 让它定位 |
-| **快速原型** | 规划新功能时用 5 轮提示词快速生成多个原型 |
-| **反向采访** | 需求模糊时让 Codex 先问你澄清问题，再动手 |
+围绕 `Codex` 的进一步理解，当前最值得单独看待的专题大致有几条。
 
-> 💡 **Prompt 四要素**：Goal（做什么）+ Context（相关文件/报错，用 @ 引用）+ Constraints（架构约束/规范）+ **Done when（完成标准）**——最后一个最容易被忽略，加上后确认来回少一大半。
+### 6.1 Computer Use 与页面操作
 
----
+这条线讨论的是：`Codex` 在什么条件下可以预览、操作页面或远程控制界面，以及它和普通浏览器预览之间的差异。
 
-## 六、远程连接能力（2026 新特性）
+### 6.2 Automations 与非交互工作流
 
-| 功能 | 说明 | 官方文档 |
-|------|------|----------|
-| **Control this Mac** | 手机/别的设备遥控这台 Mac | [developers.openai.com/codex/app/computer-use](https://developers.openai.com/codex/app/computer-use) |
-| **Control other devices** | 这台 Mac 遥控别的 Codex 设备 | 同上 |
-| **SSH 远程连接** | Codex 进入远程服务器/开发机干活 | [developers.openai.com/codex/remote-connections](https://developers.openai.com/codex/remote-connections) |
+这条线讨论的是：自动化触发、非交互执行、项目级自动化与外部集成如何组织。
 
----
+### 6.3 Multi-agent / Subagent
 
-## 七、资源链接汇总（建议收藏）
+这条线讨论的是：父子线程、委托执行、并行工作、上下文转发和工作域隔离等问题。
 
-| 类别 | 链接 | 说明 |
-|------|------|------|
-| 🌐 **官方 Web App** | [https://chatgpt.com/codex](https://chatgpt.com/codex) | 直接浏览器用，需 ChatGPT 账号 |
-| 🌐 **官方桌面版下载** | [https://openai.com/zh-Hans-CN/codex](https://openai.com/zh-Hans-CN/codex) | Windows / macOS |
-| 📘 **官方开发者文档** | [https://developers.openai.com/codex](https://developers.openai.com/codex) | 完整 API + 指南 |
-| 📘 **Remote Connections** | [https://developers.openai.com/codex/remote-connections](https://developers.openai.com/codex/remote-connections) | SSH / 远程设备连接 |
-| 📘 **Computer Use** | [https://developers.openai.com/codex/app/computer-use](https://developers.openai.com/codex/app/computer-use) | 远程操控 GUI |
-| 📦 **GitHub Releases（二进制）** | [https://github.com/openai/codex/releases](https://github.com/openai/codex/releases) | 各平台二进制下载 |
-| 🐙 **开源镜像（Gitee）** | [https://gitcode.com/GitHub_Trending/codex31/codex](https://gitcode.com/GitHub_Trending/codex31/codex) | Rust 源码，48 个 crate |
-| 📄 **OpenAI 内部实践 PDF** | [cdn.openai.com/pdf/6a2631dc.../how-openai-uses-codex.pdf](https://cdn.openai.com/pdf/6a2631dc-783e-479b-b1a4-af0cfbd38630/how-openai-uses-codex.pdf) | 251 篇实战整理，强烈推荐 |
-| 📝 **CSDN 架构分析** | [blog.csdn.net/gitblog_01166/article/details/157419484](https://blog.csdn.net/gitblog_01166/article/details/157419484) | 并发引擎 5 组件代码级解析 |
-| 📝 **CSDN 使用指南** | [blog.csdn.net/Daleuion/article/details/160021183](https://blog.csdn.net/Daleuion/article/details/160021183) | AGENTS.md / MCP / Skills 详解 |
-| 📝 **CSDN 5W1H 全集** | [blog.csdn.net/qq_20042935/article/details/157217063](https://blog.csdn.net/qq_20042935/article/details/157217063) | 7 篇打通，可落地可复用 |
-| 📝 **贡献指南** | [blog.csdn.net/gitblog_00432/article/details/152357019](https://blog.csdn.net/gitblog_00432/article/details/152357019) | 想参与开源必读 |
+### 6.4 Architecture / 源码结构
+
+这条线讨论的是：开源仓库中的 crate 组织、核心模块、协议对象和实现边界。
+
+### 6.5 Troubleshooting
+
+这条线讨论的是：会话、日志、恢复动作、权限阻塞、环境异常等排障问题。
+
+这些专题都属于 `Codex` 全貌的一部分，但它们回答的是不同层面的理解问题，不应混成一条线索。
 
 ---
 
----
+## 七、开源边界与替代路径
 
-## 九、能力边界与局限
+理解 `Codex` 时，还需要把“开源工具链”“产品入口”“模型后端”和“完整替代方案”区分开。
 
-> 以下内容旨在提供客观的边界评估，避免工具选择时的盲点。非贬低 Codex 能力，而是帮助读者判断"什么场景用它、什么场景换别的"。
+### 7.1 当前较稳的边界
 
-### 9.1 适用场景 vs 不适用场景
+根据当前目录内已收敛的材料，可以较稳地理解为：
 
-| 场景 | 适合 Codex | 更适合其他方案 |
-|------|-----------|--------------|
-| **大型单体仓库重构** | 有 AGENTS.md 和沙箱隔离时可行 | 对超大规模仓库（>10GB 源码），令牌消耗和上下文窗口仍是瓶颈，更适合人类分步拆解 |
-| **非主流技术栈** | 基础支持，效果取决于模型训练数据覆盖 | Go/Python/TS/Java 等主流生态最佳；冷门语言或内部 DSL 表现显著下降 |
-| **高安全 / 合规环境** | 有审批模式和沙箱，可管控 | 完全离线 / 空气间隙环境无法使用云端 API；敏感代码建议使用本地模型替代 |
-| **创造性架构设计** | 可辅助生成候选方案 | 高层的系统级架构决策仍需人类主导，Agent 缺乏业务语境和长期战略视角 |
-| **长周期持续任务** | 交互模式 + 恢复功能，可跨会话 | 超过单次上下文的超长任务可能丢失早期信息，需人工分段校验 |
+- `Codex` 不是简单意义上的“整体开源”或“整体闭源”
+- 开源范围主要集中在 `CLI`、`SDK`、`App Server`、`Skills`、`codex-universal` 等组件
+- `IDE extension`、`Codex web` 等产品形态不应直接视为同等开源范围
 
-### 9.2 已知局限
+### 7.2 替代路径为什么仍需谨慎
 
-- **上下文窗口硬约束**：尽管支持长上下文，但工具调用历史、文件内容、MCP 通信会快速消耗令牌，实际可用窗口小于理论值
-- **闭源黑箱风险**：模型推理过程不可完全审计，关键决策（如文件修改范围）依赖 Agent 的自我报告
-- **工具生态依赖**：Codex 的工程化能力（读/写/运行）依赖底层工具链（MCP Server、系统命令）。外部工具故障或权限不足时，Agent 可能产生误导性输出
-- **并发性能并非无限**：2.2 节的并发引擎在 IO 密集型任务中优势明显，但在 CPU 密集型计算（如大型编译器调用、密集数值计算）中提升有限，资源隔离本身也带来开销
+即使仓库中已经出现 `Ollama`、`LM Studio`、`Bedrock` 等 provider 相关对象，也不能直接推出：
 
-### 9.3 竞品定位对比
+- 任意 provider 接入 = 完整官方能力替代
+- 本地模型接入 = 纯本地开源工作站已经成立
+- 可接入后端 = 产品体验和功能闭环等价
 
-| 维度 | Codex | Cursor | Copilot |
-|------|-------|--------|---------|
-| **本质定位** | AI 工程师（有手有脚） | AI 编辑器（深度 IDE 集成） | AI 补全助手（行级建议） |
-| **任务复杂度** | 高（多文件、跨步骤） | 中（文件级重构） | 低（行/函数级） |
-| **自动化程度** | 全自动到手动审批可选 | 半自动（需确认） | 被动触发 |
-| **远程/云端能力** | 支持（SSH + Computer Use） | 不支持 | 不支持 |
+所以，“可替换模型后端”和“完整替代 Codex 产品能力”之间仍然存在明显边界。
 
 ---
 
-## 十、调研路线建议
+## 八、适用场景与关键 trade-off
 
-```
-第 1 步：先装 CLI，用交互模式跑一遍（30 分钟建立体感）
-  ↓
-第 2 步：读官方文档 developers.openai.com/codex（建立完整认知）
-  ↓
-第 3 步：读 OpenAI 内部实践 PDF（理解真实工程用法）
-  ↓
-第 4 步：在自己项目里建 AGENTS.md + 配置 MCP（工程化落地）
-  ↓
-第 5 步：读 CSDN 架构分析文章（理解并发引擎实现）
-  ↓
-第 6 步：clone 开源仓库，看 Rust 源码（深入实现细节）
-  ↓
-第 7 步：尝试贡献 PR / 建自己的 Skill（社区参与）
-```
+`Codex` 适合的，不只是“让模型写几行代码”，而是那些确实需要执行闭环与工程上下文的任务。
 
-> **一句话总结**：Codex 的定位不是"更聪明的代码补全"，而是一个 **能读仓库、改文件、跑命令、做审查的 AI 编程代理**。以上内容综合了官方文档和社区材料，部分细节仍需实际使用验证。
+### 8.1 常见适用场景
 
-*最后更新: 2026-05-28*
+- 理解陌生仓库
+- 批量改动或跨文件修改
+- 围绕报错、测试失败或构建失败做迭代修复
+- 把重复性开发流程部分交给代理执行
+- 在规则明确的项目中做受控协作
+
+### 8.2 常见 trade-off
+
+- **自动化程度 vs 风险控制**：越自动化，越依赖审批、沙箱和规则约束
+- **本地执行 vs 云端环境**：本地更贴近真实项目，云端更容易获得隔离与托管能力
+- **交互协作 vs 非交互调用**：前者适合复杂任务，后者适合稳定流程
+- **通用能力 vs 项目适配**：没有项目规则和环境约束时，输出更容易漂移
+- **开源工具链 vs 产品能力完整性**：开源可见不等于完整替代成立
+
+---
+
+## 九、当前领域覆盖与成熟度判断
+
+从当前目录内容来看，`Codex` 这一主题已经形成了比较完整的认知骨架，至少覆盖了：
+
+- 代码 Agent 定位与主线认知
+- 环境边界与机制治理
+- Computer Use、Automations、Troubleshooting 等专题
+- Multi-agent、Architecture、Open-source 等进阶专题
+
+但成熟度并不完全一致：
+
+- **相对收敛**：主线认知、Cloud / Local 主边界、开源主边界、Automations 的产品级对象划分
+- **仍需补证**：源码架构细节、multi-agent 更细实现、cloud 细规格、替代路径对象级研究
+- **仍需持续收口**：不同专题之间的边界复用、部分旧版强断言的清理
+
+因此，更合适的理解不是“Codex 已完全讲清”，而是“目录已经形成较稳定的全貌框架，但部分深水区仍需对象级和源码级补证”。
+
+---
+
+## 十、与主线专题的关系
+
+`overview.md` 可以与 `codex-agent-overview.md`、`codex-agent-mechanisms.md`、`codex-agent-practice.md` 对同一组关键结论做重复解释，因为综述需要维持可读性和相对完整性。
+
+但重复时应保持明显的详略分工：
+
+- 本文负责用更短路径交代整体判断与主题关系
+- `codex-agent-overview.md` 进一步聚焦“Codex 作为代码 Agent 是什么”
+- `codex-agent-mechanisms.md` 展开能力闭环、治理机制与执行边界
+- `codex-agent-practice.md` 把判断转成使用方法、任务范式与团队落地建议
+
+因此，`overview.md` 不需要追求把每条结论都讲到最细；只要读者能先形成整体认知，再按需要进入更细的主线专题即可。
+
+---
+
+## 十一、一句话总结
+
+> 可以先把 `Codex` 理解为一组围绕软件工程任务组织起来的代码 Agent 能力与产品形态：它强调读仓库、改文件、跑命令、接工具、受规则约束地持续协作；而真正理解它，需要同时把产品入口、运行环境、治理机制、专题能力和开源边界放在一起看。
+
+## Evidence
+
+- Status: Mixed
+- Sources: 本目录主线文档与专题文档；OpenAI 官方页面；本地开源仓库 `D:\github\codex`；必要的社区补充材料。
+- Trace: 本文按“领域综述”重写，目标是帮助读者快速获得 `Codex` 全貌；只保留当前目录内已较稳定的整体认知和保守边界，不再把对象级细节、候选解释或待分流内容作为主体结构。
+- Needs: 若继续增强本综述，应优先吸收已稳定的主线结论，并等待 `architecture`、`multi-agent`、cloud 细规格与 provider 替代路径的补证进一步收敛。
+
+*最后更新: 2026-06-04*

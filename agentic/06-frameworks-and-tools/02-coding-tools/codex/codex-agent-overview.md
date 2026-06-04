@@ -1,6 +1,8 @@
 # Codex Agent 总览
 
 > 目标：从“代码能力 Agent 本体”理解 Codex，而不是把它当作分散产品功能集合。
+>
+> 本文属于主线专题，不回避与 `overview.md` 对同一组核心结论做重复说明；但重复的目的，是把“Codex 作为代码 Agent”这条主线单独讲透，而不是替代领域综述。相较 `overview.md` 的高层概览，本文默认提供更聚焦的对象定义、判断框架与阅读入口。
 
 ## 1. Codex Agent 是什么
 
@@ -52,9 +54,16 @@ OpenAI 对 Codex 的定位经历了三个阶段：
 3. `codex-agent-practice.md`（使用方法）
 4. `codex-agent-evidence.md`（证据与核验）
 
+## Evidence
+
+- Status: Inferred
+- Sources: OpenAI 官方产品页面与发布材料、`codex-agent-evidence.md` 中收口的 benchmark / 时间线信息、`conflict.md` 中的术语与可比性约束。
+- Trace: 本文将 Codex 抽象为“代码能力 + 执行闭环 + 工程治理”的对象视角总览；其中“官方定位演进”属于对多期官方表述的归纳，不等同单一官方定义原文。
+- Needs: 继续补齐各阶段官方表述的一手链接，并核验“AI 数字伙伴 / AI 工程师”是否为稳定对外措辞。
+
 ## 6. 版本变更记录
 
 - 2026-05-25：从多专题体系收敛为 Agent 本体导向主线。
 - 2026-05-26：补充官方定位演进时间线。
 
-*最后更新: 2026-05-26*
+*最后更新: 2026-06-03*

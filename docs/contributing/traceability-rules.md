@@ -46,12 +46,18 @@ Trace 是内容进入仓库的轻量链路记录。
 
 记录内容输入来自哪里。
 
+来源标识应优先使用对读者和协作者可共享、可复现的引用形式。对于当前仓库内的材料，正式 Trace 应优先记录仓库内相对路径；对于 GitHub 等开源社区的公开仓库，即使实际核验发生在本机本地副本上，正式 Trace 也应优先记录上游仓库 URL，而不是机器私有的本地文件系统路径。
+
+在满足“可共享、可复现”前提下，引用表达可以保持适度灵活，避免机械重复冗长前缀：如果一篇文档会反复引用同一个外部仓库、文档站或其他外部资源，可以先在文中声明一次上游基准 URL，后续条目使用“基准 URL + 相对路径 / 相对资源路径”的写法；只要读者能够稳定还原到完整来源，这种缩写式引用是允许的。禁止的是机器私有路径和无法还原来源的模糊简称，不是对外部 URL 的合理去重。
+
 示例：
 
 - `agentic/temp/ai-context.md`
-- `agentic/05-environments/backlog.md`
+- `docs/contributing/documentation-workflow.md`
 - 某篇论文笔记
-- 某个官方文档或开源仓库
+- `https://github.com/openai/codex`
+- 基准来源：`https://github.com/OpenHands/OpenHands`；后续引用：`frontend/src/routes/conversation.tsx`、`openhands/app_server/sandbox/remote_sandbox_service.py`
+- 基准来源：`https://docs.openhands.dev/sdk/`；后续引用：`arch/workspace`、`guides/convo-persistence`
 - AI 协作者基于已有目录的综合整理
 
 ### 3.2 Decision

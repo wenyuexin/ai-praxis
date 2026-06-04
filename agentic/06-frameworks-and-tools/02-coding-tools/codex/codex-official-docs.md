@@ -1,159 +1,199 @@
-# Codex 官方文档导航
+# Codex 官方文档入口图
 
-> **专题文档**。本文梳理官方文档的菜单结构、App UI 布局和优先级推荐，方便快速定位官方资料。不属于主线阅读路径，可与 `codex-agent-overview.md` 搭配查阅。
+> **专题文档**。本文只整理 `Codex` 官方资料的入口结构、页面分组和查阅顺序，帮助读者快速定位一手来源。它不是主线综述，也不负责承接术语冲突、产品边界裁决或实现细节结论。
 
-
-
-> 基于 `developers.openai.com/codex` 官方文档体系整理（2026.5 最新），可作为查阅官方资料的路线图。
+> 以 `https://developers.openai.com/codex` 为主要入口；官方站点结构可能调整，使用时仍应以当前导航为准。
 
 ---
 
-## 一、官方文档的菜单/页面结构（6 大板块）
+## 一、官方资料的几类主要入口
 
-官方文档 hub 在 **`https://developers.openai.com/codex`**，导航分为以下 **6 大菜单页面**：
+当前最值得优先关注的官方入口大致可分为几组：
 
-```
-developers.openai.com/codex
-│
-├── 📘 Overview（概览）
-│   └── Introducing Codex / What is Codex
-│       → 定位、核心能力、与 ChatGPT 的区别
-│
-├── 🚀 Quickstart（快速开始）
-│   └── Getting Started
-│       → 安装方式（npm / Homebrew / 二进制）
-│       → 三种工作模式：codex（交互式TUI）/ codex "..."（带提示）/ codex exec（非交互）
-│       → 配置文件 config.toml 入门
-│
-├── 🖥️ App（桌面应用 —— 2026.2 上线，核心板块）
-│   ├── App Features（功能清单）⭐ 最长的一页
-│   │   ├── Multi-Agent Workflow（多 Agent 并行）
-│   │   ├── Skills（技能系统）
-│   │   ├── Automations（定时任务）
-│   │   ├── Worktrees（Git 独立工作树）
-│   │   ├── Built-in Terminal（内置终端）
-│   │   ├── Built-in Browser（应用内浏览器）
-│   │   ├── Computer Use（远程操控 GUI）⭐ 2026.4.16 新增
-│   │   └── Non-code Files（非代码文件处理：PDF/Excel/PPT）
-│   ├── Computer Use（专门页面）
-│   │   → 远程操控浏览器、点击元素、填写表单
-│   └── Remote Connections（远程连接）
-│       → SSH 远程连接 / 远程设备控制
-│
-├── # CLI（命令行界面）
-│   ├── CLI Reference（子命令大全）
-│   │   ├── codex（默认，启动 TUI）
-│   │   ├── codex exec（非交互批量执行）
-│   │   ├── codex review（代码审查模式）
-│   │   ├── codex login/logout（认证）
-│   │   ├── codex mcp（MCP 服务器管理）
-│   │   ├── codex mcp-server（stdio MCP server）
-│   │   ├── codex app-server（App Server 模式）
-│   │   ├── codex sandbox（沙箱操作）
-│   │   ├── codex doctor（本地诊断）
-│   │   ├── codex resume / fork（会话管理）
-│   │   ├── codex apply（应用 diff）
-│   │   └── codex cloud（云端执行）
-│   └── Configuration（config.toml 完整配置）
-│       → 模型选择 / 审批策略 / 沙箱模式 / Profiles
-│
-├── 📖 Guides（使用指南）
-│   ├── AGENTS.md Guide ⭐ 最重要的一篇
-│   │   → 规则文件怎么写、三层加载顺序、AGENTS.override.md 优先级
-│   ├── MCP Guide（Model Context Protocol）
-│   │   → 怎么连外部工具、官方 MCP Server 清单、自定义开发
-│   ├── Sandboxing（沙箱机制）
-│   │   → OS 内核级隔离（Landlock+Seccomp / Seatbelt / ACL+WFP）
-│   ├── Config（配置管理）
-│   │   → approval_policy 四级（untrusted / on-failure / on-request / never）
-│   └── Profiles（配置集切换）
-│       → full_auto / readonly_quiet 等预设
-│
-└── 🔧 Advanced（高级主题）
-    ├── Custom MCP Servers（自定义 MCP 开发）
-    │   → TypeScript / Python SDK、官方模板
-    ├── Skills vs AGENTS.md（分工对比）
-    ├── Security Model（安全模型）
-    └── Architecture（架构解析：Rust + Tokio + ratatui TUI）
-```
+- **Overview / Quickstart**：回答 `Codex` 是什么、如何开始用
+- **App**：回答桌面端、功能页、Computer Use、Remote Connections 等产品能力
+- **CLI**：回答命令行参考、配置方式、子命令与非交互调用
+- **Guides**：回答 `AGENTS.md`、`MCP`、sandbox、profiles 等机制与实践问题
+- **Open Source / GitHub**：回答哪些组件开源、仓库结构在哪里
+- **产品公告与实践材料**：回答版本变化、官方实践、产品定位更新
 
 ---
 
-## 二、App 桌面端的 UI 菜单结构（实际使用时看到的）
+## 二、官方文档主站的查阅路径
 
-Codex Desktop App（macOS / Windows）的界面分为 **左侧边栏 + 主工作区**：
+官方 hub 位于：`https://developers.openai.com/codex`
 
-```
-┌─────────────────────────────────────────────────────┐
-│  📁 Projects    │  💬 Conversations   │  🤖 Automations │  🧩 Skills    │  ⚙️ Settings  │
-│  (项目列表)      │  (对话历史)          │  (定时任务)      │  (技能库)     │  (设置)       │
-├─────────────────┴─────────────────────┴─────────────────┴───────────────┴───────────────┤
-│                                                                                     │
-│   ┌─────────────┐  ┌──────────────────────────────────────────────────────────┐     │
-│   │  对话窗口    │  │              多功能区域                                    │     │
-│   │  (流式输出)  │  │  · 终端 / 浏览器预览 / 文件预览 / Computer Use           │     │
-│   │             │  │  · @引用文件  /  /命令  /  Skill 调用                     │     │
-│   └─────────────┘  └──────────────────────────────────────────────────────────┘     │
-│                                                                                     │
-└─────────────────────────────────────────────────────────────────────────────────────┘
-```
+可先按下面的路径理解：
 
-| 菜单 | 功能 | 官方文档对应页 |
-|------|------|--------------|
-| **Projects** | 项目管理，每个项目独立 AGENTS.md | App → Features → Worktrees |
-| **Conversations** | 对话历史，支持 /plan /goal /review /status | CLI → commands |
-| **Automations** | 定时任务（日报/CI 监控/告警） | App → Features → Automations |
-| **Skills** | 技能库（个人 `~/.agents/skills` + 团队 `.agents/skills`） | Guides → Skills |
-| **Settings** | 模型选择、审批策略、语言（中文/英文）、日常工作模式 | CLI → Configuration |
+### 2.1 入门入口
+
+- `https://developers.openai.com/codex`
+- `https://developers.openai.com/codex/quickstart`
+
+适合回答：
+
+- `Codex` 是什么
+- 首次安装和启动方式是什么
+- CLI / App / Cloud 大致有哪些入口
+
+### 2.2 App 与产品能力入口
+
+- `https://developers.openai.com/codex/app/features`
+- `https://developers.openai.com/codex/app/computer-use`
+- `https://developers.openai.com/codex/remote-connections`
+- `https://developers.openai.com/codex/app/troubleshooting`
+
+适合回答：
+
+- App 中有哪些能力对象
+- Computer Use、Browser、Worktrees、Automations 等分别是什么
+- Remote Connections 与 App 能力如何关联
+- App 场景下的常见排障入口在哪里
+
+### 2.3 CLI 与配置入口
+
+- `https://developers.openai.com/codex/cli`
+- `https://developers.openai.com/codex/cli/reference`
+- `https://developers.openai.com/codex/cli/config`
+- `https://developers.openai.com/codex/cli/features`
+
+适合回答：
+
+- CLI 子命令有哪些
+- 非交互执行、配置文件、profiles、sandbox 相关入口在哪里
+- CLI 用户应优先查哪几页
+
+### 2.4 Guides 与机制入口
+
+- `https://developers.openai.com/codex/guides/agents-md`
+- `https://developers.openai.com/codex/guides/mcp`
+- `https://developers.openai.com/codex/guides/sandboxing`
+- `https://developers.openai.com/codex/guides/profiles`
+
+适合回答：
+
+- `AGENTS.md` 怎么写
+- `MCP` 怎么接入外部工具
+- sandbox / approval / profiles 等治理相关问题去哪里看
+
+### 2.5 开源与仓库入口
+
+- `https://developers.openai.com/codex/open-source`
+- `https://github.com/openai/codex`
+- `https://github.com/openai/skills`
+- `https://github.com/openai/codex-universal`
+
+适合回答：
+
+- 哪些组件明确开源
+- 官方仓库和相关开源对象在哪里
+- 开源工具链与产品形态边界应从哪里找一手资料
+
+### 2.6 官方公告与实践入口
+
+- `https://openai.com/index/introducing-the-codex-app/`
+- `https://openai.com/index/introducing-upgrades-to-codex/`
+- `https://cdn.openai.com/pdf/6a2631dc-783e-479b-b1a4-af0cfbd38630/how-openai-uses-codex.pdf`
+
+适合回答：
+
+- 产品近期新增了什么能力
+- 官方如何描述真实工程使用方式
+- 功能上线节奏与产品口径如何变化
 
 ---
 
-## 三、一张图总结：官方文档 → 实际产品的对应关系
+## 三、按问题类型查官方资料
 
-| 官方文档页面 | 对应产品能力 | 优先级 |
-|-------------|-------------|--------|
-| `/codex/overview` | "这是什么" | ⭐ 先读 |
-| `/codex/quickstart` | 装好能用 | ⭐⭐ 必须 |
-| `/codex/app/features` | App 全部功能清单 | ⭐⭐⭐ 核心 |
-| `/codex/guides/agents-md` | **AGENTS.md 怎么写** | ⭐⭐⭐⭐ 最实用 |
-| `/codex/guides/mcp` | 怎么连外部工具 | ⭐⭐⭐ 进阶 |
-| `/codex/concepts/sandboxing` | 安全机制 | ⭐⭐⭐ 企业必读 |
-| `/codex/app/computer-use` | 远程操控 GUI | ⭐⭐⭐⭐ 2026 新特性 |
-| `/codex/remote-connections` | SSH / 远程设备 | ⭐⭐ 特定场景 |
-| `/codex/cli` | 命令行完整参考 | ⭐⭐⭐ CLI 用户必读 |
+### 3.1 想先知道 `Codex` 值不值得看
 
-> 💡 **官方文档的隐藏逻辑**：`/codex/app/features` 是最长最全的一页（涵盖 Multi-Agent / Skills / Automations / Worktrees / Computer Use），相当于"产品说明书"；`/codex/guides/agents-md` 是社区公认**最值得反复读**的一页，因为 80% 的使用质量取决于 AGENTS.md 写得好不好。
+优先阅读：
+
+- `https://developers.openai.com/codex`
+- `https://developers.openai.com/codex/quickstart`
+- `https://developers.openai.com/codex/app/features`
+
+### 3.2 想落地到自己的项目
+
+优先阅读：
+
+- `https://developers.openai.com/codex/guides/agents-md`
+- `https://developers.openai.com/codex/guides/mcp`
+- `https://developers.openai.com/codex/cli/config`
+- `https://developers.openai.com/codex/cli/reference`
+
+### 3.3 想理解产品能力边界
+
+优先阅读：
+
+- `https://developers.openai.com/codex/app/features`
+- `https://developers.openai.com/codex/app/computer-use`
+- `https://developers.openai.com/codex/remote-connections`
+- `https://developers.openai.com/codex/open-source`
+
+### 3.4 想看源码或开源实现
+
+优先阅读：
+
+- `https://github.com/openai/codex`
+- `https://developers.openai.com/codex/open-source`
+- `https://github.com/openai/skills`
+- `https://github.com/openai/codex-universal`
+
+---
+
+## 四、使用本文时的边界
+
+本文适合做：
+
+- 官方页面入口图
+- 页面分组与查找路径
+- 阅读顺序建议
+- 一手来源定位
+
+本文不适合做：
+
+- 主线综述
+- 冲突裁决
+- 产品边界定论
+- 源码实现分析
+- 用社区材料替代官方页面下结论
+
+若问题已经从“去哪找官方页”转向“这件事到底怎么理解”，应回到主线或相应专题：
+
+- 领域综述：`overview.md`
+- 主线认知：`codex-agent-overview.md`、`codex-agent-mechanisms.md`、`codex-agent-practice.md`
+- 环境边界：`codex-cloud-sandbox.md`
+- 多代理与工作域：`codex-multi-agent.md`
+- 开源边界：`codex-open-source.md`
+- 冲突与口径不一致：`conflict.md`
 
 ---
 
-## 四、边界澄清：Codex 与 Code Interpreter 不可混用
+## Evidence
 
-> 本节用于解决 `conflict.md` 中的冲突 4，避免把不同产品线的结论混写到 Codex 文档。
-
-- `developers.openai.com/codex` 这套文档描述的是 **Codex CLI / App**（含 Worktrees、MCP、Automations、Skills）。
-- `platform.openai.com/docs/guides/code-interpreter` 描述的是 **Code Interpreter Python 工具环境**。
-- 两者都可能出现“沙箱”与“工具调用”术语，但**执行边界不应直接互相外推**。
-- 对“本地执行 Python 脚本 / 本地 MCP”这类问题，若证据来自 Code Interpreter 页面，应标注为“旁证”，不能直接作为 Codex 结论。
-- 若官方后续新增 Codex 专页（如 Local MCP 连接形态说明），应优先用 Codex 官方页覆盖旧结论。
-- 在工程实践上，可先采用“协议层可支持本地/远程传输，产品层按 CLI/Web/App 分别核验”的双层口径，避免把某一产品形态的结论扩展到全部形态。
-- 术语精度建议：仓库实现层优先使用 `stdio + streamable_http`；若引用外部资料出现 `HTTP/SSE` 表述，应显式注明其与仓库实现术语可能存在映射差异。
-
-### 4.1 术语映射（避免混用）
-
-- MCP transport（实现层）：`stdio`（本地进程） / `streamable_http`（远程）。
-- 外部文案中的 `HTTP/SSE`：可作为高层表述，但不应直接替换仓库实现术语。
-- SSE（仓库常见语义）：更多用于响应流/事件流，不等同于 MCP transport 分类。
-- 实践原则：写机制文档时优先“实现层术语”，写对外综述时可补“文案层术语”并标注映射关系。
-
-> 建议：涉及“本地/远程执行边界”的结论，先在 `conflict.md` 登记并核验，再回写主线文档。
-
----
+- Status: Mixed
+- Sources: `developers.openai.com/codex` 及其相关子页面；OpenAI 官方产品公告；官方实践 PDF；官方 GitHub 仓库。
+- Trace: 本文已从“导航 + 边界澄清混写”收紧为“官方资料入口图”；只保留页面分组、查阅路径和阅读顺序建议，不再承接冲突裁决与产品边界定论。
+- Needs: 继续定期复核官方站点的栏目结构、路径命名和 App / CLI / Guides 的页面分工。
 
 ## 参考来源
 
-- https://developers.openai.com/codex
-- https://openai.com/index/introducing-upgrades-to-codex/
-- https://openai.com/index/introducing-the-codex-app/
-- https://platform.openai.com/docs/guides/code-interpreter
+- `https://developers.openai.com/codex`
+- `https://developers.openai.com/codex/quickstart`
+- `https://developers.openai.com/codex/app/features`
+- `https://developers.openai.com/codex/app/computer-use`
+- `https://developers.openai.com/codex/remote-connections`
+- `https://developers.openai.com/codex/app/troubleshooting`
+- `https://developers.openai.com/codex/cli`
+- `https://developers.openai.com/codex/cli/reference`
+- `https://developers.openai.com/codex/cli/config`
+- `https://developers.openai.com/codex/guides/agents-md`
+- `https://developers.openai.com/codex/guides/mcp`
+- `https://developers.openai.com/codex/guides/sandboxing`
+- `https://developers.openai.com/codex/open-source`
+- `https://github.com/openai/codex`
+- `https://openai.com/index/introducing-the-codex-app/`
+- `https://openai.com/index/introducing-upgrades-to-codex/`
 
-*最后更新: 2026-05-28*
+*最后更新: 2026-06-04*

@@ -66,6 +66,7 @@ Evidence 和 Traceability 分别维护细则，但在执行时不应割裂。
 
 - `Status` 和 `Sources` 由 [`Evidence 规则`](./evidence-rules.md) 约束。
 - `Trace` 和 `Needs` 由 [`Traceability 规则`](./traceability-rules.md) 约束。
+- 当同一段或同一文档反复引用同一个外部仓库 / 文档站时，`Sources` / `Trace` 可以先声明一次基准 URL，后续用相对路径补充，避免重复书写冗长前缀；前提是读者仍能稳定还原完整来源。
 
 ## 5. `temp/` 回流主线条件
 

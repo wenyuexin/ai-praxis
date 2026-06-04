@@ -1,170 +1,181 @@
-# Codex 多智能体系统详解
+# Codex 多智能体边界核验
 
-> **专题文档**。本文详解 Manager-Subagent 多智能体系统，包括通信协议、Worktree 隔离和冲突仲裁。适合技术研究者。不属于主线阅读路径。
+> **专题文档**。本文只整理目前能从公开产品页面与本地源码 `D:\github\codex` 中保守确认的多智能体相关事实，并明确哪些说法仍不宜写成定论。
 
-
-
-> 基于 OpenAI 官方文档 + CSDN 架构拆解 + 源码追踪整理（2026.5 最新）。注意：部分 Worktree 和冲突仲裁的细节为社区推断，非源码直读。
+> 截至当前，`subagent`、子线程生成、父子线程关系、并发线程上限、linked worktree 场景处理，都已有较明确锚点；但 `Manager` 调度器、`TaskGraph`、`TaskChannel`、冲突仲裁器、以及“每个 Subagent 自动创建 git worktree”之类说法，仍不应写成源码级事实。
 
 ---
 
-## 一、Manager-Subagent 架构
+## 一、当前可直接核验的事实
 
-### 1.1 角色定义
+### 1.1 `subagent` 在协议层是显式概念
 
-| 角色 | 职责 |
-|------|------|
-| **Manager（指挥官）** | ① 将用户请求拆分为子任务（调用 `task_parser.rs` 的 `split_into_concurrent_tasks`） ② 监控所有 Subagent 状态 ③ 冲突仲裁与重调度 ④ 结果聚合 |
-| **Subagent（执行者）** | ① 领取单一原子子任务（如"代码语法分析""安全扫描"） ② 在独立沙箱中执行 ③ 将结果通过通道回传 ④ 执行范围受沙箱限制，具体能否自主决定修改范围取决于 Manager 的调度策略 |
+在本地源码中，`SessionSource`、`ThreadSource`、`SubAgentSource` 都是明确类型，而不是仅存在于产品文案里的抽象说法。
 
-从架构设计角度看，Manager 更像一个**调度器+仲裁器**角色，而不是一个"更聪明的 Agent"。这种设计可以避免多 Agent 系统中 Manager 自身产生幻觉的问题。
+| 事实 | 一手锚点 |
+|------|----------|
+| 会话来源可标记为 `SubAgent(...)` | `D:\github\codex\codex-rs\protocol\src\protocol.rs` |
+| 线程来源存在 `ThreadSource::Subagent` | `D:\github\codex\codex-rs\protocol\src\protocol.rs` |
+| `SubAgentSource` 至少包含 `Review`、`Compact`、`ThreadSpawn`、`MemoryConsolidation` | `D:\github\codex\codex-rs\protocol\src\protocol.rs` |
 
-### 1.2 通信协议
+这意味着：**“子代理 / 子线程”在 Codex 源码里是一级对象**，而不只是社区对并行执行现象的命名。
 
-```
-┌──────────┐    async_channel (Tokio mpsc)    ┌──────────────┐
-│  Manager  │ ◄─────────────────────────────► │  Subagent N  │
-│(scheduler)│   TaskChannel<Task>                │(sandboxed)   │
-└────┬─────┘                                     └──────────────┘
-     │
-     │  MCP 协议（跨节点/跨进程时）
-     ▼
-┌──────────────┐
-│  MCP Server  │  (codex-rs/mcp-server/src/lib.rs)
-└──────────────┘
-```
+### 1.2 子线程生成机制可以直接看到
 
-| 通信场景 | 协议 | 源码位置 |
-|----------|------|----------|
-| **同一进程内 Manager → Subagent** | `TaskChannel<T>`（Tokio mpsc） | `codex-rs/core/src/communication/async_channel.rs` |
-| **跨进程/跨节点** | MCP | `codex-rs/mcp-server/src/mcp_connection_manager.rs` |
-| **结果回传** | `oneshot::Sender<Response>` + `Arc<Mutex<HashMap>>` | `codex-rs/mcp-server/src/outgoing_message.rs` |
+`codex-rs/core/src/agent/control.rs` 中可以直接看到：父线程会为新 agent 预留并发槽位，并在 `SubAgentSource::ThreadSpawn` 场景下生成带来源信息的新线程。
 
-同一进程内推测使用 mpsc（零拷贝、低延迟），跨节点场景使用 MCP 协议，分层设计比较清晰。
+可直接引用的关键点包括：
 
-### 1.3 典型工作流 Trace
+- `spawn_agent_with_metadata(...)`
+- `spawn_agent_internal(...)`
+- `SessionSource::SubAgent(SubAgentSource::ThreadSpawn { ... })`
+- `state.spawn_new_thread_with_source(...)`
+- `thread_source: Some(ThreadSource::Subagent)`
 
-以用户输入 **"分析这个项目的代码并生成安全报告"** 为例：
+因此，把 Codex 的一部分多智能体能力理解为**父线程拉起子线程执行子任务**，是有源码锚点支撑的。
 
-```
-[User Input]
-    │
-    ▼
-[Manager::parse_task] ──► TaskGraph（3 个子任务）
-    │
-    ├──► [TaskChannel] ──► Subagent_A: "静态代码分析" (lint)
-    │       │                    │
-    │       │                    ▼
-    │       │              [sandbox::run_in_sandbox]
-    │       │                    │
-    │       │                    ▼
-    │       └── [oneshot] ◄──────┘  Result_A
-    │
-    ├──► [TaskChannel] ──► Subagent_B: "依赖安全扫描" (security)
-    │       │                    │
-    │       │                    ▼
-    │       │              [sandbox::run_in_sandbox]
-    │       │                    │
-    │       │                    ▼
-    │       └── [oneshot] ◄──────┘  Result_B
-    │
-    └──► [TaskChannel] ──► Subagent_C: "生成文档" (docgen)
-            │                    │
-            │                    ▼
-            │              [sandbox::run_in_sandbox]
-            │                    │
-            │                    ▼
-            └── [oneshot] ◄──────┘  Result_C
-    │
-    ▼
-[Manager::aggregate_results] ──► merge_results([A, B, C]) ──► FinalReport
-```
+### 1.3 delegate 路径中存在真实的异步转发机制
 
-工作流对应 `task_parser.rs` → `priority_scheduler.rs` → `resource_isolation.rs` → `result_aggregator.rs` 的完整调用链。
+`codex-rs/core/src/codex_delegate.rs` 提供了更具体的子线程委托入口：
 
----
+- `run_codex_thread_interactive(...)`
+- `run_codex_thread_one_shot(...)`
+- `async_channel::bounded(...)`
+- `tokio::spawn(...)`
+- `forward_events(...)`
+- `forward_ops(...)`
 
-## 二、Worktree 物理隔离
+从这里至少能保守确认两件事：
 
-### 2.1 实现方式
+1. 父会话确实可以启动一个 `subagent` 子线程。
+2. 子线程与父侧之间存在事件与操作的异步转发链路。
 
-- 每个 Subagent 通过 `git worktree` 创建独立工作目录
-- 可绑定不同 git 分支
-- 共享 `.git/objects`（不是完整 clone），磁盘开销低
-- 就是标准 `git worktree` 命令封装，无自定义魔改
+但这还**不足以推出**一套完整且稳定命名的“Manager → TaskGraph → TaskChannel → Subagent”内部架构。
 
+### 1.4 系统对 `subagent` 生命周期有正式埋点
 
+`codex-rs/analytics/src/events.rs` 中存在：
+
+- `subagent_thread_started_event_request(...)`
+- `subagent_source_name(...)`
+- `subagent_parent_thread_id(...)`
+
+这些符号说明：
+
+- `subagent` 启动会被显式记录；
+- 父线程 ID 与 `subagent_source` 会进入事件模型；
+- `thread_spawn` 不是完全隐含的内部细节，而是被系统性追踪的对象。
+
+### 1.5 并发线程上限是正式配置项
+
+`codex-rs/core/config.schema.json` 中存在 `max_concurrent_threads_per_session`。
+
+这能支撑一个较保守的判断：**Codex 至少在会话级别暴露了并发子线程数量的控制面**。这比“理论上可并行”更强，也比“任意多 Agent DAG 调度”更保守。
+
+### 1.6 linked worktree 是明确考虑过的场景
+
+`codex-rs/app-server/README.md` 中可以直接看到对 **linked Git worktrees** 的说明：同一项目的 hooks 定义以 root checkout 的 `.codex/` 为准，而不是以某个 linked worktree 的局部定义为准。
+
+这能确认：
+
+- 仓库明确支持或至少明确处理 linked worktree 场景；
+- worktree 并非完全游离于 Codex 能力边界之外。
+
+但这仍然**不能直接证明**：每个 `subagent` 都自动通过 `git worktree` 创建独立目录。
 
 ---
 
-## 三、DAG 拓扑排序与分发
+## 二、目前可保守成立的结构性理解
 
-### 3.1 TaskGraph → Subagent 映射
+### 2.1 更接近“父线程 + 子线程委托”而不是强行写死 `Manager` 类型
 
-```
-TaskGraph (DAG)
-    │
-    ├── Node_0 (root: "分析代码并生成文档")
-    │     │
-    │     ├── Node_1: "代码语法分析"      ──► Subagent_1
-    │     ├── Node_2: "代码结构提取"      ──► Subagent_2
-    │     └── Node_3: "文档生成"          ──► Subagent_3
-    │           │
-    │           └── [依赖 Node_1, Node_2] ──► 等 Node_1+2 完成后触发
-```
+如果要对当前源码做最保守的抽象，一个更稳妥的说法是：
 
+- 父线程会在特定来源下拉起 `subagent` 子线程；
+- 子线程带有来源、父线程关系、角色元数据等信息；
+- 父侧与子侧之间存在事件转发、操作转发与审批路由；
+- 并发度会受到会话级配置约束。
 
----
+这个抽象已经足够解释公开产品中“并行线程”“子代理”“线程来源”等现象，而不必提前发明一个源码里未明确出现的 `Manager` 总控类型。
 
-## 四、冲突仲裁
+### 2.2 多智能体能力更像“线程化委托 + 会话并发控制”
 
-### 4.1 冲突类型
+结合 `control.rs`、`codex_delegate.rs`、`protocol.rs`、`config.schema.json`，当前更稳的理解是：
 
-社区报告提到的主要冲突类型包括：文件修改冲突（多个 Subagent 改同一文件）、资源竞争（抢 CPU/内存）。具体的仲裁策略细节官方未公开。
+- Codex 至少具备把任务分派到子线程的能力；
+- 子线程不是匿名 worker，而是带 `subagent source` 的正式对象；
+- 并行能力首先体现为**每会话可并发的线程数**，而不是公开可见的 DAG 调度系统；
+- 审批与部分事件会回到父会话处理，而不是完全由子线程自治。
 
-### 4.2 冲突预防
-
-从公开信息看，任务拆分会考虑依赖关系，以减少互斥资源被并发调度的概率。
-
-### 4.3 社区案例
-
-| 来源 | 案例 | 结果 |
-|------|------|------|
-| Reddit | 3 个 Subagent 同时修改 `package.json`，导致 merge conflict | Manager 检测到冲突 → 暂停 2 个 → 逐个合并 → 成功 |
-| CSDN | 电商团队代码检查，lint + security + format 并行 | 效率提升 75%，无冲突 |
-
-从社区分析看，其处理思路更接近"预防—检测—仲裁"的保守策略，但具体实现细节官方未公开。
+这类判断可以写成 `Inferred` 或“候选解释”，但比旧版文档中的通道图更贴近现有源码。
 
 ---
 
-## 五、实际表现
+## 三、当前未找到的关键说法
 
-### 5.1 性能数据
+下列说法在本地仓库 `D:\github\codex` 中**未找到足够强的一手源码锚点**，因此不宜继续写成正文定论：
 
-社区实测的几组数据表明并行能带来显著加速（如代码质量检查从 4 分半降至 1 分多），但具体加速比因任务类型和资源条件而异。
+| 不宜写死的说法 | 当前状态 |
+|----------------|----------|
+| 存在明确的 `Manager` 多智能体调度核心类型 | 未找到 |
+| 存在 `TaskGraph` 数据结构 | 未找到 |
+| 存在 `TaskChannel<T>` 作为固定通道抽象 | 未找到 |
+| `Manager → Subagent` 主要通过 `Tokio mpsc` 通信 | 未找到直接证据 |
+| `Subagent` 结果通过 `oneshot` 回传 | 未找到直接证据 |
+| 存在独立的冲突仲裁器 / arbitration 模块 | 未找到 |
+| 每个 `Subagent` 都自动创建独立 `git worktree` | 未找到直接实现证据 |
+| 存在稳定公开的 Automations 核心实现模块 | 本地源码中未见清晰对象级锚点 |
 
+这并不意味着这些能力绝对不存在，而是表示：**在当前证据状态下，正文不该把它们写成已经核实的内部实现。**
 
+---
+
+## 四、Worktree 与 Automations 的边界
+
+### 4.1 Worktree：可以确认“支持场景”，不能确认“固定隔离机制”
+
+结合官方产品页面与本地源码，目前最稳妥的边界是：
+
+- 官方产品叙述明确出现过 `Worktree` 与并行线程协作；
+- 本地源码与 app-server 文档也明确考虑 linked worktree 场景；
+- 但尚不足以把“每个 Subagent = 一个独立 git worktree”写成稳定实现事实。
+
+因此，关于 worktree 的更稳写法应是：**Codex 产品层明确支持 worktree 场景，但子代理与 worktree 的一一对应关系仍待补证。**
+
+### 4.2 Automations：更适合继续停留在产品层描述
+
+本地仓库里能看到与 `automations` 相关的标签或外围痕迹，但尚未找到足够清晰、适合在本专题中当作内部多智能体核心机制引用的稳定模块。
+
+所以在 `codex-multi-agent.md` 中，更合适的做法是：
+
+- 保留“官方产品层存在 Automations 能力”的说法；
+- 不把 Automations 直接等同为某个已核实的多智能体调度内核；
+- 若后续要继续深挖，应另行在 Automations 专题中补对象级锚点。
 
 ---
 
-## 六、最佳实践：何时使用多 Agent
+## 五、当前可接受的一句话总结
 
-| 最适合的任务 | 不适合的任务（应关掉多 Agent） |
-|-------------|-------------------------------|
-| ✅ **多个独立子任务可并行**（lint + security + format） | ❌ **强顺序依赖**（无并行空间） |
-| ✅ **IO 密集型混合 CPU 密集型** | ❌ **单任务已足够快**（调度开销 > 并行收益） |
-| ✅ **需要多视角验证**（安全扫描 + 风格检查互为备份） | ❌ **资源极度受限**（内存 < 1GB 会 OOM） |
-| ✅ **大规模测试/批量处理**（100 个文件并行检查） | ❌ **需要强一致性事务**（冲突概率极高） |
-
-> **一句话总结**：从架构角度看，Codex 的多智能体设计侧重于"**让并发更安全**"而非"让 AI 更聪明"——Manager 类似于编译器调度，Subagent 类似于执行线程，worktree 提供隔离环境，MCP 处理跨节点通信。
+> 截至当前，更稳妥的说法是：Codex 已明确具备 `subagent` 子线程、父子线程来源建模、异步委托与会话级并发控制等多智能体相关能力；但 `Manager`、`TaskGraph`、冲突仲裁、以及“每个子代理固定对应一个 worktree”等更细粒度机制，仍不应写成已核实事实。
 
 ---
+
+## Evidence
+
+- Status: Mixed
+- Sources: OpenAI 官方产品页面；本地源码仓库 `D:\github\codex` 中的 `codex-rs/core/src/agent/control.rs`、`codex-rs/core/src/codex_delegate.rs`、`codex-rs/protocol/src/protocol.rs`、`codex-rs/analytics/src/events.rs`、`codex-rs/core/config.schema.json`、`codex-rs/app-server/README.md`。
+- Trace: 本文已从“社区推断型架构图”收缩为“源码可核验事实 + 保守解释 + 未找到项”三层结构；凡是未在本地仓库中找到稳定符号的内部机制，一律不再写成定论。
+- Needs: 若后续继续补证，可进一步核验 `spawn_agent` 周边测试、线程上限配置的实际生效路径、以及 linked worktree 与产品 Worktree 能力之间是否存在更直接的源码连接。
 
 ## 参考来源
 
-- https://developers.openai.com/codex/app/features
+- `D:\github\codex\codex-rs\core\src\agent\control.rs`
+- `D:\github\codex\codex-rs\core\src\codex_delegate.rs`
+- `D:\github\codex\codex-rs\protocol\src\protocol.rs`
+- `D:\github\codex\codex-rs\analytics\src\events.rs`
+- `D:\github\codex\codex-rs\core\config.schema.json`
+- `D:\github\codex\codex-rs\app-server\README.md`
 - https://developers.openai.com/codex
-- https://blog.csdn.net/gitblog_01166/article/details/157419484
-- https://openai.com/index/introducing-upgrades-to-codex/
+- https://developers.openai.com/codex/app/features
 
-*最后更新: 2026-05-26*
+*最后更新: 2026-06-04*
