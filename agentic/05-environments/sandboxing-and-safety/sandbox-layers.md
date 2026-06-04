@@ -128,6 +128,8 @@ container、microVM、remote runtime 主要回答：
 
 没有这一层，系统即使“拦得住一部分风险”，也难以支持：
 
+这里还需要补一条边界提醒：State / Recovery layer 可以稳定讨论 conversation restore、runtime resume、sandbox reuse、traceability 与 recovery hooks，但不能在证据不足时把这些能力直接写成“workspace 文件系统可独立 checkpoint / replay / restore”。恢复连接、恢复执行身份与恢复文件状态是相关但不同的三层语义。
+
 - 长时任务
 - 自动修改
 - 失败恢复
@@ -264,6 +266,8 @@ container、microVM、remote runtime 主要回答：
 
 系统越偏向 headless autonomy，就越需要恢复与审计来兜底；系统越偏向逐次确认，就越依赖人工作为第一道风险闸门。
 
+同时还要避免把“可恢复”写得过粗：有些系统实际支持的是会话 / 连接 / runtime identity 的恢复，而不是文件系统状态可独立重建。如果不区分这两类恢复，恢复层就会被误写成比实际证据更强的能力承诺。
+
 ### 6.3 隔离强度 vs 执行效率
 
 更强的 execution isolation 往往带来更高启动成本、更复杂资源管理和更重工程负担。
@@ -286,6 +290,7 @@ permission 与 governance 层越细，安全越可能提升；但开发、研究
 - environment isolation 足够强就不需要 policy layer
 - confirmation gate 属于产品交互，不属于环境设计
 - rollback 只是附加能力，不影响自治设计
+- 只要支持 conversation restore / runtime resume，就等于完整 workspace 状态可恢复
 - sandbox 层次越多，系统就一定越安全
 
 这些判断都会导致 `05-environments/` 再次退化为 runtime 技术清单，而失去 agent-specific environment 的组织价值。

@@ -69,6 +69,8 @@
 
 这一层对长期任务、自动化修改、代码执行和自治系统尤其关键。
 
+同时需要加一条 stop-line：**恢复连接能力不等于文件系统可重建能力**。一个系统可能已经支持 conversation restore、runtime resume、agent-server 重连或 sandbox identity 恢复，但这并不自动证明底层 workspace 文件状态能脱离原 runtime / volume / working_dir 连续性被独立 checkpoint / replay / restore。
+
 ### 2.4 Minimal Safety Composition
 
 如果只停留在“permission / execution / observability-recovery”三层结构，仍容易产生一个误解：好像只要某一层做得足够强，系统就已经安全。
@@ -93,6 +95,8 @@
 在 Agent 语境里，`environment` 不应被简化成 execution container，也不应无限膨胀为一切运行相关概念。
 
 一个更稳妥的停线规则是：environment 至少覆盖以下四类边界条件——agent 能看到什么、能做什么、实际在哪里执行、失败后如何被追踪和恢复；但不应把 tool executor 之外的所有控制逻辑都吞进去。
+
+在恢复语义上，还应额外记住一个边界提醒：environment 层可以稳定讨论 persistence、traceability、checkpoint、rollback / recovery hooks，但不应在证据不足时把“会话 / sandbox / runtime 可恢复”直接写成“workspace 文件系统可独立重建”。前者属于 environment 的可恢复能力，后者则涉及更强的状态保存粒度与恢复证明。
 
 因此可以把以下内容视为 environment 的稳定组成部分：
 
@@ -141,7 +145,9 @@
 
 更强的隔离通常意味着更高的启动成本、更复杂的运行时管理和更多执行开销。
 
-这条 trade-off 没有免费解：安全性、速度、复杂度和可维护性始终相互牵制。
+从 OpenHands 的 runtime / sandbox / workspace 调度路径看，这个成本不只来自“隔离技术本身”，还来自执行环境编排链路：sandbox start / resume 轮询、Docker / remote runtime 同步调用、workspace bridge 的 HTTP 往返、event persistence 的全量读取，以及清理回收路径的串行等待，都会把隔离边界转化成尾延迟和吞吐压力。
+
+这条 trade-off 没有免费解：安全性、速度、复杂度、可恢复性和可维护性始终相互牵制。
 
 ### 4.2 “在哪里执行” vs “允许做什么”
 
@@ -169,6 +175,19 @@
 
 共享 workspace 能降低状态传递成本，但也更容易带来污染、干扰和副作用扩散；完全隔离则更干净，但成本更高、协作更复杂。
 
+### 4.5 Connection Recovery vs Filesystem Reconstruction
+
+系统越强调 conversation restore、runtime resume、sandbox reuse 或 agent-server 重连，越容易给人一种“恢复能力已经足够强”的印象；但如果没有额外证据，这并不等于底层 workspace 文件状态已经可被独立重建。
+
+调度性能也会放大这一区分：恢复连接通常还要经过 sandbox resume、健康检查、WebSocket 重连、workspace backend 可用性确认和 event 读取等步骤；这些路径变慢时，用户感知到的是“恢复慢”，但根因可能是执行实体重连、状态读取或工作域重建中的某一层，而不是单一 recovery 机制失效。
+
+也就是说：
+
+- 会话 / 连接恢复回答的是“还能否继续交互与执行”
+- 文件系统重建回答的是“脱离原执行实体后，能否把同一任务工作域重新造出来”
+
+两者相关，但不能混成一个恢复指标。
+
 ---
 
 ## 五、最容易被误写成定论的问题
@@ -179,6 +198,8 @@
 - environment 等于 execution container
 - workspace 等于容器中的某个目录路径
 - rollback 只有一种合理实现路径
+- 恢复连接 / 会话恢复自动等于 workspace 文件系统可独立重建
+- 环境调度慢主要是 Python 语言性能问题
 - 更强隔离一定意味着更优系统设计
 
 这些问题都更适合先进入 `conflict.md` 或专题文档，而不是写成总论定论。
@@ -219,7 +240,7 @@ permission layer
 最近一轮已经优先补上了 `workspace` 相关主线：
 
 - `code-execution-environments/workspace-structure.md`：澄清 workspace 是 task-specific working context，而不只是 sandbox 内目录路径
-- `code-execution-environments/workspace-checkpoint.md`：展开 snapshot、checkpoint、rollback 与 recovery 的状态粒度问题
+- `code-execution-environments/workspace-checkpoint.md`：展开 snapshot、checkpoint、rollback 与 recovery 的状态粒度问题，并明确“会话恢复 / 连接恢复”不自动等于“文件系统可独立重建”
 - `code-execution-environments/workspace-traceability.md`：展开日志、轨迹、artifact 归因与 auditability 边界
 
 因此，`workspace / checkpoint / traceability` 这一组主题已从“待补齐”推进为“已有主干骨架，后续继续补证”。

@@ -9,10 +9,11 @@
 | 你要做什么 | 优先阅读 | 目的 |
 |---|---|---|
 | 新增一篇笔记 | [文档增改流程](./docs/contributing/documentation-workflow.md) 第 1、2、4 节 + 第二章；证据规则见 [Evidence 规则](./docs/contributing/evidence-rules.md)，链路规则见 [Traceability 规则](./docs/contributing/traceability-rules.md) | 先判断材料是否适合写成正文，再确定目录、命名和证据状态 |
-| 新增一个子目录 | [文档增改流程](./docs/contributing/documentation-workflow.md) 第 5 节 + 第一章、第三章；README 细则见 [README 规则](./docs/contributing/readme-rules.md) | 先确定目录定位、层级和 README 要求 |
-| 处理外部 AI 调研、网页搜索或临时笔记 | [文档增改流程](./docs/contributing/documentation-workflow.md) 第 3、8、10 节；统一流程见 [Evidence 与 Traceability 工作流](./docs/contributing/evidence-and-traceability.md) | 先做证据分级和材料分流，不直接写正文 |
-| 记录主题缺口或待研究对象 | 第四章 L4/L5 + [文档增改流程](./docs/contributing/documentation-workflow.md) 第 2、9 节；文件职责见 [元信息文件模型](./docs/contributing/metadata-files.md) | 区分问题缺口与研究对象 |
-| 处理术语、事实或结论冲突 | 第四章 L7 + [文档增改流程](./docs/contributing/documentation-workflow.md) 第 7 节；冲突文件职责见 [元信息文件模型](./docs/contributing/metadata-files.md) | 先记录冲突，再决定是否修改正文 |
+| 新增一个子目录 | [文档增改流程](./docs/contributing/documentation-workflow.md) 第 6 节 + 第一章、第三章；子领域/案例研究组织见[研究产物规则](./docs/contributing/research-artifacts.md) | 先确定目录定位、层级和 README 要求 |
+| 处理外部 AI 调研、网页搜索或临时笔记 | [文档增改流程](./docs/contributing/documentation-workflow.md) 第 3、9、10 节；统一流程见 [Evidence 与 Traceability 工作流](./docs/contributing/evidence-and-traceability.md) | 先做证据分级和材料分流，不直接写正文 |
+| 记录主题缺口或待研究对象 | 第四章 L4/L5 + [文档增改流程](./docs/contributing/documentation-workflow.md) 第 2、9、10 节；文件职责见 [元信息文件模型](./docs/contributing/metadata-files.md) | 区分问题缺口与研究对象 |
+| 处理术语、事实或结论冲突 | 第四章 L7 + [文档增改流程](./docs/contributing/documentation-workflow.md) 第 8 节；冲突文件职责见 [元信息文件模型](./docs/contributing/metadata-files.md) | 先记录冲突，再决定是否修改正文 |
+| 组织项目 / 论文 / 产品案例研究 | [研究产物组织规则](./docs/contributing/research-artifacts.md) | 区分子领域研究与具体案例研究，管理案例正文、机制专题和辅助材料 |
 | 查某个元信息文件的职责 | 第四章；细则见 [元信息文件模型](./docs/contributing/metadata-files.md) | 理解 `README.md`、`overview.md`、`backlog.md` 等文件边界 |
 | 查仓库建设规则的承接位置 | [`docs/contributing/`](./docs/contributing/) | 区分知识正文与贡献、治理、证据、可追溯性约束 |
 | 优化单篇文档表达 | 第五章 | 调整结构、公式、表格或论文笔记写法 |

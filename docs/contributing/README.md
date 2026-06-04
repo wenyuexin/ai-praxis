@@ -17,23 +17,27 @@
 
 ```text
 docs/contributing/
-├── documentation-workflow.md
-├── evidence-and-traceability.md
-├── evidence-rules.md
-├── metadata-files.md
-├── readme-rules.md
-├── traceability-rules.md
-└── README.md
+├── README.md                         # 本目录索引：按任务找到规则文件
+├── documentation-workflow.md          # 材料处理、分流、落位与回流流程
+├── research-artifacts.md              # 子领域研究、案例研究与研究辅助材料组织
+├── metadata-files.md                  # README / overview / backlog 等元信息文件模型
+├── readme-rules.md                    # README 出现条件、展开深度与导航边界
+├── evidence-and-traceability.md       # Evidence + Traceability 组合执行入口
+├── evidence-rules.md                  # Claim / Evidence / Status / 标注方式
+└── traceability-rules.md              # Source / Decision / Placement / Gap 规则
 ```
 
 ## 当前规则入口
 
-当前仓库级强约束仍以根目录 [`CONTRIBUTING.md`](../../CONTRIBUTING.md) 为准，AI 协作者入口见 [`AGENTS.md`](../../AGENTS.md)。本目录承接更细的规则设计；当 `CONTRIBUTING.md` 中某类规则继续增长时，应逐步迁移到本目录下的专题文件，并在 `CONTRIBUTING.md` 中保留摘要和链接。
+当前仓库级强约束仍以根目录 [`CONTRIBUTING.md`](../../CONTRIBUTING.md) 为准，AI 协作者入口见 [`AGENTS.md`](../../AGENTS.md)。本目录承接更细的规则设计；需要按任务查规则时，先看本文件的职责索引，再进入对应专题文件；当 `CONTRIBUTING.md` 中某类规则继续增长时，应逐步迁移到本目录下的专题文件，并在 `CONTRIBUTING.md` 中保留摘要和链接。
+
+本目录文件不使用数字编号，也不要求从上到下通读。推荐阅读方式是：先看 `README.md` 判断任务类型，再选择 1–2 个最相关的规则文件；只有需要 Evidence、Traceability、README 或元信息细则时，再进入对应细则文件。
 
 已拆分规则：
 
+- [研究产物组织规则](./research-artifacts.md)：定义子领域研究、具体案例研究、研究辅助材料的组织方式。
 - [材料处理与文档增改流程](./documentation-workflow.md)：定义新材料、外部调研、`temp/` 内容和正文修改的判断、落位与回流流程。
-- [Evidence 与 Traceability 工作流](./evidence-and-traceability.md)：统一执行入口，说明正式 Evidence + 轻量 Traceability 如何一起使用。
+- [Evidence 与 Traceability 工作流](./evidence-and-traceability.md)：组合执行入口，只说明正式 Evidence + 轻量 Traceability 如何一起使用。
 - [Evidence 规则](./evidence-rules.md)：定义 Claim、Evidence 状态、来源类型、标注密度、正文标注方式和主题级 evidence registry 的启用条件。
 - [Traceability 规则](./traceability-rules.md)：定义 Source / Decision / Placement / Gap 四个轻量链路字段。
 - [README 规则](./readme-rules.md)：定义 README 出现条件、目录树展开深度、导航边界和类型化结构建议。

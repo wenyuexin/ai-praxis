@@ -42,7 +42,17 @@
 - **为什么重要**：rollback / recovery 是 agent 环境的重要组成部分，若不记录冲突，容易过早把某一路径当成标准答案。
 - **建议处理方向**：不再继续讨论“是否只有一种合理路径”；后续重点转向恢复语义、任务形态、审计要求与实现成本之间的映射关系。
 
-### 1.5 Workspace Traceability 应以什么为核心组织单位
+### 1.5 恢复连接能力是否等于文件系统可重建
+
+- **冲突类型**：术语 / 事实 / 结论力度
+- **当前较稳定结论**：当前更稳妥的主干口径应是把“恢复连接 / 恢复会话 / 恢复 sandbox 身份”和“恢复 workspace 文件系统状态”明确拆开。OpenHands 与 `software-agent-sdk` 的交叉源码已经能稳定支持前者：conversation-level persistence / restore、workspace backend 的 `pause()` / `resume()`、agent-server 的持久化 conversation 恢复、以及 `pause` / `interrupt` / `resume` 的不同暂停语义都已成立；但这些证据并不足以直接推出“完整工作目录可脱离原 runtime / volume / working_dir 连续性独立重建”。
+- **仍待核验部分**：在 DockerWorkspace、APIRemoteWorkspace、OpenHandsCloudWorkspace 与 agent-server 的具体恢复链路里，`working_dir` 与文件系统内容到底是被同一执行实体继续持有、被卷/挂载延续，还是能由 persisted events / trajectory / logical metadata 独立重建；不同系统里 replay engine 与 artifact traceability 是否足以承担文件系统恢复职责。
+- **涉及范围**：`code-execution-environments/workspace-lifecycle.md`、`code-execution-environments/workspace-checkpoint.md`、`code-execution-environments/rollback-recovery-design-paths.md`、`../06-frameworks-and-tools/03-project-studies/openhands/official-docs.md`、`../06-frameworks-and-tools/03-project-studies/openhands/runtime-and-sandbox.md`
+- **为什么重要**：如果把 conversation restore 直接写成 workspace checkpoint / filesystem restore，就会把恢复语义、traceability、checkpoint 粒度和 runtime 连续性全部混成一件事，导致环境层关于 recovery、checkpoint 与 sharing model 的边界持续失真。
+- **Source / Trace**：该问题最初在 `official-docs.md` 中表现为官方文档对 `persistence_dir`、`base_state.json` 与 `events/` 的恢复表述容易被过度外推；随后在 `runtime-and-sandbox.md` 的 OpenHands + `software-agent-sdk` 交叉源码核验中进一步收敛为：当前证据更支持“先恢复 conversation / runtime identity，再尽量沿用既有 runtime / volume / working_dir 连续性”，而不是“已经证明可单靠 replay 或逻辑状态重建完整工作域”。
+- **建议处理方向**：主干已可把“恢复连接能力 ≠ 文件系统可重建”写成稳定边界；后续不再争论是否存在恢复，而是重点比较不同系统把恢复能力落在哪一层，以及这些层之间的耦合强度。
+
+### 1.6 Workspace Traceability 应以什么为核心组织单位
 
 - **冲突类型**：术语 / 设计选择
 - **当前较稳定结论**：workspace traceability 不应只以 command / event log 为核心；更稳妥的主干口径是同时显式建模 task / step、action、workspace state / checkpoint、artifact、actor / executor 与 decision / authorization context。`workspace-traceability.md` 已区分 event-first、artifact-centric、task-centric 与 hybrid 四类组织视角，`traceability-object-model.md` 已进一步把问题下沉为最小对象集与关系集。
@@ -51,7 +61,7 @@
 - **为什么重要**：会直接影响 workspace 中日志、文件变化、artifact lineage、task trace 与 auditability 的组织方式；若核心单位不清晰，trace 体系容易停留在原始日志堆积。
 - **建议处理方向**：不再继续讨论“是否需要对象模型”；后续重点转向跨系统对象映射、关系强度比较，以及不同任务形态下最小对象集是否需要扩展。
 
-### 1.6 Headless Autonomy 与 Interactive Safety 是否可兼得
+### 1.7 Headless Autonomy 与 Interactive Safety 是否可兼得
 
 - **冲突类型**：结论
 - **冲突描述**：一类系统强调危险操作前必须人工确认；另一类系统追求无人工干预的自主执行与可回滚恢复。两者在设计假设上存在根本张力。

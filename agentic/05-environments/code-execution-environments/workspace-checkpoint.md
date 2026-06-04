@@ -29,6 +29,22 @@
 
 连续性只说明历史状态还在累积；checkpoint 才回答：
 
+从当前已核验的 OpenHands / `software-agent-sdk` 交叉证据看，还需要再补一道区分：**会话可恢复性也不等于文件系统可恢复性**。
+
+也就是说，一个系统可能已经支持：
+
+- 重新连回同一 `conversation_id` / `sandbox_id`
+- 重新获取 `conversation_url` / `session_api_key`
+- 对同一 runtime / container / remote session 执行 `resume`
+
+但这仍不足以直接证明：
+
+- 底层 `working_dir` 可以被独立重建
+- 文件状态能仅靠 persisted events / trajectory / logical metadata 稳定恢复
+- 没有原 runtime 连续性时仍能复原同一任务工作域
+
+因此，workspace checkpoint 讨论里必须把“恢复连接”“恢复执行身份”“恢复文件状态”拆开。
+
 - 如果某一步引入错误，回退到哪里
 - 如果执行中断，恢复从哪里继续
 - 如果多个分支尝试并行展开，如何保留可比较的中间状态
@@ -81,6 +97,8 @@ checkpoint 不是为了“存档”而存在，而是为了支持后续动作：
 
 很多场景还需要知道：
 
+当前 OpenHands / `software-agent-sdk` 交叉源码正好提供了一个很典型的例子：系统可以显式保存或恢复 `conversation_id`、`sandbox_id`、`conversation_url`、`session_api_key`、持久化 conversation 目录等“任务状态指针”，从而让会话重新可寻址、可重连、可 resume；但这些指针本身并不自动等于完整文件快照。
+
 - 当前执行到哪个步骤
 - 上一个成功节点是什么
 - 哪些 artifact 属于本轮尝试
@@ -98,6 +116,8 @@ checkpoint 不是为了“存档”而存在，而是为了支持后续动作：
 - 与当前 checkpoint 绑定的 trace / artifact metadata
 
 这说明 checkpoint 的讨论不能完全脱离 observability。
+
+OpenHands 的调度风险也提示，checkpoint / recovery 的工程成本不能只看“状态是否保存下来”。如果 event persistence 需要全量读取、过滤、排序，或者恢复路径必须等待 sandbox resume、workspace backend 健康检查与远端命令轮询，那么恢复点即使存在，也可能因为读取、重连和验证链路过长而难以形成低延迟的可用恢复能力。
 
 ### 3.4 人工介入与决策痕迹
 
@@ -144,6 +164,8 @@ checkpoint 不是为了“存档”而存在，而是为了支持后续动作：
 ### 4.3 Logical Checkpoint
 
 不直接完整保存底层状态，而是保存“足以重建任务状态”的逻辑描述，例如：
+
+这里尤其要警惕一种常见误写：把“支持 resume / restore 的逻辑元数据”直接写成“已经足以重建 workspace 文件系统”。当前 OpenHands / `software-agent-sdk` 的源码更适合支撑一种较弱但更准确的表述：它已经证明了 conversation restore、workspace backend pause/resume、agent-server conversation persistence 等逻辑恢复能力存在；但尚未证明这些逻辑元数据在脱离原 runtime / volume / working_dir 连续性的情况下，足以独立重建完整任务工作域。
 
 - 当前基线版本
 - 已应用 patch 集合
@@ -274,3 +296,4 @@ checkpoint 是被回退或恢复所引用的状态锚点；rollback 是一种动
 - checkpoint metadata 是否需要显式纳入 artifact、trace 与任务状态指针
 - workspace checkpoint 与容器 snapshot、Git patch、event replay 的边界该如何清晰拆分
 - 多 agent / 多 subtask 场景下 checkpoint 是否应共享基线、独立分支，还是分层组合
+- “恢复连接 / 恢复会话 / 恢复 sandbox 身份” 与 “恢复文件系统状态” 在真实系统里是否经常分离，哪些系统提供前者但不提供后者

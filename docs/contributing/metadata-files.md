@@ -13,6 +13,7 @@
 - 它是参考手册，用于查清 `README.md`、`overview.md`、`backlog.md`、`candidates.md` 等文件的职责边界。
 - 它不负责给出材料处理流程；拿到新材料后如何分级、分流和落地，应查看 [`documentation-workflow.md`](./documentation-workflow.md)。
 - 它不讨论单篇正文如何写得更清楚；那属于写作表达规则。
+- 它也不把项目研究、论文研究或源码核验记录定义为新的元信息层；这些属于正文或研究笔记的内部组织问题，应按 [`research-artifacts.md`](./research-artifacts.md) 中案例研究辅助材料的规则处理。
 
 如果只是想判断“这个目录下应该有哪些元信息文件”，读本文件。
 
@@ -24,7 +25,9 @@
 
 其中 `index.md`、`roadmap.md` 属于**预定义能力位**：仓库允许它们存在，也保留统一命名和职责边界；但只有当目录确实出现发现、路径指引需求时才创建。不要因为模型中定义了 L2/L6，就为每个目录机械补齐。
 
-Evidence registry 不属于七层元信息文件模型的默认层级。证据优先写在正文 `## Evidence`、`backlog.md`、`candidates.md` 或 `conflict.md` 的条目内部；只有当某个主题的证据对照本身成为稳定维护对象时，才按 [`Evidence 规则`](./evidence-rules.md) 启用主题级 registry。
+Evidence registry 不属于七层元信息文件模型的默认层级。证据优先写在被支撑内容所在文档或条目内部；只有当某个主题的证据对照本身成为稳定维护对象时，才按 [`Evidence 规则`](./evidence-rules.md) 启用主题级 registry。
+
+同理，项目研究中的 `notes.md`、`notes/`、`source-notes.md`、`evidence-notes.md`、源码核验记录、论文细读笔记等也不是七层元信息文件。它们属于具体案例研究的辅助材料层，具体使用方式见 [`research-artifacts.md`](./research-artifacts.md) 第 5 节。
 
 | 层级 | 认知任务 | 文件名 | 职责 | 出现条件 | 典型内容 |
 |:---|:---|:---|:---|:---|:---|

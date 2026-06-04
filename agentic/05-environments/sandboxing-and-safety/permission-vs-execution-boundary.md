@@ -195,17 +195,20 @@ Agent 被允许执行 `rm`、联网下载、写入工作区、访问凭证文件
 
 - **如果动作本身就不应该发生，这是谁来拦？**
 - **如果动作已经发生并且出错，副作用由谁来限域？**
+- **如果会话可以恢复，但文件系统状态未必能独立重建，这属于哪一层的能力？**
 
 通常：
 
 - 前一个问题更偏 permission layer
 - 后一个问题更偏 execution layer
+- 第三个问题更偏 recovery / traceability，但如果要判断文件状态是否真能独立恢复，还需要继续下沉到 workspace lifecycle / checkpoint 语义，而不能停留在“已经支持 resume”的表面描述
 
 再细一点看：
 
 - “是否允许” → permission
 - “在哪里执行” → execution
 - “出了事如何回退与解释” → recovery / traceability
+- “恢复的是连接、执行身份，还是完整文件状态” → recovery / traceability 与 workspace lifecycle 的交叉边界
 - “什么时候自动做、什么时候停下确认” → autonomy governance
 
 这个判断方法有助于避免把所有安全问题都堆进一个“sandbox”词里。
@@ -240,6 +243,7 @@ Agent 被允许执行 `rm`、联网下载、写入工作区、访问凭证文件
 - command allowlist 已经足够代表 execution control
 - 用户确认就是完整安全边界
 - network restriction 只属于 runtime 层
+- 只要系统支持 resume / reconnect，就不必再区分 recovery 语义与文件系统恢复语义
 - 这两层完全可以合并成一个统一实现而不损失解释力
 
 这些说法都会把环境层重新压扁成单轴安全模型，失去 Agent-specific environment 的分析价值。

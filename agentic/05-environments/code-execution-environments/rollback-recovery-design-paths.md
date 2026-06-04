@@ -39,6 +39,8 @@
 
 很多场景真正关心的是：
 
+从当前 OpenHands / `software-agent-sdk` 交叉源码看，这一点还可以再拆得更细：系统可能已经具备很强的 conversation-level recovery——例如恢复 `conversation_id`、`sandbox_id`、`conversation_url`、`session_api_key`，或者让同一 runtime / container / remote session 重新 `resume`——但这仍然不自动等于“底层 workspace 文件状态已经被完整回到过去”或“可脱离原执行实体独立重建”。
+
 - 能否回到一个可继续执行的安全基线
 - 能否重新拿到必要 artifact 与上下文
 - 能否解释恢复前后发生了什么变化
@@ -140,6 +142,8 @@
 
 通过事件流、步骤记录、patch 序列或 task trace 重放到目标状态。
 
+当前 OpenHands 相关核验结果恰好说明了为什么这一路径不能被提前写成既成事实：虽然本地仓库中已经能确认 trajectory 配置项、前端下载 / 拉取入口、event 持久化，以及 SDK / agent-server 的 conversation restore 语义，但仍未在当前已核验范围内定位到一个可直接指认、足以把 event / observation / tool call / artifact / workspace file change 串成完整文件系统重建链的 replay engine。因此，“存在 replay 入口”与“replay 足以重建工作域”之间必须显式留出证据空档。
+
 优点：
 
 - 更利于解释因果链
@@ -200,6 +204,14 @@
 
 有些机制强调精确回退，有些机制强调继续推进。
 
+再进一步，继续推进本身也可能存在不同语义层次：
+
+- 等当前动作自然结束后进入可恢复状态
+- 立即中断当前执行，再把会话停在可恢复状态
+- 重新连回既有会话或 runtime 身份，但不承诺完整文件系统重建
+
+这也是为什么 `pause`、`interrupt`、`resume` 的差异不能只被看成 API 细节，而应被视为 recovery design path 的组成部分。
+
 前者更偏：
 
 - known-good rollback
@@ -220,8 +232,11 @@
 - 状态记录成本
 - 恢复执行成本
 - 运行时耦合成本
+- 调度与编排成本
 - 实现复杂度与维护成本
 - 人工理解与排障成本
+
+OpenHands 的 runtime / sandbox / workspace 调度风险说明，“恢复执行成本”本身也应继续拆开：sandbox resume 轮询、远端 runtime API 调用、workspace bridge HTTP 往返、event store 全量读取、setup script 重跑和清理失败处理，都会影响 recovery 的可用性。压缩存储或减少 checkpoint 文件，并不自动降低这些编排链路的尾延迟。
 
 所以“更省空间”不等于“更优恢复设计”。
 

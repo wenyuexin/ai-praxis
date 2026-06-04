@@ -4,12 +4,14 @@
 
 ## 1. 先读哪些规则
 
-开始修改前，按任务类型优先阅读：
+开始修改前，先读本文件和 [`CONTRIBUTING.md`](./CONTRIBUTING.md) 了解仓库级强约束，再按任务类型阅读最相关的规则文件；不要为了小任务一次性通读所有规则。
 
-- 仓库级强约束：[`CONTRIBUTING.md`](./CONTRIBUTING.md)
-- 仓库建设与文档治理规则：[`docs/contributing/`](./docs/contributing/)
+按任务类型优先阅读：
+
+- 系统研究论文、开源项目、产品、benchmark 或具体案例：[`docs/contributing/research-artifacts.md`](./docs/contributing/research-artifacts.md)
+- 仓库建设与文档治理规则索引：[`docs/contributing/`](./docs/contributing/)
 - 新材料、外部调研、`temp/` 回流：[`docs/contributing/documentation-workflow.md`](./docs/contributing/documentation-workflow.md)
-- Evidence 与 Traceability：[`docs/contributing/evidence-and-traceability.md`](./docs/contributing/evidence-and-traceability.md)、[`docs/contributing/evidence-rules.md`](./docs/contributing/evidence-rules.md)、[`docs/contributing/traceability-rules.md`](./docs/contributing/traceability-rules.md)
+- Evidence 与 Traceability：先读组合流程 [`docs/contributing/evidence-and-traceability.md`](./docs/contributing/evidence-and-traceability.md)，需要细则时再读 [`docs/contributing/evidence-rules.md`](./docs/contributing/evidence-rules.md) 和 [`docs/contributing/traceability-rules.md`](./docs/contributing/traceability-rules.md)
 - README 和元信息文件：[`docs/contributing/readme-rules.md`](./docs/contributing/readme-rules.md)、[`docs/contributing/metadata-files.md`](./docs/contributing/metadata-files.md)
 
 ## 2. 仓库内容边界
@@ -53,8 +55,9 @@
 - 只改与当前任务直接相关的文件，不顺手重构无关内容。
 - 文档重组时优先移动原文件，再做小范围后续编辑，避免迁移和重写混在一起。
 - 删除文件前先确认内容已经迁移、替代或确实不再需要。
-- 不要提交或保留临时反馈文件、外部审查草稿、一次性中间产物。
+- 不要无任务依据地保留临时反馈文件、外部审查草稿、一次性中间产物；若用户明确要求生成审查反馈或委托材料，可以写入 `docs/temp/`，并在交付时说明其临时性质。
 - 不要主动创建新的规则文档，除非现有文档已经明显过长或用户明确要求拆分。
+- 如果用户要求与仓库规则冲突，先说明冲突点并给出替代方案；如果用户确认坚持原要求，可以按用户要求执行，并在交付时说明偏离了哪条规则。
 
 ## 7. 提交前自检
 

@@ -111,6 +111,7 @@ Evidence 状态：`Verified`
 - 当前页面明确给出持久化目录包含 `base_state.json` 和 `events/`。
 - 当前页面把 `base_state.json` 描述为保存 agent configuration、execution status、statistics、secrets、agent_state。
 - 当前页面把 `events/event-*.json` 描述为保存 message history、tool calls、observations、all conversation events。
+- 但这些表述在官方资料阶段只能直接支撑“conversation-level persistence / restore”存在，不能单独外推出“完整 workspace 文件系统状态可被独立恢复”；这一点需要结合源码阶段另行核验。
 
 Evidence 状态：`Verified`
 
@@ -186,6 +187,8 @@ Evidence 状态：`Inferred`
 
 这些内容统一降为：`Unverified`，并标明仍需进入源码阶段核验。
 
+补充说明：即使后续源码已经证明 conversation-level restore、workspace backend pause/resume、agent-server conversation persistence 等能力存在，官方资料阶段本身仍不能被回写成“完整 workspace 文件系统可被独立 checkpoint / replay / restore”的强结论；这一边界必须保持。
+
 ## 五、DeepWiki / 第三方资料的降级处理
 
 以下材料已明确降级：
@@ -213,6 +216,7 @@ Evidence 状态：`Observed / Verified`
 
 - OpenHands 官方页面直接支持 conversation persistence。
 - 当前页面直接说明持久化包含 `base_state.json` 与 `events/`，并支持同一 `conversation_id` 的恢复。
+- 这些官方表述更稳妥地应理解为 conversation-level persistence / restore，而不是完整 workspace checkpoint 机制；单看官方资料阶段，仍不能把它外推成“恢复连接 = 恢复完整任务工作域”或“文件系统状态可脱离原 runtime 独立重建”。
 - 当前页面没有直接把 pause / resume、checkpoint、rollback、snapshot 列为正式功能。
 - 当前页面也没有直接给出“保存完整 workspace 文件系统状态”的明确原文。
 
@@ -242,8 +246,8 @@ Evidence 状态：`Observed / Unverified`
 1. V1 中 workspace、sandbox、runtime、conversation / session 的核心类、接口与依赖关系。
 2. `DockerWorkspace` / `RemoteWorkspace` / `LocalWorkspace` 的创建、销毁、复用与清理逻辑；当前已定位到候选 SDK 仓库 `https://github.com/OpenHands/software-agent-sdk`，后续应优先在该仓库中核验 `openhands-sdk` 与 `openhands-workspace` 包。官方架构页目前把 `DockerWorkspace` 标到 `openhands-workspace/openhands/workspace/docker`，把 `RemoteAPIWorkspace` 标到 `openhands-workspace/openhands/workspace/remote_api`。
 3. `SANDBOX_VOLUMES`、工作目录、容器挂载与宿主路径映射的真实实现。
-4. `persistence_dir` / `OH_PERSISTENCE_DIR` 保存的状态范围，尤其是否包含真实文件系统内容，还是仅 conversation state / events。
-5. conversation 恢复时 sandbox / workspace 是否重建、复用或重新挂载；当前已在上游仓库 `https://github.com/OpenHands/OpenHands` 的前端与 `app_server` V1 路由中补到一部分 reopen 入口证据：既有会话页会先走 `GET /api/v1/app-conversations?ids=...` 读取持久化 metadata，再用 `conversation_url` / `session_api_key` 直连既有 agent-server，若 `sandbox_status === "PAUSED"` 则页面初次打开或标签重新可见时实际先走 `POST /api/v1/sandboxes/{sandbox_id}/resume`。进一步看底层实现，Docker 路径是复用同一容器、`working_dir` 与 volume mounts，Remote runtime 路径是复用同一 `sandbox_id` / `session_id` 并按既有 `runtime_id` 调 `/resume`；当前仓库内尚未看到“单靠事件回放重建完整文件系统状态”的直接证据。
+4. `persistence_dir` / `OH_PERSISTENCE_DIR` 保存的状态范围，尤其是否包含真实文件系统内容，还是仅 conversation state / events；当前交叉源码更支持后者至少是核心可确认部分，而不是直接支持“完整文件系统独立恢复”。
+5. conversation 恢复时 sandbox / workspace 是否重建、复用或重新挂载；当前已在上游仓库 `https://github.com/OpenHands/OpenHands` 的前端与 `app_server` V1 路由中补到一部分 reopen 入口证据：既有会话页会先走 `GET /api/v1/app-conversations?ids=...` 读取持久化 metadata，再用 `conversation_url` / `session_api_key` 直连既有 agent-server，若 `sandbox_status === "PAUSED"` 则页面初次打开或标签重新可见时实际先走 `POST /api/v1/sandboxes/{sandbox_id}/resume`。进一步看底层实现，Docker 路径是复用同一容器、`working_dir` 与 volume mounts，Remote runtime 路径是复用同一 `sandbox_id` / `session_id` 并按既有 `runtime_id` 调 `/resume`；当前仓库内尚未看到“单靠事件回放重建完整文件系统状态”的直接证据，因此更稳妥的口径应是“先恢复 conversation / runtime identity，再尽量沿用既有 runtime / volume / working_dir 连续性”。
 6. event / trajectory 是否能够支撑 action → observation → artifact 的可追溯链。
 7. 是否存在 pause / resume、checkpoint、rollback、snapshot、overlay / copy-on-write 机制。
 8. V0 runtime 与 V1 sandbox / workspace 的迁移关系到底是术语迁移还是架构重组。
