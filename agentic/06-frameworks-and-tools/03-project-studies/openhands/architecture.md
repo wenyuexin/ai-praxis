@@ -2,13 +2,13 @@
 
 > 面向读者的案例架构总览，不包含源码核验细节
 > Evidence 状态：以 `Verified` / `Observed` 为主；缺乏直接证据的结论标为 `Inferred` 或 `Unverified`
-> 源码核验与证据表见 `./runtime-and-sandbox.md`
+> 源码核验与证据表见 `./runtime-and-sandbox.md`；调度性能风险见 `./scheduling-performance.md`
 
 ## 一、定位
 
 OpenHands 是一个开源 coding agent / software agent platform。就当前已核验的 environment / runtime / sandbox 范围看，其 V1 架构把原先集中在 runtime 口径下的环境生命周期能力，拆分到 app server、sandbox service、SDK workspace 和 agent server 等层次中。
 
-本文件着眼的是 OpenHands 在 **agent 执行环境**方面的架构选择：sandbox service、workspace 抽象、conversation / session 管理和持久化/恢复机制。它不覆盖 OpenHands 的 tool use、agent loop 或前端设计。
+本文件着眼的是 OpenHands 在 **agent 执行环境**方面的架构选择：sandbox service、workspace 抽象、conversation / session 管理和持久化/恢复机制。它不覆盖 OpenHands 的 tool use、agent loop 或前端设计；也不展开性能风险细节，相关内容集中在 `./scheduling-performance.md`。
 
 ## 二、核心组件关系
 
@@ -134,7 +134,13 @@ OpenHands V1 使用 `AppConversation` 模型（非 SDK 中的 `Conversation` / `
 
 5. **公开 REST 契约约束**：`openhands-agent-server/AGENTS.md` 明确将 `/api/**` 下的 REST 契约视为公开 API，意味着与 pause / interrupt / resume 相关的接口差异应按兼容性和弃用窗口理解。这对子领域 "API 契约治理是否属于 environment 设计" 是一个有用案例。
 
-## 七、未验证 / 待继续补证的问题
+## 七、性能风险入口
+
+OpenHands 的 runtime / sandbox / workspace 调度性能风险已单列到 `./scheduling-performance.md`。该文关注 sandbox start / resume、conversation start、event read / search、workspace command execution、cleanup 和 observability 等路径，只能证明源码层面的风险结构；实际高并发表现、尾延迟和瓶颈排序仍需要运行实验或压测验证。
+
+因此，本架构总览只保留结构性结论，不把性能风险写成 OpenHands 的确定生产瓶颈，也不把同步 Docker / HTTP / 文件 I/O 风险归因为 Python 解释器本身。
+
+## 八、未验证 / 待继续补证的问题
 
 以下问题在 OpenHands + software-agent-sdk 的当前核验范围内尚未找到直接证据：
 

@@ -125,6 +125,8 @@ OpenHands 的调度风险也提示，checkpoint / recovery 的工程成本不能
 
 如果恢复后丢失这些信息，系统虽然回到了旧文件，但不一定回到了同一个任务语义状态。
 
+LangGraph 的第一轮与第二轮补证又提供了一个很好的反例边界：它已经能稳定支持 thread-scoped graph state checkpoint、durable execution、interrupt / resume、time travel replay / fork 与 `update_state` 分支继续执行；但这些能力保存和恢复的是 graph runtime state，而不是默认的 workspace 文件系统快照。也就是说，系统完全可能已经具备“workflow state recovery”，却仍不具备“workspace file recovery”。这进一步说明，本专题必须把 graph state、task control state、workspace file state 和 execution environment state 分层讨论，而不能把所有“checkpoint”写成一类东西。
+
 ---
 
 ## 四、常见 checkpoint 组织路径

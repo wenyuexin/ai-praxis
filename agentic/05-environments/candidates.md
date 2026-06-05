@@ -40,10 +40,11 @@
 - **对象类型**：开源软件工程 agent / benchmark-oriented coding agent
 - **关联问题**：coding agent 执行环境如何组织 workspace、Docker sandbox、任务尝试与测试循环；代码任务中的工作域隔离边界
 - **为什么值得研究**：它能提供代码任务环境组织、测试执行循环与 workspace 隔离的真实工程案例，适合作为 per-task isolated workspace / execution environment 的对照样本
-- **当前状态**：候选 / 待研究
-- **Evidence need / 证据优先级**：官方文档、GitHub 源码、环境抽象相关实现
-- **预期产出**：补充 `workspace-lifecycle.md` 对 per-task isolated workspace / execution environment 边界的案例证据；必要时补 `rollback-recovery-design-paths.md` 对尝试循环与恢复路径的观察
-- **Source / Decision / Placement / Gap**：来源于 `agentic/temp/chat/instruction.md` 的推荐对象与 `workspace-lifecycle.md` 当前 Needs；作为候选研究对象登记到本文件；服务代码任务环境隔离的补证；仍缺对环境抽象、尝试边界与测试循环的源码级核验
+- **当前状态**：case-study 已建立。已完成 `SWE-agent` 仓库和 `SWE-ReX` 仓库的完整源码核验。关键修正：SWEEnv 不是 SWE-ReX 的 thin wrapper（上层独立承担 repo lifecycle / post_startup_commands / hooks / communicate() 编排）；repo reset 序列含 `git status` 共 6 条；`num_workers` 默认值为 `1`；batch 并发模型为 `ThreadPoolExecutor` 多线程；`random_delay_multiplier` 默认 `0.3` 已官方文档化；SWE-ReX 提供 7 种 Deployment 实现（Docker/Local/Modal/Fargate/Remote/Daytona/Dummy），`AbstractDeployment.__del__` 吞异常，Fargate 只停 ECS task 不清理全部 AWS 资源；trajectory 不证明 workspace 文件系统恢复。
+- **Evidence need / 证据优先级**：官方文档、GitHub 源码、环境抽象相关实现；当前已完成 SWE-agent + SWE-ReX 源码核验。后续优先核验不同 deployment 在高并发下的资源回收完整性（需实验）；trajectory state 的工具配置扩展边界仍需样例验证；mini-swe-agent 暂不另开案例，保留为 SWE-agent 小节中的后续对照方向
+- **当前产出**：`../06-frameworks-and-tools/03-project-studies/swe-agent/README.md`、`../06-frameworks-and-tools/03-project-studies/swe-agent/environment-and-execution.md`（已基于 SWE-agent + SWE-ReX 源码核验结果回填修正，主要修正：SWEEnv 不是 thin wrapper、reset 命令序列、run-batch 并发事实、SWE-ReX deployment/cleanup 边界、trajectory state 边界）
+- **预期产出**：在 workspace-lifecycle.md 等共性专题中克制引用 SWE-agent 的 per-task isolated execution 案例证据
+- **Source / Decision / Placement / Gap**：来源于 `agentic/temp/chat/instruction.md` 的推荐对象、`workspace-lifecycle.md` 当前 Needs、本地 `SWE-agent` + `SWE-ReX` 双仓库源码核验结果，以及 `agentic/temp/web-search/7.md` / `8.md` 的在线官方资料补证；案例研究已集中沉淀到 `agentic/06-frameworks-and-tools/03-project-studies/swe-agent/`，关键修正已在 `environment-and-execution.md` 中回填；当前 gap 主要是不同 deployment 在高并发下的资源回收完整性（需实验），mini-swe-agent 暂不另开案例
 
 ### 2.3 LangGraph checkpoint
 

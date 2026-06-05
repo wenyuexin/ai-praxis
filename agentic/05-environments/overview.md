@@ -186,6 +186,8 @@
 - 会话 / 连接恢复回答的是“还能否继续交互与执行”
 - 文件系统重建回答的是“脱离原执行实体后，能否把同一任务工作域重新造出来”
 
+LangGraph 的补证结果进一步强化了这条 stop-line：一个系统可以稳定支持 thread-scoped checkpoint、durable execution、interrupt / resume、time travel replay / fork 与 `update_state`，从而让 workflow state 在中断后继续推进；但这仍不等于它默认保存了 workspace 文件内容、容器状态或外部副作用状态。也就是说，workflow recovery 不是 execution environment recovery，更不是 workspace filesystem reconstruction。
+
 两者相关，但不能混成一个恢复指标。
 
 ---

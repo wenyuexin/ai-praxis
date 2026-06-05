@@ -144,6 +144,8 @@
 
 当前 OpenHands 相关核验结果恰好说明了为什么这一路径不能被提前写成既成事实：虽然本地仓库中已经能确认 trajectory 配置项、前端下载 / 拉取入口、event 持久化，以及 SDK / agent-server 的 conversation restore 语义，但仍未在当前已核验范围内定位到一个可直接指认、足以把 event / observation / tool call / artifact / workspace file change 串成完整文件系统重建链的 replay engine。因此，“存在 replay 入口”与“replay 足以重建工作域”之间必须显式留出证据空档。
 
+LangGraph 则提供了另一种对照：它已经能稳定支持 replay、fork、`update_state`、interrupt / resume 和 durable execution，但其 replay / time-travel 语义仍然围绕 graph state checkpoint 与 workflow control flow 展开，而不是默认重建 workspace 文件系统或 execution environment。也就是说，结构化 replay 的存在只能先证明“某层状态可被重放 / 分支 / 继续执行”，不能自动证明“系统所有相关状态都能被重建”。这提醒我们：replay-based recovery 必须明确说明自己重放的是哪一层状态。
+
 优点：
 
 - 更利于解释因果链

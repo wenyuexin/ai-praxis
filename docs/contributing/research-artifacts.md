@@ -87,7 +87,7 @@
 - **`notes/` 内部命名**：可使用 `general.md` 承接原 `notes.md`，记录杂项研究过程和临时观察；`source.md` 承接源码核验、长引用和失败搜索；`evidence.md` 承接已整理的证据表、Claim-Source 对照与 Evidence 状态；也可按机制或来源命名为 `<mechanism>.md`、`<source-name>.md`。
 - **导航边界**：不要把 `notes/` 当成正文目录，也不要在 README 目录树中把它提升为主要阅读入口；只说明它是研究辅助材料入口。
 
-核心原则：拆分不是"每个研究点固定两篇"，但也不是"混乱后再救火"。**重要案例一开始就允许存在正文与辅助材料两个层次**；正文保持读者可读，辅助材料保持证据可追溯。是否拆成多个文件，取决于材料体量、机制数量和后续维护频率，而不是等到不可读才触发。
+核心原则：拆分不是"每个研究点固定两篇"，但也不是"混乱后再救火"。**重要案例一开始就允许存在正文与辅助材料两个层次**；这里的“允许”不是“必须”，小案例或证据很少的案例可以只保留正文中的 `Evidence` / `Gap` 段落。正文保持读者可读，辅助材料保持证据可追溯。是否拆成多个文件，取决于材料体量、机制数量和后续维护频率，而不是等到不可读才触发。
 
 ## 6. 推荐目录树
 
@@ -96,9 +96,9 @@
 ├── <subfield>/
 │   ├── README.md                    # 子领域定向与目录导航
 │   ├── overview.md                  # 子领域共性综述：分类、边界、trade-off
-│   ├── backlog.md                   # 子领域问题缺口
-│   ├── candidates.md                # 候选论文、仓库、产品、benchmark
-│   ├── conflict.md                  # 术语、事实、边界或结论冲突
+│   ├── backlog.md                   # 按需：子领域问题缺口
+│   ├── candidates.md                # 按需：候选论文、仓库、产品、benchmark
+│   ├── conflict.md                  # 按需：术语、事实、边界或结论冲突
 │   ├── <topic-a>.md                 # 共性专题正文
 │   ├── <topic-b>.md                 # 共性专题正文
 │   └── project-studies/
@@ -131,7 +131,7 @@
 
 | 文件 | 与本文件的关系 |
 |---|---|
-| [`documentation-workflow.md`](./documentation-workflow.md) | 本文件从中迁移了"组织子领域研究与具体案例研究"的规则；工作流中保留指向本文件的简短指引 |
+| [`documentation-workflow.md`](./documentation-workflow.md) | 负责材料处理、分流和回流流程；当材料进入案例研究或子领域专题组织阶段时，转由本文件定义产物结构 |
 | [`metadata-files.md`](./metadata-files.md) | 本文件定义 `notes.md` / `source-notes.md` / `evidence-notes.md` 等辅助材料的具体组织方式；元信息模型只说明它们不是七层元信息文件 |
 | [`readme-rules.md`](./readme-rules.md) | 本文件定义案例目录内的文档结构；README 规则补充说明案例目录 README 如何导航这些产物 |
 | [`evidence-rules.md`](./evidence-rules.md) | 本文件不替代 Evidence 规则，只说明少量证据如何写在正文中、何时迁移到辅助材料 |

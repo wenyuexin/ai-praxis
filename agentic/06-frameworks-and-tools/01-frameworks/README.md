@@ -8,7 +8,9 @@
 01-frameworks/
 ├── autogen/
 ├── crewai/
-└── langchain-agents/
+├── langchain-agents/
+├── langgraph/
+└── README.md
 ```
 
 ## 收录范围
@@ -25,6 +27,7 @@
 - `autogen/`
 - `crewai/`
 - `langchain-agents/`
+- `langgraph/`
 
 后续可考虑补充：
 
@@ -39,4 +42,4 @@
 - 多 Agent 协作模式的理论分类，主归属仍是 `../../03-multi-agent/`。
 - 本目录重点回答“这个框架如何把能力组织成可用工程系统”。
 
-*最后更新: 2026-05-31*
+*最后更新: 2026-06-05*

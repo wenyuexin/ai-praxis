@@ -31,10 +31,12 @@ openhands/
 
 ## 阅读入口
 
+推荐阅读顺序：先读 `architecture.md` 建立整体架构图；需要核验证据时进入 `runtime-and-sandbox.md`；关心调度性能时进入 `scheduling-performance.md`；需要追溯官方资料来源时再看 `official-docs.md`。
+
 - **`architecture.md`**（推荐优先阅读）：面向读者的案例架构总览。回答 OpenHands 在 environment / runtime / sandbox 方面解决什么问题、主要组件关系是什么、哪些结论来自官方文档 / 源码观察 / 推断。
-- `official-docs.md`：OpenHands 官方资料阶段调研整理，包含资料清单、可用结论、风险点和源码阶段核验清单。作为 `runtime-and-sandbox.md` 之前的上游资料归档。
 - `runtime-and-sandbox.md`：机制专题 / 源码核验型文档。基于 `https://github.com/OpenHands/OpenHands` 中 `openhands/app_server/` 及 `https://github.com/OpenHands/software-agent-sdk` 中 SDK / workspace / agent-server 相关包的源码核验结果，集中记录 SandboxService、workspace 后端、持久化路径、卷挂载与当前证据边界。需要查具体 Claim 的源码证据时进入本文。
-- `scheduling-performance.md`：机制专题 / 性能风险地图。聚焦 runtime / sandbox / workspace 调度层的 20+ 个源码可观察瓶颈，区分 `Observed`（源码直接证据）、`Inferred`（架构推断）和 `Unverified`（需运行实验）。不讨论模型推理速度或 Python 通用语言性能。
+- `scheduling-performance.md`：机制专题 / 性能风险地图。聚焦 runtime / sandbox / workspace 调度层的 20+ 个源码可观察瓶颈，区分 `Observed`（源码直接证据）、`Inferred`（架构推断）和 `Unverified`（需运行实验）。不讨论模型推理速度或 Python 通用语言性能，也不把静态源码风险直接写成高并发定论。
+- `official-docs.md`：OpenHands 官方资料阶段调研整理，包含资料清单、可用结论、风险点和源码阶段核验清单。作为上游资料归档，不作为当前案例主入口。
 
 ## 与专题目录的关系
 

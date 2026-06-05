@@ -29,9 +29,9 @@ docs/contributing/
 
 ## 当前规则入口
 
-当前仓库级强约束仍以根目录 [`CONTRIBUTING.md`](../../CONTRIBUTING.md) 为准，AI 协作者入口见 [`AGENTS.md`](../../AGENTS.md)。本目录承接更细的规则设计；需要按任务查规则时，先看本文件的职责索引，再进入对应专题文件；当 `CONTRIBUTING.md` 中某类规则继续增长时，应逐步迁移到本目录下的专题文件，并在 `CONTRIBUTING.md` 中保留摘要和链接。
+当前仓库级强约束仍以根目录 [`CONTRIBUTING.md`](../../CONTRIBUTING.md) 为准，AI 协作者入口见 [`AGENTS.md`](../../AGENTS.md)。本目录承接更细的规则设计；进入本目录后，可用本文件的职责索引定位对应专题文件；当 `CONTRIBUTING.md` 中某类规则继续增长时，应逐步迁移到本目录下的专题文件，并在 `CONTRIBUTING.md` 中保留摘要和链接。
 
-本目录文件不使用数字编号，也不要求从上到下通读。推荐阅读方式是：先看 `README.md` 判断任务类型，再选择 1–2 个最相关的规则文件；只有需要 Evidence、Traceability、README 或元信息细则时，再进入对应细则文件。
+本目录文件不使用数字编号，也不要求从上到下通读。推荐阅读方式是：先根据当前任务类型选择最相关的规则文件；如果不确定该读哪一个，再用本文件定位规则入口。只有需要 Evidence、Traceability、README 或元信息细则时，再进入对应细则文件。
 
 已拆分规则：
 
@@ -42,7 +42,3 @@ docs/contributing/
 - [Traceability 规则](./traceability-rules.md)：定义 Source / Decision / Placement / Gap 四个轻量链路字段。
 - [README 规则](./readme-rules.md)：定义 README 出现条件、目录树展开深度、导航边界和类型化结构建议。
 - [元信息文件模型](./metadata-files.md)：定义 `README.md`、`overview.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 等文件的职责边界。
-
-后续优先拆分的规则包括：
-
-- AI 协作者执行前检查清单
