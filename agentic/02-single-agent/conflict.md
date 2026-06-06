@@ -1,7 +1,7 @@
 # Single-Agent Conflict
 
 > 适用范围：`02-single-agent/` 范围内的术语冲突、事实分歧、结论矛盾与待核验问题
-> 使用说明：本文件只记录会影响 `planning / memory / tool-use / reasoning-and-acting / self-reflection / patterns` 知识组织的问题；它是研究输入，不是主干定论
+> 使用说明：本文件只记录会影响 `planning / memory / tool-use / reasoning-and-acting-loop / self-reflection / patterns` 知识组织的问题；它是研究输入，不是主干定论
 
 ## 一、待核验问题
 
@@ -9,7 +9,7 @@
 
 - **冲突类型**：术语 / 定义
 - **冲突描述**：不同资料对“只要有 tool calling 是否就算 agent”存在明显分歧。有的把 function calling workflow 直接称为 agent；有的则要求具备持续执行循环、环境反馈、状态更新与自主调整。
-- **涉及范围**：`overview.md`、`tool-use/`、`reasoning-and-acting/`
+- **涉及范围**：`overview.md`、`tool-use/`、`reasoning-and-acting-loop/`
 - **为什么重要**：这会直接影响 `02-single-agent/` 的边界，以及 agent 与普通工具增强式 LLM application 的区分方式。
 - **待核验问题**：agent 的最小必要条件应如何定义？tool use 在其中是必要条件、充分条件，还是常见但非本质特征？
 - **建议处理方向**：优先查看 agent 系统综述、ReAct 论文、主流框架官方定义，整理“执行循环”与“单次工具调用”的边界。
@@ -36,7 +36,7 @@
 
 - **冲突类型**：结论 / 定义
 - **冲突描述**：部分资料默认认为高质量 single-agent 必须包含显式 planner 或 DAG；另一类实践则表明 `ReAct` 式推理—行动循环已能覆盖大量任务。
-- **涉及范围**：`planning/`、`reasoning-and-acting/`、`patterns/react/`
+- **涉及范围**：`planning/`、`reasoning-and-acting-loop/`、`architectural-patterns/react/`
 - **为什么重要**：会影响 `planning/` 在目录中的表达方式，以及是否把 planner 误写成所有 single-agent 的基础前提。
 - **待核验问题**：显式 planning 在哪些任务中是必要结构，哪些任务中只是可选增强？
 - **建议处理方向**：对比 ReAct、plan-and-execute、bilevel planning 等代表路径，按任务复杂度与工具规模分类讨论。

@@ -224,7 +224,7 @@ permission layer
 - `sandboxing-and-safety/`：偏权限层与隔离层
 - `browser-environments/`：偏特定交互环境
 - `simulated-environments/`：偏受控任务世界
-- `benchmarking-frameworks/`：偏环境如何被评测和复现
+- `evaluation-environments/`：偏环境如何被评测和复现
 
 ---
 

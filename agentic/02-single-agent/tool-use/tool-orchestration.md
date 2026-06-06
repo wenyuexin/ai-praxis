@@ -263,7 +263,7 @@ orchestration 越丰富，越能表达复杂依赖与失败分支；但状态管
 - 与 `bilevel-planning-tool-navigation.md`：后者把 hierarchical / bilevel orchestration 从“风格类型”进一步展开成独立主题，重点讨论高层规划与低层工具导航如何分层协作。
 - 与 `overview.md`：本文件同时承接其中 `Planning-Execution 耦合 vs 解耦` 与 `Tool-centric Design vs Monolithic Agent` 两条关键主轴。
 - 与 `planning-vs-execution.md`：工具规模和依赖复杂度会直接推动 planning / execution 从紧耦合走向更显式 orchestration。
-- 与 `reasoning-and-acting/README.md`：紧耦合 orchestration 往往直接嵌在 reasoning-action-observation 循环中。
+- 与 `reasoning-and-acting-loop/README.md`：紧耦合 orchestration 往往直接嵌在 reasoning-action-observation 循环中。
 - 与 `memory/`：多工具链的中间状态、失败记录与结果复用依赖 memory 机制。
 - 与 `../05-environments/`：代码执行、浏览器、权限与恢复机制会直接塑造 orchestration 的可行边界。
 - 与 `backlog.md`：对应 `Tool Selection vs Tool Orchestration` 这一高优先级缺口，也和 `Bilevel Planning for Tool Navigation` 线索相连。

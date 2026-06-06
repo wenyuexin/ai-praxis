@@ -16,7 +16,7 @@
 ## 边界说明
 
 - 放在这里：规划—执行分离、计划落实、执行反馈驱动修正、计划重建。
-- 不放在这里：一般任务拆解方法（放 `../task-decomposition/`）、搜索式思维扩展（放 `../tree-of-thoughts/`）、推理—行动循环（放 `../../reasoning-and-acting/`）。
+- 不放在这里：一般任务拆解方法（放 `../task-decomposition/`）、搜索式思维扩展（放 `../tree-of-thoughts/`）、推理—行动循环（放 `../../reasoning-and-acting-loop/`）。
 
 ## 同目录导航
 

@@ -7,7 +7,7 @@
 
 适合进入本文件的内容通常满足以下条件之一：
 
-- 能补齐 `definition-and-taxonomy / reactive-vs-deliberative / cognitive-architectures / agent-system-models` 之间的关键桥梁问题
+- 能补齐 `definition-and-taxonomy / behavioral-paradigms / cognitive-architectures / agent-system-modeling` 之间的关键桥梁问题
 - 会影响 `02-single-agent/`、`03-multi-agent/`、`05-environments/` 等后续目录的上位定义与边界判断
 - 已被论文、官方文档或高质量综述明确指出具有基础方法价值
 - 尚不适合直接写入主干正文，但值得继续跟踪
@@ -24,19 +24,21 @@
 
 ### 2.1 Agentic Workflow vs Agent Boundary
 
-- **关联目录**：`definition-and-taxonomy/`、`reactive-vs-deliberative/`
+- **关联目录**：`definition-and-taxonomy/`、`behavioral-paradigms/`
 - **为什么重要**：会直接影响后续 `single-agent`、`multi-agent` 与工程案例中“什么算 agent”的判断边界。
 - **现状**：`definition-and-taxonomy/` 下已有局部材料，但仍缺少 foundations 视角下对 workflow、agentic workflow、agent 的统一定义框架。
 
 ### 2.2 Agent Harness as System Model
 
-- **关联目录**：`agent-system-models/`
+- **关联目录**：`agent-system-modeling/`
 - **为什么重要**：`harness` 正在从工程术语演化为理解 agent runtime substrate、observability、execution control 的上位模型。
-- **现状**：已有 `agent-system-models/candidates.md` 收集 harness 方向的候选研究对象，当前它提供上游对象输入，但尚未沉淀为 foundations 层正式专题。
+- **现状**：已有 `agent-system-modeling/candidates.md` 收集 harness 方向的候选研究对象，当前它提供上游对象输入，但尚未沉淀为 foundations 层正式专题。外部调研输入显示，当前更适合先围绕 `Externalization in LLM Agents` 与 `AI Harness Engineering` 做精读核验，而不是直接写 harness 总论。
+- **待核验问题**：Harness 与 cognitive architecture 是互补还是竞争性上位框架？Harness 与 orchestration / runtime / inference 的分工层次如何划分？Observability 是 harness 的内在维度，还是驱动 harness evolution 的使能能力？Governance / permissions 应归入单 agent harness 内部，还是视为跨 agent 的 external control plane？Harness 成熟度是否能形成可复用的 H0–H3 或类似阶梯？
+- **Evidence need**：论文原文精读、官方项目材料、上游仓库或生产级案例对照；当前外部调研只能作为 `Observed / Inferred` 输入，不足以写成主线定论。
 
 ### 2.3 Cognitive Architecture vs Orchestration Architecture
 
-- **关联目录**：`cognitive-architectures/`、`agent-system-models/`
+- **关联目录**：`cognitive-architectures/`、`agent-system-modeling/`
 - **为什么重要**：认知架构、执行编排与工程 runtime 常被混写，不澄清会影响后续目录的上位分类。
 - **现状**：两条线已有零散材料，但还缺少面向整个 `01-foundations/` 的边界说明。
 
@@ -46,15 +48,15 @@
 
 ### 3.1 Reactive / Deliberative / Hybrid Continuum
 
-- **关联目录**：`reactive-vs-deliberative/`
+- **关联目录**：`behavioral-paradigms/`
 - **为什么值得关注**：很多系统并不落在纯反应式或纯审慎式两端，而是混合连续谱；这一点会影响对 planning、reflection 与 autonomy 的理解。
 - **当前状态**：已有目录占位，但 foundations 层的连续谱表达仍不充分。
 
 ### 3.2 Agent System Layers and Control Surfaces
 
-- **关联目录**：`agent-system-models/`、`05-environments/`
+- **关联目录**：`agent-system-modeling/`、`05-environments/`
 - **为什么值得关注**：model、memory、tools、workspace、permissions、human approval 等控制面之间的层次关系，决定了 agent 系统建模方式。
-- **当前状态**：相关线索已分散出现在 `02-single-agent/` 与 `05-environments/`，但 foundations 层仍缺统一抽象。
+- **当前状态**：相关线索已分散出现在 `02-single-agent/` 与 `05-environments/`，但 foundations 层仍缺统一抽象。Harness 外部调研进一步暴露了 control plane / governance / observability 与 harness 边界不清的问题，后续应优先作为边界问题核验，而不是直接归并为单一系统层。
 
 ### 3.3 Taxonomy Stability vs Market Terminology Drift
 
@@ -73,13 +75,13 @@
 
 ### 4.2 Agent runtime substrate 的统一抽象
 
-- **关联目录**：`agent-system-models/`
+- **关联目录**：`agent-system-modeling/`
 - **说明**：`runtime substrate`、`harness`、`execution fabric` 等表达可能会逐渐汇聚成新的系统模型主线。
 
 ---
 
 ## 五、与现有材料的关系
 
-- `agent-system-models/candidates.md` 当前保留 harness 方向的候选研究对象输入，但不替代 foundations backlog 本身。
+- `agent-system-modeling/candidates.md` 当前保留 harness 方向的候选研究对象输入，但不替代 foundations backlog 本身。
 - `definition-and-taxonomy/orchestration-paradigms.md` 已提供部分流程范式材料，后续可继续反哺 foundations 层边界整理。
 - 后续若某条线索证据充分，应下沉为对应子目录的正式专题，而不是长期停留在 backlog。

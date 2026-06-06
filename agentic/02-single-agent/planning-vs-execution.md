@@ -6,7 +6,7 @@
 
 ## 一、定位
 
-如果说 `planning/` 关注单智能体如何生成计划，`reasoning-and-acting/` 关注推理—行动—观察循环，那么本文件进一步讨论的是：**planning 与 execution 在系统中究竟应该多紧地耦合在一起**。
+如果说 `planning/` 关注单智能体如何生成计划，`reasoning-and-acting-loop/` 关注推理—行动—观察循环，那么本文件进一步讨论的是：**planning 与 execution 在系统中究竟应该多紧地耦合在一起**。
 
 在 single-agent 里，这不是一个小的实现细节，而是一条非常核心的设计轴。
 
@@ -214,9 +214,9 @@ planner 越薄，系统越轻；但任务和工具越复杂，缺少显式 orche
 
 - 与 `overview.md`：本文件展开其中 `Planning-Execution 耦合 vs 解耦` 这一核心结构性矛盾。
 - 与 `planning/README.md`：后者给出 planning 目录边界；本文件进一步讨论 planning 在系统中如何与 execution 组织关系。
-- 与 `reasoning-and-acting/README.md`：紧耦合端的大量模式会落到 reasoning-action loop 的局部循环中。
+- 与 `reasoning-and-acting-loop/README.md`：紧耦合端的大量模式会落到 reasoning-action loop 的局部循环中。
 - 与 `planning/plan-and-execute/README.md`：该目录对应解耦端的重要代表模式之一。
-- 与 `patterns/react/README.md`：该目录对应紧耦合端的重要代表模式之一。
+- 与 `architectural-patterns/react/README.md`：该目录对应紧耦合端的重要代表模式之一。
 - 与 `tool-use/README.md`：工具规模与调用复杂度会直接推动 planning / execution 关系的变化。
 - 与 `conflict.md`：对应 `Planning 是否必须显式存在` 这一条目，也为后续讨论 tool orchestration 提供主干支撑。
 

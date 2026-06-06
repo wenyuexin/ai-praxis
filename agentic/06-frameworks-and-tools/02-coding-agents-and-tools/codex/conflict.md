@@ -54,7 +54,7 @@
 | 字段 | 内容 |
 |------|------|
 | **冲突描述** | 基于 `https://github.com/openai/codex` 仓库核验，旧冲突已部分收敛：Codex CLI 存在明确本地执行路径，MCP 在代码配置层明确为 `stdio` + `streamable_http`。当前主要剩余的是术语精度问题（是否写成 HTTP/SSE）与 App 边界说明不足。 |
-| **涉及文档** | `https://github.com/openai/codex`（重点核验 `README.md`、`codex-rs/config/src/mcp_types.rs`、`codex-rs/cli/src/main.rs`、`codex-rs/core/src/tools/handlers/shell.rs`）；`agentic/06-frameworks-and-tools/02-coding-tools/codex/overview.md`；`agentic/06-frameworks-and-tools/02-coding-tools/codex/codex-agent-mechanisms.md` |
+| **涉及文档** | `https://github.com/openai/codex`（重点核验 `README.md`、`codex-rs/config/src/mcp_types.rs`、`codex-rs/cli/src/main.rs`、`codex-rs/core/src/tools/handlers/shell.rs`）；`agentic/06-frameworks-and-tools/02-coding-agents-and-tools/codex/overview.md`；`agentic/06-frameworks-and-tools/02-coding-agents-and-tools/codex/codex-agent-mechanisms.md` |
 | **冲突类型** | **术语 + 边界** — 事实冲突已显著下降，重点转为“传输术语精确化”和“产品形态边界补证” |
 | **当前证据** | `https://github.com/openai/codex` 仓库给出一手证据：1) CLI README 明确本地运行；2) MCP 类型为 `Stdio` 与 `StreamableHttp`；3) CLI 子命令含 `exec`、`sandbox`、`app`、`cloud`；4) shell handler 与多平台 shell 测试证明本地命令执行是设计能力。 |
 | **临时检索摘要** | 1) 可将“CLI 本地执行”从候选结论升级为主线事实；2) 可将“MCP 双形态”升级为主线事实，但表述建议用 `stdio + streamable_http`；3) Code Interpreter 不可外推到 CLI 的边界结论继续成立；4) App 执行细节仍弱证据，避免写死。 |

@@ -27,16 +27,16 @@
 ## 同目录导航
 
 - 当前跨目录主干专题：`planning-vs-execution.md`、`tool-centric-vs-monolithic.md`、`agent-vs-tool-workflow-boundary.md`。
-- 核心主题入口：`planning/`、`tool-use/`、`memory/`、`self-reflection/`、`reasoning-and-acting/`、`patterns/`。
+- 核心主题入口：`planning/`、`tool-use/`、`memory/`、`self-reflection/`、`reasoning-and-acting-loop/`、`architectural-patterns/`。
 
 ## 目录结构
 
 ```text
 02-single-agent/
 ├── memory/
-├── patterns/
+├── architectural-patterns/
 ├── planning/
-├── reasoning-and-acting/
+├── reasoning-and-acting-loop/
 ├── self-reflection/
 └── tool-use/
 ```

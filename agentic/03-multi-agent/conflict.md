@@ -1,7 +1,7 @@
 # Multi-Agent Conflict
 
 > 适用范围：`03-multi-agent/` 范围内的术语冲突、事实分歧、结论矛盾与待核验问题
-> 使用说明：本文件只记录会影响 `collaboration / coordination / communication-protocols / shared-memory / organizational / competition` 知识组织的问题；它是研究输入，不是主干定论
+> 使用说明：本文件只记录会影响 `collaboration / coordination / communication-protocols / shared-state-and-context / organizational / competition-and-conflict` 知识组织的问题；它是研究输入，不是主干定论
 
 ## 一、待核验问题
 
@@ -36,7 +36,7 @@
 
 - **冲突类型**：事实 / 结论
 - **冲突描述**：一种直觉认为多几个 agent 只是多几次模型调用；另一类证据强调 hidden coordination costs、状态同步、重复消息传播和潜在 loop 会带来显著非线性成本增长。
-- **涉及范围**：`coordination/`、`shared-memory/`、`overview.md`
+- **涉及范围**：`coordination/`、`shared-state-and-context/`、`overview.md`
 - **为什么重要**：若低估 hidden cost，multi-agent 文档会过度乐观，忽略真实工程代价。
 - **待核验问题**：哪些成本可被直接度量，哪些属于间接成本（如 error amplification、debugging complexity）？
 - **建议处理方向**：收集真实案例、系统论文和 benchmark 讨论，区分显性 token cost 与隐性协调成本。
@@ -45,7 +45,7 @@
 
 - **冲突类型**：结论 / 组织方式
 - **冲突描述**：不少资料仍以成功案例为主叙事，把失败视作边角问题；另一类研究则开始系统化分类多智能体 failure modes，认为失败模式本身就是理解 multi-agent 的核心入口。
-- **涉及范围**：`coordination/`、`collaboration/`、`shared-memory/`
+- **涉及范围**：`coordination/`、`collaboration/`、`shared-state-and-context/`
 - **为什么重要**：这关系到 `03-multi-agent/` 的组织逻辑，是按“协作成功模式”组织，还是按“收益与失败并存的机制系统”组织。
 - **待核验问题**：failure taxonomy 的成熟度如何？哪些类别已较稳定，哪些仍是探索性归纳？
 - **建议处理方向**：后续若证据充分，可将 failure modes 提升为独立专题，而非散落在案例中。

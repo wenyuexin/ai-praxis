@@ -9,7 +9,7 @@
 
 ## 快速入口
 
-- 结合上层 `../README.md` 理解 tool-use 与 reasoning-and-acting、memory、environments 的关系。
+- 结合上层 `../README.md` 理解 tool-use 与 reasoning-and-acting-loop、memory、environments 的关系。
 - 重点关注 API 调用、代码解释器、MCP、网页浏览与工具错误恢复。
 - 如出现工具协议、接口边界或版本口径冲突，优先记录到 `../conflict.md`；仅临时判断再落到 `../../temp/conflict.md`。
 

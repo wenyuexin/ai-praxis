@@ -248,7 +248,7 @@
 
 - 与 `overview.md`：本文件展开其中“不是所有高性能单智能体都需要显式 planner”这一提醒，并把它从一句 caution 变成完整专题。
 - 与 `planning/README.md`：后者定义 planning 目录边界；本文件进一步澄清 planning 重要，不等于显式 planner 必然是硬门槛。
-- 与 `patterns/react/README.md`：`ReAct` 是 planning 与 acting 紧耦合的重要代表，说明“无独立 planner”不等于“无规划能力”。
+- 与 `architectural-patterns/react/README.md`：`ReAct` 是 planning 与 acting 紧耦合的重要代表，说明“无独立 planner”不等于“无规划能力”。
 - 与 `planning/plan-and-execute/README.md`：后者代表 planning 显式分离的一端；本文件解释为什么它是路径之一，而不是唯一标准答案。
 - 与 `planning-vs-execution.md`：后者讨论 planning 与 execution 的耦合/解耦；本文件更基础地讨论 planning 是否必须以独立 planner 形式存在。
 - 与 `agent-vs-tool-workflow-boundary.md`：系统是否是 agent，关键在持续闭环而非是否有 planner；本文件在此基础上继续细化 planner 的必要性边界。

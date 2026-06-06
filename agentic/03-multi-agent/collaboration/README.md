@@ -17,7 +17,7 @@
 ## 边界说明
 
 - 放在这里：协作模式、角色划分、任务拆解、交接机制、合作收益与失败模式。
-- 不放在这里：消息协议与接口格式（放 `../communication-protocols/`）、调度与依赖控制（放 `../coordination/`）、共享状态管理（放 `../shared-memory/`）。
+- 不放在这里：消息协议与接口格式（放 `../communication-protocols/`）、调度与依赖控制（放 `../coordination/`）、共享状态管理（放 `../shared-state-and-context/`）。
 
 ## 同目录导航
 

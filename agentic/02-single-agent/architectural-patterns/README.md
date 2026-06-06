@@ -1,4 +1,4 @@
-# Patterns
+# Architectural Patterns
 
 > 适用范围：单智能体典型工作流模式与工程抽象研究
 > 阶段状态：调研优先，暂不收敛实现方案
@@ -9,14 +9,16 @@
 
 ## 快速入口
 
-- 结合上层 `../README.md` 理解 patterns 与 planning、tool-use、reasoning-and-acting 的联系。
+- 结合上层 `../README.md` 理解 architectural-patterns 与 planning、tool-use、reasoning-and-acting-loop 的联系。
 - 重点关注 ReAct、AutoGPT 风格流程、RA.Aid 等可迁移模式。
 - 如出现模式定义、机制边界或项目口径冲突，优先记录到 `../conflict.md`；仅临时判断再落到 `../../temp/conflict.md`。
 
 ## 边界说明
 
 - 放在这里：可复用工作流模式、典型执行闭环、跨机制组合范式、工程抽象模板。
-- 不放在这里：单一理论方法本身（放 `../planning/`、`../reasoning-and-acting/`）、具体框架案例全集（放 `../../06-frameworks-and-tools/`）。
+- 不放在这里：单一理论方法本身（放 `../planning/`、`../reasoning-and-acting-loop/`）、具体框架案例全集（放 `../../06-frameworks-and-tools/`）。
+- 当同一对象既可被讨论为抽象模式又可被研究为具体项目时，模式抽象放本目录，项目实现细节放 `../../06-frameworks-and-tools/`。
+- 本目录下的 `ra-aid/`、`autogpt-pattern/` 只保留模式层面的讨论；如果后续需要展开项目实现细节，应在 `../../06-frameworks-and-tools/` 中建立或引用对应对象。
 
 ## 同目录导航
 
@@ -27,9 +29,8 @@
 ## 目录结构
 
 ```text
-patterns/
+architectural-patterns/
 ├── autogpt-pattern/
-├── images/
 ├── ra-aid/
 └── react/
 ```

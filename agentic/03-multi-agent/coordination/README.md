@@ -19,7 +19,7 @@
 ## 边界说明
 
 - 放在这里：调度、依赖管理、执行顺序、冲突消解、协调成本、一致性维护。
-- 不放在这里：通信协议本身（放 `../communication-protocols/`）、协作分工模式（放 `../collaboration/`）、共享上下文与状态存储（放 `../shared-memory/`）。
+- 不放在这里：通信协议本身（放 `../communication-protocols/`）、协作分工模式（放 `../collaboration/`）、共享上下文与状态存储（放 `../shared-state-and-context/`）。
 
 ## 同目录导航
 

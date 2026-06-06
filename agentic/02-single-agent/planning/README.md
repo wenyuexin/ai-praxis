@@ -9,14 +9,14 @@
 
 ## 快速入口
 
-- 结合上层 `../README.md` 理解 planning 与 reasoning-and-acting、self-reflection 的关系。
+- 结合上层 `../README.md` 理解 planning 与 reasoning-and-acting-loop、self-reflection 的关系。
 - 重点关注计划生成、计划修正、任务分解、多步执行与失败后重规划。
 - 如出现规划术语、方法边界或论文结论冲突，优先记录到 `../conflict.md`；仅临时判断再落到 `../../temp/conflict.md`。
 
 ## 边界说明
 
 - 放在这里：任务分解、计划生成、计划修订、多步目标组织、重规划机制。
-- 不放在这里：推理—行动循环本身（放 `../reasoning-and-acting/`）、工具调用协议（放 `../tool-use/`）、多智能体协同调度（放 `../../03-multi-agent/coordination/`）。
+- 不放在这里：推理—行动循环本身（放 `../reasoning-and-acting-loop/`）、工具调用协议（放 `../tool-use/`）、多智能体协同调度（放 `../../03-multi-agent/coordination/`）。
 
 ## 同目录导航
 

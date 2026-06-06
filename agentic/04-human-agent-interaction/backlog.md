@@ -38,7 +38,7 @@
 
 ### 2.3 Agent UI 的最小必要可见性
 
-- **关联目录**：`agent-ui/`
+- **关联目录**：`interaction-surfaces/`
 - **为什么重要**：如果没有清晰的状态呈现与步骤可见性，用户难以判断 Agent 是否偏离目标；但展示过多信息也会制造认知负担。
 - **当前状态**：目录已建立，但尚无专题讨论任务面板、步骤可视化、artifact view、risk prompt 与 progress feedback 的最小组合。
 - **建议产物**：`minimum-visible-state.md`
@@ -62,7 +62,7 @@
 
 ### 3.2 Conversation UI vs Task UI
 
-- **关联目录**：`agent-ui/`
+- **关联目录**：`interaction-surfaces/`
 - **为什么值得关注**：对话式 UI 与任务面板式 UI 各自强调不同的心智模型，会显著影响可控性、可见性与协作效率。
 - **当前状态**：适合结合真实产品案例持续比较。
 

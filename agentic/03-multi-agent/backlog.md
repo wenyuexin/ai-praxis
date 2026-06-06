@@ -31,7 +31,7 @@
 
 ### 2.2 Failure Modes Catalog
 
-- **关联目录**：`coordination/`、`shared-memory/`、`communication-protocols/`
+- **关联目录**：`coordination/`、`shared-state-and-context/`、`communication-protocols/`
 - **为什么重要**：如果没有系统性失败分类，`03-multi-agent/` 容易被成功案例主导。错误放大、状态漂移、重复劳动、死锁、语义失配等都应被显式建模。
 - **现状**：已形成第一版专题 `coordination/failure-modes.md`，后续需要继续补 taxonomy、案例与定量证据。
 - **建议产物**：后续可拆成更细的失败模式专题。
@@ -45,7 +45,7 @@
 
 ### 2.4 Hidden Cost Modeling
 
-- **关联目录**：`coordination/`、`shared-memory/`
+- **关联目录**：`coordination/`、`shared-state-and-context/`
 - **为什么重要**：token redundancy、重复消息传播、隐性 loop、状态同步成本往往在工程实践中被低估。
 - **现状**：已有案例和定量线索，但主干中尚无位置系统承接。
 - **建议产物**：`hidden-costs.md`

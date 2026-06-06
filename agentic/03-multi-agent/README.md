@@ -10,12 +10,12 @@
 ## 快速入口
 
 - 从 `collaboration/`、`coordination/`、`communication-protocols/` 进入核心协作问题。
-- 从 `shared-memory/` 关注共享状态与上下文污染问题。
+- 从 `shared-state-and-context/` 关注共享状态与上下文污染问题。
 - 如遇证据冲突或口径不一致，统一记录到 `../temp/conflict.md`。
 
 ## 分类依据
 
-本目录按多智能体系统中的关键问题划分：协作、通信、协调、共享记忆、组织结构与竞争关系。
+本目录按多智能体系统中的关键问题划分：协作、通信、协调、共享状态与上下文、组织结构与竞争关系。
 
 ## 边界说明
 
@@ -24,7 +24,7 @@
 
 ## 同目录导航
 
-- 核心主题入口：`collaboration/`、`coordination/`、`communication-protocols/`、`shared-memory/`、`organizational/`、`competition/`。
+- 核心主题入口：`collaboration/`、`coordination/`、`communication-protocols/`、`shared-state-and-context/`、`organizational/`、`competition-and-conflict/`。
 - 建议优先从协作、协调与通信协议三条主线建立多智能体的基本结构。
 ## 目录结构
 
@@ -32,10 +32,10 @@
 03-multi-agent/
 ├── collaboration/
 ├── communication-protocols/
-├── competition/
+├── competition-and-conflict/
 ├── coordination/
 ├── organizational/
-└── shared-memory/
+└── shared-state-and-context/
 ```
 
 ## 与其他目录的关系

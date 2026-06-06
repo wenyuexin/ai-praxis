@@ -10,7 +10,7 @@
 ## 快速入口
 
 - 从 `../02-single-agent/`、`../03-multi-agent/` 理解 Agent 能力与协作形态，再回看人类如何介入这些执行闭环。
-- 从 `human-in-the-loop/`、`delegation-and-control/`、`agent-ui/`、`trust-and-alignment/` 进入核心子主题。
+- 从 `human-in-the-loop/`、`delegation-and-control/`、`interaction-surfaces/`、`trust-and-alignment/` 进入核心子主题。
 - 若后续出现术语冲突、边界重叠或口径不一致，可再补 `conflict.md`；当前以目录骨架和主题分工为主。
 
 ## 分类依据
@@ -19,7 +19,7 @@
 
 - `human-in-the-loop/`：人类在规划、执行、审核、纠偏与接管中的介入模式
 - `delegation-and-control/`：任务委托、权限约束、自动化程度与控制面设计
-- `agent-ui/`：Agent 面向用户的界面、状态呈现与操作入口
+- `interaction-surfaces/`：Agent 面向用户的交互表面、状态呈现与操作入口
 - `trust-and-alignment/`：信任建立、解释边界、行为预期与偏好对齐
 
 ## 边界说明
@@ -29,14 +29,14 @@
 
 ## 同目录导航
 
-- 核心主题入口：`human-in-the-loop/`、`delegation-and-control/`、`agent-ui/`、`trust-and-alignment/`。
+- 核心主题入口：`human-in-the-loop/`、`delegation-and-control/`、`interaction-surfaces/`、`trust-and-alignment/`。
 - 当前以主题占位和边界拆分为主，后续正文可优先围绕接管模式、自治与确认张力、用户心智模型与交互反馈展开。
 
 ## 目录结构
 
 ```text
 04-human-agent-interaction/
-├── agent-ui/
+├── interaction-surfaces/
 ├── delegation-and-control/
 ├── human-in-the-loop/
 └── trust-and-alignment/

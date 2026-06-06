@@ -1,4 +1,4 @@
-# Agent System Models（智能体系统模型）
+# Agent System Modeling（智能体系统建模）
 
 本目录用于沉淀 Agent 系统的总体模型、分层框架与信息流抽象，帮助连接基础定义、认知架构与后续工程实现。
 

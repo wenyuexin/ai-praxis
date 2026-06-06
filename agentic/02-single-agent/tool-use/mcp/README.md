@@ -18,6 +18,14 @@
 - 放在这里：MCP 的协议抽象、工具接入机制、上下文暴露、能力发现与安全边界。
 - 不放在这里：MCP 在具体框架或产品中的实现案例（放 `../../../06-frameworks-and-tools/` 相关目录）、多智能体通信中的一般协议问题（放 `../../../03-multi-agent/communication-protocols/`）。
 
+### 补充：MCP 在 single-agent 与 multi-agent 语境中的角色区分
+
+MCP 当前在 `tool-use/` 下的定位适用于 **single-agent 语境**：
+
+- 在 single-agent 语境下，MCP 作为工具发现、工具连接、工具调用和外部能力集成协议讨论。
+- MCP 的跨 agent 通信或多 agent 协议角色，应放到 `../../../03-multi-agent/communication-protocols/` 中讨论。
+- 两者通过交叉引用衔接；本轮不迁移 `tool-use/mcp/`。
+
 ## 同目录导航
 
 - 如后续需要整体综述，使用 `overview.md`。

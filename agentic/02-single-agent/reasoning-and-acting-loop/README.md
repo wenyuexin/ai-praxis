@@ -1,4 +1,4 @@
-# Reasoning and Acting
+# Reasoning and Acting Loop
 
 > 适用范围：单智能体中的推理—行动—观察循环研究
 > 阶段状态：调研优先，暂不收敛实现方案
@@ -22,5 +22,5 @@
 
 - 相关边界专题：`../agent-vs-tool-workflow-boundary.md`，用于理解 reasoning-action-observation loop 为什么是 agent 边界的关键组成。
 - 相关上位主轴：`../planning-vs-execution.md`，用于理解局部推理循环与显式规划之间的耦合关系。
-- 相关模式入口：`../patterns/react/README.md`，用于查看该执行循环在 `ReAct` 模式中的典型展开。
+- 相关模式入口：`../architectural-patterns/react/README.md`，用于查看该执行循环在 `ReAct` 模式中的典型展开。
 - 如发现 reasoning-and-acting 相关结论冲突，优先记录到 `../conflict.md`。

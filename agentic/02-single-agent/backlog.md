@@ -8,7 +8,7 @@
 适合进入本文件的内容通常满足以下条件之一：
 
 - 已被论文、官方文档、源码或高质量调研明确指出有研究价值
-- 能补齐 `planning / memory / tool-use / reflection / patterns` 之间的关键桥梁问题
+- 能补齐 `planning / memory / tool-use / reflection / architectural-patterns` 之间的关键桥梁问题
 - 代表 single-agent 研究中的核心矛盾、常见误区或新兴分岔
 - 尚不适合直接写入主干正文，但值得继续跟踪
 
@@ -78,7 +78,7 @@
 
 ### 4.1 新型 single-agent workflow pattern
 
-- **关联目录**：`patterns/`
+- **关联目录**：`architectural-patterns/`
 - **说明**：如 `RA.Aid`、AutoGPT 衍生模式等，适合持续观察其是否只是产品包装差异，还是确实代表新的能力组合方式。
 
 ### 4.2 新型 long-context / memory interaction pattern

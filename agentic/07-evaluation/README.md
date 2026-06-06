@@ -9,7 +9,7 @@
 
 ## 快速入口
 
-- 从 `agent-benchmarks/`、`swe-benchmarks/`、`observability-and-debugging/`、`papers/` 进入当前已有的主要子主题。
+- 从 `agent-benchmarks/`、`swe-benchmarks/`、`observability-and-debugging/` 进入当前已有的主要子主题。
 - 若关注环境如何影响评测可信度，可联动阅读 `../05-environments/`。
 - 若关注框架或工具在真实任务中的效果，可再回看 `../06-frameworks-and-tools/` 的对象案例。
 
@@ -23,7 +23,7 @@
 - `safety-and-robustness/`：安全性、稳定性、鲁棒性与失败边界
 - `human-evaluation/`：人工评估、主观反馈与协作体验验证
 - `observability-and-debugging/`：轨迹、日志、回放、归因与调试方法
-- `papers/`：评估相关论文与综述材料
+- `papers/` 与 `images/` 作为材料辅助目录，不承载独立主题分类
 
 ## 边界说明
 
@@ -32,7 +32,7 @@
 
 ## 同目录导航
 
-- 核心主题入口：`task-completion-metrics/`、`agent-benchmarks/`、`swe-benchmarks/`、`safety-and-robustness/`、`human-evaluation/`、`observability-and-debugging/`、`papers/`。
+- 核心主题入口：`task-completion-metrics/`、`agent-benchmarks/`、`swe-benchmarks/`、`safety-and-robustness/`、`human-evaluation/`、`observability-and-debugging/`。
 - 当前较适合优先补强的方向包括：任务成功标准、评测环境约束、轨迹归因与人工评估方法。
 
 ## 目录结构
@@ -41,9 +41,7 @@
 07-evaluation/
 ├── agent-benchmarks/
 ├── human-evaluation/
-├── images/
 ├── observability-and-debugging/
-├── papers/
 ├── safety-and-robustness/
 ├── swe-benchmarks/
 └── task-completion-metrics/

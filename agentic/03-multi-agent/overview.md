@@ -158,9 +158,9 @@
 - `collaboration/` 负责分工与互补
 - `coordination/` 负责依赖与全局一致性
 - `communication-protocols/` 负责交互结构
-- `shared-memory/` 负责共享上下文与状态传播
+- `shared-state-and-context/` 负责共享上下文与状态传播
 - `organizational/` 负责层级与治理
-- `competition/` 负责对抗、博弈与稳健性视角
+- `competition-and-conflict/` 负责对抗、博弈与稳健性视角
 
 ---
 

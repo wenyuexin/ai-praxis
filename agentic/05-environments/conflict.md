@@ -1,7 +1,7 @@
 # Environments Conflict
 
 > 适用范围：`05-environments/` 范围内的术语冲突、事实分歧、结论矛盾与待核验问题
-> 使用说明：本文件只记录会影响 `code-execution-environments / sandboxing-and-safety / browser-environments / simulated-environments / benchmarking-frameworks` 知识组织的问题；它是研究输入，不是主干定论
+> 使用说明：本文件只记录会影响 `code-execution-environments / sandboxing-and-safety / browser-environments / simulated-environments / evaluation-environments` 知识组织的问题；它是研究输入，不是主干定论
 
 ## 一、待核验问题
 
@@ -45,11 +45,11 @@
 ### 1.5 恢复连接能力是否等于文件系统可重建
 
 - **冲突类型**：术语 / 事实 / 结论力度
-- **当前较稳定结论**：当前更稳妥的主干口径应是把“恢复连接 / 恢复会话 / 恢复 sandbox 身份”和“恢复 workspace 文件系统状态”明确拆开。OpenHands 与 `software-agent-sdk` 的交叉源码已经能稳定支持前者：conversation-level persistence / restore、workspace backend 的 `pause()` / `resume()`、agent-server 的持久化 conversation 恢复、以及 `pause` / `interrupt` / `resume` 的不同暂停语义都已成立；但这些证据并不足以直接推出“完整工作目录可脱离原 runtime / volume / working_dir 连续性独立重建”。
-- **仍待核验部分**：在 DockerWorkspace、APIRemoteWorkspace、OpenHandsCloudWorkspace 与 agent-server 的具体恢复链路里，`working_dir` 与文件系统内容到底是被同一执行实体继续持有、被卷/挂载延续，还是能由 persisted events / trajectory / logical metadata 独立重建；不同系统里 replay engine 与 artifact traceability 是否足以承担文件系统恢复职责。
-- **涉及范围**：`code-execution-environments/workspace-lifecycle.md`、`code-execution-environments/workspace-checkpoint.md`、`code-execution-environments/rollback-recovery-design-paths.md`、`../06-frameworks-and-tools/03-project-studies/openhands/official-docs.md`、`../06-frameworks-and-tools/03-project-studies/openhands/runtime-and-sandbox.md`
-- **为什么重要**：如果把 conversation restore 直接写成 workspace checkpoint / filesystem restore，就会把恢复语义、traceability、checkpoint 粒度和 runtime 连续性全部混成一件事，导致环境层关于 recovery、checkpoint 与 sharing model 的边界持续失真。
-- **Source / Trace**：该问题最初在 `official-docs.md` 中表现为官方文档对 `persistence_dir`、`base_state.json` 与 `events/` 的恢复表述容易被过度外推；随后在 `runtime-and-sandbox.md` 的 OpenHands + `software-agent-sdk` 交叉源码核验中进一步收敛为：当前证据更支持“先恢复 conversation / runtime identity，再尽量沿用既有 runtime / volume / working_dir 连续性”，而不是“已经证明可单靠 replay 或逻辑状态重建完整工作域”。
+- **当前较稳定结论**：当前更稳妥的主干口径应是把“恢复连接 / 恢复会话 / 恢复 sandbox 身份”和“恢复 workspace 文件系统状态”明确拆开。OpenHands 与 `software-agent-sdk` 的交叉源码已经能稳定支持前者：conversation-level persistence / restore、workspace backend 的 `pause()` / `resume()`、agent-server 的持久化 conversation 恢复、以及 `pause` / `interrupt` / `resume` 的不同暂停语义都已成立；但这些证据并不足以直接推出“完整工作目录可脱离原 runtime / volume / working_dir 连续性独立重建”。LangGraph 也从另一侧提供了稳定 stop-line：`thread_id` / checkpoint 支撑的是 graph runtime state 的 durable execution、interrupt / resume、time-travel replay / fork，而不是默认的 workspace 文件系统、容器或外部副作用恢复。SWE-agent 则进一步说明，trajectory replay 与 `git reset --hard` 更接近 per-task repo baseline 恢复；即使能回到 `base_commit` 并重放 actions，也不等于完整 workspace 文件系统或外部状态可被独立重建。
+- **仍待核验部分**：在 DockerWorkspace、APIRemoteWorkspace、OpenHandsCloudWorkspace 与 agent-server 的具体恢复链路里，`working_dir` 与文件系统内容到底是被同一执行实体继续持有、被卷/挂载延续，还是能由 persisted events / trajectory / logical metadata 独立重建；不同系统里 replay engine 与 artifact traceability 是否足以承担文件系统恢复职责；conversation identity、repo baseline、graph thread state 这三类恢复锚点能否形成更稳定的环境层分类框架。
+- **涉及范围**：`code-execution-environments/workspace-lifecycle.md`、`code-execution-environments/workspace-checkpoint.md`、`code-execution-environments/rollback-recovery-design-paths.md`、`../06-frameworks-and-tools/03-project-studies/openhands/official-docs.md`、`../06-frameworks-and-tools/03-project-studies/openhands/runtime-and-sandbox.md`、`../06-frameworks-and-tools/03-project-studies/swe-agent/environment-and-execution.md`、`../06-frameworks-and-tools/01-frameworks/langgraph/checkpoint-and-persistence.md`、`../06-frameworks-and-tools/01-frameworks/langgraph/human-in-the-loop.md`
+- **为什么重要**：如果把 conversation restore、trajectory replay 或 graph checkpoint 直接写成 workspace checkpoint / filesystem restore，就会把恢复语义、traceability、checkpoint 粒度和 runtime 连续性全部混成一件事，导致环境层关于 recovery、checkpoint 与 sharing model 的边界持续失真。
+- **Source / Trace**：该问题最初在 `official-docs.md` 中表现为官方文档对 `persistence_dir`、`base_state.json` 与 `events/` 的恢复表述容易被过度外推；随后在 `runtime-and-sandbox.md` 的 OpenHands + `software-agent-sdk` 交叉源码核验中进一步收敛为：当前证据更支持“先恢复 conversation / runtime identity，再尽量沿用既有 runtime / volume / working_dir 连续性”，而不是“已经证明可单靠 replay 或逻辑状态重建完整工作域”。近期对 `swe-agent/environment-and-execution.md` 与 LangGraph checkpoint / interrupt 文档的对照又进一步补强了这条边界：SWE-agent 的 replay 更接近 action replay on repo baseline，LangGraph 的 replay / resume 更接近 workflow state recovery。
 - **建议处理方向**：主干已可把“恢复连接能力 ≠ 文件系统可重建”写成稳定边界；后续不再争论是否存在恢复，而是重点比较不同系统把恢复能力落在哪一层，以及这些层之间的耦合强度。
 
 ### 1.6 Workspace Traceability 应以什么为核心组织单位

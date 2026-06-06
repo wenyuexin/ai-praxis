@@ -8,7 +8,7 @@
 
 ### 1.1 主干收录信号
 
-对象进入 `01-frameworks/`、`02-coding-tools/`、`03-project-studies/`、`04-skill-and-tool-systems/` 等主干目录前，至少应满足若干信号：
+对象进入 `01-frameworks/`、`02-coding-agents-and-tools/`、`03-project-studies/`、`04-skill-and-tool-systems/` 等主干目录前，至少应满足若干信号：
 
 - 有明确官方文档、GitHub 仓库、论文或技术报告
 - 有稳定 API、版本路线或持续维护记录
@@ -54,11 +54,11 @@
 
 | 对象 | 候选归属 | 观察理由 | 状态 |
 |------|----------|----------|------|
-| `OpenHands / OpenDevin` | `02-coding-tools/` | 开源 coding agent 代表，和 SWE-bench 生态关联强 | 候选主干 |
-| `SWE-agent` | `02-coding-tools/` | 软件工程任务 Agent 代表项目 | 待调研 |
-| `Cline` | `02-coding-tools/` | IDE 内编码 Agent 工具，产品形态有代表性 | 待调研 |
-| `GitHub Next Ace` | `02-coding-tools/` | GitHub Next research prototype，关注团队部署 coding agents 的 alignment bottleneck | research prototype，先观察 |
-| `LocAgent` | `02-coding-tools/` 或 `07-evaluation/swe-benchmarks/` 相关引用 | 图引导代码定位，可能成为 coding agent 标准组件 | 学术项目，先观察 |
+| `OpenHands / OpenDevin` | `02-coding-agents-and-tools/` | 开源 coding agent 代表，和 SWE-bench 生态关联强 | 候选主干 |
+| `SWE-agent` | `02-coding-agents-and-tools/` | 软件工程任务 Agent 代表项目 | 待调研 |
+| `Cline` | `02-coding-agents-and-tools/` | IDE 内编码 Agent 工具，产品形态有代表性 | 待调研 |
+| `GitHub Next Ace` | `02-coding-agents-and-tools/` | GitHub Next research prototype，关注团队部署 coding agents 的 alignment bottleneck | research prototype，先观察 |
+| `LocAgent` | `02-coding-agents-and-tools/` 或 `07-evaluation/swe-benchmarks/` 相关引用 | 图引导代码定位，可能成为 coding agent 标准组件 | 学术项目，先观察 |
 
 ### 2.3 Project Studies 候选
 
@@ -66,7 +66,7 @@
 |------|----------|----------|------|
 | `OpenClaw` | `03-project-studies/openclaw/` | 自托管 AI 自动化执行引擎，适合作完整系统案例 | 已创建目录 |
 | `Hermes Agent` | `03-project-studies/hermes-agent/` | 记忆、技能、网关、上下文、自动化等完整模块拆解 | 已在主干 |
-| `Ruflo` | `03-project-studies/` 或 `02-coding-tools/` | Claude Code 编排平台，若资料可靠可做系统案例 | 证据不足，观察中 |
+| `Ruflo` | `03-project-studies/` 或 `02-coding-agents-and-tools/` | Claude Code 编排平台，若资料可靠可做系统案例 | 证据不足，观察中 |
 | `Agency` | `03-project-studies/` 或 `01-frameworks/` | 多 Agent 编排热度高，但需核验官方资料与差异性 | 证据不足，观察中 |
 
 ### 2.4 Skill / Tool Systems 候选
@@ -91,8 +91,8 @@
 | `Hindsight` | Memory architecture | 多网络结构化记忆，探索“记忆作为一等执行对象” | 理论归 `02-single-agent/memory/` |
 | `ATOM` | Multi-agent collaboration | 将预算控制作为多 Agent 协作一等设计目标 | 理论归 `03-multi-agent/coordination/` |
 | `Fault-Tolerant Sandboxing` | Execution safety | 事务性沙箱，把回滚和安全拦截引入 Agent 执行环境 | 主归属 `05-environments/sandboxing-and-safety/` |
-| `AG-UI` | Agent UI protocol | Agent 与 UI 的交互协议标准化方向 | 主归属 `04-human-agent-interaction/agent-ui/` |
-| `Code as Agent Harness` | Methodology | 将代码视为 Agent harness 的方法论框架；相关候选研究对象见 `../01-foundations/agent-system-models/candidates.md` | 主归属 `01-foundations/agent-system-models/` |
+| `AG-UI` | Agent UI protocol | Agent 与 UI 的交互协议标准化方向 | 主归属 `04-human-agent-interaction/interaction-surfaces/` |
+| `Code as Agent Harness` | Methodology | 将代码视为 Agent harness 的方法论框架；相关候选研究对象见 `../01-foundations/agent-system-modeling/candidates.md` | 主归属 `01-foundations/agent-system-modeling/` |
 
 ### 3.2 P1：一般观察
 
@@ -131,7 +131,7 @@
 ## 五、后续建设建议
 
 1. 优先补 `01-frameworks/` 中 LangGraph、AutoGen、CrewAI、Semantic Kernel、MAF 的正式对象文档。
-2. 补 `02-coding-tools/` 中 OpenHands / SWE-agent / Cline 的初步调研。
+2. 补 `02-coding-agents-and-tools/` 中 OpenHands / SWE-agent / Cline 的初步调研。
 3. 把 `OpenClaw` 拆成 architecture、safety、ecosystem 等专题文档。
 4. 在 `05-comparisons/` 中建立 `framework-selection.md` 和 `coding-agent-products.md`。
 5. 将 memory、multi-agent、sandbox、evaluation 等前沿对象分别回流到 `02/03/05/07` 的 backlog 或专题文档中，避免全部堆在 `06`。

@@ -16,9 +16,9 @@
 ## 边界说明
 
 - 放在这里：消息格式、通信协议、同步机制、协作接口、协议状态转换。
-- 不放在这里：任务分工与协作模式（放 `../collaboration/`）、调度与依赖控制（放 `../coordination/`）、共享状态本身（放 `../shared-memory/`）。
+- 不放在这里：任务分工与协作模式（放 `../collaboration/`）、调度与依赖控制（放 `../coordination/`）、共享状态本身（放 `../shared-state-and-context/`）。
 
 ## 同目录导航
 
 - 建议结合 `../collaboration/README.md` 查看协议结构如何支撑角色协作。
-- 建议结合 `../shared-memory/README.md` 区分消息交换与共享状态同步的边界。
+- 建议结合 `../shared-state-and-context/README.md` 区分消息交换与共享状态同步的边界。

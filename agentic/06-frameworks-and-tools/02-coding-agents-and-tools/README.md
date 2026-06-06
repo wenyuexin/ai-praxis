@@ -1,11 +1,11 @@
-# Coding Tools（编码智能体工具）
+# Coding Agents and Tools（编码智能体与工具）
 
 本目录用于沉淀面向软件工程任务的 Agent 工具与产品，包括 IDE、CLI、云端编码 Agent 与代码自动化工作流。
 
 ## 目录结构
 
 ```text
-02-coding-tools/
+02-coding-agents-and-tools/
 ├── claude-code/
 ├── claw-code/
 └── codex/

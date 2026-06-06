@@ -16,7 +16,7 @@
 ## 边界说明
 
 - 放在这里：层级结构、团队形态、角色制度、治理机制、中央化与去中心化权衡。
-- 不放在这里：具体通信协议（放 `../communication-protocols/`）、任务级调度（放 `../coordination/`）、共享状态存储（放 `../shared-memory/`）。
+- 不放在这里：具体通信协议（放 `../communication-protocols/`）、任务级调度（放 `../coordination/`）、共享状态存储（放 `../shared-state-and-context/`）。
 
 ## 同目录导航
 

@@ -1,4 +1,4 @@
-# Competition
+# Competition and Conflict
 
 > 适用范围：多智能体竞争、博弈与稳健性研究
 > 阶段状态：调研优先，暂不收敛实现方案
@@ -16,7 +16,7 @@
 ## 边界说明
 
 - 放在这里：竞争关系、博弈模型、资源争用、对抗行为、稳健性与失控风险。
-- 不放在这里：正常协作分工（放 `../collaboration/`）、调度与控制机制（放 `../coordination/`）、共享上下文与状态同步（放 `../shared-memory/`）。
+- 不放在这里：正常协作分工（放 `../collaboration/`）、调度与控制机制（放 `../coordination/`）、共享上下文与状态同步（放 `../shared-state-and-context/`）。
 
 ## 同目录导航
 

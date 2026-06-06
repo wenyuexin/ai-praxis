@@ -13,7 +13,7 @@
 **当前结论**：已改为对象视角组织：
 
 - `01-frameworks/`
-- `02-coding-tools/`
+- `02-coding-agents-and-tools/`
 - `03-project-studies/`
 - `04-skill-and-tool-systems/`
 - `05-comparisons/`
