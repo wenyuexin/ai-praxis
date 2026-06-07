@@ -66,7 +66,7 @@ Reactive 与 deliberative 代表两种极端设计哲学：
 
 系统模型试图把认知架构、执行编排、工具系统、记忆系统、协议、环境、治理等放在同一个上位解释框架中。
 
-当前在这个方向上最重要的信号来自 harness 视角。harness 正在从**工程术语**演化为**系统模型概念**：它尝试统一解释 runtime substrate、observability、execution control、memory 协调与权限治理的上位层。这一演进轨迹在多篇论文和工程实践中有独立证据（`candidates.md` 已列出相关候选对象），但当前仍处于候选研究对象收集阶段，尚未收敛为 foundations 层正式专题。
+当前在这个方向上最重要的信号来自 harness 视角。harness 正在从**工程术语**演化为**系统模型概念**：它尝试统一解释 runtime substrate、observability、execution control、memory 协调与权限治理的上位层。这一演进轨迹在多篇论文和工程实践中有独立证据；当前仓库已不只是候选对象排队阶段，而是进入了**候选对象跟踪 + 多篇论文笔记成形 + 继续复核剩余证据边界**的状态（见 `agent-system-modeling/candidates.md`、`agent-system-modeling/2605.13357_AI_Harness_Engineering.md` 与 `agent-system-modeling/ETCLOVG_Harness_Survey.md`），但仍未收敛为 foundations 层正式专题。
 
 ---
 
@@ -135,7 +135,7 @@ Reactive 与 deliberative 代表两种极端设计哲学：
 以下方向从 overview 视角看**还不适合直接写成定论**，但值得在 `backlog.md` 或专题文件继续跟踪：
 
 1. **Agent 工作定义的稳定性**：随着产业界对 agent 定义的漂移，“持续执行循环”这一工作定义是否足够区分 agent 与 agentic workflow，需要持续检验。更适合进入 `definition-and-taxonomy/` 专题或 `backlog.md`。
-2. **Harness 作为系统模型的收敛**：当前 harness 从工程术语走向系统模型概念的信号已足够明确，但仍主要在 candidate 阶段。如果后续有更多案例支持或正式专题产出，可以考虑升级为 foundations 层正式专题。
+2. **Harness 作为系统模型的收敛**：当前 harness 从工程术语走向系统模型概念的信号已足够明确，且已进入多篇论文笔记成形与剩余证据边界继续复核阶段；但它仍未收敛为 foundations 层正式专题。如果后续有更多案例支持，或 `agent-system-modeling/` 下形成更稳定的总论，再考虑升级为正式专题。
 3. **认知架构与编排架构的统一表述**：Externalization 的 4-pillar 框架、orchestration-paradigms 的 4-paradigm 框架、topology 的 4-type 框架之间是否存在更上位的统一结构，当前还不清楚。更适合在 `backlog.md` 中持续跟踪。
 4. **Reactive / Deliberative 连续谱的工程映射**：连续谱的概念框架已有，但如何映射到具体的 planning / reflection / autonomy 设计决策，仍然缺乏系统化整理。适合放入 `behavioral-paradigms/` 专题。
 5. **Terminology 漂移的记录机制**：当前仓库对 workflow / agent / agentic workflow 的定义是基于当前状态的便利工作定义。如果产业界在这些术语上的口径持续变化，需要有一个轻量机制来记录不同来源的口径差异。适合进入 `definition-and-taxonomy/`。
@@ -155,10 +155,10 @@ Reactive 与 deliberative 代表两种极端设计哲学：
 ## Evidence
 
 - Status: `Observed / Inferred`
-- Sources: `02-single-agent/overview.md`（agent 最小工作定义、执行循环描述）、`cognitive-architectures/Externalization_2604.08224.md`（外部化 4-pillar 框架）、`definition-and-taxonomy/orchestration-paradigms.md`（4 范式分类）、`agent-system-modeling/candidates.md`（harness 候选对象集）、`01-foundations/backlog.md`（P0 缺口定义）
+- Sources: `02-single-agent/overview.md`（agent 最小工作定义、执行循环描述）、`cognitive-architectures/Externalization_2604.08224.md`（外部化 4-pillar 框架）、`definition-and-taxonomy/orchestration-paradigms.md`（4 范式分类）、`agent-system-modeling/candidates.md`（harness 候选对象集与阅读顺序）、`agent-system-modeling/2605.13357_AI_Harness_Engineering.md`（runtime substrate 方向论文笔记）、`agent-system-modeling/ETCLOVG_Harness_Survey.md`（生态分类方向论文笔记）、`01-foundations/backlog.md`（P0 缺口定义）
 - Trace: 从 `round5-feedback.md` 的“首选方向 = 01-foundations 概念底座补齐”出发，基于当前已有积累完成 foundations 层概念总览，并在后续重构中收缩重复与越界内容
 - Needs: 随着 `02`–`07` 继续建设，本文件的定义可能需要同步更新；特别是 agent 工作定义和 harness 概念的系统化程度
 
 ---
 
-*最后更新: 2026-06-06*
+*最后更新: 2026-06-08*

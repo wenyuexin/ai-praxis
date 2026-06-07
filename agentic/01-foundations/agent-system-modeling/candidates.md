@@ -12,8 +12,8 @@
 | 对象 | 类型 | 关联问题 | 为什么值得研究 | 当前状态 | 产出链接 |
 |------|------|----------|----------------|----------|----------|
 | **Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering** | paper | Agent Harness as System Model / Cognitive Architecture vs Orchestration Architecture | 已从认知架构视角给出 harness 的统一理论坐标，可作为阅读其他 harness 论文的上位框架；下一步需要基于论文原文补齐 harness 作为 unification layer 的精读证据 | 已完成；优先复核 | `../cognitive-architectures/Externalization_2604.08224.md` |
-| **AI Harness Engineering: A Runtime Substrate for Foundation-Model Software Agents** | paper | Agent Harness as System Model | 直接使用 `runtime substrate` 表述，是 foundations 层最关键的概念信号之一；优先用于核验 harness 是否可作为 runtime substrate / system modeling 对象 | 优先精读 | - |
-| **LLM Harness / Harness Engineering Survey（ETCLOVG 分类）** | survey / project | Agent Harness as System Model | 外部调研称其提供 ETCLOVG 七层分类与公开条目映射；适合补充 Externalization 偏理论、AI Harness Engineering 偏定义的不足，但需要先核验原始 PDF / 项目页 | 待核验 | - |
+| **AI Harness Engineering: A Runtime Substrate for Foundation-Model Software Agents** | paper | Agent Harness as System Model | 直接使用 `runtime substrate` 表述，是 foundations 层最关键的概念信号之一；当前已形成论文笔记，可继续用于复核 harness 是否可作为 runtime substrate / system modeling 对象，以及 H0–H3、trace-based evaluation 等判断的可推广边界 | 已形成笔记；优先复核 | `2605.13357_AI_Harness_Engineering.md` |
+| **LLM Harness / Harness Engineering Survey（ETCLOVG 分类）** | survey / project | Agent Harness as System Model | 已完成基于 `main.pdf`、项目主页与 `awesome-agent-harness` 清单的首轮精读，现可作为补充 Externalization 偏理论、AI Harness Engineering 偏定义不足的生态分类材料；但第 2–5 个开放问题的逐条原文展开仍需继续复核 | 已形成笔记；继续复核 | `ETCLOVG_Harness_Survey.md` |
 | **Natural-Language Agent Harnesses** | paper | Agent Harness as System Model | 明确把 harness 提升为一等研究对象，并提出自然语言规范 + runtime 的双层结构；适合作为可编程性 / 可移植性方向的补充材料 | 次级精读 | - |
 | **Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses** | paper | Agent Harness as System Model | 将 observability 与 harness evolution 直接绑定，能连接 system modeling 与执行反馈闭环；适合用于核验 observability 是 harness 内在维度还是演化驱动 | 次级精读 | - |
 | **Meta-Harness: End-to-End Optimization of Model Harnesses** | paper | Agent Harness as System Model | 代表 harness 自动搜索与端到端优化方向，能补足 harness 从静态配置走向自演化系统的视角 | 后续参考 | - |
@@ -29,8 +29,8 @@
 
 ## 四、当前阅读顺序
 
-- **第一优先级**：复核 `Externalization in LLM Agents` 与精读 `AI Harness Engineering`，先确认 harness 作为 unification layer / runtime substrate 的最小概念轮廓。
-- **第二优先级**：核验 ETCLOVG 分类综述是否能提供更系统的生态映射，再选择 `Natural-Language Agent Harnesses` 或 `Agentic Harness Engineering` 补充可编程性、可观测性与演化视角。
+- **第一优先级**：继续复核 `Externalization in LLM Agents` 与 `AI Harness Engineering`，先把 harness 作为 unification layer / runtime substrate 的最小概念轮廓压实，再判断哪些结论可以上升为更稳定的 foundations 层表述。
+- **第二优先级**：继续复核 `ETCLOVG_Harness_Survey.md` 中第 2–5 个开放问题的原文展开，同时再选择 `Natural-Language Agent Harnesses` 或 `Agentic Harness Engineering` 补充可编程性、可观测性与演化视角。
 - **暂缓平均精读**：`Meta-Harness`、`The Last Harness You'll Ever Build`、`Effective Harness Engineering`、`Affordance Agent Harness` 更适合作为后续实证或特定任务域对照。
 
 ## 五、与其他文件的关系

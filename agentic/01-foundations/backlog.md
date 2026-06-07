@@ -32,9 +32,9 @@
 
 - **关联目录**：`agent-system-modeling/`
 - **为什么重要**：`harness` 正在从工程术语演化为理解 agent runtime substrate、observability、execution control 的上位模型。
-- **现状**：已有 `agent-system-modeling/candidates.md` 收集 harness 方向的候选研究对象，当前它提供上游对象输入，但尚未沉淀为 foundations 层正式专题。外部调研输入显示，当前更适合先围绕 `Externalization in LLM Agents` 与 `AI Harness Engineering` 做精读核验，而不是直接写 harness 总论。
-- **待核验问题**：Harness 与 cognitive architecture 是互补还是竞争性上位框架？Harness 与 orchestration / runtime / inference 的分工层次如何划分？Observability 是 harness 的内在维度，还是驱动 harness evolution 的使能能力？Governance / permissions 应归入单 agent harness 内部，还是视为跨 agent 的 external control plane？Harness 成熟度是否能形成可复用的 H0–H3 或类似阶梯？
-- **Evidence need**：论文原文精读、官方项目材料、上游仓库或生产级案例对照；当前外部调研只能作为 `Observed / Inferred` 输入，不足以写成主线定论。
+- **现状**：`agent-system-modeling/candidates.md` 已不只是候选对象排队入口；当前这一方向已经形成多篇论文笔记，包括 `Externalization_2604.08224.md`、`2605.13357_AI_Harness_Engineering.md` 与 `ETCLOVG_Harness_Survey.md`，并进入“已形成初步概念轮廓、但仍需继续复核剩余证据边界”的阶段。不过，这些材料目前仍更适合支撑 `candidate / backlog / overview` 层的判断，尚未沉淀为 foundations 层正式专题。
+- **待核验问题**：Harness 与 cognitive architecture 是互补还是竞争性上位框架？Harness 与 orchestration / runtime / inference 的分工层次如何划分？Observability 是 harness 的内在维度，还是驱动 harness evolution 的使能能力？Governance / permissions 应归入单 agent harness 内部，还是视为跨 agent 的 external control plane？Harness 成熟度是否能形成可复用的 H0–H3 或类似阶梯？其中来自 `agent-system-modeling/2605.13357_AI_Harness_Engineering.md` 的直接启发包括：Harness 边界是否会膨胀到接近“系统设计”的同义词；固定模型下成立的 H0–H3 ladder 在换模型后是否仍保留相同解释力；trace-based evaluation 的证据生产成本由谁承担；论文中的 H0 基线是否足以代表当前工业实践。来自 `agent-system-modeling/ETCLOVG_Harness_Survey.md` 的继续待核验点包括：ETCLOVG 七层与更一般的 harness system model 之间到底是分类法关系、局部视角，还是可上升为更强系统框架的候选；以及 survey 中第 2–5 个开放问题的逐条原文展开，在恢复完整前应避免过度上升为主题级定论。
+- **Evidence need**：论文原文精读、官方项目材料、上游仓库或生产级案例对照；当前已可使用论文笔记中的 `Observed / Inferred` 积累来支撑 backlog 层问题意识，但仍不足以直接写成 foundations 层正式总论。
 
 ### 2.3 Cognitive Architecture vs Orchestration Architecture
 
