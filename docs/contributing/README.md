@@ -22,6 +22,8 @@ docs/contributing/
 ├── research-artifacts.md              # 子领域研究、案例研究与研究辅助材料组织
 ├── metadata-files.md                  # README / overview / backlog 等元信息文件模型
 ├── readme-rules.md                    # README 出现条件、展开深度与导航边界
+├── organization-principles.md         # 知识树设计、分类轴与长期组织原则
+├── structure-refactoring-rules.md     # 目录重构、导航收敛与结构演进规则
 ├── evidence-and-traceability.md       # Evidence + Traceability 组合执行入口
 ├── evidence-rules.md                  # Claim / Evidence / Status / 标注方式
 └── traceability-rules.md              # Source / Decision / Placement / Gap 规则
@@ -33,6 +35,18 @@ docs/contributing/
 
 本目录文件不使用数字编号，也不要求从上到下通读。推荐阅读方式是：先根据当前任务类型选择最相关的规则文件；如果不确定该读哪一个，再用本文件定位规则入口。只有需要 Evidence、Traceability、README 或元信息细则时，再进入对应细则文件。
 
+## 先读哪篇
+
+可按下面的职责边界快速定位：
+
+- **为什么这样组织知识**：先读 [文档组织原则](./organization-principles.md)
+- **已经决定重构后怎么低风险执行**：先读 [结构重构规则](./structure-refactoring-rules.md)
+- **README 应该展开到几级、如何导航**：先读 [README 规则](./readme-rules.md)
+- **`README.md` / `overview.md` / `backlog.md` 等文件各自做什么**：先读 [元信息文件模型](./metadata-files.md)；如果想看单篇文档的文档头信息与尾注信息如何摆放，也看该文附录
+- **研究对象、案例研究、辅助材料如何组织**：先读 [研究产物组织规则](./research-artifacts.md)
+- **新材料、外部调研、`temp/` 内容如何判断与分流**：先读 [材料处理与文档增改流程](./documentation-workflow.md)
+- **证据状态和轻量链路如何一起使用**：先读 [Evidence 与 Traceability 工作流](./evidence-and-traceability.md)
+
 已拆分规则：
 
 - [研究产物组织规则](./research-artifacts.md)：定义子领域研究、具体案例研究、研究辅助材料的组织方式。
@@ -41,4 +55,6 @@ docs/contributing/
 - [Evidence 规则](./evidence-rules.md)：定义 Claim、Evidence 状态、来源类型、标注密度、正文标注方式和主题级 evidence registry 的启用条件。
 - [Traceability 规则](./traceability-rules.md)：定义 Source / Decision / Placement / Gap 四个轻量链路字段。
 - [README 规则](./readme-rules.md)：定义 README 出现条件、目录树展开深度、导航边界和类型化结构建议。
+- [文档组织原则](./organization-principles.md)：定义知识树设计、分类轴一致性、长期主义、材料目录与知识目录分离等上位组织原则。
+- [结构重构规则](./structure-refactoring-rules.md)：定义目录改名、结构迁移、README 导航收敛、材料目录治理与结构经验沉淀原则。
 - [元信息文件模型](./metadata-files.md)：定义 `README.md`、`overview.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 等文件的职责边界。

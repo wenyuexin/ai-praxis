@@ -23,11 +23,11 @@
 - `safety-and-robustness/`：安全性、稳定性、鲁棒性与失败边界
 - `human-evaluation/`：人工评估、主观反馈与协作体验验证
 - `observability-and-debugging/`：轨迹、日志、回放、归因与调试方法
-- `papers/` 与 `images/` 作为材料辅助目录，不承载独立主题分类
 
 ## 边界说明
 
 - 放在这里：benchmark、指标设计、人工评估、可观测性、调试、失败分析与可靠性验证。
+- `papers/` 与 `images/` 只作为材料辅助目录存在，不承载独立主题分类。
 - 不放在这里：Agent 内部能力机制（放 `../02-single-agent/`）、多智能体组织机制（放 `../03-multi-agent/`）、运行环境本体（放 `../05-environments/`）、具体产品案例（放 `../06-frameworks-and-tools/`）。
 
 ## 同目录导航
