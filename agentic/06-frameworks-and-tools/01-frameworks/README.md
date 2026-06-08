@@ -10,6 +10,7 @@
 ├── crewai/
 ├── langchain-agents/
 ├── langgraph/
+├── openai-agents-sdk/
 └── README.md
 ```
 
@@ -28,6 +29,7 @@
 - `crewai/`
 - `langchain-agents/`
 - `langgraph/`
+- `openai-agents-sdk/`
 
 后续可考虑补充：
 

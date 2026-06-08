@@ -201,6 +201,7 @@ LangGraph 的补证结果进一步强化了这条 stop-line：一个系统可以
 - workspace 等于容器中的某个目录路径
 - rollback 只有一种合理实现路径
 - 恢复连接 / 会话恢复自动等于 workspace 文件系统可独立重建
+- 只要官方文档列出 session / sandbox / tracing / state 模块，就自动等于 runtime/job resume 或 workspace recovery 已被证实
 - 环境调度慢主要是 Python 语言性能问题
 - 更强隔离一定意味着更优系统设计
 

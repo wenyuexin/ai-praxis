@@ -65,6 +65,7 @@
 - **Evidence 回答结论支撑**：某个正文 Claim 凭什么成立、Evidence 状态是什么、来源和限制是什么。
 - **Notes 是原材料池**：可以包含源码片段、搜索路径、失败搜索、长引用、临时判断和待查问题，允许杂乱和未完成。
 - **Evidence 是论证结构**：应围绕 Claim / Status / Sources / Notes / Needs 等字段组织，服务正文可信度和复核。
+- **代码库研究需要版本语义**：当 notes 或 evidence 指向开源代码库时，应遵守 [`evidence-rules.md`](./evidence-rules.md) 的版本基线规则和 [`traceability-rules.md`](./traceability-rules.md) 的版本链路字段要求。
 
 因此，`notes/evidence.md` 或 `evidence-notes.md` 不是普通杂项 notes，而是从 notes 原材料中整理出来的 claim-source 对照层。正文中的关键判断应优先引用正文 `## Evidence` 或 `notes/evidence.md`，而不是要求读者从 `notes/general.md`、`notes/source.md` 这类过程材料中自行还原论证。
 

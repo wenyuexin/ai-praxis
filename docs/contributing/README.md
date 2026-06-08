@@ -18,6 +18,7 @@
 ```text
 docs/contributing/
 ├── README.md                         # 本目录索引：按任务找到规则文件
+├── meta-rules.md                     # 规则怎么改：适用时机、最小改动、落位边界
 ├── documentation-workflow.md          # 材料处理、分流、落位与回流流程
 ├── research-artifacts.md              # 子领域研究、案例研究与研究辅助材料组织
 ├── metadata-files.md                  # README / overview / backlog 等元信息文件模型
@@ -49,11 +50,12 @@ docs/contributing/
 
 已拆分规则：
 
+- [规则的规则](./meta-rules.md)（按需）：定义什么时候改规则、规则如何最小改动，以及专题规则与 meta-rule 的边界。
 - [研究产物组织规则](./research-artifacts.md)：定义子领域研究、具体案例研究、研究辅助材料的组织方式。
 - [材料处理与文档增改流程](./documentation-workflow.md)：定义新材料、外部调研、`temp/` 内容和正文修改的判断、落位与回流流程。
 - [Evidence 与 Traceability 工作流](./evidence-and-traceability.md)：组合执行入口，只说明正式 Evidence + 轻量 Traceability 如何一起使用。
-- [Evidence 规则](./evidence-rules.md)：定义 Claim、Evidence 状态、来源类型、标注密度、正文标注方式和主题级 evidence registry 的启用条件。
-- [Traceability 规则](./traceability-rules.md)：定义 Source / Decision / Placement / Gap 四个轻量链路字段。
+- [Evidence 规则](./evidence-rules.md)：定义 Claim、Evidence 状态、来源类型、标注密度、正文标注方式、主题级 evidence registry 的启用条件，以及研究开源代码库时的版本基线要求。
+- [Traceability 规则](./traceability-rules.md)：定义 Source / Decision / Placement / Gap 四个轻量链路字段，以及代码库研究中的 `Version Basis` / `Observed At` / `Scope` / `Drift Risk`。
 - [README 规则](./readme-rules.md)：定义 README 出现条件、目录树展开深度、导航边界和类型化结构建议。
 - [文档组织原则](./organization-principles.md)：定义知识树设计、分类轴一致性、长期主义、材料目录与知识目录分离等上位组织原则。
 - [结构重构规则](./structure-refactoring-rules.md)：定义目录改名、结构迁移、README 导航收敛、材料目录治理与结构经验沉淀原则。

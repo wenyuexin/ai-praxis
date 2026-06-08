@@ -40,6 +40,8 @@
 - workflow / graph runtime 是否成为生产级 Agent 的主流底座
 - 框架如何处理状态、checkpoint、human-in-the-loop 和工具权限
 - 大厂框架整合是否会改变生态格局
+- `AutoGen`、`Semantic Kernel` 与 `Microsoft Agent Framework` 的对象边界应分开写：前两者是历史来源与独立对象，后者是后继整合框架，不宜直接合并成同一对象下结论
+- `OpenAI Agents SDK / Responses API` 更适合作为框架候选对象继续补证：官方 docs 已公开多个与 agent orchestration 相关的模块入口，但当前目录尚未形成可直接回写主线的对象专题；涉及 handoffs、sessions、results/state、MCP、tracing、guardrails / human review、sandbox agents 的具体边界，以 `backlog.md` 与 `conflict.md` 中的待核验记录为准，不应把外部归纳的“七层架构”写成官方命名
 
 ### 2.2 编码智能体工具
 

@@ -95,6 +95,21 @@ Trace 是内容进入仓库的轻量链路记录。
 - 缺跨项目比较
 - 缺版本边界说明
 
+### 3.5 代码库版本链路字段
+
+当 Source 指向开源代码库、release notes、issue / PR 或源码文件时，除 `Source / Decision / Placement / Gap` 外，Trace 可补版本链路信息；如果正文太轻，可写在 `notes/evidence.md`、`source-notes.md` 或条目内部：
+
+- `Version Basis`：本次判断基于 `branch`、`tag/release`、`commit` 中的哪一种，并包含可还原的具体标识，例如 `branch main`、`tag v0.14.0` 或至少 7 位 commit hash。
+- `Observed At`：核验日期，而不是文件系统最后修改时间。
+- `Scope`：结论适用于当前默认分支、某个 release、某个历史 commit，还是仅适用于实验分支。
+- `Drift Risk`：可选；当对象处于快速迭代期时，可标 `high / medium / low`。
+
+最低要求：
+
+- 基于源码实现写结论时，至少给出 `Version Basis` 和 `Observed At`。
+- 如果引用的是 release notes 或 tag，对应源码观察应尽量指向同一版本窗口。
+- 如果只观察了当前默认分支，必须让读者看出这是“当前截面观察”，不是无条件长期定论。
+
 ## 4. 标注方式
 
 ### 4.1 正文专题
@@ -105,33 +120,33 @@ Trace 是内容进入仓库的轻量链路记录。
 ## Evidence
 
 - Status: Inferred
-- Sources: `agentic/temp/ai-context.md`, existing `05-environments/` documents
-- Trace: Synthesized from repository context to define a first-pass taxonomy.
-- Needs: External validation from papers, official docs, or open-source implementations.
+- Sources: `agentic/temp/ai-context.md`
+- Trace: First-pass synthesis from repository context.
+- Needs: External validation.
 ```
 
 ### 4.2 Backlog / Candidates
 
-`backlog.md` 或 `candidates.md` 中可以按条目记录 Trace：
+`backlog.md` 或 `candidates.md` 中可以按条目记录 Trace。字段顺序尽量稳定，便于能力较弱的模型照着填：
 
 ```md
 - Topic: Trust calibration in agent UI
-  - Source: Current `04-human-agent-interaction/` overview gap
-  - Decision: Keep as backlog until external evidence is collected
+  - Source: Current overview gap
+  - Decision: Keep as backlog
   - Placement: `04-human-agent-interaction/trust-and-alignment/`
-  - Gap: Need HCI papers and product documentation
+  - Gap: Need HCI papers
 ```
 
 ### 4.3 Conflict
 
-`conflict.md` 中的 Trace 应重点记录冲突来源和待核验问题：
+`conflict.md` 中的 Trace 应重点记录冲突来源和待核验问题。最少保留 `Sources / Decision / Placement / Gap` 这组骨架，不要随意省字段：
 
 ```md
 - Conflict: Workspace traceability core unit
-  - Sources: `workspace-traceability.md`, `traceability-object-model.md`
-  - Decision: Keep conflict open until cross-system mappings are verified
+  - Sources: `workspace-traceability.md`
+  - Decision: Keep conflict open
   - Placement: `05-environments/conflict.md`
-  - Gap: Need comparison across multiple agent runtime systems
+  - Gap: Need cross-system comparison
 ```
 
 ## 5. 与 Evidence 的关系

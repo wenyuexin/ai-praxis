@@ -41,7 +41,7 @@
   → 记录 Sources / Trace / Needs
 ```
 
-执行原则：
+执行原则。对能力较弱的模型，最稳妥的顺序是：先写 `Status`，再写 `Sources`，再写 `Trace`，最后写 `Needs`：
 
 - 无法判断 Evidence 状态时，默认标为 `Unverified`。
 - 无法说明 Source 时，不要写成正文定论。
@@ -59,10 +59,13 @@
 - Needs: 还缺什么证据、验证或对照
 ```
 
-字段归属：
+如果 Source 包含开源代码库、release notes、issue / PR 或源码文件，除基本字段外还应补版本链路信息；最低要求与字段定义见 [`traceability-rules.md`](./traceability-rules.md)，Claim 级使用边界见 [`evidence-rules.md`](./evidence-rules.md)。
+
+字段归属。若拿不准，先按这组最小顺序补：`Status → Sources → Trace → Needs`；版本链路字段只在源码 / release notes / issue / PR 等代码库材料中再补：
 
 - `Status`、`Sources` 的细则见 [`evidence-rules.md`](./evidence-rules.md)。
 - `Trace`、`Needs` 的细则见 [`traceability-rules.md`](./traceability-rules.md)。
+- `Version Basis`、`Observed At`、`Scope`、`Drift Risk` 是 `Trace` 的版本链路补充字段；其中 `Version Basis`、`Observed At` 是源码实现结论的最低字段，`Scope` 按适用范围补充，`Drift Risk` 仅对快速迭代对象按需补充。
 - 同一文档反复引用同一个外部仓库或文档站时，可以先声明一次基准 URL，后续用相对路径补充；前提是读者仍能还原完整来源。
 
 ## 5. `temp/` 回流门槛

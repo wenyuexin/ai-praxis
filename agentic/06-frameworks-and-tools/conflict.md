@@ -30,6 +30,11 @@
 |------|----------|----------|
 | `Microsoft Agent Framework` | GA / RC / LTS 状态、AutoGen 与 Semantic Kernel 的整合边界 | Microsoft 官方文档与发布公告 |
 | `Semantic Kernel` | Agent Framework 相关功能的稳定状态与长期支持范围 | Microsoft Learn / GitHub release |
+| `OpenAI Agents SDK / Responses API` | “七层架构”应继续视为外部归纳；当前主线只可稳定写到 handoffs、results/state、sessions、tracing、sandbox、tools/MCP 等公开能力面，不宜上推成统一 runtime 契约 | OpenAI 官方 docs / SDK 文档 / 对象目录正文 |
+| `OpenAI Agents SDK / Responses API` | `session` 与 `conversation_id` / `previous_response_id` / `auto_previous_response_id` 的互斥边界已较清楚，但 `RunState`、server-managed continuation、sandbox `session_state` / `snapshot` 这几层恢复面如何组合仍待源码级核验 | `running_agents`、`sessions`、`results`、`human_in_the_loop`、`ref/sandbox`、`openai-agents-sdk/notes/evidence.md` |
+| `OpenAI Agents SDK / Responses API` | `SandboxRunConfig.session_state`、`snapshot`、sandbox capabilities 的字段存在已可确认，但 snapshot 是否完整覆盖 workspace changes、是否跨 sandbox client / hosted provider 一致，公开资料仍不足 | `v0.14.0` release notes、`ref/sandbox`、sandbox client 源码、`openai-agents-sdk/notes/evidence.md` |
+| `OpenAI Agents SDK / Responses API` | local MCP / hosted MCP integration 已可确认存在，但 cancellation、connect/cleanup、resume/reconnect 后连接状态、hosted MCP 恢复语义仍缺统一公开说明 | `tools`、`running_agents`、后续 `MCP servers / manager` reference 与源码、`openai-agents-sdk/notes/evidence.md` |
+| `OpenAI Agents SDK / Responses API` | error handlers、`ToolTimeoutError`、partial output、max turns 与 retry/cancel/recovery 之间的边界未形成统一契约；当前只宜保留“存在结构化错误类型与有限 terminal fallback”这一层 | `ref/run`、`running_agents`、异常/runner 源码、`openai-agents-sdk/notes/evidence.md` |
 | `CrewAI` | 企业使用比例、运行规模等第三方数据是否有官方证据 | CrewAI 官方博客、客户案例、release notes |
 | `DSPy` | 是否应作为 Agent framework 主干对象，还是只作为 prompt / program optimization 对比对象 | Stanford DSPy 官方文档与论文 |
 

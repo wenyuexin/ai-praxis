@@ -53,7 +53,7 @@
 - **Status**：Inferred / Observed / 局部 Verified；已形成正文专题，继续补证。
 - **Source / Trace**：先由 `agentic/temp/web-search/4.md` 的 workspace lifecycle / sharing model 线索回流到 `code-execution-environments/workspace-lifecycle.md`，再吸收 `../06-frameworks-and-tools/03-project-studies/openhands/runtime-and-sandbox.md` 的跨仓库源码核验结果，并与既有 workspace / checkpoint / traceability 专题保持边界互补。
 - **Evidence need**：更多产品案例、overlay / worktree / remote runtime 的成本比较、多 agent 场景下 shared / isolated / hybrid workspace 的共享边界，以及“恢复连接能力”和“文件系统连续性”在不同系统中的真实耦合强度。
-- **Candidates**：补证对象已登记到 `candidates.md`，当前优先跟踪 `OpenHands`、`SWE-agent`、`LangGraph checkpoint`、`Claude Code / Git worktree parallel agents`、`AgentFS / astrid-vfs / overlay filesystem cases`。
+- **Candidates**：补证对象已登记到 `candidates.md`，当前优先跟踪 `OpenHands`、`SWE-agent`、`LangGraph checkpoint`、`OpenAI Agents SDK / sandbox agents`、`Claude Code / Git worktree parallel agents`、`AgentFS / astrid-vfs / overlay filesystem cases`。
 - **建议产物**：如后续材料继续增厚，可再拆出 `workspace-sharing-models.md`，专门展开跨产品共享模式对照。
 
 ### 2.3 Traceability Object Model

@@ -43,8 +43,9 @@
 
 | 对象 | 候选归属 | 观察理由 | 状态 |
 |------|----------|----------|------|
-| `Semantic Kernel` | `01-frameworks/` | 微软企业级 AI SDK，模型无关，和 Agent Framework 生态有强关联 | 待补正式文档 |
-| `Microsoft Agent Framework` | `01-frameworks/` | 整合 AutoGen 与 Semantic Kernel 的企业级 Agent 框架方向 | 待核验版本状态 |
+| `Semantic Kernel` | `01-frameworks/` | 微软企业级 AI SDK，已可确认 `AgentGroupChat`、plugin/kernel、OpenTelemetry observability 等能力入口；但 durable checkpoint / resume 仍待补正式文档 | 待补正式文档 |
+| `Microsoft Agent Framework` | `01-frameworks/` | 后继整合框架，官方已明确区分 agents 与 workflows，并公开 checkpointing、agent session、middleware、MCP clients 等入口 | 待核验版本状态 |
+| `OpenAI Agents SDK / Responses API` | `01-frameworks/` | 官方已公开 handoffs、sessions、results/state、MCP、tracing、guardrails / human review、sandbox agents 等模块；对象目录已建立，当前进入深水区源码补证阶段，重点是 `RunState`、server-managed continuation、sandbox `session_state` / `snapshot`、local/hosted MCP lifecycle、error/retry/cancel 边界，细化 checklist 已统一收敛到 `openai-agents-sdk/notes/evidence.md` | 已进入主干，继续补证 |
 | `DSPy` | `01-frameworks/` 或 `05-comparisons/` | 声明式 LM program / prompt optimization 代表，与 Agent orchestration 有交集 | 观察中 |
 | `Google ADK` | `01-frameworks/` | 大厂 Agent Development Kit，可能影响协议与框架生态 | 证据不足，观察中 |
 | `Agno` | `01-frameworks/` | 轻量 Agent framework / runtime，工程化方向明确 | 观察中 |
