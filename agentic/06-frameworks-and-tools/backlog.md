@@ -120,6 +120,24 @@
 
 以下内容不能直接写入主干结论，只能作为后续调研线索：
 
+### 4.1 Agent Adapter / Orchestrator 契约核验队列
+
+这组对象用于核验 `Agent Adapter / Orchestrator` 契约问题，不代表它们已经形成统一抽象，也不代表对象间能力可直接横向比较。
+
+| 对象 | 核验重点 | 当前状态 |
+|------|----------|----------|
+| `MCP` | 区分 tool discovery / invocation 与完整 orchestration contract；核验 `tools/list`、`tools/call`、capabilities、timeout、cancel、large output、streaming / partial output 的协议边界 | 已完成第一轮官方规范核验，见 `04-skill-and-tool-systems/mcp/` |
+| `LangGraph` | 核验 checkpoint、thread、interrupt、retry、time travel、replay 的真实边界；特别区分 graph / workflow state 与 workspace filesystem recovery | 已完成 workflow state / checkpoint / replay 与 `update_state` / fork 第一轮源码边界核验，见 `01-frameworks/langgraph/notes/evidence.md`；interrupted thread 的 server 私有语义仍需补证 |
+| `OpenAI Agents SDK / Responses API` | 核验 sessions、results/state、handoff、tracing、guardrails、sandbox agents 的公开证据边界；避免把外部归纳的“七层架构”写成官方命名 | 已进入主干，继续补证 |
+| `CrewAI` | 核验 Flow persistence、checkpoint、restore、fork lineage、retry / cancel / human input 的粒度 | 观察中，需确认版本状态与官方语义 |
+| `OpenHands / OpenDevin` | 核验 workspace、runtime、event log、sandbox、recovery 是否足以支撑环境层对象研究 | 候选主干，需源码与官方文档补证 |
+| `SWE-agent` | 核验 trajectory replay 与 checkpoint / resume 的边界，以及 workspace / container / final artifact 的正式语义 | 待调研 |
+| `AutoGen` | 核验 group chat、tool、MCP、handoff / delegation、trace、cancel / retry 的对象内边界；不与 Microsoft Agent Framework 混写 | 观察中，需与 MAF 分开核验 |
+| `Microsoft Agent Framework` | 核验 agents / workflows、AgentTool、MCP、checkpointing、session、middleware 的版本状态与公开 API 边界 | 待核验版本状态 |
+| `Semantic Kernel` | 核验 AgentGroupChat、plugin/kernel、observability 与 checkpoint / resume / durable execution 的边界；区分 SK 本体与 Azure / Foundry 集成能力 | 待补正式文档 |
+
+### 4.2 其他证据不足项
+
 - `OpenClaw`、`HermesAgent`、`Ruflo`、`Agency` 等项目的 GitHub stars、增长速度、生态排名等热度数据，需要官方仓库或可信统计源核验。
 - `CrewAI` 的 Fortune 500 使用比例、agent 月度运行量等数据，需要官方案例或可靠来源确认。
 - `Microsoft Agent Framework` 的 GA / RC / LTS 状态，需要 Microsoft 官方文档确认。
@@ -131,12 +149,13 @@
 
 ## 五、后续建设建议
 
-1. 优先补 `01-frameworks/` 中 LangGraph、AutoGen、CrewAI、Semantic Kernel、MAF 的正式对象文档。
-2. 补 `02-coding-agents-and-tools/` 中 OpenHands / SWE-agent / Cline 的初步调研。
-3. 把 `OpenClaw` 拆成 architecture、safety、ecosystem 等专题文档。
-4. 在 `05-comparisons/` 中建立 `framework-selection.md` 和 `coding-agent-products.md`。
-5. 将 memory、multi-agent、sandbox、evaluation 等前沿对象分别回流到 `02/03/05/07` 的 backlog 或专题文档中，避免全部堆在 `06`。
+1. 基于已完成的 `MCP` 与 `LangGraph` 窄口径核验，继续迭代 `05-comparisons/orchestration-implementations.md` 的契约维度初稿。
+2. 继续补 `01-frameworks/` 中 LangGraph、AutoGen、CrewAI、Semantic Kernel、MAF 的正式对象文档。
+3. 补 `02-coding-agents-and-tools/` 中 OpenHands / SWE-agent / Cline 的初步调研。
+4. 把 `OpenClaw` 拆成 architecture、safety、ecosystem 等专题文档。
+5. 在 `05-comparisons/` 中继续建立 `framework-selection.md` 和 `coding-agent-products.md`。
+6. 将 memory、multi-agent、sandbox、evaluation 等前沿对象分别回流到 `02/03/05/07` 的 backlog 或专题文档中，避免全部堆在 `06`。
 
 ---
 
-*最后更新: 2026-05-31*
+*最后更新: 2026-06-09*

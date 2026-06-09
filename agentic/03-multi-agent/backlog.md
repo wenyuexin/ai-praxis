@@ -72,6 +72,14 @@
 - **为什么值得关注**：不同 benchmark 对 multi-agent 的正负结论高度依赖任务类型与评测设定。
 - **当前状态**：更适合先放 backlog，后续跨目录联动。
 
+### 3.4 Human Agent as Supervisor / Harness in Coding Workflows
+
+- **关联目录**：`coordination/`、`organizational/`、`../04-human-agent-interaction/`
+- **为什么值得关注**：在 coding workflow 中，人类可能不是外部审批者，而是作为特殊 agent 参与规划、切换、验收与 delegation policy 制定；这会改变“single-agent vs multi-agent”比较的前提，因为系统收益不再只取决于 agent 数量，还取决于人类 harness 如何参与协调。
+- **当前状态**：当前目录已覆盖 topology、hidden cost、specialization granularity 与收益边界，但尚未单独讨论“人类 agent + 多 agent”组合何时真正优于“人类 harness + 单 agent”或“纯多 agent”结构。
+- **Evidence need**：需要比较 planner / executor / reviewer / test-runner 等角色拆分在有人类监督时的净收益，尤其关注 coordination overhead、handoff 频率、批准成本与 artifact 可见性；避免把概念上的角色拆分直接写成工程上可落地的最优结构。
+- **建议产物**：可先作为 `when-multi-agent-helps.md` 的补充问题，后续再决定是否拆成独立专题。
+
 ---
 
 ## 四、P2：保留观察线索

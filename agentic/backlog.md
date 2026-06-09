@@ -59,9 +59,9 @@
 
 - **关联目录**：`02-single-agent/tool-use/`、`03-multi-agent/coordination/`、`05-environments/code-execution-environments/`、`06-frameworks-and-tools/`、`07-evaluation/observability-and-debugging/`
 - **为什么重要**：当系统需要调度内部 Agent、外部 Agent、工具执行和长任务工作流时，共性问题不是某个 provider 如何接入，而是任务输入、执行边界、状态、产物、错误、取消、重试和 trace 如何被统一表达。
-- **当前状态**：相关线索分散在框架 / 工具案例、环境恢复语义和评估回流问题中，但尚未形成面向 Agent 系统契约的统一研究问题。
-- **Evidence need**：需要比较不同 agent framework、coding agent、workflow framework 与工具协议如何描述 capability、session、workspace、trace、cost、abort、retry 和 result normalization；单对象机制只能先保留为对象观察。
-- **建议产物**：先形成 `TaskSpec / ExecutionSpec / ResultSpec / ErrorSpec / AdapterSpec` 维度的研究专题，再决定是否拆入对应子目录。
+- **当前状态**：已用 `MCP` 和 `LangGraph` 完成第一轮窄口径样本核验，并在 `06-frameworks-and-tools/05-comparisons/orchestration-implementations.md` 形成 `TaskSpec / ExecutionSpec / ResultSpec / ErrorSpec / AdapterSpec` 维度初稿；当前只能支持协议层与 workflow runtime 层的保守抽象，不能外推为统一行业标准或完整 orchestrator contract。
+- **Evidence need**：继续比较不同 agent framework、coding agent、workflow framework 与工具协议如何描述 capability、session、workspace、trace、cost、abort、retry 和 result normalization；单对象机制只能先保留为对象观察。下一步优先补 OpenAI Agents SDK / Responses API、OpenHands 与 SWE-agent 的 session / workspace / artifact / trace / recovery 边界。
+- **建议产物**：继续迭代 `06-frameworks-and-tools/05-comparisons/orchestration-implementations.md`，每引入一个对象都先补对象内 `Observed` 证据；顶层只保留跨目录问题推进状态，对象细节留在 `06-frameworks-and-tools/`。
 
 ### 2.6 Tool Executor 与 Skill 制品边界
 

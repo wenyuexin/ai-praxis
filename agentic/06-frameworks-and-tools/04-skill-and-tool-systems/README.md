@@ -6,6 +6,7 @@
 
 ```text
 04-skill-and-tool-systems/
+├── mcp/
 └── skill-based-agents/
 ```
 
@@ -16,7 +17,7 @@
 - Skill 定义、加载、组合、隔离和验证机制
 - Tool registry、tool discovery、tool generation 的工程实现
 - 插件系统和能力市场
-- 与 MCP、function calling、工具权限控制相关的具体实现案例
+- 与 MCP、function calling、工具权限控制相关的具体实现案例或协议对象
 
 ## 边界
 

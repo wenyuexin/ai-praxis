@@ -72,6 +72,14 @@
 - **为什么值得关注**：长任务中的偏好漂移、上下文遗忘与误判，会让“对齐”从模型问题延伸到交互与控制问题。
 - **当前状态**：尚需更多产品与论文证据支撑。
 
+### 3.4 Human-as-Agent Harness in Vibe Coding
+
+- **关联目录**：`delegation-and-control/`、`human-in-the-loop/`、`interaction-surfaces/`、`../01-foundations/agent-system-modeling/`、`../03-multi-agent/`
+- **为什么值得关注**：把人类视作轻量 harness provider 可以作为一个研究引子，帮助系统整理 vibe coding 中与 plan、constraint、review、rule、takeover 和角色切换有关的实用技巧。
+- **当前状态**：已在 `human-in-the-loop/vibe-coding-human-harness.md` 形成第一版小专题，但当前更像技巧收集框架，而不是已证明的理论专题；后续重点应转向补具体工作法和案例。
+- **Evidence need**：需要继续比较 coding-agent 产品、经验帖、案例复盘与团队工作流，区分哪些技巧已经形成可重复工作法，哪些仍主要停留在个体经验；同时继续观察多 agent 何时只是技巧容器，何时真的带来净收益。
+- **建议产物**：继续迭代 `human-in-the-loop/vibe-coding-human-harness.md`，优先沉淀 plan 审核、模型自审、rule 文档写法、设计/代码 review 技巧与接管时机，而不是先追大理论。
+
 ---
 
 ## 四、P2：保留观察线索

@@ -17,6 +17,12 @@
 
 因此，本目录更适合被理解为 Agent 系统中的 **control relationship / collaboration experience layer**，而不是附属于前端界面的小主题。
 
+这个定位也允许一个更偏 system-modeling 的研究视角：**在某些 coding-agent / vibe coding 场景里，人类不只是外部用户，而可以被理解为一个特殊 agent**。其关键作用不是提供一次性 prompt，而是持续为系统提供 harness：设定目标、注入约束、决定何时拆分/切换子任务、在关键节点审批或接管，并最终做结果验收。
+
+这个视角当前更适合作为 `04-human-agent-interaction/` 的轻量 framing，而不是单独定论。它的价值在于把 delegation、human-in-the-loop、task UI、trust calibration 与 multi-agent coordination 重新串起来：许多所谓 vibe coding 技巧，未必需要被写成全新范式，也可能只是“人类作为 harness provider 参与 agent 编排”的不同实现。
+
+但这里仍要保持 stop-line：把人类写成“特殊 agent”是当前研究用的 `Inferred` 视角，不等于已经验证的统一体系；哪些 harness 动作能稳定产品化，哪些会因操作摩擦、认知负担或 coordination overhead 过高而难以落地，仍需要继续通过真实产品、workflow 和案例补证。
+
 ---
 
 ## 二、建议采用的四个核心视角

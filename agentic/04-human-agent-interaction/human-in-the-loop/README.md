@@ -26,5 +26,6 @@
 ## 同目录导航
 
 - 当前已包含专题：`human-in-the-loop-patterns.md`，用于展开不同介入模式的分类、场景和 trade-off。
+- `vibe-coding-human-harness.md` 作为一个很小的场景化补充，用 human harness 视角串起 vibe coding 里的 plan、约束、审核、规则、接管与角色切换技巧。
 - 建议结合 `../delegation-and-control/README.md` 区分"介入点"与"控制权分配"的边界。
 - 建议结合 `../interaction-surfaces/README.md` 理解状态呈现如何支撑人工介入决策。

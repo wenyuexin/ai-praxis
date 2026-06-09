@@ -53,7 +53,7 @@ LangGraph 的 interrupt / resume 是它区别于一次性 workflow runner 的重
 
 ### 3.4 interrupt 依赖 checkpointer
 
-当前官方资料明确要求：使用 interrupt 前必须启用 checkpointer。原因是 interrupt / resume 依赖持久化 graph state，而不是依赖内存中保留一个阻塞执行体。
+当前官方资料明确要求：使用 interrupt 前必须启用 checkpointer。本轮 OSS runtime 源码也能直接观察到：`Command(resume=...)` 在没有 checkpointer 时会抛出 runtime error。原因是 interrupt / resume 依赖持久化 graph state，而不是依赖内存中保留一个阻塞执行体。
 
 ### 3.5 动态 interrupt 与静态 breakpoint 是两类机制
 
@@ -69,7 +69,7 @@ LangGraph 的 interrupt / resume 是它区别于一次性 workflow runner 的重
 - **Replay**：从先前 checkpoint 重新执行，不是只读回看缓存。
 - **Fork**：从先前 checkpoint 出发，用修改后的 state 创建新的执行分支。
 
-这意味着 time travel 不是单一语义，而是“历史重放 + 分支继续执行”的组合能力。
+本轮 OSS runtime 源码还能观察到：time-travel replay 主路径在特定条件下会写入 `source=fork` 的 checkpoint，并把 `source=update` / `source=fork` 路径单独排除。这意味着 time travel 不是单一语义，而是“历史重放 + 分支继续执行”的组合能力。
 
 ### 3.7 `update_state` / fork 的语义需要分层表述
 
@@ -77,9 +77,10 @@ LangGraph 的 interrupt / resume 是它区别于一次性 workflow runner 的重
 
 - `update_state` 的 first-class use case 是修改 checkpoint 处的 graph state。
 - 官方文档层把它描述为修改 state 后创建新的 branch checkpoint，并继续执行。
-- 但当前 OSS runtime 主路径源码中，`update_state` 更接近在原 thread 的 checkpoint 链上做覆盖式写入，而不是显式新建 `checkpoint_id` / `thread_id`。
+- 当前 OSS runtime 主路径中已经能观察到 `source=update` 与 `source=fork` 两类 metadata：普通 `update_state` 通过节点 writers / reducers 写入 `source=update` checkpoint；显式 `as_node="__copy__"` 与 time-travel copy 路径会写入 `source=fork` checkpoint。
+- Python SDK / server runtime 类型说明把 `threads.update` 明确为 state write context：它不执行 node function、不沿 edges 继续运行 graph，只把给定 values 当作指定 node 的输出写入 state channels。
 
-因此，这里应保持 stop-line：state edit / fork 更接近“从旧状态出发派生或继续执行”的 time-travel 语义，而不是环境回滚；但“branch checkpoint”与“覆盖式写入”之间的精确对应关系，当前仍需继续结合 server / platform 层核验。
+因此，这里应保持 stop-line：state edit / fork 更接近“从旧状态出发派生或继续执行”的 time-travel 语义，而不是环境回滚；“branch checkpoint”更适合先写成基于 checkpoint / parent checkpoint 的对外抽象，不应收缩成单一 `update_state` 字段或等同于 execution environment branch。
 
 ### 3.8 approval / HITL 的最小闭环是 interrupt → state edit → resume
 
@@ -87,8 +88,8 @@ LangGraph 的 interrupt / resume 是它区别于一次性 workflow runner 的重
 
 - 先通过 `interrupt()` 或 `interrupt_before` / `interrupt_after` 把 graph 停在一个可审阅的 checkpoint。
 - runtime 会把 `INTERRUPT` 信号写入相应的 checkpoint / pending write 路径，使当前 state 对后续读取可见。
-- 人可以在该 checkpoint 处检查 state，并通过 `update_state` 修改 graph state。
-- 然后再通过 `Command(resume=...)` 或对应的 server / platform run API 恢复执行。
+- 人可以在该 checkpoint 处检查 state，并通过 `update_state` 修改 graph state；这一步应用 channel writers / reducers，不等于重新执行 node function。
+- 然后再通过 `Command(resume=...)`、`invoke(None, fork_config)` 或对应的 server / platform run API 恢复 / 继续执行。
 - 在当前 OSS runtime 主路径中，还可以直接观察到恢复阶段会跳过 `ERROR` / `INTERRUPT` 等特殊写入，并对可复用的成功 writes 做 re-apply。
 
 这说明 LangGraph 的 approval 不只是“暂停等待确认”，还包含对 graph state 的显式编辑能力；但这类编辑仍然只作用于 graph state snapshot，而不是自动修复外部系统状态。
@@ -110,12 +111,13 @@ LangGraph 的 interrupt / resume 是它区别于一次性 workflow runner 的重
 
 ### 4.3 state edit 只作用于 graph state snapshot
 
-`update_state` 修改的是 graph state snapshot 中的字段，不等于修改外部环境或自动修复外部系统不一致。
+`update_state` 修改的是 graph state snapshot 中的字段：它把给定 values 作为某个 node 的输出应用到 state channels，并触发 reducers / channel versions 更新；它不执行完整 node function、不继续走 edges，也不等于修改外部环境或自动修复外部系统不一致。
 
 ## 五、仍待继续核验的问题
 
 - state edit 后 system metadata、trace metadata 如何传递。
 - 平台 UI / approval API 与本地 SDK 的细节差异。
+- `threads.update_state` 在 interrupted thread 上 consume outstanding interrupt 的 server 私有实现细节。
 - 多轮 edit / fork / continue 的最佳实践与限制。
 - 外部系统副作用不一致时是否有官方推荐处理模式。
 
@@ -124,4 +126,4 @@ LangGraph 的 interrupt / resume 是它区别于一次性 workflow runner 的重
 - Status: Observed / Inferred / Unverified
 - Sources: LangGraph 官方 interrupt / human-in-the-loop / time travel / `update_state` / API 参考资料；本轮整理见 `./notes/source.md` 与 `./notes/evidence.md`。
 - Trace: 用于连接 LangGraph framework study 与环境层 recovery / governance 问题。
-- Needs: 深读 fork branch、state metadata、approval UI / platform 语义与 side-effect consistency 指南。
+- Needs: 深读 state metadata、approval UI / platform 语义、interrupted thread 上的 update semantics 与 side-effect consistency 指南。
