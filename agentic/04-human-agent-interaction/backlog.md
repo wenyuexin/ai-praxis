@@ -26,15 +26,15 @@
 
 - **关联目录**：`human-in-the-loop/`
 - **为什么重要**：审批、纠偏、审核、接管、fallback 等介入方式经常被混写；如果没有稳定分类，human-in-the-loop 很容易退化成“有人工参与”这一空泛概念。
-- **当前状态**：目录已建立，但主线中尚无系统专题承接。
-- **建议产物**：`human-in-the-loop-patterns.md`
+- **当前状态**：`human-in-the-loop/human-in-the-loop-patterns.md` 已形成第一版专题，初步拆分了介入时机与 approval / correction / review / validation / takeover / fallback 等控制语义；后续重点应转向补产品证据、真实工作流组合和边界对照。
+- **建议产物**：继续迭代 `human-in-the-loop-patterns.md`，优先补不同产品中的介入点组合、任务风险等级映射，以及 review / validation / takeover / fallback 的边界案例。
 
 ### 2.2 Delegation Granularity and Control Surface
 
 - **关联目录**：`delegation-and-control/`
 - **为什么重要**：用户到底是在委托目标、步骤、工具权限，还是整个工作流，是理解 Agent 控制面的关键问题。
-- **当前状态**：目录已建立，但缺少把 delegation granularity、approval points、autonomy budget 与 stop conditions 联系起来的主线专题。
-- **建议产物**：`delegation-granularity.md`、`control-surface-design.md`
+- **当前状态**：`delegation-and-control/delegation-granularity.md` 已形成第一版专题，初步拆分了委托对象、自主厚度、权限边界、stop condition、恢复路径与 HITL 介入点的关系；但 control surface 仍缺少独立专题承接。
+- **建议产物**：继续迭代 `delegation-granularity.md`，补真实产品中的 delegation 组合方式；后续再拆 `control-surface-design.md`，专门讨论 approval points、autonomy budget、permission boundary 与 stop conditions 如何暴露给用户。
 
 ### 2.3 Agent UI 的最小必要可见性
 
@@ -75,10 +75,11 @@
 ### 3.4 Human-as-Agent Harness in Vibe Coding
 
 - **关联目录**：`delegation-and-control/`、`human-in-the-loop/`、`interaction-surfaces/`、`../01-foundations/agent-system-modeling/`、`../03-multi-agent/`
-- **为什么值得关注**：把人类视作轻量 harness provider 可以作为一个研究引子，帮助系统整理 vibe coding 中与 plan、constraint、review、rule、takeover 和角色切换有关的实用技巧。
-- **当前状态**：已在 `human-in-the-loop/vibe-coding-human-harness.md` 形成第一版小专题，但当前更像技巧收集框架，而不是已证明的理论专题；后续重点应转向补具体工作法和案例。
+- **为什么值得关注**：vibe coding 把人类对 Agent 的外部支撑暴露得更明显：人类不仅给 prompt，还会提供目标拆分、上下文压缩、handoff、review、validation、权限边界与接管机制。
+- **当前状态**：`human-in-the-loop/vibe-coding-human-harness.md` 已形成案例型入口，可作为 coding-agent 场景下的经验汇总和问题引子；但它仍不应被直接写成通用理论定论。
+- **后续问题**：需要继续区分哪些做法只适用于 vibe coding，哪些可以抽象为一般 agentic workflow 的 harness；同时补充任务尺度与 harness 强度、动态引导、handoff / review / validation 组合方式、人类控制 / 支撑 / 评估的边界，以及多会话 / 多 agent 委托的交互体验。
 - **Evidence need**：需要继续比较 coding-agent 产品、经验帖、案例复盘与团队工作流，区分哪些技巧已经形成可重复工作法，哪些仍主要停留在个体经验；同时继续观察多 agent 何时只是技巧容器，何时真的带来净收益。
-- **建议产物**：继续迭代 `human-in-the-loop/vibe-coding-human-harness.md`，优先沉淀 plan 审核、模型自审、rule 文档写法、设计/代码 review 技巧与接管时机，而不是先追大理论。
+- **建议产物**：在保留 `human-in-the-loop/vibe-coding-human-harness.md` 案例性质的基础上，后续可拆出更窄的专题，例如 human harness 抽象边界、任务尺度与动态引导、AI handoff 模式、review / validation 分层、以及多模型协作的 delegation UX。
 
 ---
 
@@ -100,5 +101,6 @@
 
 - `README.md` 已建立 `04-human-agent-interaction/` 的目录骨架与主题边界。
 - `overview.md` 已提供 delegation、human-in-the-loop、UI 与 trust 四个核心视角的总体框架。
+- `human-in-the-loop/vibe-coding-human-harness.md` 已提供 coding-agent 场景下的人类外部支架案例，backlog 后续主要追踪其可泛化边界与仍未沉淀的专题。
 - 当前目录中的新增 overview 与正文专题仍以结构化归纳为主，后续需要按 `docs/contributing/evidence-rules.md` 和 `docs/contributing/traceability-rules.md` 继续补充 Evidence 状态与必要的 Trace 字段。
 - 后续若某个问题获得更稳定证据，应优先拆成专题文档，而不是长期停留在 backlog。

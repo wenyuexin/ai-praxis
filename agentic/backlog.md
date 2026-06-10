@@ -79,7 +79,7 @@
 
 - **关联目录**：`04-human-agent-interaction/`、`05-environments/sandboxing-and-safety/`、`07-evaluation/safety-and-robustness/`
 - **为什么值得关注**：自治能力、人类确认、权限策略、治理模式与安全评估并不是相互独立的主题；它们共同决定系统能否在真实任务中可控地运行。
-- **当前状态**：`04-human-agent-interaction/backlog.md` 已记录 delegation / takeover / trust 相关缺口，`05-environments/` 已形成 permission / execution / recovery / governance 的安全组合；但跨目录统一表达仍不足。
+- **当前状态**：`04-human-agent-interaction/backlog.md` 已记录 delegation / takeover / trust 相关缺口，`04-human-agent-interaction/human-in-the-loop/vibe-coding-human-harness.md` 也已提供 coding-agent 场景下的人类外部支架案例；`05-environments/` 已形成 permission / execution / recovery / governance 的安全组合；但跨目录统一表达仍不足。
 - **不宜直接定论的原因**：不同产品形态、任务风险等级和交互模式差异很大，当前不适合写成单一标准。
 
 ### 3.2 Memory、workspace 与 trace 的状态边界
@@ -134,7 +134,7 @@
 ### 4.3 长任务 Agent 的可靠性组合
 
 - **关联目录**：`02-single-agent/`、`04-human-agent-interaction/`、`05-environments/`、`07-evaluation/`
-- **说明**：长任务可靠性通常同时依赖 planning、memory、workspace、permission、recovery、human takeover 与 evaluation loop；目前各层已有局部材料，但顶层组合框架仍需长期观察。
+- **说明**：长任务可靠性通常同时依赖 planning、memory、workspace、permission、recovery、human takeover 与 evaluation loop；vibe coding human harness 已提供一个案例型入口，但任务尺度、外部支架强度、动态引导与跨场景抽象仍需长期观察。
 
 ---
 
