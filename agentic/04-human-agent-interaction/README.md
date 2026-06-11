@@ -1,7 +1,7 @@
 # 04 Human-Agent Interaction
 
 > 适用范围：人与 Agent 之间的任务委托、交互控制与协作体验研究
-> 阶段状态：目录骨架已建立，后续持续补充主干内容
+> 阶段状态：核心主题已开始形成，后续持续补充产品证据与边界对照
 
 ## 一句话定位
 
@@ -10,8 +10,8 @@
 ## 快速入口
 
 - 从 `../02-single-agent/`、`../03-multi-agent/` 理解 Agent 能力与协作形态，再回看人类如何介入这些执行闭环。
-- 从 `human-in-the-loop/`、`delegation-and-control/`、`interaction-surfaces/`、`trust-and-alignment/` 进入核心子主题。
-- 若后续出现术语冲突、边界重叠或口径不一致，可再补 `conflict.md`；当前以目录骨架和主题分工为主。
+- 从 `human-in-the-loop/`、`delegation-and-control/`、`interaction-surfaces/`、`trust-and-alignment/` 进入核心子主题；具体专题入口优先查看各子目录 README。
+- 若后续出现术语冲突、边界重叠或口径不一致，再按元信息文件规则处理；当前以 HITL、delegation granularity 与 control surface 的主线建设为主。
 
 ## 分类依据
 

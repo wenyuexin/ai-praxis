@@ -26,15 +26,15 @@
 
 - **关联目录**：`human-in-the-loop/`
 - **为什么重要**：审批、纠偏、审核、接管、fallback 等介入方式经常被混写；如果没有稳定分类，human-in-the-loop 很容易退化成“有人工参与”这一空泛概念。
-- **当前状态**：`human-in-the-loop/human-in-the-loop-patterns.md` 已形成第一版专题，初步拆分了介入时机与 approval / correction / review / validation / takeover / fallback 等控制语义；后续重点应转向补产品证据、真实工作流组合和边界对照。
+- **当前状态**：`human-in-the-loop/human-in-the-loop-patterns.md` 已形成第一版专题，初步拆分了介入时机与 approval / correction / review / validation / takeover / fallback 等控制语义，并已回填 OpenHands、Copilot Edits 与 Handoff Debt 的保守证据；后续重点应转向补更多产品证据、真实工作流组合和边界对照。
 - **建议产物**：继续迭代 `human-in-the-loop-patterns.md`，优先补不同产品中的介入点组合、任务风险等级映射，以及 review / validation / takeover / fallback 的边界案例。
 
 ### 2.2 Delegation Granularity and Control Surface
 
 - **关联目录**：`delegation-and-control/`
 - **为什么重要**：用户到底是在委托目标、步骤、工具权限，还是整个工作流，是理解 Agent 控制面的关键问题。
-- **当前状态**：`delegation-and-control/delegation-granularity.md` 已形成第一版专题，初步拆分了委托对象、自主厚度、权限边界、stop condition、恢复路径与 HITL 介入点的关系；但 control surface 仍缺少独立专题承接。
-- **建议产物**：继续迭代 `delegation-granularity.md`，补真实产品中的 delegation 组合方式；后续再拆 `control-surface-design.md`，专门讨论 approval points、autonomy budget、permission boundary 与 stop conditions 如何暴露给用户。
+- **当前状态**：`delegation-and-control/delegation-granularity.md` 已形成第一版专题，初步拆分了委托对象、自主厚度、权限边界、stop condition、恢复路径与 HITL 介入点的关系；`delegation-and-control/control-surface-design.md` 已形成第一版专题，并回填 OpenHands、Copilot Edits、Cursor cloud agents / SDK、Claude Code permission / subagent 官方文档、Hedwig 与 authenticated delegation 的保守案例。
+- **建议产物**：继续迭代 `delegation-granularity.md` 与 `control-surface-design.md`，补真实产品中的 delegation 组合方式、control surface 组件、动态 autonomy budget、permission boundary 与 stop condition 的边界案例；下一轮优先核验 OpenAI Codex CLI 的 approval modes、sandbox、rollback / checkpoint 与 control surface 官方证据，随后再整理跨产品对照。
 
 ### 2.3 Agent UI 的最小必要可见性
 
@@ -102,5 +102,6 @@
 - `README.md` 已建立 `04-human-agent-interaction/` 的目录骨架与主题边界。
 - `overview.md` 已提供 delegation、human-in-the-loop、UI 与 trust 四个核心视角的总体框架。
 - `human-in-the-loop/vibe-coding-human-harness.md` 已提供 coding-agent 场景下的人类外部支架案例，backlog 后续主要追踪其可泛化边界与仍未沉淀的专题。
+- `evidence-registry.md` 汇总 HAI 主线已回填和待核验的外部证据，避免从 `temp/` 调研材料直接写成正文定论。
 - 当前目录中的新增 overview 与正文专题仍以结构化归纳为主，后续需要按 `docs/contributing/evidence-rules.md` 和 `docs/contributing/traceability-rules.md` 继续补充 Evidence 状态与必要的 Trace 字段。
 - 后续若某个问题获得更稳定证据，应优先拆成专题文档，而不是长期停留在 backlog。
