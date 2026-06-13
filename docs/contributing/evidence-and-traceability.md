@@ -68,6 +68,18 @@
 - `Version Basis`、`Observed At`、`Scope`、`Drift Risk` 是 `Trace` 的版本链路补充字段；其中 `Version Basis`、`Observed At` 是源码实现结论的最低字段，`Scope` 按适用范围补充，`Drift Risk` 仅对快速迭代对象按需补充。
 - 同一文档反复引用同一个外部仓库或文档站时，可以先声明一次基准 URL，后续用相对路径补充；前提是读者仍能还原完整来源。
 
+### 4.1 字段映射：组合入口字段与结构化链路字段的关系
+
+正文或元信息条目中常用的最小字段 `Sources / Trace / Needs`，与 `traceability-rules.md` 中定义的 `Source / Decision / Placement / Gap` 不是两套并列体系，而是同一治理行为的不同表达层次：
+
+- `Sources`（最小字段）≈ 对 `Source` 读者面向的来源列表
+- `Trace`（最小字段）≈ 对 `Decision + Placement` 的人类可读摘要
+- `Needs`（最小字段）≈ 对 `Gap` 的展示形式
+
+当链路简单时，用最小字段即可：`Sources: xxx / Trace: Moved from ... / Needs: ...`。
+当链路复杂时（如跨目录迁移、多次回流、多来源合并），才需要用 `Source / Decision / Placement / Gap` 四字段做结构化记录。
+两者不矛盾，也不应同时维护两套：正文中写 `Sources / Trace / Needs` 即可；需要更深链路记录时，进入 `traceability-rules.md` 的四个字段。
+
 ## 5. `temp/` 回流门槛
 
 `temp/` 内容默认只是输入材料，不是主线知识；`web_search` / `web_fetch` 等联网工具获取的结果也按外部输入处理。迁移出 `temp/` 或将联网结果写入正文前，至少满足：
@@ -75,10 +87,10 @@
 - 已判断材料类型：整体认知、主题缺口、待研究对象、冲突问题或正文专题材料。
 - 已判断目标落位：`overview.md`、`backlog.md`、`candidates.md`、`conflict.md` 或某篇正文专题。
 - 已判断 Evidence 状态：至少能标为 `Observed` 或 `Inferred`；只能标为 `Unverified` 时，不得写成正文定论。
-- 已记录 Trace：能说明 `Source / Decision / Placement / Gap` 或等价信息。
+- 已记录 Trace：能说明 `Source / Decision / Placement / Gap` 或等价信息（链路简单时用 `Sources / Trace / Needs` 即可）。
 - 已说明缺口：写清还缺论文、官方文档、源码实现、社区观察或跨系统比较中的哪一类。
 
-最小回流标注：
+最小回流标注（字段映射说明：这里的 `Sources / Trace / Needs` 分别对应 `traceability-rules.md` 中的 `Source`、`Decision+Placement`、`Gap`）：
 
 ```md
 ## Evidence

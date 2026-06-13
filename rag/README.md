@@ -6,11 +6,11 @@
 
 ## 分类依据
 
-RAG 目录按"基础 → 检索 → 高级范式 → 评估 → 生产"组织，检索是 RAG 的差异化核心：
+RAG 目录按"基础 → 检索 → 高级范式 → 评估 → 生产"组织。检索是 RAG 的差异化核心；03 中的 llm-wiki 等方向虽暂列于此，但关注的是查询前的知识预编译和持久化，而非经典的查询时检索拼接。
 
 - **01（基础）**：RAG 概念、朴素 RAG、管线总览、上下文构建、生成策略
 - **02（检索）**：分块、嵌入、向量数据库、高级检索方法
-- **03（高级范式）**：图增强、自反思、Agent 驱动、模块化、多模态等范式，含代表实现
+- **03（高级范式）**：图增强、自反思、Agent 驱动、模块化、多模态等范式，含代表实现；另含少量与 RAG 相邻但不完全等同的方向（如 llm-wiki）。这类目录讨论的是知识组织范式，不承接 `PageIndex` 这类可独立成立的检索框架主条目
 - **04（评估）**：端到端指标、公开基准
 - **05（生产）**：框架、缓存与扩展、安全与隐私
 
@@ -48,7 +48,8 @@ rag/
 │       ├── hybrid-retrieval/
 │       ├── multi-hop-retrieval/
 │       ├── recursive-retrieval/
-│       └── reranking/
+│       ├── reranking/
+│       └── page-index/
 │
 ├── 03-advanced-patterns/            # 高级范式（含代表实现）
 │   ├── graph-rag/                   # 图增强RAG（含Microsoft GraphRAG）
@@ -56,7 +57,7 @@ rag/
 │   ├── agentic-rag/                 # Agent驱动RAG
 │   ├── modular-rag/                 # 模块化RAG
 │   ├── multimodal-rag/              # 多模态RAG
-│   └── llm-wiki/                    # LLM Wiki / 知识编译范式
+│   └── llm-wiki/                    # LLM Wiki / 知识编译范式（非狭义 RAG，见该目录 README）
 │
 ├── 04-evaluation/                   # 评估
 │   ├── end-to-end-metrics/

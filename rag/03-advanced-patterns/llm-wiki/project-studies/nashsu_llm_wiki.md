@@ -15,13 +15,13 @@ tags:
   - rag
   - knowledge-graph
 created: "2026-05-04"
-updated: "2026-05-04"
+updated: "2026-06-13"
 status: "stable"
 ---
 
 # nashsu/llm_wiki
 
-> **一句话总结**：LLM Wiki 是 Karpathy 的 LLM Wiki 设计模式最完整的桌面工程实现，通过两步思维链摄入、四信号知识图谱、Louvain 社区检测和多阶段检索管线，将文档自动转化为增量构建的持久化知识库——知识编译一次，持续更新，不再每次从零检索。
+> **一句话总结**：nashsu/llm_wiki 是受 Karpathy 的 LLM Wiki 设计模式启发的一个桌面工程实现，通过两步思维链摄入、四信号知识图谱、Louvain 社区检测和多阶段检索管线，将文档自动转化为增量构建的持久化知识库——知识编译一次，持续更新，不再每次从零检索。
 
 ## 基本信息
 
@@ -39,7 +39,7 @@ status: "stable"
 
 - **解决的问题**：传统 RAG 每次查询都从零检索，回答不一致、无法积累上下文、缺乏结构化理解。LLM Wiki 的核心创新是"增量式知识编译"——LLM 主动理解、结构化、关联文档，持久存储为 wiki 页面，后续查询在已有知识基础上进行。这从根本上改变了 LLM 与文档的交互方式：从"每次临时检索"变为"持续维护一个知识图谱"。
 - **目标用户**：需要深度理解大量文档的研究者和学生；希望构建个人知识库但不想手动整理链接的 Obsidian/Notion 用户；对 LLM 原生知识管理感兴趣的开发者。
-- **在生态中的角色**：与 Obsidian（手动链接）、传统 RAG（临时检索）形成三角关系。LLM Wiki 的独特定位是"LLM 主动管理知识"——不是人手动整理，也不是每次临时检索，而是让 LLM 持续维护一个结构化的知识图谱。它同时是 Karpathy 原始设计模式最完整的工程化实现。
+- **在生态中的角色**：与 Obsidian（手动链接）、传统 RAG（临时检索）形成三角关系。LLM Wiki 的独特定位是"LLM 主动管理知识"——不是人手动整理，也不是每次临时检索，而是让 LLM 持续维护一个结构化的知识图谱。它是 Karpathy 原始设计模式的主要桌面工程实现之一。
 
 ## 上手成本
 
@@ -297,6 +297,22 @@ User Query → Multi-phase Retrieval → Chat / Graph / Search
 | [Karpathy's llm-wiki.md](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) | 上游/理论基础 | 想理解核心设计思想先看原版，它是本项目的"设计文档" |
 | [Obsidian](https://obsidian.md) | 互补/替代 | 喜欢手动控制链接结构选 Obsidian；想让 LLM 自动管理选 LLM Wiki |
 | [Quivr](https://github.com/StanGirard/quivr) | 替代 | Quivr 是云端 RAG 方案，LLM Wiki 是本地知识编译，隐私偏好决定选择 |
+| [OpenKB](https://github.com/VectifyAI/OpenKB) | 平行实现 | 同为 LLM Wiki 范式的系统实现，但技术路线不同：nashsu/llm_wiki 偏重知识图谱、两步摄入和桌面知识库，OpenKB 偏重 wiki 编译 + PageIndex 长文档机制。两者是同一范式的不同工程路径。`Observed` |
+| [PageIndex](https://github.com/VectifyAI/PageIndex) | 支撑框架（OpenKB 路线） | PageIndex 是 OpenKB 路线的长文档检索引擎，提供层级树索引 + LLM 推理导航。它不是 LLM Wiki 系统实现，而是 OpenKB 中的组件；对象研究主条目见 `../../../02-retrieval/advanced-retrieval/page-index/README.md`。`Verified` |
+
+## 与 OpenKB / PageIndex 的技术路线差异
+
+nashsu/llm_wiki 和 OpenKB 都是受 Karpathy LLM Wiki 模式启发的端到端系统实现，但采用不同技术路线：
+
+| 维度 | nashsu/llm_wiki | OpenKB |
+|---|---|---|
+| 长文档处理 | 两步 CoT + 增量缓存 + 持久化队列，LLM 直接处理 | 短文档 LLM 直接读取，长文档（>20 页）由 PageIndex 构建树索引后推理检索 |
+| 知识关联 | 四信号知识图谱（Source Overlap / Direct Link / Adamic-Adar / Type Affinity） | wiki 编译阶段生成概念页和交叉引用 |
+| 检索机制 | 四阶段混合（分词 + 可选向量 + 图谱扩展 + 上下文预算） | wiki 查询 + PageIndex 检索 |
+| 技术栈 | TypeScript + Rust (Tauri)，桌面应用 | Python CLI |
+| 关键差异 | 图谱驱动，强调知识发现和社区检测 | 编译优先，强调长文档的可扩展检索 |
+
+PageIndex 本身不是 LLM Wiki 系统实现，而是支撑 OpenKB 路线的长文档检索引擎框架。以上对照基于官方文档与项目公开说明整理，而非第三方独立比较。`Inferred`。
 
 ---
 

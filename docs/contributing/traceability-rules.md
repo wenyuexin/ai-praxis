@@ -97,6 +97,8 @@ Trace 是内容进入仓库的轻量链路记录。
 
 ### 3.5 代码库版本链路字段
 
+**Stop-line：只要结论基于源码观察，就不要省略 `Version Basis` 和 `Observed At`。**
+
 当 Source 指向开源代码库、release notes、issue / PR 或源码文件时，除 `Source / Decision / Placement / Gap` 外，Trace 可补版本链路信息；如果正文太轻，可写在 `notes/evidence.md`、`source-notes.md` 或条目内部：
 
 - `Version Basis`：本次判断基于 `branch`、`tag/release`、`commit` 中的哪一种，并包含可还原的具体标识，例如 `branch main`、`tag v0.14.0` 或至少 7 位 commit hash。

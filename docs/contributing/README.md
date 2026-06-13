@@ -19,15 +19,16 @@
 docs/contributing/
 ├── README.md                         # 本目录索引：按任务找到规则文件
 ├── meta-rules.md                     # 规则怎么改：适用时机、最小改动、落位边界
-├── documentation-workflow.md          # 材料处理、分流、落位与回流流程
-├── research-artifacts.md              # 子领域研究、案例研究与研究辅助材料组织
-├── metadata-files.md                  # README / overview / landscape / backlog 等元信息文件模型
-├── readme-rules.md                    # README 出现条件、展开深度与导航边界
-├── organization-principles.md         # 知识树设计、分类轴与长期组织原则
-├── structure-refactoring-rules.md     # 目录重构、导航收敛与结构演进规则
-├── evidence-and-traceability.md       # Evidence + Traceability 组合执行入口
-├── evidence-rules.md                  # Claim / Evidence / Status / 标注方式
-└── traceability-rules.md              # Source / Decision / Placement / Gap 规则
+├── documentation-workflow.md         # 材料处理、分流、落位与回流流程
+├── research-artifacts.md             # 子领域研究、案例研究与研究辅助材料组织
+├── metadata-files.md                 # README / overview / landscape / backlog 等元信息文件模型
+├── readme-rules.md                   # README 出现条件、展开深度与导航边界
+├── organization-principles.md        # 知识树设计、分类轴与长期组织原则
+├── structure-refactoring-rules.md    # 目录重构、导航收敛与结构演进规则
+├── evidence-and-traceability.md      # Evidence + Traceability 组合执行入口
+├── evidence-rules.md                 # Claim / Evidence / Status / 标注方式
+├── traceability-rules.md             # Source / Decision / Placement / Gap 规则
+└── intent/                           # 非默认入口：保存规则设计意图与长解释
 ```
 
 ## 当前规则入口
@@ -45,18 +46,24 @@ docs/contributing/
 - **README 应该展开到几级、如何导航**：先读 [README 规则](./readme-rules.md)
 - **`README.md` / `overview.md` / `landscape.md` / `backlog.md` 等文件各自做什么**：先读 [元信息文件模型](./metadata-files.md)；如果想看单篇文档的文档头信息与尾注信息如何摆放，也看该文附录
 - **研究对象、案例研究、辅助材料如何组织**：先读 [研究产物组织规则](./research-artifacts.md)
+- **判断某个对象是否应升格为独立目录（非迁移执行问题）**：先读 [研究产物组织规则](./research-artifacts.md) 和 [文档组织原则](./organization-principles.md)
 - **新材料、外部调研、`temp/` 内容如何判断与分流**：先读 [材料处理与文档增改流程](./documentation-workflow.md)
 - **证据状态和轻量链路如何一起使用**：先读 [Evidence 与 Traceability 工作流](./evidence-and-traceability.md)
+
+如果主规则已经读过，但仍需要误判复盘、边界案例或更长解释，再看 [`cases/README.md`](./cases/README.md) 或 `intent/` 下的对应释义文档；这里都不是默认入口。
 
 已拆分规则：
 
 - [规则的规则](./meta-rules.md)（按需）：定义什么时候改规则、规则如何最小改动，以及专题规则与 meta-rule 的边界。
+- [`intent/meta-rules.md`](./intent/meta-rules.md)（按需）：解释为什么仓库需要 meta-rules，以及为什么只有短规则条文还不足以守住规则原意。
 - [研究产物组织规则](./research-artifacts.md)：定义子领域研究、具体案例研究、研究辅助材料的组织方式。
 - [材料处理与文档增改流程](./documentation-workflow.md)：定义新材料、外部调研、`temp/` 内容和正文修改的判断、落位与回流流程。
 - [Evidence 与 Traceability 工作流](./evidence-and-traceability.md)：组合执行入口，只说明正式 Evidence + 轻量 Traceability 如何一起使用。
 - [Evidence 规则](./evidence-rules.md)：定义 Claim、Evidence 状态、来源类型、标注密度、正文标注方式、主题级 evidence registry 的启用条件，以及研究开源代码库时的版本基线要求。
 - [Traceability 规则](./traceability-rules.md)：定义 Source / Decision / Placement / Gap 四个轻量链路字段，以及代码库研究中的 `Version Basis` / `Observed At` / `Scope` / `Drift Risk`。
+- [`intent/traceability-rules.md`](./intent/traceability-rules.md)（按需）：解释为什么当前 Traceability 既不能做成重型 lineage 系统，也不能退化成一句模糊备注，以及为什么源码观察必须带版本链路字段。
 - [README 规则](./readme-rules.md)：定义 README 出现条件、目录树展开深度、导航边界和类型化结构建议。
 - [文档组织原则](./organization-principles.md)：定义知识树设计、分类轴一致性、长期主义、材料目录与知识目录分离等上位组织原则。
 - [结构重构规则](./structure-refactoring-rules.md)：定义目录改名、结构迁移、README 导航收敛、材料目录治理与结构经验沉淀原则。
 - [元信息文件模型](./metadata-files.md)：定义 `README.md`、`overview.md`、`landscape.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 等文件的职责边界。
+- [`intent/metadata-files.md`](./intent/metadata-files.md)（按需）：解释为什么 `README.md`、`overview.md`、`landscape.md` 不能被当成一组对称槽位来理解，尤其解释 `overview` 的独立可读性与 `landscape` 的结构化文档体系构建职责。
