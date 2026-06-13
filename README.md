@@ -179,8 +179,7 @@ machine-learning/
 │   │   └── any2any/                            # 全模态模型
 │   └── 08-safety-and-society/                  # 安全与社会影响
 │       ├── safety-and-alignment/               # 安全与对齐
-│       ├── social-impact/                      # 社会影响
-│       └── llm-wiki/                           # LLM知识库/wiki
+│       └── social-impact/                      # 社会影响
 │
 ├── rag/                                        # 检索增强生成
 │   ├── 01-foundations/                         # 基础
@@ -197,6 +196,7 @@ machine-learning/
 │   │   └── advanced-retrieval/                 # 高级检索
 │   ├── 03-advanced-patterns/                   # 高级范式（含代表实现）
 │   │   ├── graph-rag/                          # 图增强RAG
+│   │   ├── llm-wiki/                           # LLM Wiki / 知识编译范式
 │   │   ├── self-reflective-rag/                # 自反思RAG
 │   │   ├── agentic-rag/                        # Agent驱动RAG
 │   │   ├── modular-rag/                        # 模块化RAG

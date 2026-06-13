@@ -63,7 +63,18 @@
 - 2026-02：Codex 桌面 App（macOS）发布
 - 2026-04-16：Codex 大版本升级——Computer Use + 90+ 官方插件 + Automations + 桌面 App（Windows）
 
-## 5. 维护建议
+## 5. Rollback / Restore 边界
+
+当前与 `rollback`、`restore`、`undo turns` 相关的官方证据，最稳妥的分层理解是：
+
+- `Codex CLI` 官方文档已明确 approval policy、sandbox、subagents、`/goal` 与 `codex resume` 等控制入口。
+- `rollback` 相关更直接的官方材料，目前主要来自 changelog / release notes 中的 `app-server thread rollback` 与 IDE 客户端撤销最近 N 个回合能力。
+- 现阶段**仍未找到 `Codex CLI` 原生 rollback / checkpoint 覆盖范围的官方定义**，因此不能把 IDE / app-server 层的恢复能力直接外推为 CLI 原生的完整恢复语义。
+- 尤其不能直接推定它覆盖 `workspace files`、`shell side effects`、`external side effects` 或 `runtime identity`。
+
+这意味着：如果讨论 `Codex` 作为对象本身的恢复能力，应区分 `CLI`、`app-server` 与 `IDE integration` 三层；如果讨论它在跨主题中的控制面意义，则只能保守写成“最近 N 个回合的 thread rollback 线索已存在，但 CLI 原生 rollback scope 未闭环”。
+
+## 6. 维护建议
 
 - 每月核验一次核心数字（窗口、成本、benchmark）
 - 每季度更新一次时间轴

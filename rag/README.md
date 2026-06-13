@@ -55,7 +55,8 @@ rag/
 │   ├── self-reflective-rag/         # 自反思RAG（含Self-RAG、Corrective RAG）
 │   ├── agentic-rag/                 # Agent驱动RAG
 │   ├── modular-rag/                 # 模块化RAG
-│   └── multimodal-rag/              # 多模态RAG
+│   ├── multimodal-rag/              # 多模态RAG
+│   └── llm-wiki/                    # LLM Wiki / 知识编译范式
 │
 ├── 04-evaluation/                   # 评估
 │   ├── end-to-end-metrics/

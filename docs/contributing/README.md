@@ -21,7 +21,7 @@ docs/contributing/
 ├── meta-rules.md                     # 规则怎么改：适用时机、最小改动、落位边界
 ├── documentation-workflow.md          # 材料处理、分流、落位与回流流程
 ├── research-artifacts.md              # 子领域研究、案例研究与研究辅助材料组织
-├── metadata-files.md                  # README / overview / backlog 等元信息文件模型
+├── metadata-files.md                  # README / overview / landscape / backlog 等元信息文件模型
 ├── readme-rules.md                    # README 出现条件、展开深度与导航边界
 ├── organization-principles.md         # 知识树设计、分类轴与长期组织原则
 ├── structure-refactoring-rules.md     # 目录重构、导航收敛与结构演进规则
@@ -43,7 +43,7 @@ docs/contributing/
 - **为什么这样组织知识**：先读 [文档组织原则](./organization-principles.md)
 - **已经决定重构后怎么低风险执行**：先读 [结构重构规则](./structure-refactoring-rules.md)
 - **README 应该展开到几级、如何导航**：先读 [README 规则](./readme-rules.md)
-- **`README.md` / `overview.md` / `backlog.md` 等文件各自做什么**：先读 [元信息文件模型](./metadata-files.md)；如果想看单篇文档的文档头信息与尾注信息如何摆放，也看该文附录
+- **`README.md` / `overview.md` / `landscape.md` / `backlog.md` 等文件各自做什么**：先读 [元信息文件模型](./metadata-files.md)；如果想看单篇文档的文档头信息与尾注信息如何摆放，也看该文附录
 - **研究对象、案例研究、辅助材料如何组织**：先读 [研究产物组织规则](./research-artifacts.md)
 - **新材料、外部调研、`temp/` 内容如何判断与分流**：先读 [材料处理与文档增改流程](./documentation-workflow.md)
 - **证据状态和轻量链路如何一起使用**：先读 [Evidence 与 Traceability 工作流](./evidence-and-traceability.md)
@@ -59,4 +59,4 @@ docs/contributing/
 - [README 规则](./readme-rules.md)：定义 README 出现条件、目录树展开深度、导航边界和类型化结构建议。
 - [文档组织原则](./organization-principles.md)：定义知识树设计、分类轴一致性、长期主义、材料目录与知识目录分离等上位组织原则。
 - [结构重构规则](./structure-refactoring-rules.md)：定义目录改名、结构迁移、README 导航收敛、材料目录治理与结构经验沉淀原则。
-- [元信息文件模型](./metadata-files.md)：定义 `README.md`、`overview.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 等文件的职责边界。
+- [元信息文件模型](./metadata-files.md)：定义 `README.md`、`overview.md`、`landscape.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 等文件的职责边界。

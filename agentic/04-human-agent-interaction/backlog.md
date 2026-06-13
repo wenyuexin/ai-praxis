@@ -33,8 +33,18 @@
 
 - **关联目录**：`delegation-and-control/`
 - **为什么重要**：用户到底是在委托目标、步骤、工具权限，还是整个工作流，是理解 Agent 控制面的关键问题。
-- **当前状态**：`delegation-and-control/delegation-granularity.md` 已形成第一版专题，初步拆分了委托对象、自主厚度、权限边界、stop condition、恢复路径与 HITL 介入点的关系；`delegation-and-control/control-surface-design.md` 已形成第一版专题，并回填 OpenHands、Copilot Edits、Cursor cloud agents / SDK、Claude Code permission / subagent 官方文档、Hedwig 与 authenticated delegation 的保守案例。
-- **建议产物**：继续迭代 `delegation-granularity.md` 与 `control-surface-design.md`，补真实产品中的 delegation 组合方式、control surface 组件、动态 autonomy budget、permission boundary 与 stop condition 的边界案例；下一轮优先核验 OpenAI Codex CLI 的 approval modes、sandbox、rollback / checkpoint 与 control surface 官方证据，随后再整理跨产品对照。
+- **当前状态**：`delegation-and-control/delegation-granularity.md` 已形成第一版专题，初步拆分了委托对象、自主厚度、权限边界、stop condition、恢复路径与 HITL 介入点的关系；`delegation-and-control/control-surface-design.md` 已形成第一版专题，并回填 OpenHands、Copilot Edits、Cursor cloud agents / SDK、Claude Code、OpenAI Codex、Hedwig 与 authenticated delegation 的保守案例，同时已形成一张第一版跨产品 control surface 对照表。
+- **建议产物**：继续迭代 `delegation-granularity.md` 与 `control-surface-design.md`，补真实产品中的 delegation 组合方式、control surface 组件、动态 autonomy budget、permission boundary 与 stop condition 的边界案例；下一轮重点从当前产品对照表中仍为空缺或仅有保守线索的格子出发，继续核验 takeover、resume、artifact rollback、validation gate 与 subagent isolation 的官方证据。
+
+### 2.2a 当前共享证据边界
+
+以下问题同时影响多篇正文专题、放回单篇正文会造成口径漂移，暂记于此：
+
+- `Codex CLI` 原生 rollback / checkpoint 覆盖范围仍未由官方定义闭环，不能把已有 thread rollback 线索外推为完整恢复语义；对象级更细判断见 `06-frameworks-and-tools/02-coding-agents-and-tools/codex/codex-agent-evidence.md`。
+- `Claude Code` checkpoint / conversation restore 仍未完全由官方材料闭合，Auto Mode classifier 的完整规则与 fallback 条件也仍待核验。
+- `Claude Code` subagent permission isolation 仍需区分"可配置工具 / permissionMode"和"安全隔离"。
+- `Cursor` checkpoint 存储 / 审计边界、auto-review 优先级、子 agent 权限继承仍待正式文档化。
+- `SWE-agent` 暂无足够材料确认是否存在人类审批、接管或 handoff 机制。
 
 ### 2.3 Agent UI 的最小必要可见性
 
@@ -102,6 +112,6 @@
 - `README.md` 已建立 `04-human-agent-interaction/` 的目录骨架与主题边界。
 - `overview.md` 已提供 delegation、human-in-the-loop、UI 与 trust 四个核心视角的总体框架。
 - `human-in-the-loop/vibe-coding-human-harness.md` 已提供 coding-agent 场景下的人类外部支架案例，backlog 后续主要追踪其可泛化边界与仍未沉淀的专题。
-- `evidence-registry.md` 汇总 HAI 主线已回填和待核验的外部证据，避免从 `temp/` 调研材料直接写成正文定论。
+- `evidence-registry.md` 已删除；其剩余内容已迁回本文件与正文专题。不再在 sub domain 根目录保留辅助材料文件。
 - 当前目录中的新增 overview 与正文专题仍以结构化归纳为主，后续需要按 `docs/contributing/evidence-rules.md` 和 `docs/contributing/traceability-rules.md` 继续补充 Evidence 状态与必要的 Trace 字段。
 - 后续若某个问题获得更稳定证据，应优先拆成专题文档，而不是长期停留在 backlog。

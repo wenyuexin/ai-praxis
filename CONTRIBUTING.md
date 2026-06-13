@@ -55,7 +55,7 @@ README 的详细规则见 [`docs/contributing/readme-rules.md`](./docs/contribut
 - 每个一级目录（顶层领域目录）下必须有 `README.md`。
 - 二级及更深层目录仅在存在或未来可能容纳子目录时必须写 README；纯文件目录不需要。
 - README 必须包含目录结构，但按所在层级控制展开深度：根 README 按内容活跃度展开；一级目录（顶层领域目录）README 允许展开到三级子目录；二级及更深层 README 默认只记录直接子目录。
-- 目录树原则上只展示目录，不展示内容文件；README 导航不主动列出 `overview.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 等元信息文件。
+- 目录树原则上只展示目录，不展示内容文件；README 导航不主动列出 `overview.md`、`landscape.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 等元信息文件。
 - 如需标注 `最后更新`、来源、适用范围、状态等元信息，统一放在标题下方、正文开始之前。
 
 ## 四、元信息文件模型
@@ -66,13 +66,13 @@ README 的详细规则见 [`docs/contributing/readme-rules.md`](./docs/contribut
 |:---|:---|:---|:---|:---|
 | L1 定向 | Orient | `README.md` | “这是什么地方？跟我有什么关系？” | 目录存在或未来可能容纳子目录时必选 |
 | L2 发现 | Discover | `index.md` | “我要的文件/主题在哪？” | 可选；文件/子目录较多，或主题交叉关系复杂时创建 |
-| L3 理解 | Understand | `overview.md` | “这个领域的全貌和现状是什么？” | 该目录代表一个需要建立整体认知的领域 |
+| L3 理解 | Understand | `overview.md` | “如果我只读一篇，这个主题最值得先理解的主线是什么？” | 当 README 和零散专题无法让读者形成整体理解时创建；有稳定主线判断的主题考虑补上 |
 | L4 推进 | Track | `backlog.md` | “这个领域还有什么没被覆盖？” | 目录处于活跃建设期，内容有明显缺口 |
 | L5 选题 | Queue | `candidates.md` | “接下来值得研究哪些对象？” | 可选；需要持续跟踪论文、仓库、官方文档、产品、协议、benchmark 等候选研究对象时创建 |
 | L6 规划 | Plan | `roadmap.md` | “从哪开始、按什么顺序阅读/建设？” | 可选；有明确的内容组织顺序或学习路径时创建 |
 | L7 校验 | Reconcile | `conflict.md` | “这里是否存在定义冲突或口径不一致？” | 仅当发现冲突时创建 |
 
-命名约定：L3 的标准文件名为 `overview.md`，不再使用 `summary.md` / `SUMMARY.md` 承接领域全貌。
+命名约定：L3 的标准文件名为 `overview.md`，承接人类向主文；当目录还需要一篇结构化研究文时，可按需新增 `landscape.md`（`landscape.md` 不在 L1–L7 编号体系中）。`summary.md` / `SUMMARY.md` 不再作为该槽位命名。
 
 ## 五、文档写作与表达建议
 
@@ -98,12 +98,12 @@ README 的详细规则见 [`docs/contributing/readme-rules.md`](./docs/contribut
 - **证据状态必须显式判断**：从外部材料回流主线时，先区分 `Verified`、`Observed`、`Inferred`、`Unverified`、`Conflicting`、`Deprecated`；完整规则见 [`docs/contributing/evidence-rules.md`](./docs/contributing/evidence-rules.md)。
 - **链路字段按需保留**：涉及迁移、回流、冲突处理或外部来源时，应能说明 `Source / Decision / Placement / Gap`；完整规则见 [`docs/contributing/traceability-rules.md`](./docs/contributing/traceability-rules.md)。
 
-默认策略：**拿不准时，先写元信息文件或保留在 `temp/`，不要抢写正文。**
+默认策略：**拿不准时，先写元信息文件或保留在 `temp/`，不要抢写正文。** 七层模型提供职责基线；是否真的需要某个文件，应结合对应的问题触发信号判断，而不是机械补齐。
 
 ## 七、其他规则
 
 - **空目录**（README 出现条件详见 [README 规则](./docs/contributing/readme-rules.md)）：
-  - 如果该目录存在或未来可能容纳子目录：优先放入 `README.md`，用一句话说明该主题的定位和研究计划。既保持结构完整，又为未来贡献预留语义接口
+  - 如果该目录存在或未来可能容纳子目录且存在入口定向问题：补 `README.md`，用一句话说明该主题的定位和研究计划。既保持结构完整，又为未来贡献预留语义接口
   - 文件非常少的底层目录，或快速调整目录结构时的临时状态，可用 `.gitkeep` 占位
   - `.gitkeep` 仅作为中间状态，目录稳定后应替换为 `README.md`
   - 纯文件目录（不会容纳子目录）不需要 README 或 .gitkeep，直接等文件填充即可

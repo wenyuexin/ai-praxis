@@ -13,7 +13,7 @@
 - 如果你在**研究论文、开源项目、产品、benchmark 或具体案例**：读 [`research-artifacts.md`](./docs/contributing/research-artifacts.md)
 - 如果你在**新建/改名/迁移目录**：读 [`structure-refactoring-rules.md`](./docs/contributing/structure-refactoring-rules.md)
 - 如果你在**修改 README 树或导航**：读 [`readme-rules.md`](./docs/contributing/readme-rules.md)
-- 如果你在**判断 overview/backlog/candidates/conflict 落位**：读 [`metadata-files.md`](./docs/contributing/metadata-files.md)
+- 如果你在**判断 overview/landscape/backlog/candidates/conflict 落位**：读 [`metadata-files.md`](./docs/contributing/metadata-files.md)
 - 如果你在**处理 temp / 外部调研 / 回流正文**：读 [`documentation-workflow.md`](./docs/contributing/documentation-workflow.md)
 - 如果你在**讨论结构是否长期合理**：读 [`organization-principles.md`](./docs/contributing/organization-principles.md)
 - 如果你在**标注 Evidence 或 Trace**：先读 [`evidence-and-traceability.md`](./docs/contributing/evidence-and-traceability.md)；需要细则时，再读 [`evidence-rules.md`](./docs/contributing/evidence-rules.md) 和 [`traceability-rules.md`](./docs/contributing/traceability-rules.md)
