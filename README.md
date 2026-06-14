@@ -1,21 +1,29 @@
 <div align="center">
 
-  <h1>🧠 Machine Learning Study Notes</h1>
+  <h1>🧠 AI PRAXIS</h1>
   <p>
-    <strong>从经典算法到大语言模型：一场结构化的现代机器学习之旅</strong><br>
-    <em>ML / DL / NLP / CV / LLM / RAG / KG</em>
+    <strong>从基础方法到智能系统：一场面向现代AI的结构化研究之旅</strong><br>
+    <em>ML / DL / CV / LLM / KG / RAG / AGENTIC</em><br>
   </p>
 
   <!-- 核心状态栏 -->
   <p>
     <!-- 动态获取最后提交时间 -->
-    <img src="https://img.shields.io/github/last-commit/wenyuexin/machine-learning?style=flat-square&label=Last%20Update&color=00bcd4" alt="Last Commit">
+    <img src="https://img.shields.io/github/last-commit/wenyuexin/ai-praxis?style=flat-square&label=Last%20Update&color=00bcd4" alt="Last Commit">
     <!-- 静态徽章 -->
     <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License">
-    <img src="https://img.shields.io/badge/Status-Active%20Learning-yellow?style=flat-square" alt="Status">
+    <img src="https://img.shields.io/badge/Status-Active%20Research-yellow?style=flat-square" alt="Status">
     <img src="https://img.shields.io/badge/Format-Markdown-lightgrey?style=flat-square" alt="Format">
   </p>
 </div>
+
+---
+
+现代AI并不是一组彼此孤立的知识点，而是一套从基础方法、核心模型到智能系统持续展开、相互牵引的技术体系。
+
+本仓库围绕这一整体视角展开，持续整理基础知识、研究代表性方向，并跟踪前沿主题的演化。内容主轴覆盖传统机器学习、深度学习、计算机视觉、大语言模型、知识图谱、检索增强生成与智能体，也适度延伸至世界模型、具身智能、训练基础设施与跨学科问题。
+
+知识反哺实践，这里也在持续演化一套构建知识体系的方法。结构化研究被用来组织基础方法、核心模型、智能系统与跨主题问题，并让它们形成一个可积累、可连接、可持续扩展的整体。
 
 ---
 
@@ -317,4 +325,4 @@ machine-learning/
 
 - 📢 如需转载，请注明出处
 
-- 🏗️ 个人的学习仓库，目录建得很全，但是不确定什么时候填坑
+- 🏗️ 持续探索中，不定期填坑

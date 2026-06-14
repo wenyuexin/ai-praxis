@@ -7,6 +7,7 @@
 ```
 learning-materials/
 ├── interview/       # 面试资料
+├── scratch/         # 零散、未整理、可后续回流的个人记录
 ├── backlog.md       # 技术项待办
 ├── books.md         # 书籍推荐
 ├── courses.md       # 课程与讲座

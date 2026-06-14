@@ -31,7 +31,7 @@
 
 ## Workflow state / checkpoint / replay boundary pass（2026-06-09）
 
-Version Basis：本轮源码观察基于本地 LangGraph checkout `/Users/wenyuexin/github/langgraph` 的 `libs/checkpoint/` 与 `libs/langgraph/` 当前工作区状态。
+Version Basis：本轮源码观察基于 `langchain-ai/langgraph` 当前工作区中的 `libs/checkpoint/` 与 `libs/langgraph/`。
 Observed At：2026-06-09。
 Scope：仅覆盖 OSS `BaseCheckpointSaver`、checkpoint schema、Pregel loop / apply_writes 主路径；不覆盖 LangGraph Platform 托管后台的未公开实现。
 Drift Risk：LangGraph checkpoint / delta channel / platform API 仍在演进，源码字段与官方文档口径可能继续变化。
@@ -50,7 +50,7 @@ Drift Risk：LangGraph checkpoint / delta channel / platform API 仍在演进，
 
 ## `update_state` / branch boundary pass（2026-06-09）
 
-Version Basis：本轮源码观察基于本地 LangGraph checkout `/Users/wenyuexin/github/langgraph` 的 `libs/langgraph/`、`libs/sdk-py/` 与 `libs/sdk-js/` 当前工作区状态。
+Version Basis：本轮源码观察基于 `langchain-ai/langgraph` 当前工作区中的 `libs/langgraph/`、`libs/sdk-py/` 与 `libs/sdk-js/`。
 Observed At：2026-06-09。
 Scope：覆盖 OSS `Pregel.update_state` / `bulk_update_state` 主路径、Python SDK `threads.update_state` REST wrapper、server runtime 类型说明和相关测试；未覆盖 LangGraph API server 私有实现。
 Drift Risk：`update_state`、server runtime 和 platform branch 语义仍可能随 LangGraph API 演进。

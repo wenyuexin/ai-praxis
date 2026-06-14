@@ -4,6 +4,8 @@
 
 它不保存具体机器学习或 Agentic 知识内容；知识内容应放在对应主题目录中，例如 `agentic/`、`llm/`、`training-infra/` 等。
 
+更准确地说，这里不只是一个规则目录，也是在沉淀一套面向 AI 与人类协作的结构化研究方法体系：帮助研究过程稳定分层、证据可追、判断可回流、知识可长期维护。
+
 ## 职责边界
 
 - [`CONTRIBUTING.md`](../../CONTRIBUTING.md)：仓库级贡献入口，保留必须遵守的核心规则。
@@ -65,7 +67,7 @@ docs/contributing/
 - [材料处理与文档增改流程](./documentation-workflow.md)：定义新材料、外部调研、`temp/` 内容和正文修改的判断、落位与回流流程。
 - [Evidence 与 Traceability 工作流](./evidence-and-traceability.md)：组合执行入口，只说明正式 Evidence + 轻量 Traceability 如何一起使用。
 - [Evidence 规则](./evidence-rules.md)：定义 Claim、Evidence 状态、来源类型、标注密度、正文标注方式、主题级 evidence registry 的启用条件，以及研究开源代码库时的版本基线要求。
-- [Traceability 规则](./traceability-rules.md)：定义 Source / Decision / Placement / Gap 四个轻量链路字段，以及代码库研究中的 `Version Basis` / `Observed At` / `Scope` / `Drift Risk`。
+- [Traceability 规则](./traceability-rules.md)：定义 Source / Decision / Placement / Gap 四个轻量链路字段，以及代码库研究中的 `Version Basis` / `Observed At` / `Scope` / `Drift Risk`；正式来源表达优先写仓库内相对路径、上游公开仓库 URL 或 `owner/repo`。
 - [`intent/traceability-rules.md`](./intent/traceability-rules.md)（按需）：解释为什么当前 Traceability 既不能做成重型 lineage 系统，也不能退化成一句模糊备注，以及为什么源码观察必须带版本链路字段。
 - [README 规则](./readme-rules.md)：定义 README 出现条件、目录树展开深度、导航边界和类型化结构建议。
 - [文档组织原则](./organization-principles.md)：定义知识树设计、分类轴一致性、长期主义、材料目录与知识目录分离等上位组织原则。

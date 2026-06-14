@@ -9,7 +9,7 @@ RAG 的检索模块，覆盖文档分块、嵌入、索引、排序全链路。
 | chunking-strategies/ | 文档分块策略：固定大小、语义分块、递归分块 |
 | embedding-models/ | 嵌入模型：稠密嵌入、稀疏嵌入、多模态嵌入 |
 | vector-databases/ | 向量数据库：选型对比、索引结构、性能调优 |
-| advanced-retrieval/ | 高级检索：混合搜索、递归检索、多跳检索、重排序，以及 PageIndex 这类推理型检索框架 |
+| advanced-retrieval/ | 高级检索：混合检索、递归检索、多跳检索、重排序，以及 PageIndex 这类结构化导航检索框架；内部切分逻辑见该目录 README |
 
 ## 相关资源
 
