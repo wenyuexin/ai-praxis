@@ -97,7 +97,7 @@
 > 编号目录展开至子目录名；核心领域展开较深，扩展领域仅列三级目录。各领域详细结构见对应 README。
 
 ```
-machine-learning/
+ai-praxis/
 │
 ├── traditional-ml/                             # 传统机器学习
 │   ├── 01-fundamentals/                        # 数学基础
