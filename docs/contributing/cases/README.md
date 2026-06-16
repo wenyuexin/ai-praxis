@@ -31,13 +31,25 @@
 
 - 先看 [`pageindex-hybrid-study-unit.md`](./pageindex-hybrid-study-unit.md)：这是“研究单元边界”样本，回答为什么有些对象不能只按“纯主题 / 纯对象”二分。
 - 再看 [`interdisciplinarity-readme-index-roadmap.md`](./interdisciplinarity-readme-index-roadmap.md)：这是“复杂目录拆分”样本，回答为什么 `README.md`、`index.md`、`roadmap.md` 必须分开承接不同认知任务。
+- 如果你拿不准为什么某些目录会先长出 `landscape.md` 而不是 `overview.md`，看 [`training-infra-landscape-before-overview.md`](./training-infra-landscape-before-overview.md)：这是“结构支架先成熟”样本，回答为什么 `README.md`、`index.md`、`landscape.md`、`roadmap.md` 可以先成立，而 `overview.md` 暂不机械创建。
+- 如果你拿不准为什么某些目录会先长出 `candidates.md`，而不是 `overview.md` 或本层 `backlog.md`，看 [`agent-system-modeling-readme-candidates.md`](./agent-system-modeling-readme-candidates.md)：这是“对象队列先成熟”样本，回答为什么 `README.md` + `candidates.md` 可以先成立。
 
 ## 当前规划
 
 - [`pageindex-hybrid-study-unit.md`](./pageindex-hybrid-study-unit.md)：`PageIndex` 作为“主题+对象混合型研究单元”的首个完整边界案例，说明为什么它既不能被压成纯主题，也不能只被当成普通对象研究。
 - [`interdisciplinarity-readme-index-roadmap.md`](./interdisciplinarity-readme-index-roadmap.md)：`interdisciplinarity/` 作为复杂横向目录的拆分案例，说明为什么 `README.md`、`index.md`、`roadmap.md` 必须分别承接目录定位、结构导航与路径分流，以及何时只出现 `overview` 信号而不机械创建 `overview.md`。
+- [`training-infra-landscape-before-overview.md`](./training-infra-landscape-before-overview.md)：`training-infra/` 作为“结构支架先成熟”案例，说明为什么 `landscape.md` 可以先于 `overview.md` 出现，以及 `README.md`、`index.md`、`landscape.md`、`roadmap.md` 如何分工。
+- [`agent-system-modeling-readme-candidates.md`](./agent-system-modeling-readme-candidates.md)：`agent-system-modeling/` 作为“对象队列先成熟”案例，说明为什么 `candidates.md` 可以先于 `overview.md` 出现，以及为什么本层不必机械补 `backlog.md`。
 - 后续如再出现同类边界问题，可继续在本目录沉淀案例；没有稳定问题模式时，不主动扩充。
 - 如果后续再次出现“规则本身清楚，但 AI 在长任务中仍反复把 `README.md`、`index.md`、`overview.md` 等文件职责重新混写”的情况，可考虑补一个关于"结构语义优先于规则记忆"的误判复盘案例；在问题尚未形成稳定模式前，不单独建新案例文件。
+
+## 案例的时效性
+
+本目录中的案例可以引用当前仓库里的真实目录作为样本，但这些样本是动态的，不应被误当成永久事实。
+
+写案例时应优先沉淀可迁移的判断，例如：什么问题先稳定出现、为什么某类文件此时应出现或暂不出现、哪些职责不应继续混写；不要过度依赖易失效的目录细节。
+
+如果某个样本目录后续发生明显变化，例如新增了原本不存在的元信息文件、职责边界重新调整、或不再代表当时要说明的问题模式，应重新检查对应案例是否仍然成立；必要时更新、改写或退役该案例，而不是继续把旧样本当成默认依据。
 
 ## 与主规则、`intent/` 的关系
 

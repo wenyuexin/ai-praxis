@@ -45,47 +45,10 @@ flowchart LR
 - **training-infra/** 侧重分布式训练、显存优化、框架选型等工程层面，DL `05-infra/` 只保留概念介绍
 - **reinforce-learning/** 使用 DL 的神经网络作为函数逼近器，两者在策略网络、Q 网络处交汇
 
-## 目录结构
+## 入口说明
 
-```
-deep-learning/
-├── 01-neural-network-fundamentals/  # 神经网络基础
-│   ├── perceptron-and-mlp/
-│   ├── activation-functions/
-│   └── loss-functions/
-│
-├── 02-training-and-optimization/    # 训练与优化
-│   ├── backpropagation/
-│   ├── gradient-descent-variants/
-│   │   ├── sgd/
-│   │   ├── adam/
-│   │   └── learning-rate-schedules/
-│   ├── regularization/
-│   │   ├── l1-l2/
-│   │   ├── dropout/
-│   │   └── batch-normalization/
-│   └── initialization-methods/
-│
-├── 03-architectures/      # 按领域划分的架构
-│   ├── cnns/                        # 卷积神经网络
-│   ├── rnns-and-sequence-models/    # 循环神经网络与序列模型
-│   ├── transformers/                # Transformer
-│   └── generative-models/           # 生成模型
-│       ├── gans/
-│       ├── vaes/
-│       └── diffusion-models/
-│
-├── 04-advanced-topics/              # 进阶主题
-│   ├── self-supervised-learning/
-│   ├── meta-learning/
-│   ├── neural-architecture-search/
-│   └── continual-learning/
-│
-└── 05-infra/          # 深度学习基础设施
-    ├── gpu-computing/
-    ├── distributed-training/
-    └── framework-comparison/
-```
+- 想查目录结构、子目录定位时，转到 [`index.md`](./index.md)
+- 想按阶段推进学习时，优先使用本页的学习路径
 
 ## 学习路径
 

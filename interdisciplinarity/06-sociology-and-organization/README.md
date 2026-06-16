@@ -3,49 +3,28 @@
 本目录从人类社会的协作形态出发，审视多智能体系统（Multi-Agent Systems）的组织、协调与治理机制。
 
 > 社会学的核心洞见在于：**个体理性不等于集体最优，秩序不是设计出来的就是涌现出来的**。
+>
+> **入口说明**：第一次进入时，先用本页判断这个目录是否与你的问题匹配；如果你已经知道要找哪类组织机制或子方向，再转到 [`index.md`](./index.md)。
 
-## 目录结构
+## 目录定位
 
-```
-06-sociology-and-organization/
-│
-├── ambidexterity-and-paradox/          # 双元性与悖论（流程与效率平衡）
-│
-├── social-network-analysis/             # 社会网络分析（嵌入理论、结构洞）
-│
-├── institutional-theory/                # 制度理论（合法性、制度同形）
-│
-├── organizational-forms/                # 组织形式理论（科层制/市场/网络）
-│
-├── coordination-theory/                 # 协调理论（任务依赖、沟通机制）
-│
-├── social-capital/                      # 社会资本理论（信任、互惠、合作）
-│
-└── organizational-ecology/              # 组织生态学（密度依赖、生态位）
-```
+这里主要承接两类问题：
 
-## 阅读路径建议
+- 人类组织如何在张力、协调、制度与信任中维持协作
+- 这些组织机制如何映射到 Multi-Agent 系统的组织形态、通信结构与治理约束
 
-```
-路径1：组织张力与悖论
-├── ambidexterity-and-paradox/ — 结构化流程与适应性效率的平衡
-└── coordination-theory/ — 协调机制如何消解张力
+当前子目录主要按五类组织机制切分，分别对应张力管理、协作编排、制度环境、组织形态与关系资源五种长期主题分工。
 
-路径2：群体结构与演化
-├── social-network-analysis/ — 通信拓扑与信息流动
-├── organizational-forms/ — 组织形式选择（科层制/市场/网络）
-└── organizational-ecology/ — 种群竞争与生态位分化
+## 相邻边界
 
-路径3：规范与信任
-├── institutional-theory/ — 制度如何塑造行为
-└── social-capital/ — 社会资本的建立、维持与转化
-```
+- 更偏技术实现、系统架构或 Agent 工程模式的问题，优先放回 `agentic/`
+- 更偏跨学科目录的顶层映射与入口分流，留在 `interdisciplinarity/` 父层处理
+- 更偏这一方向的目录结构与子主题定位，转到 [`index.md`](./index.md)
 
-## 快速导航
+## 相关资源
 
-- **学科全景**: [`overview.md`](./overview.md) — 社会学10个分支 + 组织学10个领域的完整地图
-- **写作模板**: [`../template.md`](../template.md) — 跨学科笔记的四个问题映射框架
+- 撰写新笔记时，参考 [`../template.md`](../template.md)
 
 ---
 
-*最后更新: 2026-05-07*
+*最后更新: 2026-06-16*

@@ -57,15 +57,15 @@ interdisciplinarity/
 | 工作记忆 / 长期记忆 | Context Window / RAG | [`rag/`](../rag/) |
 | 注意力机制 | Transformer Self-Attention | [`deep-learning/03-architectures/transformers/`](../deep-learning/03-architectures/transformers/) |
 | 赫布学习 | 局部学习规则、脉冲网络 | [`deep-learning/01-neural-network-fundamentals/`](../deep-learning/01-neural-network-fundamentals/) |
-| 认知架构（SOAR, ACT-R） | Agent 认知架构 | [`agentic/01-foundations/cognitive-architectures-intro/`](../agentic/01-foundations/cognitive-architectures-intro/) |
+| 认知架构（SOAR, ACT-R） | Agent 认知架构 | [`agentic/01-foundations/`](../agentic/01-foundations/) |
 
 ### 02 语言学与语用学
 
 | 外部学科概念 | AI/ML 对应 | 关联目录 |
 |---|---|---|
-| 语用学 / 言语行为理论 | 对话 Agent 的意图理解与生成 | [`agentic/02-single-agent/tool-use/`](../agentic/02-single-agent/tool-use/) |
-| 乔姆斯基层级 / 普遍语法 | LLM 语法能力的理论边界 | [`llm/02-models/emergent-abilities/`](../llm/02-models/emergent-abilities/) |
-| 话语分析 | 长文本连贯性、多轮对话管理 | [`llm/04-serving/prompt-engineering/`](../llm/04-serving/prompt-engineering/) |
+| 语用学 / 言语行为理论 | 对话 Agent 的意图理解与生成 | [`agentic/02-single-agent/`](../agentic/02-single-agent/) |
+| 乔姆斯基层级 / 普遍语法 | LLM 语法能力的理论边界 | [`llm/02-models/`](../llm/02-models/) |
+| 话语分析 | 长文本连贯性、多轮对话管理 | [`llm/04-serving/`](../llm/04-serving/) |
 | 语义学 / 组合性 | LLM 的语义组合能力与幻觉 | [`llm/06-explainability/`](../llm/06-explainability/) |
 | 社会语言学 | 多语言/多文化 LLM 对齐 | [`llm/08-safety-and-society/safety-and-alignment/`](../llm/08-safety-and-society/safety-and-alignment/) |
 
@@ -74,9 +74,9 @@ interdisciplinarity/
 | 外部学科概念 | AI/ML 对应 | 关联目录 |
 |---|---|---|
 | 负反馈 / 正反馈 | RL 奖励调节、策略梯度 | [`reinforce-learning/`](../reinforce-learning/) |
-| 自调节系统 | Agent 自反思与纠错 | [`agentic/02-single-agent/self-reflection/`](../agentic/02-single-agent/self-reflection/) |
-| 稳态 | Agent 目标维持与安全约束 | [`agentic/05-environments/sandboxing-and-safety/`](../agentic/05-environments/sandboxing-and-safety/) |
-| 黑箱系统 | 可解释性与机制可解释性 | [`llm/06-explainability/mechanistic/`](../llm/06-explainability/mechanistic/) |
+| 自调节系统 | Agent 自反思与纠错 | [`agentic/02-single-agent/`](../agentic/02-single-agent/) |
+| 稳态 | Agent 目标维持与安全约束 | [`agentic/05-environments/`](../agentic/05-environments/) |
+| 黑箱系统 | 可解释性与机制可解释性 | [`llm/06-explainability/`](../llm/06-explainability/) |
 | 感知-动作闭环 | 具身智能控制回路 | [`embodied-intelligence/02-perception/`](../embodied-intelligence/02-perception/) |
 
 ### 06 社会学与组织管理
@@ -85,21 +85,21 @@ interdisciplinarity/
 |---|---|---|
 | 韦伯式科层制 | 层级式 Multi-Agent | [`agentic/03-multi-agent/organizational/`](../agentic/03-multi-agent/organizational/) |
 | 市场机制 / 价格信号 | 竞价式 Agent 协调 | [`agentic/03-multi-agent/coordination/`](../agentic/03-multi-agent/coordination/) |
-| 社会网络 / 结构洞 | Agent 通信拓扑优化 | `06-sociology-and-organization/social-network-analysis/` |
-| 制度主义 | Agent 规范与约束设计 | `06-sociology-and-organization/institutional-theory/` |
-| 组织生态学 | Agent 种群竞争与生态位 | `06-sociology-and-organization/organizational-ecology/` |
+| 社会网络 / 结构洞 | Agent 通信拓扑优化 | [`06-sociology-and-organization/`](./06-sociology-and-organization/) |
+| 制度主义 | Agent 规范与约束设计 | [`06-sociology-and-organization/institutional-theory/`](./06-sociology-and-organization/institutional-theory/) |
+| 组织生态学 | Agent 种群竞争与生态位 | [`06-sociology-and-organization/`](./06-sociology-and-organization/) |
 | 社会资本 / 信任 | Agent 间信任评估 | [`agentic/07-evaluation/safety-and-robustness/`](../agentic/07-evaluation/safety-and-robustness/) |
-| 组织学习 | Multi-Agent 经验共享 | [`agentic/03-multi-agent/shared-memory/`](../agentic/03-multi-agent/shared-memory/) |
+| 组织学习 | Multi-Agent 经验共享 | [`agentic/03-multi-agent/`](../agentic/03-multi-agent/) |
 
 ### 08 法学与治理
 
 | 外部学科概念 | AI/ML 对应 | 关联目录 |
 |---|---|---|
-| 责任归属 | Agent 行为的法律责任主体 | [`agentic/07-evaluation/safety-and-robustness/`](../agentic/07-evaluation/safety-and-robustness/) |
-| 合规 | 数据合规、模型合规审计 | [`llm/08-safety-and-society/safety-and-alignment/`](../llm/08-safety-and-society/safety-and-alignment/) |
+| 责任归属 | Agent 行为的法律责任主体 | [`agentic/07-evaluation/`](../agentic/07-evaluation/) |
+| 合规 | 数据合规、模型合规审计 | [`llm/08-safety-and-society/`](../llm/08-safety-and-society/) |
 | 权利理论 | AI 权利、人格与道德地位 | [`llm/08-safety-and-society/social-impact/`](../llm/08-safety-and-society/social-impact/) |
-| 规则制定 | AI 治理框架与标准制定 | [`agentic/05-environments/sandboxing-and-safety/`](../agentic/05-environments/sandboxing-and-safety/) |
-| 程序正义 | 算法公平性与可申诉性 | [`llm/05-evaluation/evaluation-methods/`](../llm/05-evaluation/evaluation-methods/) |
+| 规则制定 | AI 治理框架与标准制定 | [`agentic/05-environments/`](../agentic/05-environments/) |
+| 程序正义 | 算法公平性与可申诉性 | [`llm/05-evaluation/`](../llm/05-evaluation/) |
 
 ## 按阅读目标找入口
 
