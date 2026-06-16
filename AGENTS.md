@@ -1,6 +1,6 @@
 # AGENTS.md
 
-本文件是 AI 协作者在本仓库工作的入口说明。它不替代 `CONTRIBUTING.md`，只保留执行时必须优先遵守的规则。
+本文件是 AI 协作者在本仓库工作的入口说明。它不替代 `CONTRIBUTING.md`，只保留执行时必须优先遵守的规则。首次进入本仓库时，必须先读完本文件，再立即阅读 [`CONTRIBUTING.md`](./CONTRIBUTING.md)；未完成这两步前，不要响应任何仓库相关的分析、修改或结构建议。
 
 ## 1. 一句话原则
 
@@ -8,7 +8,7 @@
 
 ## 2. 任务路由
 
-开始修改前，先读本文件和 [`CONTRIBUTING.md`](./CONTRIBUTING.md)，了解仓库级强约束，再按当前操作选择最相关的规则文件；不要为了小任务一次性通读所有规则。
+完成 `AGENTS.md` 与 [`CONTRIBUTING.md`](./CONTRIBUTING.md) 的阅读后，再按当前操作选择最相关的规则文件；不要为了小任务一次性通读所有规则。
 
 - 如果你在**研究论文、开源项目、产品、benchmark 或具体案例**：读 [`research-artifacts.md`](./docs/contributing/research-artifacts.md)
 - 如果你在**新建/改名/迁移目录**：读 [`structure-refactoring-rules.md`](./docs/contributing/structure-refactoring-rules.md)
@@ -23,7 +23,7 @@
 - 知识正文放主题目录，治理规则放 `docs/contributing/`，模板放 `docs/templates/`，测试材料放 `docs/test/`；不要把仓库建设约束写进知识正文目录，也不要把具体领域知识写进 `docs/contributing/`。
 - 处理新材料时，按这个顺序判断：材料类型 → Evidence 状态 → 目标落位 → 是否需要 Trace；拿不准时先写元信息文件或保留在 `temp/`，不要抢写正文。细则见 [`documentation-workflow.md`](./docs/contributing/documentation-workflow.md)。
 - 外部 AI 调研、网页搜索、博客摘录、issue/PR 讨论都只是上游输入，不要直接写成主线结论；回流时必须说明 Evidence 状态和 Trace；模型综合判断默认标为 `Inferred` 或 `Unverified`，不要写成已验证事实。细则见 [`evidence-and-traceability.md`](./docs/contributing/evidence-and-traceability.md)。
-- README 只做定向和目录导航，不列出元信息文件，目录树只展示目录不展示内容文件。细则见 [`readme-rules.md`](./docs/contributing/readme-rules.md)。
+- README 只做目录说明与最小入口分流，不列出元信息文件；目录结构与查找导航优先由 `index.md` 承接。细则见 [`readme-rules.md`](./docs/contributing/readme-rules.md)。
 - `candidates.md`、`roadmap.md` 按需创建；`conflict.md` 仅在发现冲突时创建。细则见 [`metadata-files.md`](./docs/contributing/metadata-files.md)。
 - 只改与当前任务直接相关的文件；文档重组时先移动，再小改；删除前先确认内容已迁移或确实不再需要；不要无任务依据地保留临时反馈文件；不要主动创建新规则文档。细则见 [`structure-refactoring-rules.md`](./docs/contributing/structure-refactoring-rules.md)。
 - 如果用户要求和仓库规则冲突，先说明冲突点；交付时再说明偏离了哪条规则。

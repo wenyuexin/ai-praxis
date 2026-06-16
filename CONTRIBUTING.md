@@ -18,6 +18,8 @@
 | 查仓库建设规则的承接位置 | [`docs/contributing/`](./docs/contributing/) | 区分知识正文与贡献、治理、证据、可追溯性约束 |
 | 优化单篇文档表达 | 第五章 | 调整结构、公式、表格或论文笔记写法 |
 
+如果任务涉及修改规则文件或判断是否改规则，先读 [规则的规则](./docs/contributing/meta-rules.md)。
+
 如果只记一条默认策略：**拿不准时，先写元信息文件，不要着急写正文。**
 
 ---
@@ -54,8 +56,9 @@ README 的详细规则见 [`docs/contributing/readme-rules.md`](./docs/contribut
 
 - 每个一级目录（顶层领域目录）下必须有 `README.md`。
 - 二级及更深层目录仅在存在或未来可能容纳子目录时必须写 README；纯文件目录不需要。
-- README 必须包含目录结构，但按所在层级控制展开深度：根 README 按内容活跃度展开；一级目录（顶层领域目录）README 允许展开到三级子目录；二级及更深层 README 默认只记录直接子目录。
-- 目录树原则上只展示目录，不展示内容文件；README 导航不主动列出 `overview.md`、`landscape.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 等元信息文件。
+- README 负责目录说明与最小入口分流，不再默认承担目录结构展示。
+- 目录结构与查找导航优先由 `index.md` 承接；仅在明确不使用 `index.md` 时，README 才按需保留最小目录树。
+- README 不主动列出 `overview.md`、`landscape.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 等元信息文件。
 - 如需标注 `最后更新`、来源、适用范围、状态等元信息，统一放在标题下方、正文开始之前。
 
 ## 四、元信息文件模型
@@ -64,8 +67,8 @@ README 的详细规则见 [`docs/contributing/readme-rules.md`](./docs/contribut
 
 | 层级 | 认知任务 | 文件名 | 核心职责 | 出现条件 |
 |:---|:---|:---|:---|:---|
-| L1 定向 | Orient | `README.md` | “这是什么地方？跟我有什么关系？” | 目录存在或未来可能容纳子目录时必选 |
-| L2 发现 | Discover | `index.md` | “我要的文件/主题在哪？” | 可选；文件/子目录较多，或主题交叉关系复杂时创建 |
+| L1 说明 | Explain | `README.md` | “这是什么地方？为什么存在？和相邻目录如何区分？” | 目录需要被当作入口说明对象时启用 |
+| L2 导航 | Navigate | `index.md` | “这个目录下面有什么？我已经知道想找什么时该去哪？” | 可选；当目录需要同时承接结构展示与查找导航时创建 |
 | L3 理解 | Understand | `overview.md` | “如果我只读一篇，这个主题最值得先理解的主线是什么？” | 当 README 和零散专题无法让读者形成整体理解时创建；有稳定主线判断的主题考虑补上 |
 | L4 推进 | Track | `backlog.md` | “这个领域还有什么没被覆盖？” | 目录处于活跃建设期，内容有明显缺口 |
 | L5 选题 | Queue | `candidates.md` | “接下来值得研究哪些对象？” | 可选；需要持续跟踪论文、仓库、官方文档、产品、协议、benchmark 等候选研究对象时创建 |

@@ -54,12 +54,23 @@ docs/contributing/
 
 如果主规则已经读过，但仍需要误判复盘、边界案例或更长解释，再看 [`cases/README.md`](./cases/README.md) 或 `intent/` 下的对应释义文档；这里都不是默认入口。
 
-尤其当主规则已经足以判断大方向，但你仍拿不准“何时切到深度研究脚手架”“何时把脚手架回流成正式正文”这类边界问题时，再读对应 `intent/`，不要先扩读无关规则。
+两者的分工是：
+
+- `intent/`：解释规则背后的设计原理、原始意图与常见概念误读，回答“为什么这样定规则”。
+- `cases/`：沉淀高价值边界案例、误判复盘与对象级样本，回答“规则在复杂真实场景里怎么用”。
+
+尤其当主规则已经足以判断大方向，但你仍拿不准“何时切到深度研究脚手架”“何时把脚手架回流成正式正文”这类边界问题时，再读对应 `intent/`，不要先扩读无关规则；如果问题不在抽象原理，而在某类复杂对象上反复误判，再看 `cases/`。
+
+如果是第一次进入 `cases/`，可优先看两个代表样本：
+
+- [`cases/pageindex-hybrid-study-unit.md`](./cases/pageindex-hybrid-study-unit.md)：研究单元为什么不能只按“纯主题 / 纯对象”二分。
+- [`cases/interdisciplinarity-readme-index-roadmap.md`](./cases/interdisciplinarity-readme-index-roadmap.md)：复杂目录为什么必须拆开 `README.md`、`index.md`、`roadmap.md`。
 
 已拆分规则：
 
 - [规则的规则](./meta-rules.md)（按需）：定义什么时候改规则、规则如何最小改动，以及专题规则与 meta-rule 的边界。
 - [`intent/meta-rules.md`](./intent/meta-rules.md)（按需）：解释为什么仓库需要 meta-rules，以及为什么只有短规则条文还不足以守住规则原意。
+- [`intent/repo-entry-files.md`](./intent/repo-entry-files.md)（按需）：解释 `AGENTS.md`、`CONTRIBUTING.md` 等仓库级入口文件为什么分层存在、各自承接什么，以及修改这类文件时应优先判断哪一层。
 - [研究产物组织规则](./research-artifacts.md)：定义子领域研究、具体案例研究、研究辅助材料的组织方式，并区分主题、对象、主题+对象混合型三类研究单元；也定义何时从总览切到深度研究脚手架、何时把脚手架回流成正式正文，以及如何试行 `reflections.md` 反思层。
 - [`intent/research-artifacts.md`](./intent/research-artifacts.md)（按需）：解释为什么研究单元不能只按“主题 / 对象”二分，以及为什么有些高价值对象必须按“主题+对象混合型”处理。
 - [`intent/deep-research.md`](./intent/deep-research.md)（按需）：解释为什么机制级研究不能继续只靠补 overview 或依赖用户反复追问，而应切到主线驱动的问题树脚手架。

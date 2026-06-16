@@ -1,13 +1,12 @@
 # 计算机视觉 (Computer Vision)
 
+计算机视觉：从图像中提取、理解和生成视觉信息的技术体系，覆盖感知理解、生成与多模态、基础模型与工程化应用。
+
+> **入口说明**：第一次进入时，先读本页的分类依据与边界说明建立整体方向；如需查找目录结构、子目录定位或学习路径，转向 [`index.md`](./index.md)。
+
 ## 分类依据
 
-CV 目录按"从基础到应用、从感知到生成"的递进逻辑组织：
-
-- **01-04（感知理解）**：图像 → 分类 → 检测分割 → 视频/3D，输入到输出的复杂度递增
-- **05（生成与多模态）**：从理解转向生成，并跨出纯视觉与文本/语言交互
-- **06（基础模型）**：通用的预训练范式，不绑定具体下游任务
-- **07（应用与工具）**：工程化落地的总结
+CV 目录按"从基础到应用、从感知到生成"的递进逻辑组织。
 
 ## 边界说明
 
@@ -48,68 +47,6 @@ flowchart LR
 - **llm/07-multimodal/** 以 LLM 为中心的多模态，与 CV 的`05-generative-and-multimodal/` 互补（见上表）
 - **embodied-intelligence/02-perception/** 聚焦机器人场景下的视觉感知，CV 的通用方法可作为其理论基础
 - **world-models/** 的视频生成方向与 CV 的`04-video-and-3d-vision/` 有交集，WM 侧重环境建模与预测
-
-## 目录结构
-
-```
-cv/
-├── 01-image-fundamentals/              # 图像基础
-│   ├── image-processing-basics/
-│   │   ├── filtering/
-│   │   └── edge-detection/
-│   └── feature-extraction/
-│
-├── 02-image-classification/            # 图像分类
-│   ├── classic-backbones/
-│   ├── efficient-models/
-│   └── training-tricks/
-│
-├── 03-detection-and-segmentation/      # 目标检测与分割
-│   ├── two-stage-detectors/
-│   ├── one-stage-detectors/
-│   ├── instance-segmentation/
-│   ├── semantic-segmentation/
-│   └── panoptic-segmentation/
-│
-├── 04-video-and-3d-vision/             # 视频与3D视觉
-│   ├── video-understanding/
-│   ├── optical-flow/
-│   ├── 3d-reconstruction/
-│   └── nerf-and-3d-gaussian-splatting/
-│
-├── 05-generative-and-multimodal/       # 生成与多模态
-│   ├── image-generation/
-│   ├── text-to-image/
-│   │   └── dall-e/
-│   └── multimodal-models/
-│
-├── 06-foundation-models/  # 自监督与基础模型
-│   ├── contrastive-learning/
-│   ├── masked-image-modeling/
-│   └── vision-foundation-models/
-│
-└── 07-applications-and-tools/          # 应用与工具
-    ├── ocr/
-    ├── face-recognition/
-    └── deployment-and-optimization/
-```
-
-## 学习路径
-
-**基础阶段**
-- `01-image-fundamentals/` — 图像处理基础、特征提取
-
-**核心阶段**
-- `02-image-classification/` — 经典骨干网络、高效模型
-- `03-detection-and-segmentation/` — 检测与分割
-
-**进阶阶段**
-- `04-video-and-3d-vision/` — 视频理解、3D重建、NeRF
-- `05-generative-and-multimodal/` — 图像生成、多模态模型
-- `06-foundation-models/` — 对比学习、基础模型
-- `07-applications-and-tools/` — OCR、人脸识别、部署优化
-
-## 相关资源
 
 - [深度学习基础](../deep-learning/) — CNN等基础架构
 - [多模态LLM](../llm/07-multimodal/vlm/) — 视觉语言模型

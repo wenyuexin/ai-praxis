@@ -7,13 +7,9 @@
 
 本目录用于梳理 Agent 执行环境的类型、隔离边界、安全机制与生命周期管理，明确环境如何影响能力上限、稳定性与可治理性。
 
-## 快速入口
+## 入口说明
 
-- 从 `overview.md` 进入整体理解框架，先把 `permission / execution / observability-recovery` 三层结构与 `minimal safety composition` 的总览建立起来。
-- 从 `code-execution-environments/` 进入代码执行与依赖隔离问题，优先阅读 `code-execution-environments/workspace-structure.md`、`code-execution-environments/workspace-lifecycle.md`、`code-execution-environments/workspace-checkpoint.md`、`code-execution-environments/workspace-traceability.md`。
-- 从 `sandboxing-and-safety/` 进入权限控制与安全边界问题，优先阅读 `sandboxing-and-safety/permission-policy.md`、`sandboxing-and-safety/permission-vs-execution-boundary.md`、`sandboxing-and-safety/sandbox-layers.md`、`sandboxing-and-safety/safety-composition.md`。
-- 从 `browser-environments/`、`simulated-environments/` 了解特定任务环境，并从 `evaluation-environments/` 进入环境评测与复现基座问题。
-- 如遇证据冲突或版本口径不一致，统一记录到 `conflict.md`；若只影响临时判断，再回写 `../temp/conflict.md`。
+第一次进入本目录时，先读 [`overview.md`](./overview.md) 建立整体理解；如果你需要查看本目录的结构或查找具体问题、专题、元信息文件与子目录入口，改读 [`index.md`](./index.md)。
 
 ## 分类依据
 
@@ -29,22 +25,6 @@
 
 - 放在这里：执行环境类型、隔离分层、权限模型、workspace/artifact、生命周期管理、恢复与审计。
 - 不放在这里：单智能体内部推理与工具策略（放 `../02-single-agent/`）、多智能体协作机制（放 `../03-multi-agent/`）、具体框架案例本身（放 `../06-frameworks-and-tools/`）。
-
-## 同目录导航
-
-- 核心主题入口：`code-execution-environments/`、`sandboxing-and-safety/`、`browser-environments/`、`simulated-environments/`、`evaluation-environments/`。
-- 建议阅读顺序：先建立环境三层框架，再进入代码执行、沙箱安全与特定任务环境。
-
-## 目录结构
-
-```text
-05-environments/
-├── evaluation-environments/
-├── browser-environments/
-├── code-execution-environments/
-├── sandboxing-and-safety/
-└── simulated-environments/
-```
 
 ## 与其他目录的关系
 

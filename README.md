@@ -1,6 +1,6 @@
 <div align="center">
 
-  <h1>🧠 AI PRAXIS</h1>
+  <h1>🧠 AI Praxis</h1>
   <p>
     <strong>从基础方法到智能系统：一场面向现代AI的结构化研究之旅</strong><br>
     <em>ML / DL / CV / LLM / KG / RAG / AGENTIC</em><br>
