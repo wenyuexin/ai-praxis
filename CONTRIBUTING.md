@@ -1,6 +1,6 @@
 # 仓库组织与写作规范
 
-本文件定义仓库的组织规则与笔记写作规范。这个仓库不仅保存多个研究领域下的知识内容，也在持续沉淀一套面向研究型知识工作的结构化研究方法体系。更细的仓库建设、文档治理、证据分级与可追溯性规则，沉淀在 [`docs/contributing/`](./docs/contributing/)；本文件保留仓库级强约束和入口说明。AI 协作者入口见 [`AGENTS.md`](./AGENTS.md)。Evidence 与 Traceability 的统一工作流见 [`docs/contributing/evidence-and-traceability.md`](./docs/contributing/evidence-and-traceability.md)，细则见 [`evidence-rules.md`](./docs/contributing/evidence-rules.md) 和 [`traceability-rules.md`](./docs/contributing/traceability-rules.md)。
+本文件定义仓库的组织规则与笔记写作规范。这个仓库不仅保存多个研究领域下的知识内容，也在持续沉淀一套面向研究型知识工作的结构化研究方法体系。更细的仓库建设、文档治理、证据分级与可追溯性规则，沉淀在 [`docs/contributing/`](./docs/contributing/)；本文件保留仓库级强约束和入口说明。规则层目录说明入口见 [`docs/contributing/README.md`](./docs/contributing/README.md)，按任务继续查找具体规则时读 [`docs/contributing/index.md`](./docs/contributing/index.md)。如需理解这套系统提供的公共能力，可转到 [`docs/capabilities/README.md`](./docs/capabilities/README.md)；进入能力层后按问题继续查找时读 [`docs/capabilities/index.md`](./docs/capabilities/index.md)。AI 协作者入口见 [`AGENTS.md`](./AGENTS.md)。Evidence 与 Traceability 的统一工作流见 [`docs/contributing/evidence-and-traceability.md`](./docs/contributing/evidence-and-traceability.md)，细则见 [`evidence-rules.md`](./docs/contributing/evidence-rules.md) 和 [`traceability-rules.md`](./docs/contributing/traceability-rules.md)。
 
 ## 快速导读
 
@@ -21,6 +21,8 @@
 如果任务涉及修改规则文件或判断是否改规则，先读 [规则的规则](./docs/contributing/meta-rules.md)；如果准备做重大规则变更，必须在动手前重新通读一遍，不要依赖当前长上下文中的记忆。
 
 如果只记一条默认策略：**拿不准时，先写元信息文件，不要着急写正文。**
+
+如果你已经进入规则层，但拿不准下一步该读哪篇规则，不要在本文件里硬找，直接进入 [`docs/contributing/index.md`](./docs/contributing/index.md) 按任务继续分流。
 
 ---
 
@@ -76,7 +78,7 @@ README 的详细规则见 [`docs/contributing/readme-rules.md`](./docs/contribut
 | L6 规划 | Plan | `roadmap.md` | “从哪开始、按什么顺序阅读/建设？” | 可选；有明确的内容组织顺序或学习路径时创建 |
 | L7 校验 | Reconcile | `conflict.md` | “这里是否存在定义冲突或口径不一致？” | 仅当发现冲突时创建 |
 
-命名约定：L3 的标准文件名为 `overview.md`，承接人类向主文；当目录需要一篇结构化研究文时，可按需创建 `landscape.md`（`landscape.md` 不在 L1–L7 编号体系中，可在 `overview.md` 之前或之后出现，取决于哪个认知问题先稳定下来）。`summary.md` / `SUMMARY.md` 不再作为该槽位命名。
+命名约定：L3 的标准文件名为 `overview.md`，承接人类向主文；当目录需要一篇结构化研究文时，可按需创建 `landscape.md`（`landscape.md` 不在 L1–L7 编号体系中，可在 `overview.md` 之前或之后出现，取决于哪个认知问题先稳定下来）。同样地，研究早期也可能先稳定出现 `backlog.md` 或 `candidates.md`，分别承接内容缺口与对象队列；不要把这些文件读成固定顺序的成套槽位。`summary.md` / `SUMMARY.md` 不再作为该槽位命名。
 
 ## 五、文档写作与表达建议
 

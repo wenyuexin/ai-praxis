@@ -31,6 +31,7 @@
 
 - 先看 [`pageindex-hybrid-study-unit.md`](./pageindex-hybrid-study-unit.md)：这是“研究单元边界”样本，回答为什么有些对象不能只按“纯主题 / 纯对象”二分。
 - 再看 [`interdisciplinarity-readme-index-roadmap.md`](./interdisciplinarity-readme-index-roadmap.md)：这是“复杂目录拆分”样本，回答为什么 `README.md`、`index.md`、`roadmap.md` 必须分开承接不同认知任务。
+- 如果你拿不准为什么某些目录会先长出 `backlog.md`，而不是 `candidates.md` 或 `overview.md`，看 [`learning-materials-readme-backlog.md`](./learning-materials-readme-backlog.md)：这是“内容缺口先成熟”样本，回答为什么 `README.md` + `backlog.md` 可以先成立。
 - 如果你拿不准为什么某些目录会先长出 `landscape.md` 而不是 `overview.md`，看 [`training-infra-landscape-before-overview.md`](./training-infra-landscape-before-overview.md)：这是“结构支架先成熟”样本，回答为什么 `README.md`、`index.md`、`landscape.md`、`roadmap.md` 可以先成立，而 `overview.md` 暂不机械创建。
 - 如果你拿不准为什么某些目录会先长出 `candidates.md`，而不是 `overview.md` 或本层 `backlog.md`，看 [`agent-system-modeling-readme-candidates.md`](./agent-system-modeling-readme-candidates.md)：这是“对象队列先成熟”样本，回答为什么 `README.md` + `candidates.md` 可以先成立。
 
@@ -38,6 +39,7 @@
 
 - [`pageindex-hybrid-study-unit.md`](./pageindex-hybrid-study-unit.md)：`PageIndex` 作为“主题+对象混合型研究单元”的首个完整边界案例，说明为什么它既不能被压成纯主题，也不能只被当成普通对象研究。
 - [`interdisciplinarity-readme-index-roadmap.md`](./interdisciplinarity-readme-index-roadmap.md)：`interdisciplinarity/` 作为复杂横向目录的拆分案例，说明为什么 `README.md`、`index.md`、`roadmap.md` 必须分别承接目录定位、结构导航与路径分流，以及何时只出现 `overview` 信号而不机械创建 `overview.md`。
+- [`learning-materials-readme-backlog.md`](./learning-materials-readme-backlog.md)：`learning-materials/` 作为“内容缺口先成熟”案例，说明为什么 `backlog.md` 可以先于 `candidates.md`、`landscape.md` 与 `overview.md` 出现，以及为什么本层不必机械补其他元信息文件。
 - [`training-infra-landscape-before-overview.md`](./training-infra-landscape-before-overview.md)：`training-infra/` 作为“结构支架先成熟”案例，说明为什么 `landscape.md` 可以先于 `overview.md` 出现，以及 `README.md`、`index.md`、`landscape.md`、`roadmap.md` 如何分工。
 - [`agent-system-modeling-readme-candidates.md`](./agent-system-modeling-readme-candidates.md)：`agent-system-modeling/` 作为“对象队列先成熟”案例，说明为什么 `candidates.md` 可以先于 `overview.md` 出现，以及为什么本层不必机械补 `backlog.md`。
 - 后续如再出现同类边界问题，可继续在本目录沉淀案例；没有稳定问题模式时，不主动扩充。

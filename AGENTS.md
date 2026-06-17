@@ -8,7 +8,7 @@
 
 ## 2. 任务路由
 
-完成 `AGENTS.md` 与 [`CONTRIBUTING.md`](./CONTRIBUTING.md) 的阅读后，再按当前操作选择最相关的规则文件；不要为了小任务一次性通读所有规则。
+完成 `AGENTS.md` 与 [`CONTRIBUTING.md`](./CONTRIBUTING.md) 的阅读后，再按当前操作选择最相关的规则文件；不要为了小任务一次性通读所有规则。如果你想先理解规则层整体分工，读 [`docs/contributing/README.md`](./docs/contributing/README.md)；如果已经进入规则层但拿不准下一步该读哪篇，读 [`docs/contributing/index.md`](./docs/contributing/index.md)。如果你想先理解这套系统提供哪些公共能力，读 [`docs/capabilities/README.md`](./docs/capabilities/README.md)；如果已经进入能力层但拿不准下一步该读哪篇，读 [`docs/capabilities/index.md`](./docs/capabilities/index.md)。
 
 - 如果你在**研究论文、开源项目、产品、benchmark 或具体案例**：读 [`research-artifacts.md`](./docs/contributing/research-artifacts.md)
 - 如果你在**新建/改名/迁移目录**：读 [`structure-refactoring-rules.md`](./docs/contributing/structure-refactoring-rules.md)

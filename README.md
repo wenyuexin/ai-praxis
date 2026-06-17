@@ -54,7 +54,7 @@
 
 支撑资源：
 ├── learning-materials/          # 学习资料与书籍推荐
-└── docs/                        # 仓库建设、贡献规则与文档模板
+└── docs/                        # 仓库建设、能力文档、贡献规则与文档模板
 ```
 
 ## 知识体系
@@ -315,8 +315,11 @@ ai-praxis/
 │   ├── datasets.md                             # 数据集
 │   └── community.md                            # 社区与活动
 │
-└── docs/                                       # 仓库建设、贡献规则与文档模板
-    ├── contributing/                           # 贡献、文档治理、证据与可追溯性规则
+└── docs/                                       # 仓库建设、能力文档、贡献规则与文档模板
+    ├── capabilities/                           # 公共能力文档（README + index）
+    ├── contributing/                           # 贡献、文档治理、证据与可追溯性规则（README + index）
+    ├── index.md                                # docs/ 级别的查找导航页
+    ├── design/                                 # 专项设计文档目录（README、system-design、capability-design、contributing-design）
     ├── templates/                              # 文档模板
     └── test/                                   # Markdown 与 Mermaid 渲染测试
 ```
