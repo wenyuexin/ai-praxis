@@ -10,6 +10,7 @@
 docs/capabilities/
 ├── README.md
 ├── index.md
+├── meta.md
 ├── navigate.md
 ├── place.md
 ├── ingest.md
@@ -40,6 +41,7 @@ docs/capabilities/
 
 - `README.md`：回答 capability layer 是什么、为什么存在、与相邻层如何分工
 - `index.md`：回答进入 capability layer 后，如果我已经知道自己要理解哪类能力问题，该读哪篇能力文档
+- `meta.md`：回答 capability layer 自己该怎么长、怎么守边界、变动后要同步哪些面
 - `../design/capability-design.md`：回答 capability layer 为什么这样设计、当前核心能力如何承接、后续补强状态如何
 
 ## 边界说明

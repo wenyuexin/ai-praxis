@@ -8,12 +8,14 @@
 
 ## 2. 任务路由
 
-完成 `AGENTS.md` 与 [`CONTRIBUTING.md`](./CONTRIBUTING.md) 的阅读后，再按当前操作选择最相关的规则文件；不要为了小任务一次性通读所有规则。如果你想先理解规则层整体分工，读 [`docs/contributing/README.md`](./docs/contributing/README.md)；如果已经进入规则层但拿不准下一步该读哪篇，读 [`docs/contributing/index.md`](./docs/contributing/index.md)。如果你想先理解这套系统提供哪些公共能力，读 [`docs/capabilities/README.md`](./docs/capabilities/README.md)；如果已经进入能力层但拿不准下一步该读哪篇，读 [`docs/capabilities/index.md`](./docs/capabilities/index.md)。
+完成 `AGENTS.md` 与 [`CONTRIBUTING.md`](./CONTRIBUTING.md) 的阅读后，再按当前操作选择最相关的规则文件；不要为了小任务一次性通读所有规则。如果你想先理解规则层整体分工，读 [`docs/contributing/README.md`](./docs/contributing/README.md)；如果已经进入规则层但拿不准下一步该读哪篇，读 [`docs/contributing/index.md`](./docs/contributing/index.md)。如果你想先理解这套系统提供哪些公共能力，读 [`docs/capabilities/README.md`](./docs/capabilities/README.md)；如果你要判断 capability layer 自己的边界、增长方式与联动更新面，读 [`docs/capabilities/meta.md`](./docs/capabilities/meta.md)；如果已经进入能力层但拿不准下一步该读哪篇，读 [`docs/capabilities/index.md`](./docs/capabilities/index.md)。
 
 - 如果你在**研究论文、开源项目、产品、benchmark 或具体案例**：读 [`research-artifacts.md`](./docs/contributing/research-artifacts.md)
 - 如果你在**新建/改名/迁移目录**：读 [`structure-refactoring-rules.md`](./docs/contributing/structure-refactoring-rules.md)
-- 如果你在**修改 README 树或导航**：读 [`readme-rules.md`](./docs/contributing/readme-rules.md)
-- 如果你在**判断 overview/landscape/backlog/candidates/conflict 落位**：读 [`metadata-files.md`](./docs/contributing/metadata-files.md)
+- 如果你在**判断 `README.md` / `index.md` / `overview.md` / `landscape.md` / `backlog.md` / `candidates.md` / `conflict.md` 该如何分工或落位**：读 [`metadata-files.md`](./docs/contributing/metadata-files.md)
+- 如果你在**修改 README 本身的写法、出现条件、入口说明或导航边界**：读 [`readme-rules.md`](./docs/contributing/readme-rules.md)
+- 如果你在**修改 `index.md` 本身的结构、粒度、父子层导航方式或 stop-line**：读 [`index-rules.md`](./docs/contributing/index-rules.md)
+- 如果你在**修改目录树、查找导航，或判断结构展示是否应从 README 迁到 `index.md`**：先读 [`metadata-files.md`](./docs/contributing/metadata-files.md)；涉及 `index.md` 的专项细则时继续读 [`index-rules.md`](./docs/contributing/index-rules.md)；README 写法问题再按需读 [`readme-rules.md`](./docs/contributing/readme-rules.md)
 - 如果你在**处理 temp / 外部调研 / 回流正文**：读 [`documentation-workflow.md`](./docs/contributing/documentation-workflow.md)
 - 如果你在**讨论结构是否长期合理**：读 [`organization-principles.md`](./docs/contributing/organization-principles.md)
 - 如果你在**标注 Evidence 或 Trace**：先读 [`evidence-and-traceability.md`](./docs/contributing/evidence-and-traceability.md)；需要细则时，再读 [`evidence-rules.md`](./docs/contributing/evidence-rules.md) 和 [`traceability-rules.md`](./docs/contributing/traceability-rules.md)

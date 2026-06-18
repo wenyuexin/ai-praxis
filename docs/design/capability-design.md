@@ -13,9 +13,25 @@
 
 因此，这份设计文档关注的是 capability layer 本身，而不是当前文件数。
 
-## 2. 六类核心能力
+## 2. 能力层不只包含能力正文
 
-### 2.1 Navigate
+当 capability layer 逐步稳定后，它不只需要单篇能力文档，还需要至少三类彼此分开的承接位：
+
+- `README.md`：回答 capability layer 是什么、为什么存在、与相邻层如何分工
+- `index.md`：回答进入 capability layer 后，按能力问题该读哪篇
+- `meta.md`：回答 capability layer 自己该怎么守边界、怎么增长、变动后要同步哪些面
+
+这三者不直接承接某一项具体能力，但它们共同决定 capability layer 能否长期保持：
+
+- 能力说明不混回规则层
+- 能力分流不退化成另一份 README
+- 能力层自己的边界知识不再散落在入口页和设计页里
+
+因此，下面的六类核心能力，是建立在这组能力层基础承接位之上的，而不是孤立存在的几篇说明文档。
+
+## 3. 六类核心能力
+
+### 3.1 Navigate
 
 回答：从问题出发，如何沿 `README.md` / `index.md` 缩小范围，找到最可能的入口或目标位置。
 
@@ -30,7 +46,7 @@
 - 运行时接口：各目录 `README.md` / `index.md`
 - 公共能力文档：[`../capabilities/navigate.md`](../capabilities/navigate.md)
 
-### 2.2 Place
+### 3.2 Place
 
 回答：在已经找到稳定区域之后，这个内容应停在哪一层、应写成正文还是哪类元信息文件。
 
@@ -48,7 +64,7 @@
 
 当前状态：已有规则承接，并已补出首份独立能力文档；后续仍可继续补强示例、边界案例与用户侧说明。
 
-### 2.3 Ingest
+### 3.3 Ingest
 
 回答：新材料进入系统前，先如何判断类型、Evidence 状态与临时落点，不直接抢写正文。
 
@@ -69,7 +85,7 @@
 
 当前状态：已有较完整规则承接，并已补出首份独立能力文档；后续仍可继续补强输入类型样式、降级策略与回流边界说明。
 
-### 2.4 Structure
+### 3.4 Structure
 
 回答：如何让目录树、README、index 与元信息文件边界长期保持可导航、可维护、可扩展。
 
@@ -90,7 +106,7 @@
 
 当前状态：已有较完整规则承接，并已补出首份独立能力文档；后续仍可继续补强结构退化样式、分工误判样例与层间协作模式。
 
-### 2.5 Answer
+### 3.5 Answer
 
 回答：如何基于已有知识回答问题，同时守住 Evidence 边界，区分稳定结论与未稳定材料。
 
@@ -108,7 +124,7 @@
 
 当前状态：已有行为约束，并已补出首份独立能力文档；后续仍可继续补强回答样式、边界表述与问题类型分层。
 
-### 2.6 Maintain
+### 3.6 Maintain
 
 回答：如何处理样本漂移、案例退役、结构老化，以及规则与文档系统的长期演化。
 
@@ -127,7 +143,17 @@
 
 当前状态：已有规则与案例承接，并已补出首份独立能力文档；后续仍可继续补强对象级示例与生命周期判断样式。
 
-## 3. 当前映射总表
+## 4. 当前映射总表
+
+### 4.1 能力层基础承接位
+
+| 基础位 | 当前主要承接 | 当前状态 |
+|---|---|---|
+| 目录说明入口 | `docs/capabilities/README.md` | 已建立 |
+| 能力分流入口 | `docs/capabilities/index.md` | 已建立 |
+| 能力层自我约束位 | `docs/capabilities/meta.md` | 已建立 |
+
+### 4.2 六类核心能力
 
 | 能力域 | 当前主要承接 | 当前状态 |
 |---|---|---|
@@ -135,10 +161,11 @@
 | Place | `documentation-workflow.md` + `metadata-files.md` + `docs/capabilities/place.md` | 已有规则承接，并已补出首份能力文档 |
 | Ingest | `documentation-workflow.md` + Evidence / Traceability 规则 + `docs/capabilities/ingest.md` | 已有较完整规则承接，并已补出首份能力文档 |
 | Structure | README / 元信息 / 组织原则 / 结构重构规则 + `docs/capabilities/structure.md` | 已有较完整规则承接，并已补出首份能力文档 |
-| Answer | AI 协作者行为 + Evidence 约束 + `docs/capabilities/answer.md` | 已有行为约束，并已补出首份能力文档 |
+| Answer | AI 协作者行为 + Evidence 约束 + `docs/capabilities/answer.md` | 已有行为约束，并已补出首份独立能力文档 |
 | Maintain | meta-rules + structure-refactoring + cases + `docs/capabilities/maintain.md` | 已有首份能力文档，后续仍可继续补强 |
 
-## 4. 当前最值得继续补强的能力文档
+## 5. 当前最值得继续补强的能力文档
+
 
 按当前成熟度看，下一批最值得继续补强的能力文档，通常是：
 
@@ -152,12 +179,13 @@
 - `maintain` 虽已独立成文，但仍最需要继续补强对象级示例与生命周期判断
 - `structure` 与 `answer` 虽已独立成文，但都仍值得继续补强误判样例、边界表述与分层样式
 
-## 5. 使用边界
+## 6. 使用边界
 
 如果你当前要做的是：
 
 - 实际修改仓库结构、README、元信息文件、Evidence 标注：优先回到 `docs/contributing/`
 - 理解能力层和规则层为什么要分开：读 [`system-design.md`](./system-design.md) 与 [`../capabilities/README.md`](../capabilities/README.md)
+- 理解 capability layer 自己的边界、增长方式与联动更新面：读 [`../capabilities/meta.md`](../capabilities/meta.md)
 - 判断下一篇 capability doc 最值得写什么：从本文开始
 
-它不是 capability layer 的默认入口，而是 design layer 下的一份 capability layer 专项设计文档：更适合在需要横向看能力覆盖状态、承接关系与后续补强方向时使用。
+它不是 capability layer 的默认入口，而是 design layer 下的一份 capability layer 专项设计文档：更适合在需要横向看能力覆盖状态、承接关系、基础承接位是否齐全，以及后续补强方向时使用。

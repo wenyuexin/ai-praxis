@@ -15,6 +15,7 @@ docs/contributing/
 ├── research-artifacts.md
 ├── metadata-files.md
 ├── readme-rules.md
+├── index-rules.md
 ├── organization-principles.md
 ├── structure-refactoring-rules.md
 ├── evidence-and-traceability.md
@@ -27,8 +28,10 @@ docs/contributing/
 ## 按任务找入口
 
 - **我现在要处理新材料、外部调研、`temp/` 内容或正文回流**：读 [`documentation-workflow.md`](./documentation-workflow.md)
-- **我现在要判断 `README.md` / `overview.md` / `landscape.md` / `backlog.md` / `candidates.md` 等元信息文件该怎么分工**：读 [`metadata-files.md`](./metadata-files.md)
-- **我现在要修改 README、目录树或入口导航**：读 [`readme-rules.md`](./readme-rules.md)
+- **我现在要判断 `README.md` / `index.md` / `overview.md` / `landscape.md` / `backlog.md` / `candidates.md` 等元信息文件该怎么分工**：读 [`metadata-files.md`](./metadata-files.md)
+- **我现在要修改 README 本身的写法、出现条件、入口说明或导航边界**：读 [`readme-rules.md`](./readme-rules.md)
+- **我现在要修改 `index.md` 本身的结构、粒度、父子层导航方式或 stop-line**：读 [`index-rules.md`](./index-rules.md)
+- **我现在要修改目录树、查找导航，或判断结构展示是否应从 README 迁到 `index.md`**：先读 [`metadata-files.md`](./metadata-files.md)；涉及 `index.md` 的专项细则时继续读 [`index-rules.md`](./index-rules.md)；README 写法问题再回到 [`readme-rules.md`](./readme-rules.md)
 - **我现在要讨论结构是否长期合理、分类轴是否该调整**：读 [`organization-principles.md`](./organization-principles.md)
 - **我现在已经决定做目录迁移、结构收敛或重构执行**：读 [`structure-refactoring-rules.md`](./structure-refactoring-rules.md)
 - **我现在要标注 Evidence / Traceability，或判断一条说法该用什么证据状态**：先读 [`evidence-and-traceability.md`](./evidence-and-traceability.md)
@@ -41,6 +44,20 @@ docs/contributing/
 - **问题不在抽象原理，而在复杂真实样本上反复误判**：进入 `cases/`
 
 它们都不是默认入口。
+
+`intent/` 按设计问题与复发误读组织，不要求与顶层规则文件一一对应；只有当某组解释值得独立长期保存时，才单独建文件。
+
+### `intent/` 文件列表
+
+- [`intent/metadata-files.md`](./intent/metadata-files.md)：元信息文件总模型，为什么按问题触发而不是按槽位补齐
+- [`intent/navigation-files.md`](./intent/navigation-files.md)：`README.md` / `index.md` / `roadmap.md` 的拆分原理与导航入口误读
+- [`intent/overview-landscape.md`](./intent/overview-landscape.md)：`overview.md` / `landscape.md` 的原意与常见误读
+- [`intent/meta-rules.md`](./intent/meta-rules.md)：规则修改原则、`intent/` 分工与解释层边界
+- [`intent/research-artifacts.md`](./intent/research-artifacts.md)：研究产物组织总原则与混合型研究单元
+- [`intent/deep-research.md`](./intent/deep-research.md)：研究方法簇中的深度研究脚手架专项
+- [`intent/reflections.md`](./intent/reflections.md)：研究方法簇中的反思层专项
+- [`intent/traceability-rules.md`](./intent/traceability-rules.md)：Traceability 规则的设计意图
+- [`intent/repo-entry-files.md`](./intent/repo-entry-files.md)：仓库入口文件设计原理
 
 ## 代表样本
 
@@ -59,6 +76,7 @@ docs/contributing/
 - [`research-artifacts.md`](./research-artifacts.md)：研究产物组织方式
 - [`metadata-files.md`](./metadata-files.md)：元信息文件职责边界
 - [`readme-rules.md`](./readme-rules.md)：README 出现条件、展开深度与导航边界
+- [`index-rules.md`](./index-rules.md)：`index.md` 的触发条件、结构模型与导航细则
 - [`organization-principles.md`](./organization-principles.md)：知识树设计与长期组织原则
 - [`structure-refactoring-rules.md`](./structure-refactoring-rules.md)：目录重构与结构演进规则
 - [`evidence-and-traceability.md`](./evidence-and-traceability.md)：Evidence + Traceability 组合入口

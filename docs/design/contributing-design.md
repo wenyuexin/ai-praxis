@@ -122,12 +122,14 @@
 但它们的核心区别是：
 
 - `docs/capabilities/`：回答“系统提供什么能力、如何理解和使用这些能力”
+- `docs/capabilities/meta.md`：回答 capability layer 自己该怎么守边界、怎么增长、变动后要同步哪些面
 - `docs/contributing/`：回答“真正维护仓库时，应该按什么规则和流程执行”
 
 如果混在一起，最常见的退化是：
 
 - capability doc 写成第二份规则文档
 - 规则文档反过来承担能力说明
+- capability layer 的边界知识仍然散落在入口页和设计页里，没有独立自我约束位
 - 维护者不知道自己现在是在学系统能力，还是在执行具体约束
 
 因此，两层并列存在是必要的。
@@ -168,3 +170,4 @@
 - 想实际进入规则层按任务找规则：读 [`../contributing/README.md`](../contributing/README.md)
 - 想理解整个仓库为什么这样分层：读 [`system-design.md`](./system-design.md)
 - 想看 capability layer 的专项设计文档与横向总表：读 [`capability-design.md`](./capability-design.md)
+- 想看 capability layer 自己如何守边界、如何增长：读 [`../capabilities/meta.md`](../capabilities/meta.md)

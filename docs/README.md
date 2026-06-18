@@ -6,7 +6,7 @@
 
 ## 稳定承接位
 
-- `capabilities/`：公共能力文档目录，用来承接这套系统提供什么能力、如何使用这些能力，以及能力之间如何衔接；进入后先读 `capabilities/README.md`，需要按能力问题查找具体文档时再读 `capabilities/index.md`。
+- `capabilities/`：公共能力文档目录，用来承接这套系统提供什么能力、如何使用这些能力，以及能力之间如何衔接；进入后先读 `capabilities/README.md`，需要理解能力层自身边界时读 `capabilities/meta.md`，需要按能力问题查找具体文档时再读 `capabilities/index.md`。
 - `contributing/`：仓库建设、贡献协作、文档治理、Evidence、Traceability 等规则目录；进入后先读 `contributing/README.md`，需要按任务查找具体规则时再读 `contributing/index.md`。
 - `index.md`：`docs/` 级查找导航页；当你已经知道自己要找的是规则、能力、设计还是支撑材料时，从这里继续分流。
 - `design/`：专项设计文档目录；承接系统设计说明、能力矩阵等设计侧文档，进入后先读 `design/README.md`。

@@ -19,6 +19,7 @@ docs/
 
 - **我想理解 `docs/` 这个目录本身是什么、为什么这样分层**：先读 [`README.md`](./README.md)
 - **我想知道这套仓库作为 knowledge agent system 提供了哪些公共能力**：先读 [`capabilities/README.md`](./capabilities/README.md)
+- **我想理解 capability layer 自己的边界、增长方式与联动更新面**：读 [`capabilities/meta.md`](./capabilities/meta.md)
 - **我已经进入能力层，想按能力问题继续找到具体文档**：读 [`capabilities/index.md`](./capabilities/index.md)
 - **我想知道维护仓库时应该遵守什么规则、该按什么流程执行**：先读 [`contributing/README.md`](./contributing/README.md)
 - **我已经进入规则层，想按任务继续找到具体规则文件**：读 [`contributing/index.md`](./contributing/index.md)
@@ -31,6 +32,7 @@ docs/
 
 - **我现在要找的是规则、约束、执行流程**：进入 [`contributing/README.md`](./contributing/README.md)
 - **我现在要找的是公共能力、判断框架、能力之间如何衔接**：进入 [`capabilities/README.md`](./capabilities/README.md)
+- **我现在要判断 capability layer 自己该怎么长、边界怎么守**：读 [`capabilities/meta.md`](./capabilities/meta.md)
 - **我现在要理解 `docs/` 为什么这样分层，以及 rules / capability layer 如何协同**：读 [`design/system-design.md`](./design/system-design.md)
 - **我现在要找文档模板或渲染测试材料**：分别进入 `templates/` 或 `test/`
 

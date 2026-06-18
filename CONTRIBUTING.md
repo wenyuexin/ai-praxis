@@ -1,6 +1,6 @@
 # 仓库组织与写作规范
 
-本文件定义仓库的组织规则与笔记写作规范。这个仓库不仅保存多个研究领域下的知识内容，也在持续沉淀一套面向研究型知识工作的结构化研究方法体系。更细的仓库建设、文档治理、证据分级与可追溯性规则，沉淀在 [`docs/contributing/`](./docs/contributing/)；本文件保留仓库级强约束和入口说明。规则层目录说明入口见 [`docs/contributing/README.md`](./docs/contributing/README.md)，按任务继续查找具体规则时读 [`docs/contributing/index.md`](./docs/contributing/index.md)。如需理解这套系统提供的公共能力，可转到 [`docs/capabilities/README.md`](./docs/capabilities/README.md)；进入能力层后按问题继续查找时读 [`docs/capabilities/index.md`](./docs/capabilities/index.md)。AI 协作者入口见 [`AGENTS.md`](./AGENTS.md)。Evidence 与 Traceability 的统一工作流见 [`docs/contributing/evidence-and-traceability.md`](./docs/contributing/evidence-and-traceability.md)，细则见 [`evidence-rules.md`](./docs/contributing/evidence-rules.md) 和 [`traceability-rules.md`](./docs/contributing/traceability-rules.md)。
+本文件定义仓库的组织规则与笔记写作规范。这个仓库不仅保存多个研究领域下的知识内容，也在持续沉淀一套面向研究型知识工作的结构化研究方法体系。更细的仓库建设、文档治理、证据分级与可追溯性规则，沉淀在 [`docs/contributing/`](./docs/contributing/)；本文件保留仓库级强约束和入口说明。规则层目录说明入口见 [`docs/contributing/README.md`](./docs/contributing/README.md)，按任务继续查找具体规则时读 [`docs/contributing/index.md`](./docs/contributing/index.md)。如需理解这套系统提供的公共能力，可转到 [`docs/capabilities/README.md`](./docs/capabilities/README.md)；如需理解能力层自己的边界、增长方式与联动更新面，读 [`docs/capabilities/meta.md`](./docs/capabilities/meta.md)；进入能力层后按问题继续查找时读 [`docs/capabilities/index.md`](./docs/capabilities/index.md)。AI 协作者入口见 [`AGENTS.md`](./AGENTS.md)。Evidence 与 Traceability 的统一工作流见 [`docs/contributing/evidence-and-traceability.md`](./docs/contributing/evidence-and-traceability.md)，细则见 [`evidence-rules.md`](./docs/contributing/evidence-rules.md) 和 [`traceability-rules.md`](./docs/contributing/traceability-rules.md)。
 
 ## 快速导读
 
@@ -14,7 +14,10 @@
 | 记录主题缺口或待研究对象 | 第四章 L4/L5 + [文档增改流程](./docs/contributing/documentation-workflow.md) 第 2、9、10 节；文件职责见 [元信息文件模型](./docs/contributing/metadata-files.md) | 区分问题缺口与研究对象 |
 | 处理术语、事实或结论冲突 | 第四章 L7 + [文档增改流程](./docs/contributing/documentation-workflow.md) 第 8 节；冲突文件职责见 [元信息文件模型](./docs/contributing/metadata-files.md) | 先记录冲突，再决定是否修改正文 |
 | 组织项目 / 论文 / 产品案例研究 | [研究产物组织规则](./docs/contributing/research-artifacts.md) | 区分子领域研究与具体案例研究，管理案例正文、机制专题和辅助材料 |
-| 查某个元信息文件的职责 | 第四章；细则见 [元信息文件模型](./docs/contributing/metadata-files.md) | 理解 `README.md`、`overview.md`、`backlog.md` 等文件边界 |
+| 查某个元信息文件的职责 | 第四章；细则见 [元信息文件模型](./docs/contributing/metadata-files.md) | 理解 `README.md`、`index.md`、`overview.md`、`backlog.md` 等文件边界 |
+| 修改 README 本身的写法、出现条件、入口说明或导航边界 | 第三章；细则见 [README 规则](./docs/contributing/readme-rules.md) | 调整 README 自身，而不是重写元信息文件分工 |
+| 修改 `index.md` 本身的结构、粒度、父子层导航方式或 stop-line | 第四章 L2；细则见 [Index 规则](./docs/contributing/index-rules.md) | 调整 `index.md` 自身的专项执行细则 |
+| 修改目录树、查找导航，或判断结构展示是否应从 README 迁到 `index.md` | 第四章 L1/L2；细则见 [元信息文件模型](./docs/contributing/metadata-files.md)；`index.md` 专项细则见 [Index 规则](./docs/contributing/index-rules.md)；README 细则再看 [README 规则](./docs/contributing/readme-rules.md) | 先判断这是元信息文件分工问题，还是 `index.md` / README 自身写法问题 |
 | 查仓库建设规则的承接位置 | [`docs/contributing/`](./docs/contributing/) | 区分知识正文与贡献、治理、证据、可追溯性约束 |
 | 优化单篇文档表达 | 第五章 | 调整结构、公式、表格或论文笔记写法 |
 

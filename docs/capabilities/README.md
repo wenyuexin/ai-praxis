@@ -13,5 +13,6 @@
 
 - 想理解仓库为什么要把能力层单独显式化：读 [`../design/system-design.md`](../design/system-design.md)
 - 想理解 capability layer 为什么这样设计、当前核心能力如何承接：读 [`../design/capability-design.md`](../design/capability-design.md)
+- 想理解 capability layer 自己的边界、增长方式与联动维护面：读 [`meta.md`](./meta.md)
 - 想按能力问题继续查找具体文档：读 [`index.md`](./index.md)
 - 想实际执行文档维护、Evidence、README、元信息文件判断：回到 [`../contributing/README.md`](../contributing/README.md)

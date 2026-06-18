@@ -4,7 +4,7 @@
 
 它面向普通读者、人类维护者与 AI 协作者，关注的是一种公共能力：**定位完成后的落位决策**。
 
-它不替代 `docs/contributing/documentation-workflow.md` 的操作流程，也不替代 `docs/contributing/metadata-files.md` 的完整职责定义。本文只把 Place 这项能力单独显式化，避免它长期混在 Retrieve 或规则细则里。
+它不替代 `docs/contributing/documentation-workflow.md` 的操作流程，也不替代 `docs/contributing/metadata-files.md` 的完整职责定义。本文只把 Place 这项能力单独显式化，避免它长期混在 Navigate 或规则细则里。
 
 ## 1. Place 不是 Navigate
 

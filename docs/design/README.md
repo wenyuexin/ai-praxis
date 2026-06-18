@@ -8,12 +8,14 @@
 
 - `system-design.md`：系统级设计主文，解释仓库为什么被组织成一个 knowledge agent system。
 - `capability-design.md`：capability layer 的专项设计文档，说明当前核心能力、承接文档与补强状态。
+- `../capabilities/meta.md`：capability layer 自我约束文档，说明能力层的边界、增长方式与联动更新面。
 - `contributing-design.md`：`docs/contributing/` 这一层的专项设计文档，解释 rules / methods layer 为什么这样分层。
 
 ## 阅读建议
 
 - 想理解这个仓库为什么这样分层：读 [`system-design.md`](./system-design.md)
 - 想横向看 capability layer 当前有哪些能力位、由什么承接：读 [`capability-design.md`](./capability-design.md)
+- 想理解 capability layer 自己如何守边界、如何增长、变动后要同步哪些面：读 [`../capabilities/meta.md`](../capabilities/meta.md)
 - 想理解为什么需要 `docs/contributing/` 这一层，以及它为什么继续拆成主规则、`intent/`、`cases/`：读 [`contributing-design.md`](./contributing-design.md)
 
 ## 边界说明
