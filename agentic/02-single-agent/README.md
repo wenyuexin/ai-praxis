@@ -11,7 +11,7 @@
 
 - 从 `../01-foundations/` 获取基础概念与认知框架。
 - 从 `tool-use/`、`planning/`、`memory/`、`self-reflection/` 进入单体能力的核心主题。
-- 如遇证据冲突或版本不一致，优先记录到 `conflict.md`；仅临时判断再落到 `../temp/conflict.md`。
+- 如遇证据冲突或版本不一致，优先记录到 `conflict.md`；若只是临时判断，可先做临时冲突整理，但不要长期替代本目录的稳定冲突入口。
 
 ## 分类依据
 

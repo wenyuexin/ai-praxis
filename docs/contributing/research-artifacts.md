@@ -196,6 +196,35 @@
 
 因此，`notes/evidence.md` 或 `evidence-notes.md` 不是普通杂项 notes，而是从 notes 原材料中整理出来的 claim-source 对照层。正文中的关键判断应优先引用正文 `## Evidence` 或 `notes/evidence.md`，而不是要求读者从 `notes/general.md`、`notes/source.md` 这类过程材料中自行还原论证。
 
+### 3.9 外部临时材料何时先回流到 `notes/`
+
+当输入材料来自 `temp/`、外部 AI 调研、联网检索 / 网页抓取结果、博客整理或临时笔记时，默认先按 [`documentation-workflow.md`](./documentation-workflow.md) 第 2、3、5、6 节判断 Claim、Evidence 状态与落位；在**已经确定它属于某个具体对象目录**、但**又不足以直接进入对象正文或机制专题正文**时，允许先回流到该对象目录的 `notes/`。
+
+适合先进入 `notes/` 的典型情形：
+
+- 材料已经和某个具体对象强绑定，但仍包含较多未压实的源码线索、长引用、对照表或待核验问题。
+- 结论已经不适合继续只留在 `temp/`，但还不足以直接写进 `overview.md`、`architecture.md` 或 `<mechanism>.md`。
+- 当前价值主要在于为后续正文提供 claim-source 对照、来源恢复、局部核验或研究脚手架，而不是直接形成给普通读者的稳定叙述。
+
+进入 `notes/` 后的默认分工：
+
+- `notes/source.md`：承接上游来源摘录、源码核验路径、长引用、失败搜索和版本语义。
+- `notes/evidence.md`：承接已开始整理的 Claim-Source 对照、Evidence 状态、局部结论和待补证点。
+- `notes/general.md`：承接尚未结构化为 source / evidence 的对象内研究过程材料。
+
+进入 `notes/` 不等于可以跳过回流工序：
+
+- 仍要先拆 Claim，而不是整段搬运外部调研稿。
+- 仍要优先恢复论文原文、官方文档、上游仓库 URL、release notes 等真实来源。
+- 仍要区分哪些内容应进 `backlog.md`、`candidates.md`、`conflict.md`，不要把对象不相关的发散问题都塞进 `notes/`。
+- 仍要避免把 `temp/` 路径本身写成对象目录内 `notes` 的最终正式来源终点；必要时可在 `Trace` 中说明它只是输入 staging。
+
+Stop-line：
+
+- 不要把对象无关的临时材料，因为“顺手可放”就塞进某个案例目录的 `notes/`。
+- 不要把已经足以形成稳定机制叙述的内容，长期滞留在 `notes/` 而不提炼为正文。
+- 不要把 `notes/` 当成 `temp/` 的镜像备份目录；进入 `notes/` 的材料应已经完成对象归属判断。
+
 ## 4. 少量证据写在哪里
 
 少量证据不需要单独拆文件时，应放在正文的固定位置，而不是散落在叙事段落中：
@@ -212,7 +241,8 @@
 - **辅助材料很少**：不创建 `notes/`，放在专题文件末尾的 `## Research Notes`，或在案例根目录保留一个 `notes.md`。
 - **中等规模辅助材料**：不创建 `notes/`，可在案例根目录使用 `notes.md`、`source-notes.md`、`evidence-notes.md` 或 `<mechanism>-notes.md`，但数量应保持很少。
 - **辅助材料很多**：创建 `notes/` 子目录，所有辅助材料统一放入 `notes/`；案例根目录不再同时保留 `notes.md`、`source-notes.md`、`evidence-notes.md` 等平铺辅助文件。
-- **`notes/` 内部命名**：可使用 `general.md` 承接原 `notes.md`，记录杂项研究过程和临时观察；`source.md` 承接源码核验、长引用和失败搜索；`evidence.md` 承接已整理的证据表、Claim-Source 对照与 Evidence 状态；`reflections.md` 承接基于当前客观现状的个人观察、直觉和阶段性理解；也可按机制或来源命名为 `<mechanism>.md`、`<source-name>.md`。
+- **外部临时材料的对象内过渡落点**：如果一份外部调研 / 网页抓取 / 临时整理材料已经完成对象归属判断，但还不足以直接进入对象正文，可先按第 3.9 节整理进 `notes/`，而不是继续停留在 `temp/` 或直接润色进正文。
+- **`notes/` 内部命名**：可使用 `general.md` 承接原 `notes.md`，记录杂项研究过程和临时观察；`source.md` 承接源码核验、长引用、外部来源摘录和失败搜索；`evidence.md` 承接已整理的证据表、Claim-Source 对照与 Evidence 状态；`reflections.md` 承接基于当前客观现状的个人观察、直觉和阶段性理解；也可按机制或来源命名为 `<mechanism>.md`、`<source-name>.md`。
 - **导航边界**：不要把 `notes/` 当成正文目录，也不要在 README 目录树中把它提升为主要阅读入口；只说明它是研究辅助材料入口。
 
 核心原则：拆分不是"每个研究点固定两篇"，但也不是"混乱后再救火"。**重要案例一开始就允许存在正文与辅助材料两个层次**；这里的“允许”不是“必须”，小案例或证据很少的案例可以只保留正文中的 `Evidence` / `Gap` 段落。正文保持读者可读，辅助材料保持证据可追溯。是否拆成多个文件，取决于材料体量、机制数量和后续维护频率，而不是等到不可读才触发。

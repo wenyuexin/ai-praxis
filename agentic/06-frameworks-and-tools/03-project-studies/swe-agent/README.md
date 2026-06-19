@@ -40,6 +40,6 @@ OpenHands 当前案例更偏 app server / sandbox service / SDK workspace / agen
 ## Evidence
 
 - Status: Observed / Inferred / Unverified
-- Sources: `https://github.com/SWE-agent/SWE-agent`（README、官方 docs、`sweagent/environment/`、`sweagent/run/`）；`https://github.com/SWE-agent/SWE-ReX`（`swerex/deployment/`、`swerex/runtime/`、`swerex/server.py`、`swerex/exceptions.py`）；`agentic/temp/web-search/7.md` 与 `agentic/temp/web-search/8.md` 的在线官方资料补证。
+- Sources: `https://github.com/SWE-agent/SWE-agent`（README、官方 docs、`sweagent/environment/`、`sweagent/run/`）；`https://github.com/SWE-agent/SWE-ReX`（`swerex/deployment/`、`swerex/runtime/`、`swerex/server.py`、`swerex/exceptions.py`）；SWE-agent / SWE-ReX 相关在线官方资料补证。
 - Trace: 从 `05-environments/candidates.md` 中的 SWE-agent 候选对象出发，先建立对象内聚的 case-study 入口，再决定是否回填环境层专题。
 - Needs: SWE-ReX 不同 deployment 在高并发下的资源回收完整性核验；trajectory state 的工具配置扩展边界仍需样例验证；batch 真实负载下的 Docker / CPU / file I/O 瓶颈排序；mini-swe-agent 暂不另开案例。

@@ -51,7 +51,7 @@
 - **为什么重要**：workspace 已被稳定定义为 task-specific working context，但它是否与 runtime 生命周期绑定、subtask 如何共享、overlay 是否应作为一等模型，仍是后续工程判断的关键。
 - **当前状态**：`workspace-lifecycle.md` 已形成独立主干专题，系统梳理了 workspace 与 runtime / sandbox / session 的关系，以及 per-task isolation、shared baseline + overlay、git worktree 三类共享模型；最新又结合 OpenHands 与 `software-agent-sdk` 的交叉源码，把“conversation restore / pause-resume 能力可分层存在，但不自动等于文件系统可独立重建”的边界补进正文。后续重点转向更多产品案例、多 agent 共享边界与成本比较。
 - **Status**：Inferred / Observed / 局部 Verified；已形成正文专题，继续补证。
-- **Source / Trace**：先由 `agentic/temp/web-search/4.md` 的 workspace lifecycle / sharing model 线索回流到 `code-execution-environments/workspace-lifecycle.md`，再吸收 `../06-frameworks-and-tools/03-project-studies/openhands/runtime-and-sandbox.md` 的跨仓库源码核验结果，并与既有 workspace / checkpoint / traceability 专题保持边界互补。
+- **Source / Trace**：先由一轮围绕 workspace lifecycle / sharing model 的外部调研线索形成 `code-execution-environments/workspace-lifecycle.md` 的第一版框架，再吸收 `../06-frameworks-and-tools/03-project-studies/openhands/runtime-and-sandbox.md` 的跨仓库源码核验结果，并与既有 workspace / checkpoint / traceability 专题保持边界互补。
 - **Evidence need**：更多产品案例、overlay / worktree / remote runtime 的成本比较、多 agent 场景下 shared / isolated / hybrid workspace 的共享边界，以及“恢复连接能力”和“文件系统连续性”在不同系统中的真实耦合强度。
 - **Candidates**：补证对象已登记到 `candidates.md`，当前优先跟踪 `OpenHands`、`SWE-agent`、`LangGraph checkpoint`、`OpenAI Agents SDK / sandbox agents`、`Claude Code / Git worktree parallel agents`、`AgentFS / astrid-vfs / overlay filesystem cases`。
 - **建议产物**：如后续材料继续增厚，可再拆出 `workspace-sharing-models.md`，专门展开跨产品共享模式对照。
@@ -117,6 +117,6 @@
 ## 五、与现有材料的关系
 
 - `overview.md` 已建立 permission / execution / observability 三层理解框架。
-- `temp/web-search/2.md` 为本 backlog 提供了多条高价值观察线索。
-- `temp/conflict.md` 已承接 Docker safety、workspace 定义、rollback 路径等关键冲突。
+- 早期外部调研为本 backlog 提供了多条高价值观察线索，后续若继续回流，应优先改写为对应的官方文档、论文或案例对象来源。
+- 历史上的临时冲突整理曾承接 Docker safety、workspace 定义、rollback 路径等问题；当前应以本目录稳定的 `conflict.md` 为准继续维护。
 - 后续若某条线索得到更充分证据，应拆成专题文档，而不是长期停留在 backlog。

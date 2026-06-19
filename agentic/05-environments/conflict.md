@@ -30,7 +30,7 @@
 - **仍待核验部分**：workspace 生命周期在什么条件下应与 runtime / sandbox / session 强绑定、在什么条件下应通过 checkpoint、overlay、persistent volume、remote runtime 或 git worktree 部分解耦；shared / isolated / hybrid workspace 在多任务、多 subtask、多 agent 场景下的取舍边界仍需跨系统比较。
 - **涉及范围**：`code-execution-environments/workspace-structure.md`、`code-execution-environments/workspace-lifecycle.md`、`code-execution-environments/workspace-checkpoint.md`、`code-execution-environments/workspace-traceability.md`、`overview.md`
 - **为什么重要**：这会直接影响 workspace、checkpoint、traceability 和 artifact 的组织方式；若概念混淆，恢复与归因边界会持续混乱。
-- **Source / Trace**：`workspace-lifecycle.md` 已吸收 `agentic/temp/web-search/4.md` 中关于 per-task isolation、shared baseline + overlay、git worktree / branch isolation 的可用线索；本冲突条目从“workspace 是否等于路径”收窄为 lifecycle 绑定与 sharing model 取舍问题。
+- **Source / Trace**：`workspace-lifecycle.md` 已吸收一轮外部调研中关于 per-task isolation、shared baseline + overlay、git worktree / branch isolation 的可用线索，并进一步回收到更直接的产品对象与公开来源；本冲突条目从“workspace 是否等于路径”收窄为 lifecycle 绑定与 sharing model 取舍问题。
 - **建议处理方向**：主干已可把“workspace 不等于 sandbox 内路径”写成稳定认识；后续不再讨论二选一概念冲突，重点比较生命周期绑定、共享模型、恢复成本、traceability 归属和多 agent 并发边界。
 
 ### 1.4 Rollback 的合理路径是否唯一
@@ -76,4 +76,4 @@
 
 - 若问题已获得较稳定证据并形成主干结论，应同步更新相关文档并移除或改写对应条目。
 - 若问题明显属于单智能体或多智能体能力层，而非环境层，应在对应目录的 `conflict.md` 建立主条目，本文件只保留环境相关部分。
-- 若问题暂时只影响临时调研判断，可继续保留在 `../temp/conflict.md` 作为上游入口。
+- 若问题暂时只影响临时调研判断，可先保留为临时冲突整理；一旦进入本目录的稳定讨论面，应尽快收束到当前 `conflict.md`，不要长期把临时整理稿当正式入口。

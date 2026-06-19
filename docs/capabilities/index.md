@@ -23,7 +23,7 @@ docs/capabilities/
 
 - **我想从问题出发找到目录入口或目标位置**：读 [`navigate.md`](./navigate.md)
 - **我想在找到区域后判断应停在哪一层、应写什么文件**：读 [`place.md`](./place.md)
-- **我想理解新材料进入系统时为什么必须先分流、降级和暂存**：读 [`ingest.md`](./ingest.md)
+- **我想理解新材料进入系统时为什么必须先分流、降级、暂存，并在条件成熟后再回流到元信息文件、对象 `notes/` 或正文**：读 [`ingest.md`](./ingest.md)
 - **我想理解目录树、README、index 与元信息文件为什么不能重新混写**：读 [`structure.md`](./structure.md)
 - **我想理解系统如何基于已有知识回答问题，同时不越过 Evidence 边界**：读 [`answer.md`](./answer.md)
 - **我想理解这套系统长期如何维护、哪些对象需要持续校准**：读 [`maintain.md`](./maintain.md)
@@ -32,7 +32,7 @@ docs/capabilities/
 
 - `navigate.md`：从问题出发的搜索与导航能力说明
 - `place.md`：定位完成后的落位决策能力说明
-- `ingest.md`：新材料进入系统时的分流与吸收能力说明
+- `ingest.md`：新材料进入系统时的分流、吸收与回流能力说明
 - `structure.md`：让目录树与各类入口长期保持分工清楚的能力说明
 - `answer.md`：基于已有知识进行回答与解释的能力说明
 - `maintain.md`：系统长期维护与演化能力说明

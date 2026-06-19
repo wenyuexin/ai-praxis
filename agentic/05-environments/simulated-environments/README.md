@@ -11,7 +11,7 @@
 
 - 结合上层 `../README.md` 理解 simulated-environments 在环境体系中的位置。
 - 重点关注 world state、observation/action interface、环境反馈、可重复性与实验控制。
-- 如出现环境定义、任务口径或实验边界冲突，优先记录到 `../conflict.md`；仅临时判断再落到 `../../temp/conflict.md`。
+- 如出现环境定义、任务口径或实验边界冲突，优先记录到 `../conflict.md`；若只是临时判断，可先做临时冲突整理，但不要长期替代稳定冲突入口。
 
 ## 边界说明
 

@@ -115,6 +115,8 @@
 
 它不是新的抽象规则层，而是帮助维护者在真实样本中建立边界感。
 
+当前 `docs/contributing/cases/` 仍是规则层复杂样本的主要承接位，但不应被理解成所有 case 的永久唯一归宿；如果案例开始经常跨 capability、contributing 与 design 组合阅读，长期边界应回到 [`cases-layer-design.md`](./cases-layer-design.md) 判断。
+
 ## 6. `docs/contributing/` 与 `docs/capabilities/` 为什么要分开
 
 这两层最容易混淆，因为它们都在回答“系统怎么工作”。

@@ -38,8 +38,11 @@
 - Sources:
   - `./official-docs.md`
   - `./architecture.md`
-  - `../../../temp/web-search/15-intake.md`
-- Trace: 本文不是新增 OpenHands 总览，而是从 `temp/web-search/15-intake.md` 中与 vibe coding human harness 最相关的片段做一次对象内接收；OpenHands 现有案例主线仍以 architecture / runtime / sandbox 为主，这里只补一个与小专题对接的保守证据切片。
+  - OpenHands docs：`https://docs.openhands.dev/openhands/usage/security`
+  - OpenHands docs：`https://docs.openhands.dev/openhands/usage/hooks`
+  - OpenHands docs：`https://docs.openhands.dev/openhands/usage/advanced/cli-mode`
+  - OpenHands docs：`https://docs.openhands.dev/openhands/usage/advanced/agents/planning-agent`
+- Trace: 本文不是新增 OpenHands 总览，而是把此前为 vibe coding human harness 收集的对象内线索，收束回更直接的 OpenHands 官方文档入口与既有对象专题；OpenHands 现有案例主线仍以 architecture / runtime / sandbox 为主，这里只补一个与小专题对接的保守证据切片。
 - Needs:
   - 用更直接的官方文档确认 confirmation policy、hooks、CLI 暂停在用户运行时介入中的正式语义。
   - 区分哪些能力主要面向 system policy / enterprise control，哪些真的服务用户即时纠偏与 acceptance。

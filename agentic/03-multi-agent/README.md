@@ -11,7 +11,7 @@
 
 - 从 `collaboration/`、`coordination/`、`communication-protocols/` 进入核心协作问题。
 - 从 `shared-state-and-context/` 关注共享状态与上下文污染问题。
-- 如遇证据冲突或口径不一致，统一记录到 `../temp/conflict.md`。
+- 如遇证据冲突或口径不一致，优先记录到当前目录的 `conflict.md`；若只是临时判断，可先做临时冲突整理，但不要长期把临时整理稿当正式入口。
 
 ## 分类依据
 

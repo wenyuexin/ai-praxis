@@ -20,7 +20,7 @@
 - `02-coding-agents-and-tools/`：面向软件工程场景的 Agent 工具、产品与平台
 - `03-project-studies/`：完整 Agent 系统或开源项目的系统化拆解
 - `04-skill-and-tool-systems/`：Skill、Tool、插件、能力注册等工程实现对象
-- `05-comparisons/`：框架选型、产品对比与生态地图
+- `05-comparisons/`：框架选型、产品对比、生态地图与跨对象边界收口；如果已进入该目录但拿不准该看哪篇，继续读 [`05-comparisons/index.md`](./05-comparisons/index.md)
 
 ## 其他入口
 

@@ -11,7 +11,7 @@
 
 - 结合上层 `../README.md` 理解 architectural-patterns 与 planning、tool-use、reasoning-and-acting-loop 的联系。
 - 重点关注 ReAct、AutoGPT 风格流程、RA.Aid 等可迁移模式。
-- 如出现模式定义、机制边界或项目口径冲突，优先记录到 `../conflict.md`；仅临时判断再落到 `../../temp/conflict.md`。
+- 如出现模式定义、机制边界或项目口径冲突，优先记录到 `../conflict.md`；若只是临时判断，可先做临时冲突整理，但不要长期替代稳定冲突入口。
 
 ## 边界说明
 

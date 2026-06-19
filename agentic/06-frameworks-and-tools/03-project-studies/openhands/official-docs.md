@@ -2,7 +2,7 @@
 
 > 阶段：官方资料阶段结论归档完成；后续源码核验结论已转入 `runtime-and-sandbox.md`
 > Evidence 状态：以 `Verified` / `Observed` / `Inferred` / `Unverified` 为主；只有官方直接明说的 Claim 才标 `Verified`，并在来源中明确其依据来自官方文档
-> 上游材料：`agentic/temp/web-search/6.md`
+> 来源处理说明：本文件已把可保留结论回收到 OpenHands 官方文档与公开仓库对象，不再把临时整理稿作为正式来源终点
 
 ## 一、定位
 
@@ -195,7 +195,7 @@ Evidence 状态：`Inferred`
 
 - DeepWiki 页面：只作为源码聚合旁证 / 第二阶段线索，不再作为核心官方证据。
 - 第三方博客、部署平台文档、社区教程：只作旁证或待核验线索。
-- `agentic/temp/web-search/6.md` 中把 DeepWiki 近似写成官方 / maintainer comment 的表述，不再直接沿用到主干项目研究文档。
+- 早期临时整理中曾把 DeepWiki 近似写成官方 / maintainer comment；当前已明确降级，不再直接沿用到主干项目研究文档。
 
 ## 六、当前可用的谨慎结论
 

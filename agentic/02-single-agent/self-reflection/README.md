@@ -12,7 +12,7 @@
 - 结合上层 `../README.md` 理解 self-reflection 与 planning、reasoning-and-acting-loop 的关系。
 - 先看 `reflection-cost-tradeoff.md`，建立“reflection 不是默认净收益能力”的主线判断。
 - 再看 critique model、iterative refinement、自检触发条件与修正收益等具体机制。
-- 如出现反思定义、评价标准或论文结论冲突，优先记录到 `../conflict.md`；仅临时判断再落到 `../../temp/conflict.md`。
+- 如出现反思定义、评价标准或论文结论冲突，优先记录到 `../conflict.md`；若只是临时判断，可先做临时冲突整理，但不要长期替代稳定冲突入口。
 
 ## 边界说明
 

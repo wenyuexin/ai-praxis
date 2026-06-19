@@ -11,7 +11,7 @@
 
 - 结合上层 `../README.md` 理解 MCP 在 tool-use 体系中的位置。
 - 重点关注 tool discovery、capability exposure、client/server 结构、协议边界与安全问题。
-- 如出现协议定义、版本差异或实现口径冲突，记录到 `../../../temp/conflict.md`。
+- 如出现协议定义、版本差异或实现口径冲突，优先记录到上层 `../conflict.md`；若只是临时判断，可先做临时冲突整理，但不要长期替代稳定冲突入口。
 
 ## 边界说明
 

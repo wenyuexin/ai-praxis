@@ -24,6 +24,8 @@ docs/
 - **我想知道维护仓库时应该遵守什么规则、该按什么流程执行**：先读 [`contributing/README.md`](./contributing/README.md)
 - **我已经进入规则层，想按任务继续找到具体规则文件**：读 [`contributing/index.md`](./contributing/index.md)
 - **我想理解为什么会拆出 `capabilities/`，以及规则层和能力层如何协同**：读 [`design/system-design.md`](./design/system-design.md)
+- **我想理解为什么“外部临时材料进入稳定知识层”更像一条 skill-like workflow**：读 [`design/research-ingestion-design.md`](./design/research-ingestion-design.md)
+- **我想判断复杂案例长期应放在 contributing、capabilities 还是独立 case layer**：读 [`design/cases-layer-design.md`](./design/cases-layer-design.md)
 - **我想理解为什么需要 `docs/contributing/` 这一层，以及它内部为什么还要继续分层**：读 [`design/contributing-design.md`](./design/contributing-design.md)
 - **我想找文档模板**：进入 `templates/`
 - **我想看 Markdown / Mermaid 等渲染测试材料**：进入 `test/`

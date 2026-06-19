@@ -12,7 +12,7 @@
 - 结合上层 `../README.md` 理解 collaboration 与 coordination、communication-protocols 的区别。
 - 优先关注角色分工、任务切片、交接机制、协作收益与协作失败模式。
 - 当前已包含论文笔记：`AgentDisCo_2605.11732.md`。
-- 如出现协作定义、角色边界或论文结论冲突，记录到 `../../temp/conflict.md`。
+- 如出现协作定义、角色边界或论文结论冲突，优先记录到上层 `../conflict.md`；若只是临时判断，可先做临时冲突整理，但不要长期替代稳定冲突入口。
 
 ## 边界说明
 

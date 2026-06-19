@@ -229,6 +229,6 @@ SWE-agent 官方 Getting Started 与 mini-SWE-agent FAQ 明确建议优先使用
 ## Evidence
 
 - Status: Observed / Inferred / Unverified
-- Sources: `https://github.com/SWE-agent/SWE-agent` 的 `README.md`、`docs/usage/hello_world.md`、`docs/usage/batch_mode.md`、`docs/usage/trajectories.md`、`docs/config/environments.md`、`sweagent/environment/swe_env.py`、`sweagent/environment/repo.py`、`sweagent/run/run_single.py`、`sweagent/run/run_batch.py`、`sweagent/run/batch_instances.py`、`sweagent/run/run_replay.py`；`https://github.com/SWE-agent/SWE-ReX` 的 `swerex/deployment/`、`swerex/runtime/`、`swerex/server.py`、`swerex/exceptions.py`、`swerex/utils/wait.py`；在线补证来自 `agentic/temp/web-search/7.md` 与 `agentic/temp/web-search/8.md`。
+- Sources: `https://github.com/SWE-agent/SWE-agent` 的 `README.md`、`docs/usage/hello_world.md`、`docs/usage/batch_mode.md`、`docs/usage/trajectories.md`、`docs/config/environments.md`、`sweagent/environment/swe_env.py`、`sweagent/environment/repo.py`、`sweagent/run/run_single.py`、`sweagent/run/run_batch.py`、`sweagent/run/batch_instances.py`、`sweagent/run/run_replay.py`；`https://github.com/SWE-agent/SWE-ReX` 的 `swerex/deployment/`、`swerex/runtime/`、`swerex/server.py`、`swerex/exceptions.py`、`swerex/utils/wait.py`；SWE-agent / SWE-ReX 相关在线官方资料补证。
 - Trace: 从 `agentic/05-environments/candidates.md` 的 SWE-agent 候选对象出发，先建立与 OpenHands 对照的 environment / execution 机制专题；当前只回流对象目录，不回填 `05-environments` 主干。
 - Needs: 继续核验 SWE-ReX 源码；核验 trajectory state 是否可被工具配置扩展；补 run-batch worker 调度、API key 分配与实例隔离；必要时为 mini-swe-agent 另建轻量 runtime / environment 对照案例。

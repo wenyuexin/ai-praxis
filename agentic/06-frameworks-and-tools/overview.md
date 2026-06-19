@@ -1,108 +1,136 @@
 # AI Agent 框架与工具生态综述
 
-`06-frameworks-and-tools` 关注 Agent 工程生态中的具体对象：框架、SDK、编排平台、编码工具、完整项目案例、Skill/Tool 系统与横向对比。它不负责重新讲解 planning、memory、tool-use、multi-agent、environment、evaluation 等底层能力，而是观察这些能力如何在真实框架和工具中被实现、组合和产品化。
+`06-frameworks-and-tools/` 关注的不是单个 Agent 能力本身，而是：**这些能力如何在真实框架、工具、产品和开源项目中被打包、组合、暴露、限制与交付。**
+
+如果 `02-single-agent/`、`03-multi-agent/`、`05-environments/`、`07-evaluation/` 更多回答“某种能力或问题是什么”，那么这里更关心的是：**现实系统到底把这些能力做成了什么样的对象，以及这些对象如何影响选型、集成与治理。**
 
 ---
 
-## 一、定位
+## 一、为什么这一层重要
 
-本目录回答的问题是：
+Agent 系统的很多关键差异，并不体现在抽象概念名词上，而体现在它们如何被工程化：
 
-- 有哪些值得长期跟踪的 Agent 框架、工具、产品和开源项目？
-- 它们分别代表了哪些工程实现路线？
-- 它们如何组合 `agentic/` 其他层级中的能力？
-- 面向实际系统建设时，应该如何选型、比较和拆解这些对象？
+- 有的系统把能力做成 framework / SDK
+- 有的系统把能力做成 coding agent 产品
+- 有的系统把能力做成完整 project / runtime
+- 有的系统把能力做成 skill、tool、plugin 或 protocol surface
 
-因此，本目录采用**对象视角**组织，而不是按底层能力重新建一套 taxonomy。
+因此，只理解 planning、tool-use、memory、sandbox、evaluation 这些能力还不够；还需要理解这些能力在真实对象中如何被实现、组合、暴露给用户，并最终变成可部署、可扩展、可治理的系统。
 
----
-
-## 二、主干对象类型
-
-### 2.1 通用框架与编排框架
-
-这一类对象提供 Agent 构建、工具绑定、状态管理、工作流编排、多 Agent 组织等工程抽象。它们通常不是单一能力点，而是把 planning、tool-use、memory、human-in-the-loop、multi-agent collaboration 等能力组合成可复用框架。
-
-代表对象：
-
-- `LangChain / LangGraph`
-- `AutoGen`
-- `CrewAI`
-- `Semantic Kernel`
-- `Microsoft Agent Framework`
-- `DSPy`（更偏 LM program / prompt optimization，但与 Agent orchestration 有交集）
-
-长期观察重点：
-
-- 单 Agent 抽象与多 Agent 抽象如何统一
-- workflow / graph runtime 是否成为生产级 Agent 的主流底座
-- 框架如何处理状态、checkpoint、human-in-the-loop 和工具权限
-- 大厂框架整合是否会改变生态格局
-
-这些框架之间的对象边界，以及 `OpenAI Agents SDK / Responses API` 当前仍需谨慎区分的范围，见 `landscape.md` §4.3。
-
-### 2.2 编码智能体工具
-
-Coding Agent / SWE Agent 已经形成相对独立的问题域。它们面向软件工程任务，依赖 repo understanding、code localization、patch generation、test execution、IDE/CLI 集成和 PR workflow 等专门化能力。
-
-代表对象：
-
-- `Claude Code`
-- `Codex`
-- `OpenHands / OpenDevin`
-- `GitHub Copilot Agent Mode / GitHub Next Ace`
-- `SWE-agent`
-- `Cline` 等 IDE/CLI 型编码 Agent
-
-长期观察重点：
-
-- 从代码补全到仓库级任务委托的演化
-- 代码定位、编辑、验证、回滚的闭环工作流
-- 与 Docker、Git、测试框架、MCP、IDE 的集成方式
-- 与 `07-evaluation/swe-benchmarks/` 中 SWE-bench、SWE-Gym、SWE Atlas 等评估体系的关系
-
-### 2.3 完整项目案例
-
-这一类对象不是单纯 SDK，也不是单一工具，而是完整 Agent 系统或开源项目。它们的价值在于展示一个真实系统如何把 Agent 的各层能力组装成可运行的工程产品。
-
-代表对象：
-
-- `Hermes Agent`
-- `OpenClaw`
-
-长期观察重点：
-
-- Gateway、Agent runtime、Skill、Memory、Context、Automation 等模块如何协同
-- 系统如何处理多渠道接入、多 Agent 隔离、权限、安全、部署与运维
-- 与根目录中 `02/03/05/07` 各层能力的映射关系
-
-### 2.4 Skill 与 Tool 系统
-
-这一类对象关注 Skill、Tool、插件、能力注册、工具生态与可复用动作单元。它与 `02-single-agent/tool-use/` 的区别在于：`02` 讨论工具使用的原理和模式，`06` 讨论具体 Skill / Tool 系统如何工程化实现。
-
-长期观察重点：
-
-- Skill 的声明、加载、隔离、验证和组合方式
-- Tool registry、tool discovery、tool generation 的工程形态
-- Skill 是否应被视为可验证制品，而不是普通 prompt 附件
-- 与 MCP、function calling、工具权限控制的关系
-
-### 2.5 对比与选型
-
-这部分用于横向比较框架、工具、项目和产品，不重复建设底层能力理论。
-
-适合沉淀：
-
-- 框架选型矩阵
-- 编码工具对比
-- 多 Agent 编排实现对比
-- 生态地图
-- 成熟度、可维护性、适用场景和风险对比
+`06-frameworks-and-tools/` 的价值就在这里：它提供的是**对象实现视角**，而不是再重复一遍能力分类。
 
 ---
 
-如需理解本目录为什么按当前结构组织、与其他层级如何分工、以及新材料如何吸收进体系，转到 `landscape.md`。
+## 二、这一层最值得先理解的主线
+
+如果只抓主线，这一层最值得先理解的不是“有哪些对象”，而是下面三件事。
+
+### 2.1 从能力问题走向对象问题
+
+前几层更适合回答：
+
+- tool use 是什么
+- multi-agent coordination 怎么理解
+- code execution environment 有哪些边界
+- evaluation 为什么重要
+
+而到了 `06`，问题会变成：
+
+- 哪类对象在承接这些能力
+- 不同对象把这些能力组合成了什么产品或框架形态
+- 同一个能力在不同对象里为何会呈现出完全不同的工程边界
+
+也就是说，这一层研究的重心，从“能力定义”转向“对象实现”。
+
+### 2.2 从对象理解走向跨对象比较
+
+单个对象研究当然重要，但只看单个对象，容易被局部实现绑架。
+
+这一层更重要的长期价值，是通过多个对象看清：
+
+- 哪些工程边界是反复出现的
+- 哪些差异只是产品选择，哪些已经接近稳定分层
+- 哪些模块看起来都叫 tool、agent、skill、runtime，实际上职责完全不同
+
+因此，`06` 不只是对象仓库，也承担“比较、收口、选型判断”的作用。
+
+### 2.3 从功能实现走向执行治理
+
+真实 Agent 系统的难点，往往不是“能不能做”，而是：
+
+- 怎么限制它做
+- 怎么让它按规则做
+- 怎么让它在 Skill、Tool、Permission、Sandbox、Hooks、Policy 之间保持可治理
+- 怎么把结果、错误、副作用、恢复和审计面统一起来
+
+所以这一层的后续高价值问题，不只是框架选型，也包括：**执行约束、权限治理、Skill / Rule 如何真正进入执行面。**
 
 ---
 
-*最后更新: 2026-06-16*
+## 三、这一层通常会产出什么
+
+在这层里，最常见、也最有价值的产物通常包括：
+
+- 框架、工具、产品或项目对象的系统化研究
+- 对象之间的横向比较与选型判断
+- 跨对象边界收口，例如 contract、runtime boundary、Tool Executor stop-line
+- skill / tool / plugin / protocol 这类工程实现对象的专题
+- 从对象实现反推上层系统治理问题的研究入口
+
+这也是为什么这一层既和具体案例有关，也和更高层的系统设计判断有关。
+
+---
+
+## 四、阅读这层时最容易犯的错
+
+### 4.1 把这一层误读成能力理论层
+
+如果当前问题主要是：
+
+- 一个能力本身是什么
+- 某种机制的通用原理是什么
+- 某个环境边界为何成立
+
+那通常不该先停在 `06`，而应回到 `02`、`03`、`05` 或 `07`。
+
+### 4.2 把单个对象误读成通用结论
+
+这一层经常研究知名框架、产品和项目，但对象重要，不等于对象代表整个方向。
+
+对象研究优先回答：
+
+- 这个对象怎么做
+- 它暴露了什么边界
+- 它对系统设计提供了什么启发
+
+而不是直接把单个对象的实现写成领域共识。
+
+### 4.3 把执行治理问题误压成“只是工具问题”
+
+越往后走，越会遇到一些表面上像 tool / skill / runtime 的问题，实际上核心是：
+
+- 规则如何进入执行面
+- 权限如何拦住动作
+- skill 如何不是普通 prompt 附件
+- hook / approval / sandbox / policy 如何共同约束 agent
+
+这类问题已经不只是“某个工具怎么接入”，而是对象实现背后的治理问题。
+
+---
+
+## 五、怎么继续往下读
+
+如果你已经知道自己要找什么：
+
+- 想按目录结构找入口：读 [`index.md`](./index.md)
+- 想理解这一层为什么按当前方式组织、与其他层级如何分工：读 [`landscape.md`](./landscape.md)
+- 想看当前还缺哪些关键问题：读 [`backlog.md`](./backlog.md)
+- 想直接进入横向比较：读 [`05-comparisons/index.md`](./05-comparisons/index.md)
+
+如果你只带走一句话，我希望是这句：
+
+> `06-frameworks-and-tools/` 研究的不是“Agent 有哪些能力”，而是“这些能力在真实对象里被做成了什么，以及这些对象如何反过来塑造系统边界、选型和治理”。
+
+---
+
+*最后更新: 2026-06-18*

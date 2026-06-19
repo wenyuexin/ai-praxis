@@ -27,9 +27,9 @@
 
 - **关联目录**：`README.md`、`01-foundations/`、`02-single-agent/`、`03-multi-agent/`、`05-environments/`、`07-evaluation/`
 - **为什么重要**：`README.md` 已承担目录定向和边界说明，但 `agentic/` 顶层仍需要一个面向读者的领域综述，用来回答 Agentic AI 的整体脉络、核心矛盾、能力边界和跨层关系。
-- **当前状态**：`overview.md` 已形成早期版本，基于现有主干文档整理了概念、单智能体、多智能体、人机交互、环境、框架工具与评估之间的跨层关系；但由于 `agentic/` 仍存在主题缺失，该文件只能视为早期综述，后续需要随子目录专题继续修订。
+- **当前状态**：`overview.md` 已形成早期版本，基于现有主干文档整理了概念、单智能体、多智能体、人机交互、环境、框架工具与评估之间的跨层关系；当前更准确的缺口不是“还没有顶层综述”，而是该综述仍依赖若干未补齐子专题，尚未进入更稳定的跨层问题地图阶段。
 - **Evidence need**：继续基于已有子目录综述和已核验案例做归纳；外部综述或行业判断只能作为线索，不能直接写成主线定论。
-- **后续方向**：补齐人机交互、评估、浏览器环境、仿真环境和跨层对比专题后，再回头更新顶层综述。
+- **后续方向**：优先补齐人机交互、评估、浏览器环境、仿真环境和跨层对比专题，再回头收紧顶层综述中的核心矛盾表达、跨层 stop-line 与对象回填边界。
 
 ### 2.2 Agentic 核心矛盾的跨层表达
 
@@ -59,17 +59,17 @@
 
 - **关联目录**：`02-single-agent/tool-use/`、`03-multi-agent/coordination/`、`05-environments/code-execution-environments/`、`06-frameworks-and-tools/`、`07-evaluation/observability-and-debugging/`
 - **为什么重要**：当系统需要调度内部 Agent、外部 Agent、工具执行和长任务工作流时，共性问题不是某个 provider 如何接入，而是任务输入、执行边界、状态、产物、错误、取消、重试和 trace 如何被统一表达。
-- **当前状态**：已用 `MCP` 和 `LangGraph` 完成第一轮窄口径样本核验，并在 `06-frameworks-and-tools/05-comparisons/orchestration-implementations.md` 形成 `TaskSpec / ExecutionSpec / ResultSpec / ErrorSpec / AdapterSpec` 维度初稿；当前只能支持协议层与 workflow runtime 层的保守抽象，不能外推为统一行业标准或完整 orchestrator contract。
-- **Evidence need**：继续比较不同 agent framework、coding agent、workflow framework 与工具协议如何描述 capability、session、workspace、trace、cost、abort、retry 和 result normalization；单对象机制只能先保留为对象观察。下一步优先补 OpenAI Agents SDK / Responses API、OpenHands 与 SWE-agent 的 session / workspace / artifact / trace / recovery 边界。
-- **建议产物**：继续迭代 `06-frameworks-and-tools/05-comparisons/orchestration-implementations.md`，每引入一个对象都先补对象内 `Observed` 证据；顶层只保留跨目录问题推进状态，对象细节留在 `06-frameworks-and-tools/`。
+- **当前状态**：已从 `MCP`、`LangGraph` 的第一轮窄口径样本，推进到 `OpenAI Agents SDK`、`OpenHands`、`SWE-agent` 等对象的分层补证，并在 `06-frameworks-and-tools/05-comparisons/orchestration-implementations.md` 形成 `TaskSpec / ExecutionSpec / ResultSpec / ErrorSpec / AdapterSpec` 维度初稿；当前更准确的缺口不再是“缺少对象样本”，而是跨对象 contract 仍未收敛，尤其是 session / workspace / artifact / trace / recovery / result normalization 的统一边界仍主要停留在保守抽象层。
+- **Evidence need**：继续比较不同 agent framework、coding agent、workflow framework 与工具协议如何描述 capability、session、workspace、trace、cost、abort、retry 和 result normalization；单对象机制只能先保留为对象观察。下一步重点不再是补单个对象存在性，而是收紧跨对象对照、明确哪些维度已经可稳定抽象，哪些仍只能保留为 `Observed / Inferred`。
+- **建议产物**：继续迭代 `06-frameworks-and-tools/05-comparisons/orchestration-implementations.md`，优先把已完成对象研究回填为更清楚的 contract 对照；顶层只保留跨目录问题推进状态，对象细节留在 `06-frameworks-and-tools/`。
 
 ### 2.6 Tool Executor 与 Skill 制品边界
 
 - **关联目录**：`02-single-agent/tool-use/`、`05-environments/sandboxing-and-safety/`、`06-frameworks-and-tools/04-skill-and-tool-systems/`、`07-evaluation/safety-and-robustness/`
 - **为什么重要**：工具能否扩展、审计和隔离，取决于 Tool Executor、Skill manifest、依赖声明、副作用声明、权限策略和失败恢复是否被视为系统边界，而不是临时 prompt 或函数包装。
-- **当前状态**：`02-single-agent/` 已有 tool reliability 相关主题，`06-frameworks-and-tools/` 关注 Skill / Tool 系统对象，但顶层仍缺少 Tool 与 Skill 如何形成可治理制品的跨层问题。
-- **Evidence need**：需要比较内置可信工具、项目级工具、第三方工具和高风险代码执行工具在真实框架中的执行路径、权限模型、隔离策略和 trace 形态。
-- **建议产物**：形成 Tool Executor 分层表和 Skill manifest 最小字段清单，优先作为跨目录研究问题而非实现方案。
+- **当前状态**：`02-single-agent/` 已有 tool reliability 相关主题，`06-frameworks-and-tools/` 关注 Skill / Tool 系统对象；当前已在 `06-frameworks-and-tools/05-comparisons/tool-executor-boundary.md` 形成第一版横向收口，开始把 Tool Executor 压到执行路径、调用生命周期、结果面、副作用面与工作域绑定五个边界面，并补出 stop-line 初稿。但 Skill manifest 最小字段、cleanup / rollback 分层、以及 policy authority 与 execution surface 的更窄边界仍未收敛。
+- **Evidence need**：继续比较内置可信工具、项目级工具、第三方工具和高风险代码执行工具在真实框架中的执行路径、权限模型、隔离策略、trace 形态与 result lifecycle；同时补 Skill manifest 最小字段、cleanup entry 与 rollback、以及 session/runtime 级恢复和 tool-loop 级停止信号的分层。
+- **建议产物**：继续迭代 `06-frameworks-and-tools/05-comparisons/tool-executor-boundary.md`，把 stop-line、字段矩阵与对象对照继续收紧；并在时机合适时补 `Skill manifest` 最小字段专题。顶层只保留跨目录问题推进状态，对象与字段细节留在 `06-frameworks-and-tools/`。
 
 ---
 
@@ -102,6 +102,14 @@
 - **为什么值得关注**：评估如果只停留在分数或排行榜，无法指导 tool、memory、environment、coordination、human control 的改进。
 - **当前状态**：`07-evaluation/backlog.md` 已记录 failure attribution、partial completion、benchmark transferability 与 human evaluation rubrics；但顶层还缺“评估结果如何定位到系统层”的问题意识。
 - **建议产物**：等 `07-evaluation/observability-and-debugging/failure-attribution.md` 或相关专题成形后，再回填顶层综述。
+
+### 3.5 Skill、Rules 与执行约束如何真正进入 Agent Runtime
+
+- **关联目录**：`02-single-agent/`、`05-environments/`、`06-frameworks-and-tools/`、`07-evaluation/`
+- **为什么值得关注**：很多系统表面上“支持 skills / rules / hooks / approvals”，但模型是否真的按这些约束执行，取决于它们进入执行链的层级与约束力度。真正困难的不是把规则写出来，而是让 agent 在 tool call、subagent、long-running task、workspace mutation 和 permission boundary 上稳定遵守它们。
+- **当前状态**：`06-frameworks-and-tools/` 已开始形成执行约束分层问题框架；但继续推进时，至少要拆成两条主线：一条面向当前仓库这种**纯文本 skill agent**，研究如何通过结构化 skill、输出约束、自检与上下文注入提高遵守率；另一条面向**具备代码执行、工具调用和环境副作用的复杂 agent**，研究 hooks、approval、sandbox、runtime boundary 与 audit 如何形成更强的执行治理。
+- **Evidence need**：需要比较不同系统中 instructions、skills、hooks、tool contracts、sandbox、approval policy、runtime gateway 与 result lifecycle 如何共同约束执行；特别要区分 prompt-level guidance、tool-loop interception、policy enforcement、environment hard boundary 和 post-hoc evaluation 这几类机制。同时还要单独比较：纯文本 skill agent 如何提升规则遵守率，复杂 agent 如何把约束写进执行系统。
+- **建议产物**：保持 `execution-governance-layers.md` 作为上位分层框架，同时拆出两篇下位专题：一篇研究纯文本 skill agent 的治理机制，一篇研究含代码/工具/环境副作用的复杂 agent 的治理机制；优先回答“规则如何进入执行面”“什么算真正的执行约束”“哪些约束只是文本建议，哪些已经成为硬边界”。
 
 ### 3.5 Cross-domain 边界：Agentic RAG、LLM Serving 与具身环境
 

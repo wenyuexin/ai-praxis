@@ -37,8 +37,10 @@
 - Sources:
   - `./best-practices.md`
   - `./claude-code-guide.md`
-  - `../../../../temp/web-search/15-intake.md`
-- Trace: 本文不是新增 Claude Code 总览，而是从 `temp/web-search/15-intake.md` 中与 vibe coding human harness 最相关的片段做一次对象内接收；后续若继续补强，应优先回到更直接的官方文档或对象专题，而不是继续放大第三方转述。
+  - Anthropic Claude Code docs：`https://docs.anthropic.com/en/docs/claude-code/overview`
+  - Anthropic Claude Code docs：`https://docs.anthropic.com/en/docs/claude-code/common-workflows`
+  - Anthropic Claude Code docs：`https://docs.anthropic.com/en/docs/claude-code/settings`
+- Trace: 本文不是新增 Claude Code 总览，而是把此前为 vibe coding human harness 收集的对象内线索，尽量回收到更直接的官方文档入口与既有对象专题；后续若继续补强，应优先继续沿官方文档与对象专题补证，而不是放大第三方转述。
 - Needs:
   - 用更直接的官方文档确认 `/goal`、Agent View、permission mode 的正式语义。
   - 区分哪些是官方推荐工作流，哪些只是社区实践或转述经验。

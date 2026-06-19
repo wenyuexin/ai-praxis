@@ -32,7 +32,7 @@
 - **Evidence need / 证据优先级**：GitHub 源码、runtime / workspace / sandbox / agent-server 相关实现、release notes；当前已完成 `https://github.com/OpenHands/OpenHands` 中 `openhands/app_server/` 及关联已核验范围的源码核验，也已在本地 `https://github.com/OpenHands/software-agent-sdk` checkout 中补到 `openhands-sdk` / `openhands-workspace` / `openhands-agent-server` 三层实现边界；后续仍缺跨 `app_server`、sandbox、agent-server、workspace backend 与 conversation persistence 的端到端绑定图，以及 pause/resume 后文件状态连续性的更细粒度证据
 - **当前产出**：`../06-frameworks-and-tools/03-project-studies/openhands/official-docs.md`、`../06-frameworks-and-tools/03-project-studies/openhands/runtime-and-sandbox.md`（已从占位升级为 `OpenHands + software-agent-sdk` 交叉源码核验结果，并补入当前本地 OpenHands 仓库范围边界、trajectory 入口、resume 后 metadata 刷新线索，以及 SDK / workspace / agent-server 三层对象关系）、`../06-frameworks-and-tools/03-project-studies/openhands/architecture.md`（新增的面向读者架构总览，从源码核验证据中提炼稳定结论，不包含源码流水）、`../06-frameworks-and-tools/03-project-studies/openhands/scheduling-performance.md`（新增的性能风险地图，覆盖 sandbox/conversation/event/workspace 调度路径的 20+ 源码可观察瓶颈）
 - **预期产出**：继续增强跨仓库 workspace ↔ sandbox ↔ agent-server ↔ conversation persistence 绑定关系的 Evidence；`runtime-and-sandbox.md` 已补充 V1 SandboxService 体系、三种沙箱实现、事件持久化路径、workspace backend 分层，以及 conversation restore 的跨层入口；后续仍需继续核验 replay / artifact traceability 与 pause/resume 后文件状态连续性的底层实现
-- **Source / Decision / Placement / Gap**：来源于 `agentic/temp/web-search/4.md`、`agentic/temp/web-search/6.md`、`workspace-lifecycle.md` 当前 Needs，以及本地 `OpenHands` / `software-agent-sdk` 双仓库源码核验结果；官方资料阶段与跨仓库源码核验结果已集中沉淀到 `agentic/06-frameworks-and-tools/03-project-studies/openhands/`，本文件只保留候选对象状态和环境层补证指针；当前 gap 已进一步收缩为：需要继续跨 SDK 与 agent-server 相关实现核验 runtime、workspace、sandbox、persistence、replay 与恢复后文件状态连续性的边界
+- **Source / Decision / Placement / Gap**：来源于 `workspace-lifecycle.md` 当前 Needs、OpenHands 官方文档入口、以及本地 `OpenHands` / `software-agent-sdk` 双仓库源码核验结果；官方资料阶段与跨仓库源码核验结果已集中沉淀到 `agentic/06-frameworks-and-tools/03-project-studies/openhands/`，本文件只保留候选对象状态和环境层补证指针；当前 gap 已进一步收缩为：需要继续跨 SDK 与 agent-server 相关实现核验 runtime、workspace、sandbox、persistence、replay 与恢复后文件状态连续性的边界
 
 
 ### 2.2 SWE-agent
@@ -44,7 +44,7 @@
 - **Evidence need / 证据优先级**：官方文档、GitHub 源码、环境抽象相关实现；当前已完成 SWE-agent + SWE-ReX 源码核验。后续优先核验不同 deployment 在高并发下的资源回收完整性（需实验）；trajectory state 的工具配置扩展边界仍需样例验证；mini-swe-agent 暂不另开案例，保留为 SWE-agent 小节中的后续对照方向
 - **当前产出**：`../06-frameworks-and-tools/03-project-studies/swe-agent/README.md`、`../06-frameworks-and-tools/03-project-studies/swe-agent/environment-and-execution.md`（已基于 SWE-agent + SWE-ReX 源码核验结果回填修正，主要修正：SWEEnv 不是 thin wrapper、reset 命令序列、run-batch 并发事实、SWE-ReX deployment/cleanup 边界、trajectory state 边界）
 - **预期产出**：在 workspace-lifecycle.md 等共性专题中克制引用 SWE-agent 的 per-task isolated execution 案例证据
-- **Source / Decision / Placement / Gap**：来源于 `agentic/temp/chat/instruction.md` 的推荐对象、`workspace-lifecycle.md` 当前 Needs、本地 `SWE-agent` + `SWE-ReX` 双仓库源码核验结果，以及 `agentic/temp/web-search/7.md` / `8.md` 的在线官方资料补证；案例研究已集中沉淀到 `agentic/06-frameworks-and-tools/03-project-studies/swe-agent/`，关键修正已在 `environment-and-execution.md` 中回填；当前 gap 主要是不同 deployment 在高并发下的资源回收完整性（需实验），mini-swe-agent 暂不另开案例
+- **Source / Decision / Placement / Gap**：来源于 `workspace-lifecycle.md` 当前 Needs、本地 `SWE-agent` + `SWE-ReX` 双仓库源码核验结果、以及 SWE-agent / SWE-ReX 官方仓库与文档入口；案例研究已集中沉淀到 `agentic/06-frameworks-and-tools/03-project-studies/swe-agent/`，关键修正已在 `environment-and-execution.md` 中回填；当前 gap 主要是不同 deployment 在高并发下的资源回收完整性（需实验），mini-swe-agent 暂不另开案例
 
 ### 2.3 LangGraph checkpoint
 

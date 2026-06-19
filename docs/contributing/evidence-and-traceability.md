@@ -88,6 +88,7 @@
 - 已判断目标落位：`overview.md`、`backlog.md`、`candidates.md`、`conflict.md` 或某篇正文专题。
 - 已判断 Evidence 状态：至少能标为 `Observed` 或 `Inferred`；只能标为 `Unverified` 时，不得写成正文定论。
 - 已记录 Trace：能说明 `Source / Decision / Placement / Gap` 或等价信息（链路简单时用 `Sources / Trace / Needs` 即可）。
+- 主线正文与正式元信息文件中的最终 `Sources` 不再停留在 `temp/` 路径；若内容原本来自 `temp/`，回流时应优先改写为论文原文、官方文档、上游公开仓库 URL，或摘要性 Trace。更细的回流硬约束、检查单与 stop-line 见 [`documentation-workflow.md`](./documentation-workflow.md) 第 5、6、8 节。
 - 已说明缺口：写清还缺论文、官方文档、源码实现、社区观察或跨系统比较中的哪一类。
 
 最小回流标注（字段映射说明：这里的 `Sources / Trace / Needs` 分别对应 `traceability-rules.md` 中的 `Source`、`Decision+Placement`、`Gap`）：
@@ -96,8 +97,8 @@
 ## Evidence
 
 - Status: Inferred
-- Sources: `agentic/temp/ai-context.md`
-- Trace: Moved from temporary context into a first-pass mainline topic.
+- Sources: 外部调研涉及的论文原文与官方文档
+- Trace: First-pass synthesis moved out of `temp/`; temporary notes were used only as input staging, not as final sources.
 - Needs: External validation from papers, official docs, or open-source implementations.
 ```
 

@@ -42,7 +42,9 @@ repo/
     ├── design/
     │   ├── README.md                 # 设计层入口
     │   ├── system-design.md          # 系统级设计说明
-    │   └── capability-design.md      # capability layer 专项设计与当前映射
+    │   ├── capability-design.md      # capability layer 专项设计与当前映射
+    │   ├── research-ingestion-design.md # 研究型输入吸收链专项设计
+    │   └── cases-layer-design.md     # case layer 长期边界专项设计
     │
     ├── contributing/
     │   ├── README.md                 # rules / methods 层入口
@@ -165,7 +167,7 @@ AI 协作者不是系统外部的使用者，而是系统的一部分。
 
 ### 3.1 Ingest：输入与吸收
 
-回答：拿到新材料后，先怎么分流，不要直接写正文。
+回答：拿到新材料后，先怎么分流、暂存与吸收，并在条件成熟后回流到元信息文件、对象目录 `notes/` 或正文，而不是直接写正文。
 
 典型问题：
 
@@ -173,6 +175,7 @@ AI 协作者不是系统外部的使用者，而是系统的一部分。
 - Evidence 状态如何
 - 是正文候选、缺口、对象、冲突，还是临时输入
 - 今天不写正文时先放哪里
+- 什么时候应继续留在 `temp/`，什么时候应先进入元信息文件或对象目录 `notes/`
 
 当前主要由以下文档承接：
 
@@ -336,7 +339,9 @@ docs/
 ├── design/
 │   ├── README.md
 │   ├── system-design.md
-│   └── capability-design.md
+│   ├── capability-design.md
+│   ├── research-ingestion-design.md
+│   └── cases-layer-design.md
 ├── capabilities/
 │   ├── README.md
 │   ├── index.md
@@ -359,6 +364,8 @@ docs/
 - `docs/design/README.md` 承接设计层入口
 - `docs/design/system-design.md` 承接系统级设计主文
 - `docs/design/capability-design.md` 承接 capability layer 的专项设计文档与横向总表
+- `docs/design/research-ingestion-design.md` 承接“从外部临时材料到稳定知识层”的研究型输入吸收链专项设计
+- `docs/design/cases-layer-design.md` 承接 case layer 是否应从 contributing 附属物升级为独立层的长期结构判断
 - `docs/design/contributing-design.md` 承接 `docs/contributing/` 这一层的专项设计说明
 - `docs/capabilities/meta.md` 承接 capability layer 自身的边界、增长方式与联动更新面
 - capability layer 本身不再承担“能力施工总表”的默认入口职责
@@ -399,6 +406,8 @@ docs/
 
 - 想理解这个仓库式 agent system 为何这样设计：读本文
 - 想看 capability layer 的专项设计与当前映射状态：读 [`capability-design.md`](./capability-design.md)
+- 想理解为什么“外部临时材料 → 稳定知识层”的处理更接近一条 skill-like workflow：读 [`research-ingestion-design.md`](./research-ingestion-design.md)
+- 想判断复杂案例长期应属于 contributing 附属案例、capability 案例，还是独立 case layer：读 [`cases-layer-design.md`](./cases-layer-design.md)
 - 想实际新增、迁移、修改文档：读 `docs/contributing/documentation-workflow.md`
 - 想判断某种元信息文件该不该出现：读 `docs/contributing/metadata-files.md`
 - 想理解 README / index / overview / landscape 如何分工：读 `docs/contributing/readme-rules.md` 与 `docs/contributing/metadata-files.md`

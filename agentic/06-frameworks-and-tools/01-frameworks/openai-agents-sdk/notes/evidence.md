@@ -143,4 +143,4 @@
 - 当某个 Claim 获得官方文档或源码直接支持时，可升级为 `Observed`，并同步回填对应专题正文。
 - 当某个 Claim 仍主要依赖 stop-line 或边界判断时，保持 `Inferred`，不要直接抬升为对象总览定论。
 - 当不同文档、release notes、reference 或源码之间出现口径冲突时，应改写为 `Conflicting` 并迁移到更细 notes，而不是硬写进正文。
-- 正文中的 `## Evidence` 应优先摘要引用本文件中的稳定结论，而不是要求读者从 `agentic/temp/web-search/14.md` 还原论证过程。
+- 正文中的 `## Evidence` 应优先摘要引用本文件中的稳定结论，而不是要求读者回到早期临时调研整理稿中还原论证过程。

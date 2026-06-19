@@ -14,7 +14,7 @@
 - 当前专题：`topology.md` 用于比较 centralized / decentralized / hybrid / independent 等协调拓扑。
 - 当前专题：`failure-modes.md` 用于整理多智能体协调中的典型失败模式与问题地图。
 - 当前专题：`when-multi-agent-helps.md` 用于判断多智能体何时相对单智能体更可能带来净收益。
-- 如出现机制边界或术语口径冲突，记录到 `../../temp/conflict.md`。
+- 如出现机制边界或术语口径冲突，优先记录到上层 `../conflict.md`；若只是临时判断，可先做临时冲突整理，但不要长期替代稳定冲突入口。
 
 ## 边界说明
 

@@ -49,7 +49,7 @@
 - 某次误判的完整复盘
 - 某条规则在复杂对象里怎么落地
 
-那它通常更适合进入 `docs/contributing/cases/`，而不是继续扩进 capability doc。
+那它通常更适合进入 `docs/contributing/cases/`，而不是继续扩进 capability doc。若案例已经经常跨 capability、contributing 与 design 组合阅读，不要在 capability layer 内另造案例库；先参考 [`../design/cases-layer-design.md`](../design/cases-layer-design.md) 判断是否已经出现未来独立 `docs/cases/` 的升级信号。
 
 ## 3. 什么时候该补新 capability doc
 

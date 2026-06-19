@@ -54,10 +54,10 @@ Trace 是内容进入仓库的轻量链路记录。
 
 示例：
 
-- `agentic/temp/ai-context.md`
 - `docs/contributing/documentation-workflow.md`
-- 某篇论文笔记
+- 某篇论文原文或论文笔记
 - `https://github.com/openai/codex`
+- 基准来源：`https://docs.anthropic.com/claude/docs/`；后续引用：`prompt-design#structured-outputs`
 - 基准来源：`https://github.com/OpenHands/OpenHands`；后续引用：`frontend/src/routes/conversation.tsx`、`openhands/app_server/sandbox/remote_sandbox_service.py`
 - 基准来源：`https://docs.openhands.dev/sdk/`；后续引用：`arch/workspace`、`guides/convo-persistence`
 - AI 协作者基于已有目录的综合整理
@@ -124,8 +124,8 @@ Trace 是内容进入仓库的轻量链路记录。
 ## Evidence
 
 - Status: Inferred
-- Sources: `agentic/temp/ai-context.md`
-- Trace: First-pass synthesis from repository context.
+- Sources: 当前仓库相关正文、论文原文与官方文档
+- Trace: First-pass synthesis moved from temporary notes into a mainline topic; `temp/` was input staging only, not the final source endpoint.
 - Needs: External validation.
 ```
 

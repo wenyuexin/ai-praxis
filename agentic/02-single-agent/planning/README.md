@@ -11,7 +11,7 @@
 
 - 结合上层 `../README.md` 理解 planning 与 reasoning-and-acting-loop、self-reflection 的关系。
 - 重点关注计划生成、计划修正、任务分解、多步执行与失败后重规划。
-- 如出现规划术语、方法边界或论文结论冲突，优先记录到 `../conflict.md`；仅临时判断再落到 `../../temp/conflict.md`。
+- 如出现规划术语、方法边界或论文结论冲突，优先记录到 `../conflict.md`；若只是临时判断，可先做临时冲突整理，但不要长期替代稳定冲突入口。
 
 ## 边界说明
 

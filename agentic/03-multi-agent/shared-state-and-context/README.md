@@ -11,7 +11,7 @@
 
 - 结合上层 `../README.md` 理解 shared memory 与 communication-protocols、coordination 的关系。
 - 重点关注共享上下文的一致性、可见性、检索策略、写回冲突与污染风险。
-- 如出现术语定义、状态边界或版本口径冲突，记录到 `../../temp/conflict.md`。
+- 如出现术语定义、状态边界或版本口径冲突，优先记录到上层 `../conflict.md`；若只是临时判断，可先做临时冲突整理，但不要长期替代稳定冲突入口。
 
 ## 边界说明
 

@@ -66,14 +66,14 @@
 
 ### 3.3 Ingest
 
-回答：新材料进入系统前，先如何判断类型、Evidence 状态与临时落点，不直接抢写正文。
+回答：新材料进入系统后，如何先判断类型、Evidence 状态与临时落点，并在条件成熟后继续吸收到元信息文件、对象 `notes/` 或正文，而不是直接抢写正文。
 
 典型问题：
 
 - 新材料是什么类型
 - Evidence 状态如何
 - 今天不写正文时先放哪里
-- 什么时候该先留在 `temp/`、缺口、对象队列或冲突记录里
+- 什么时候该先留在 `temp/`、缺口、对象队列、冲突记录，或先进入对象目录 `notes/`
 
 当前承接：
 
@@ -83,7 +83,7 @@
 - [`../contributing/traceability-rules.md`](../contributing/traceability-rules.md)
 - [`../capabilities/ingest.md`](../capabilities/ingest.md)
 
-当前状态：已有较完整规则承接，并已补出首份独立能力文档；后续仍可继续补强输入类型样式、降级策略与回流边界说明。
+当前状态：规则层现已收缩为较薄的执行护栏，`Ingest` 已开始承接更完整的分流、吸收与回流能力；后续仍可继续补强输入类型样式、对象目录 `notes/` 作为中间稳定层的判断，以及回流正文前的能力链说明。
 
 ### 3.4 Structure
 
@@ -159,7 +159,7 @@
 |---|---|---|
 | Navigate | `README.md` / `index.md` + `docs/capabilities/navigate.md` | 已有首份公共能力文档 |
 | Place | `documentation-workflow.md` + `metadata-files.md` + `docs/capabilities/place.md` | 已有规则承接，并已补出首份能力文档 |
-| Ingest | `documentation-workflow.md` + Evidence / Traceability 规则 + `docs/capabilities/ingest.md` | 已有较完整规则承接，并已补出首份能力文档 |
+| Ingest | `documentation-workflow.md`（薄规则入口）+ Evidence / Traceability 规则 + `docs/capabilities/ingest.md` | 规则层已收缩为执行护栏，能力层开始承接更完整的分流、吸收与回流说明 |
 | Structure | README / 元信息 / 组织原则 / 结构重构规则 + `docs/capabilities/structure.md` | 已有较完整规则承接，并已补出首份能力文档 |
 | Answer | AI 协作者行为 + Evidence 约束 + `docs/capabilities/answer.md` | 已有行为约束，并已补出首份独立能力文档 |
 | Maintain | meta-rules + structure-refactoring + cases + `docs/capabilities/maintain.md` | 已有首份能力文档，后续仍可继续补强 |

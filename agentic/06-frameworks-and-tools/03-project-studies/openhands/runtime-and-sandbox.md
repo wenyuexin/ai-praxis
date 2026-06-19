@@ -294,7 +294,7 @@ Evidence 状态：`Observed`
 - `workspace-lifecycle.md`：当前发现不足以回填。需要 SDK 层 workspace 源码才能补充 workspace ↔ sandbox 的完整绑定关系。
 - `conflict.md`：没有发现有足够证据修改现有冲突条目。
 
-### 5.4 保留在 `temp/` 或待核验的问题
+### 5.4 暂未进入稳定结论的问题
 
 见第六节。
 
