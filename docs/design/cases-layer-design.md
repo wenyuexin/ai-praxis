@@ -207,8 +207,9 @@ docs/cases/
 2. 新增 case 前先判断它是 contributing case、capability case，还是 cross-layer case。
 3. 如果只是规则误判复盘，仍可先放 `docs/contributing/cases/`。
 4. 如果只是能力正文中的短例子，优先内嵌在对应 capability doc。
-5. 如果是 cross-layer case，先在设计层记录为独立 `docs/cases/` 的候选信号，避免继续误放到某一侧。
-6. 等 cross-layer case 累积到影响阅读和落位判断时，再迁移到 `docs/cases/`。
+5. 如果是 cross-layer case，当前先不要迁移目录；仍可暂放在最接近的现有承接位（通常是 `docs/contributing/cases/`），但应在该 case 文件中用一小段说明明确：它为什么已经超出单一规则案例、涉及哪些 capability / design 维度，以及为什么这目前只被视为独立 `docs/cases/` 的候选信号。
+6. `docs/contributing/cases/README.md` 可只保留很轻的一句提醒：哪些案例已带有 cross-layer signal，供后续集中复核；不要因此把 README 扩成第二份迁移台账。
+7. 等 cross-layer case 累积到影响阅读和落位判断时，再迁移到 `docs/cases/`。
 
 ## 9. 本文的边界
 

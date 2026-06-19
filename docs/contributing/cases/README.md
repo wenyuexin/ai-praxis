@@ -43,6 +43,7 @@
 - [`training-infra-landscape-before-overview.md`](./training-infra-landscape-before-overview.md)：`training-infra/` 作为“结构支架先成熟”案例，说明为什么 `landscape.md` 可以先于 `overview.md` 出现，以及 `README.md`、`index.md`、`landscape.md`、`roadmap.md` 如何分工。
 - [`agent-system-modeling-readme-candidates.md`](./agent-system-modeling-readme-candidates.md)：`agent-system-modeling/` 作为“对象队列先成熟”案例，说明为什么 `candidates.md` 可以先于 `overview.md` 出现，以及为什么本层不必机械补 `backlog.md`。
 - 后续如再出现同类边界问题，可继续在本目录沉淀案例；没有稳定问题模式时，不主动扩充。
+- 如果某个案例已经明显同时说明 contributing、capability 与 design 问题，当前仍可暂放在本目录，但应在该案例文件内补一小段 cross-layer signal 说明，明确它为什么已超出单一规则复盘；长期升级判断见 [`../../design/cases-layer-design.md`](../../design/cases-layer-design.md)。
 - 如果后续再次出现“规则本身清楚，但 AI 在长任务中仍反复把 `README.md`、`index.md`、`overview.md` 等文件职责重新混写”的情况，可考虑补一个关于"结构语义优先于规则记忆"的误判复盘案例；在问题尚未形成稳定模式前，不单独建新案例文件。
 
 ## 案例的时效性
