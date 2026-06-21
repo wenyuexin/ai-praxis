@@ -24,22 +24,10 @@
 - 放在这里：单智能体内部能力、执行循环、工具使用机制、记忆与反思策略。
 - 不放在这里：多智能体协作问题（放 `../03-multi-agent/`）、执行环境与隔离问题（放 `../05-environments/`）、框架/项目案例本身（放 `../06-frameworks-and-tools/`）。
 
-## 同目录导航
+## 入口说明
 
-- 当前跨目录主干专题：`planning-vs-execution.md`、`tool-centric-vs-monolithic.md`、`agent-vs-tool-workflow-boundary.md`。
-- 核心主题入口：`planning/`、`tool-use/`、`memory/`、`self-reflection/`、`reasoning-and-acting-loop/`、`architectural-patterns/`。
-
-## 目录结构
-
-```text
-02-single-agent/
-├── memory/
-├── architectural-patterns/
-├── planning/
-├── reasoning-and-acting-loop/
-├── self-reflection/
-└── tool-use/
-```
+- 需要查找子目录结构、按问题继续下钻或定位跨目录主干专题时，转到 [`index.md`](./index.md)。
+- 当前跨目录主干专题包括 `planning-vs-execution.md`、`tool-centric-vs-monolithic.md`、`agent-vs-tool-workflow-boundary.md`。
 
 ## 与其他目录的关系
 

@@ -31,20 +31,10 @@
 - 放在这里：基础定义、分类依据、概念边界、认知架构、系统模型、执行风格连续谱。
 - 不放在这里：单智能体能力机制（放 `../02-single-agent/`）、多智能体协调与协作（放 `../03-multi-agent/`）、执行环境与沙箱问题（放 `../05-environments/`）、框架或项目案例本身（放 `../06-frameworks-and-tools/`）。
 
-## 同目录导航
+## 入口说明
 
-- 核心主题入口：`definition-and-taxonomy/`、`cognitive-architectures/`、`agent-system-modeling/`、`behavioral-paradigms/`。
-- 当前研究重点：workflow / agent 边界、harness 作为系统模型、认知架构与执行编排的区分。
-
-## 目录结构
-
-```text
-01-foundations/
-├── agent-system-modeling/
-├── cognitive-architectures/
-├── definition-and-taxonomy/
-└── behavioral-paradigms/
-```
+- 需要查找子目录结构、按问题继续下钻或定位基础层专题时，转到 [`index.md`](./index.md)。
+- 当前研究重点包括 workflow / agent 边界、harness 作为系统模型、认知架构与执行编排的区分。
 
 ## 与其他目录的关系
 

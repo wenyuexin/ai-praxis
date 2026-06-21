@@ -32,6 +32,7 @@ docs/contributing/
 - **我现在要修改 README 本身的写法、出现条件、入口说明或导航边界**：读 [`readme-rules.md`](./readme-rules.md)
 - **我现在要修改 `index.md` 本身的结构、粒度、父子层导航方式或 stop-line**：读 [`index-rules.md`](./index-rules.md)
 - **我现在要修改目录树、查找导航，或判断结构展示是否应从 README 迁到 `index.md`**：先读 [`metadata-files.md`](./metadata-files.md)；涉及 `index.md` 的专项细则时继续读 [`index-rules.md`](./index-rules.md)；README 写法问题再回到 [`readme-rules.md`](./readme-rules.md)
+- **我现在要优化搜索 / 导航体验，或判断目录导航与定向搜索应如何配合**：先读 [`metadata-files.md`](./metadata-files.md) 与 [`index-rules.md`](./index-rules.md)；需要能力层说明时继续读 [`../capabilities/navigate.md`](../capabilities/navigate.md)
 - **我现在要讨论结构是否长期合理、分类轴是否该调整**：读 [`organization-principles.md`](./organization-principles.md)
 - **我现在已经决定做目录迁移、结构收敛或重构执行**：读 [`structure-refactoring-rules.md`](./structure-refactoring-rules.md)
 - **我现在要标注 Evidence / Traceability，或判断一条说法该用什么证据状态**：先读 [`evidence-and-traceability.md`](./evidence-and-traceability.md)

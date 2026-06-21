@@ -22,21 +22,10 @@
 - 放在这里：多智能体任务拆解、角色分工、通信协议、共享状态、协调与冲突处理。
 - 不放在这里：单智能体内部能力（放 `../02-single-agent/`）、执行环境与隔离基础设施（放 `../05-environments/`）、框架案例材料（放 `../06-frameworks-and-tools/`）。
 
-## 同目录导航
+## 入口说明
 
-- 核心主题入口：`collaboration/`、`coordination/`、`communication-protocols/`、`shared-state-and-context/`、`organizational/`、`competition-and-conflict/`。
+- 需要查找子目录结构、按问题继续下钻或定位多智能体专题时，转到 [`index.md`](./index.md)。
 - 建议优先从协作、协调与通信协议三条主线建立多智能体的基本结构。
-## 目录结构
-
-```text
-03-multi-agent/
-├── collaboration/
-├── communication-protocols/
-├── competition-and-conflict/
-├── coordination/
-├── organizational/
-└── shared-state-and-context/
-```
 
 ## 与其他目录的关系
 

@@ -30,22 +30,10 @@
 - `papers/` 与 `images/` 只作为材料辅助目录存在，不承载独立主题分类。
 - 不放在这里：Agent 内部能力机制（放 `../02-single-agent/`）、多智能体组织机制（放 `../03-multi-agent/`）、运行环境本体（放 `../05-environments/`）、具体产品案例（放 `../06-frameworks-and-tools/`）。
 
-## 同目录导航
+## 入口说明
 
-- 核心主题入口：`task-completion-metrics/`、`agent-benchmarks/`、`swe-benchmarks/`、`safety-and-robustness/`、`human-evaluation/`、`observability-and-debugging/`。
+- 需要查找子目录结构、按问题继续下钻或定位评估专题时，转到 [`index.md`](./index.md)。
 - 当前较适合优先补强的方向包括：任务成功标准、评测环境约束、轨迹归因与人工评估方法。
-
-## 目录结构
-
-```text
-07-evaluation/
-├── agent-benchmarks/
-├── human-evaluation/
-├── observability-and-debugging/
-├── safety-and-robustness/
-├── swe-benchmarks/
-└── task-completion-metrics/
-```
 
 ## 与其他目录的关系
 

@@ -27,20 +27,10 @@
 - 放在这里：任务委托、人工确认、人工接管、交互体验、信任沟通、控制权边界。
 - 不放在这里：单智能体内部能力机制（放 `../02-single-agent/`）、多智能体组织结构（放 `../03-multi-agent/`）、执行环境与隔离（放 `../05-environments/`）、具体框架或产品案例（放 `../06-frameworks-and-tools/`）。
 
-## 同目录导航
+## 入口说明
 
-- 核心主题入口：`human-in-the-loop/`、`delegation-and-control/`、`interaction-surfaces/`、`trust-and-alignment/`。
+- 需要查找子目录结构、按问题继续下钻或定位人机交互专题时，转到 [`index.md`](./index.md)。
 - 当前以主题占位和边界拆分为主，后续正文可优先围绕接管模式、自治与确认张力、用户心智模型与交互反馈展开。
-
-## 目录结构
-
-```text
-04-human-agent-interaction/
-├── interaction-surfaces/
-├── delegation-and-control/
-├── human-in-the-loop/
-└── trust-and-alignment/
-```
 
 ## 与其他目录的关系
 

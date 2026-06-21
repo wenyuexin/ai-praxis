@@ -21,12 +21,19 @@ docs/capabilities/
 
 ## 按问题找入口
 
-- **我想从问题出发找到目录入口或目标位置**：读 [`navigate.md`](./navigate.md)
+- **我想从问题出发找到目录入口或目标位置，或想结合目录导航与定向搜索缩小范围**：读 [`navigate.md`](./navigate.md)；定位后，读者通常继续看 `answer.md`，贡献者继续看 `place.md` / `ingest.md`，结构维护者继续看 `structure.md` / `maintain.md`
 - **我想在找到区域后判断应停在哪一层、应写什么文件**：读 [`place.md`](./place.md)
 - **我想理解新材料进入系统时为什么必须先分流、降级、暂存，并在条件成熟后再回流到元信息文件、对象 `notes/` 或正文**：读 [`ingest.md`](./ingest.md)
 - **我想理解目录树、README、index 与元信息文件为什么不能重新混写**：读 [`structure.md`](./structure.md)
 - **我想理解系统如何基于已有知识回答问题，同时不越过 Evidence 边界**：读 [`answer.md`](./answer.md)
 - **我想理解这套系统长期如何维护、哪些对象需要持续校准**：读 [`maintain.md`](./maintain.md)
+
+## 按角色找后续能力
+
+- **普通读者**：通常先用 `navigate.md` 找到入口，再用 `answer.md` 判断现有知识能回答到哪里。
+- **文档贡献者**：通常先用 `navigate.md` 找到区域，再用 `place.md` / `ingest.md` 判断层级、文件类型与材料处理方式。
+- **结构维护者**：通常从 `structure.md` / `maintain.md` 进入，必要时回到 `navigate.md` 检查入口链是否顺畅。
+- **AI 协作者**：先遵守 `AGENTS.md` 与 `CONTRIBUTING.md` 的规则路由；能力文档只说明如何理解和使用能力，不替代规则层。
 
 ## 当前能力文档
 
