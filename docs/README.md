@@ -6,6 +6,7 @@
 
 ## 稳定承接位
 
+- `repo-map.md`：仓库文档类型总览；如果你还拿不准治理文档、知识正文、元信息、研究辅助材料、临时输入材料分别是什么，先读这篇。
 - `capabilities/`：公共能力文档目录，用来承接这套系统提供什么能力、如何使用这些能力，以及能力之间如何衔接；进入后先读 `capabilities/README.md`，需要理解能力层自身边界时读 `capabilities/meta.md`，需要按能力问题查找具体文档时再读 `capabilities/index.md`。
 - `contributing/`：仓库建设、贡献协作、文档治理、Evidence、Traceability 等规则目录；进入后先读 `contributing/README.md`，需要按任务查找具体规则时再读 `contributing/index.md`。
 - `index.md`：`docs/` 级查找导航页；当你已经知道自己要找的是规则、能力、设计还是支撑材料时，从这里继续分流。
@@ -16,6 +17,7 @@
 ## 阅读建议
 
 - 想了解 `docs/` 这个目录整体做什么：读本文件。
+- 想先分清仓库里不同功能的文档各是什么：读 [`repo-map.md`](./repo-map.md)。
 - 想按任务查找 `docs/` 里的具体入口：读 [`index.md`](./index.md)。
 - 想知道贡献、文档治理、README、元信息、Evidence 等规则分别在哪：进入 `contributing/README.md`。
 - 想理解这个仓库为什么能被看成一个知识型 agent system：读 `design/system-design.md`。

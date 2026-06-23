@@ -34,6 +34,7 @@
 - 如果你拿不准为什么某些目录会先长出 `backlog.md`，而不是 `candidates.md` 或 `overview.md`，看 [`learning-materials-readme-backlog.md`](./learning-materials-readme-backlog.md)：这是“内容缺口先成熟”样本，回答为什么 `README.md` + `backlog.md` 可以先成立。
 - 如果你拿不准为什么某些目录会先长出 `landscape.md` 而不是 `overview.md`，看 [`training-infra-landscape-before-overview.md`](./training-infra-landscape-before-overview.md)：这是“结构支架先成熟”样本，回答为什么 `README.md`、`index.md`、`landscape.md`、`roadmap.md` 可以先成立，而 `overview.md` 暂不机械创建。
 - 如果你拿不准为什么某些目录会先长出 `candidates.md`，而不是 `overview.md` 或本层 `backlog.md`，看 [`agent-system-modeling-readme-candidates.md`](./agent-system-modeling-readme-candidates.md)：这是“对象队列先成熟”样本，回答为什么 `README.md` + `candidates.md` 可以先成立。
+- 如果你拿不准某个理论、机制或现象应由基础层承接，还是应继续留在当前应用目录，先看 [`foundational-theory-vs-application-placement.md`](./foundational-theory-vs-application-placement.md)：这是“基础对象与应用引用关系”样本，回答为什么“对当前论证有用”不等于“应由当前目录承接对象本身”。
 
 ## 当前规划
 
@@ -42,6 +43,7 @@
 - [`learning-materials-readme-backlog.md`](./learning-materials-readme-backlog.md)：`learning-materials/` 作为“内容缺口先成熟”案例，说明为什么 `backlog.md` 可以先于 `candidates.md`、`landscape.md` 与 `overview.md` 出现，以及为什么本层不必机械补其他元信息文件。
 - [`training-infra-landscape-before-overview.md`](./training-infra-landscape-before-overview.md)：`training-infra/` 作为“结构支架先成熟”案例，说明为什么 `landscape.md` 可以先于 `overview.md` 出现，以及 `README.md`、`index.md`、`landscape.md`、`roadmap.md` 如何分工。
 - [`agent-system-modeling-readme-candidates.md`](./agent-system-modeling-readme-candidates.md)：`agent-system-modeling/` 作为“对象队列先成熟”案例，说明为什么 `candidates.md` 可以先于 `overview.md` 出现，以及为什么本层不必机械补 `backlog.md`。
+- [`foundational-theory-vs-application-placement.md`](./foundational-theory-vs-application-placement.md)：`Lost in the Middle` 作为“基础理论对象不应被应用层重复收编”案例，说明为什么应用层应优先引用基础层已有承接位，而不是因为当前论证需要就把对象重新挂入本层 `candidates.md`。
 - 后续如再出现同类边界问题，可继续在本目录沉淀案例；没有稳定问题模式时，不主动扩充。
 - 如果某个案例已经明显同时说明 contributing、capability 与 design 问题，当前仍可暂放在本目录，但应在该案例文件内补一小段 cross-layer signal 说明，明确它为什么已超出单一规则复盘；长期升级判断见 [`../../design/cases-layer-design.md`](../../design/cases-layer-design.md)。
 - 如果后续再次出现“规则本身清楚，但 AI 在长任务中仍反复把 `README.md`、`index.md`、`overview.md` 等文件职责重新混写”的情况，可考虑补一个关于"结构语义优先于规则记忆"的误判复盘案例；在问题尚未形成稳定模式前，不单独建新案例文件。

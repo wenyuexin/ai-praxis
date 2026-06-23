@@ -61,7 +61,7 @@
 - 哪些步骤来自 skill，而不是临时建议
 - 哪些输出要求是必须满足的停线
 
-已有研究提示，instruction layering 的失效并不是单一现象，至少可以拆成：指令识别失败、冲突解析失败、响应实现失败。换句话说，把多层规则塞进同一上下文，并不会自然得到更强遵守率；层级关系、冲突关系和实现路径本身也需要设计。
+已有研究提示，instruction layering 的失效并不是单一现象，至少可以拆成：指令识别失败、冲突解析失败、响应实现失败。`Where Instruction Hierarchy Breaks` 进一步把这三类 failure 做成白盒诊断框架，并显示 dominant failure mode 会随模型、任务类型与 context length 变化。换句话说，把多层规则塞进同一上下文，并不会自然得到更强遵守率；层级关系、冲突关系和实现路径本身也需要设计。
 
 ### 3.2 Structured Procedure
 
@@ -115,7 +115,7 @@ skill 如果只是经验描述，遵守率通常不稳定。
 
 这一层不是为了让模型“更会反思”，而是为了把校验变成固定机制，而不是临时自觉。
 
-这一节目前有相对扎实的外部支撑：生成后修订、自我批判、多维度反思都已被多项研究当作可量化提升指令遵守率与输出质量的候选机制。更稳妥的理解不是“让模型再想一遍”，而是把检查维度、修订目标和结束条件显式化；但这些机制仍有明显失效边界，不能被写成万能方案。
+这一节目前有相对扎实的外部支撑：生成后修订、自我批判、多维度反思都已被多项研究当作可量化提升指令遵守率与输出质量的候选机制。`Where Instruction Hierarchy Breaks` 还进一步区分了两种 training-free self-monitoring 插入点：输入侧的 `PIM`（parallel input monitor）更像 generation 前的 conflict scan，输出侧的 `SOM`（sequential output monitor）更像 draft release 前的 review / repair；两者分别对应低延迟窄覆盖与高延迟宽覆盖的治理 trade-off。更稳妥的理解不是“让模型再想一遍”，而是把检查维度、修订目标和结束条件显式化；但这些机制仍有明显失效边界，不能被写成万能方案。
 
 ### 3.5 Context Shaping
 
@@ -131,7 +131,7 @@ skill 如果只是经验描述，遵守率通常不稳定。
 
 因此，这一层更像：**skill 不只是文本内容，还包括它如何被装配进当前认知环境。**
 
-现有研究至少支持两点谨慎判断：第一，长上下文中的规则保持存在明显位置效应与注意力衰减问题；第二，把执行经验回写成持续演化的 guidelines，可能比静态 prompt 更能对抗“局部目标压过全局规则”。但“全程常驻”和“按需装配”到底哪种更稳，目前仍缺足够硬的对象级对照。
+现有研究至少支持两点谨慎判断：第一，长上下文中的规则保持存在明显位置效应与注意力衰减问题；第二，把执行经验回写成持续演化的 guidelines，可能比静态 prompt 更能对抗“局部目标压过全局规则”。`Where Instruction Hierarchy Breaks` 还补充了另一层更贴执行链的证据：随着长上下文 separation length 增大，instruction hierarchy 的主导 failure mode 不只会更频繁，还会在“规则识别 / 冲突解析 / 响应实现”之间重新分布。但“全程常驻”和“按需装配”到底哪种更稳，目前仍缺足够硬的对象级对照。
 
 ---
 
@@ -156,7 +156,7 @@ skill 如果只是经验描述，遵守率通常不稳定。
 
 全局规则、任务目标、skill 步骤、输出要求混在一起，模型不知道谁优先。
 
-现有研究表明，这类失效不宜笼统归结为“模型没听话”；更细地看，至少可能发生在规则识别、冲突解析和响应实现三个不同阶段。
+现有研究表明，这类失效不宜笼统归结为“模型没听话”；更细地看，至少可能发生在规则识别、冲突解析和响应实现三个不同阶段。这个拆法的重要价值，不只是更好命名 failure，而是能反过来指导治理机制该插在哪：补 instruction retrieval、补 precedence reasoning，还是补最终 release 前的 output review。
 
 ### 5.2 skill 只有描述，没有 procedure
 
@@ -221,11 +221,13 @@ skill 如果只是经验描述，遵守率通常不稳定。
   - `Instruction Boosting` — https://arxiv.org/html/2510.14842v1
   - `PR-CoT` — https://arxiv.org/html/2601.07780v1
   - `OctoBench` — https://export.arxiv.org/abs/2601.10343
-  - `Instruction Hierarchy 的三种失效模式` — https://browse-export.arxiv.org/abs/2606.07808
+  - `./instruction-hierarchy-breaks.md`
+  - `Instruction Hierarchy 的三种失效模式` — https://arxiv.org/abs/2606.07808
   - `SCOPE` — https://browse-export.arxiv.org/pdf/2512.15374
   - `PRISM` — https://browse-export.arxiv.org/abs/2605.15665
   - `指令遵循率退化的实证量化` — https://arxiv.org/abs/2512.20662v1
-  - `Lost in the Middle`、`Self-Refine`、`Constitutional AI` 的对应论文与官方公开资料
+  - `Self-Refine`、`Constitutional AI` 的对应论文与官方公开资料
+  - `../../../../llm/01-foundations/transformer-architecture/attention-mechanisms/position-bias/papers/LostInTheMiddle_2307.03172.md`
 - Trace: 从顶层“Skill、Rules 与执行约束如何真正进入 Agent Runtime”这一跨目录问题继续下沉，先把当前仓库这类纯文本 skill agent 单独抽出来，研究如何通过结构化文本机制提高规则遵守率；第一轮先形成问题框架，随后再根据外部调研中保留下来的真实论文与公开来源，把 instruction layering、self-check、context shaping 与 failure modes 相关段落补到可复核的一手或近一手来源。外部调研过程本身仍只是输入材料，因此正文中的综合判断继续保持 `Observed / Inferred`，没有把单篇论文、单个平台文档或二手材料直接写成主线定论。
 - Needs:
   - 补更多纯文本 skill agent 或 prompt-governed agent 的对象样本

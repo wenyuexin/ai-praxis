@@ -17,6 +17,7 @@ docs/
 
 ## 按问题找入口
 
+- **我还拿不准仓库里有哪些文档类型、它们分别干什么**：先读 [`repo-map.md`](./repo-map.md)
 - **我想理解 `docs/` 这个目录本身是什么、为什么这样分层**：先读 [`README.md`](./README.md)
 - **我想知道这套仓库作为 knowledge agent system 提供了哪些公共能力**：先读 [`capabilities/README.md`](./capabilities/README.md)
 - **我想理解 capability layer 自己的边界、增长方式与联动更新面**：读 [`capabilities/meta.md`](./capabilities/meta.md)
@@ -40,6 +41,7 @@ docs/
 
 ## 最小分工
 
+- `repo-map.md`：回答仓库里有哪些文档类型、它们分别承担什么组织功能
 - `README.md`：回答 `docs/` 是什么、为什么存在、下面有哪些稳定层
 - `index.md`：回答进入 `docs/` 后，如果我已经知道自己要找的是规则、能力、设计还是支撑材料，该去哪一层
 - `contributing/README.md`：回答规则目录内部怎么继续分流

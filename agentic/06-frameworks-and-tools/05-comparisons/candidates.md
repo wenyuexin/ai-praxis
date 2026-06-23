@@ -20,12 +20,12 @@
 ### 1.1 Instruction Hierarchy 的三种失效模式
 
 - **对象类型**：论文
-- **当前状态**：已通过一轮外部调研筛选，当前保留为高优先级候选对象
-- **为什么值得继续研究**：它为 instruction layering 提供了更细的失效拆解视角，能帮助区分“规则没生效”到底是识别、冲突解析还是响应实现的问题。
-- **当前最多可支撑的问题**：纯文本 skill agent 中，规则分层失效是否可以被稳定拆成几个阶段；哪些自监控机制可能把 prompt-level guidance 推向更强流程约束。
+- **当前状态**：已形成正式研究文档，不再只是候选对象；当前更适合作为 `text-skill-governance.md` 中 instruction layering / self-monitoring / failure pattern 的对象级支撑
+- **为什么值得继续研究**：它把 instruction hierarchy failure 稳定拆成 instruction identification、conflict resolution、response realization 三类，并进一步比较输入侧与输出侧 self-monitoring 插入点
+- **当前最多可支撑的问题**：纯文本 skill agent 中，规则分层失效是否可以被稳定拆成几个阶段；自监控机制应插在 generation 前还是 draft release 前；长上下文如何改变 failure surface
+- **当前产出**：`./instruction-hierarchy-breaks.md`
 - **优先回流位置**：`text-skill-governance.md`、`execution-governance-layers.md`
-- **研究入口**：Paper — https://browse-export.arxiv.org/abs/2606.07808
-- **下一步补证方向**：核对一手论文版本，补不同模型、不同场景下的适用范围与限制。
+- **下一步补证方向**：后续继续补 Appendix 中 monitor prompt、各模型 failure 分布和更细实验表格；对象级精读细节不再继续堆在本候选条目内，而以下游正式研究文档为准
 
 ### 1.2 Instruction Boosting
 
@@ -66,16 +66,6 @@
 - **优先回流位置**：`text-skill-governance.md`、`execution-governance-layers.md`
 - **研究入口**：Paper — https://arxiv.org/abs/2212.08073
 - **下一步补证方向**：区分 safety / harmlessness 场景与通用 task execution 的迁移边界。
-
-### 1.6 Lost in the Middle
-
-- **对象类型**：论文
-- **当前状态**：已通过一轮外部调研筛选，当前保留为高优先级候选对象
-- **为什么值得继续研究**：它是长上下文中规则位置效应与注意力衰减的高信号对象，适合支撑 context shaping 相关段落。
-- **当前最多可支撑的问题**：长上下文中规则保持为什么不稳定；规则放置与重复策略为何会影响遵守率。
-- **优先回流位置**：`text-skill-governance.md`
-- **研究入口**：Paper — https://arxiv.org/abs/2307.03172
-- **下一步补证方向**：补不同模型与更长上下文窗口下的变化趋势。
 
 ### 1.7 SCOPE
 
