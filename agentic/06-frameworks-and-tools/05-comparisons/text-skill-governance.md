@@ -61,7 +61,7 @@
 - 哪些步骤来自 skill，而不是临时建议
 - 哪些输出要求是必须满足的停线
 
-已有研究提示，instruction layering 的失效并不是单一现象，至少可以拆成：指令识别失败、冲突解析失败、响应实现失败。`Where Instruction Hierarchy Breaks` 进一步把这三类 failure 做成白盒诊断框架，并显示 dominant failure mode 会随模型、任务类型与 context length 变化。换句话说，把多层规则塞进同一上下文，并不会自然得到更强遵守率；层级关系、冲突关系和实现路径本身也需要设计。
+已有研究提示，instruction layering 的失效并不是单一现象，至少可以拆成：指令识别失败、冲突解析失败、响应实现失败。`Where Instruction Hierarchy Breaks` 的价值，未必在于提出一个让业内读者完全意外的新直觉，而更在于把这三类 failure 做成了可实验、可标注、可对照的白盒诊断框架，并显示 dominant failure mode 会随模型、任务类型与 context length 变化。换句话说，把多层规则塞进同一上下文，并不会自然得到更强遵守率；层级关系、冲突关系和实现路径本身也需要设计。
 
 ### 3.2 Structured Procedure
 
@@ -115,7 +115,7 @@ skill 如果只是经验描述，遵守率通常不稳定。
 
 这一层不是为了让模型“更会反思”，而是为了把校验变成固定机制，而不是临时自觉。
 
-这一节目前有相对扎实的外部支撑：生成后修订、自我批判、多维度反思都已被多项研究当作可量化提升指令遵守率与输出质量的候选机制。`Where Instruction Hierarchy Breaks` 还进一步区分了两种 training-free self-monitoring 插入点：输入侧的 `PIM`（parallel input monitor）更像 generation 前的 conflict scan，输出侧的 `SOM`（sequential output monitor）更像 draft release 前的 review / repair；两者分别对应低延迟窄覆盖与高延迟宽覆盖的治理 trade-off。更稳妥的理解不是“让模型再想一遍”，而是把检查维度、修订目标和结束条件显式化；但这些机制仍有明显失效边界，不能被写成万能方案。
+这一节目前有相对扎实的外部支撑：生成后修订、自我批判、多维度反思都已被多项研究当作可量化提升指令遵守率与输出质量的候选机制。`Where Instruction Hierarchy Breaks` 还进一步区分了两种 training-free self-monitoring 插入点：输入侧的 `PIM`（parallel input monitor）更像 generation 前的 conflict scan，输出侧的 `SOM`（sequential output monitor）更像 draft release 前的 review / repair；两者分别对应低延迟窄覆盖与高延迟宽覆盖的治理 trade-off。对当前主线更有参考价值的，不是把这篇论文读成“规则遵守需要监控”的一般性口号，而是把 `PIM` / `SOM` 理解成两类不同的检查插入点：前者适合在生成前扫描上下文冲突，后者适合在输出前复核最终实现。更稳妥的理解不是“让模型再想一遍”，而是把检查维度、修订目标和结束条件显式化；但这些机制仍有明显失效边界，不能被写成万能方案。
 
 ### 3.5 Context Shaping
 
@@ -156,7 +156,7 @@ skill 如果只是经验描述，遵守率通常不稳定。
 
 全局规则、任务目标、skill 步骤、输出要求混在一起，模型不知道谁优先。
 
-现有研究表明，这类失效不宜笼统归结为“模型没听话”；更细地看，至少可能发生在规则识别、冲突解析和响应实现三个不同阶段。这个拆法的重要价值，不只是更好命名 failure，而是能反过来指导治理机制该插在哪：补 instruction retrieval、补 precedence reasoning，还是补最终 release 前的 output review。
+现有研究表明，这类失效不宜笼统归结为“模型没听话”；更细地看，至少可能发生在规则识别、冲突解析和响应实现三个不同阶段。这个拆法的重要价值，不只是更好命名 failure，而是能反过来指导治理机制该插在哪：补 instruction retrieval、补 precedence reasoning，还是补最终 release 前的 output review。就这篇论文本身而言，它的核心结论对熟悉该问题的人并不算反直觉；更有价值的是作者把这件事实验化了，并把“failure 发生在哪一层”变成了可比较对象。
 
 ### 5.2 skill 只有描述，没有 procedure
 
@@ -170,7 +170,7 @@ skill 如果只是经验描述，遵守率通常不稳定。
 
 任务进行到后半程后，模型只顾着完成局部问题，忘了最初的规则和 skill。
 
-这一类失效已有较强外部旁证：长上下文中的规则保持存在位置效应，而动态积累和演化 guidelines 则被一些研究视为缓解该问题的候选方向。但目前仍不足以据此断言哪一种上下文装配策略最优。
+这一类失效已有较强外部旁证：长上下文中的规则保持存在位置效应，而动态积累和演化 guidelines 则被一些研究视为缓解该问题的候选方向。`Where Instruction Hierarchy Breaks` 进一步提示，随着相关规则与冲突请求之间的 separation length 增大，不只是总体遵守率会下滑，主导 failure 还会在“规则识别 / 冲突解析 / 响应实现”之间重新分布。这使它对当前主线的意义更多落在“怎样理解长任务中的失效链条”，而不是提供某个已经被证明最优的装配方案。但目前仍不足以据此断言哪一种上下文装配策略最优。
 
 ### 5.5 自检只是口号，不是机制
 

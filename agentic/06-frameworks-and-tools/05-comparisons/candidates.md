@@ -17,16 +17,6 @@
 
 ## 一、纯文本 skill 治理优先对象
 
-### 1.1 Instruction Hierarchy 的三种失效模式
-
-- **对象类型**：论文
-- **当前状态**：已形成正式研究文档，不再只是候选对象；当前更适合作为 `text-skill-governance.md` 中 instruction layering / self-monitoring / failure pattern 的对象级支撑
-- **为什么值得继续研究**：它把 instruction hierarchy failure 稳定拆成 instruction identification、conflict resolution、response realization 三类，并进一步比较输入侧与输出侧 self-monitoring 插入点
-- **当前最多可支撑的问题**：纯文本 skill agent 中，规则分层失效是否可以被稳定拆成几个阶段；自监控机制应插在 generation 前还是 draft release 前；长上下文如何改变 failure surface
-- **当前产出**：`./instruction-hierarchy-breaks.md`
-- **优先回流位置**：`text-skill-governance.md`、`execution-governance-layers.md`
-- **下一步补证方向**：后续继续补 Appendix 中 monitor prompt、各模型 failure 分布和更细实验表格；对象级精读细节不再继续堆在本候选条目内，而以下游正式研究文档为准
-
 ### 1.2 Instruction Boosting
 
 - **对象类型**：论文

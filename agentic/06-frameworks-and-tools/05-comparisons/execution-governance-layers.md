@@ -37,7 +37,7 @@
 
 > **一个 Agent 系统中的 rules / skills / hooks / approvals / sandbox / tool contracts，分别在哪一层进入执行链，它们能改变什么，不能改变什么？**
 
-如果一句约束只能改变模型“倾向怎么想”，它和能直接拦下 tool call 的机制，不应被写成同一种执行约束。
+如果一句约束只能改变模型“倾向怎么想”，它和能直接拦下 tool call 的机制，不应被写成同一种执行约束。`Where Instruction Hierarchy Breaks` 这类对象的价值，也主要是在 prompt-level 约束内部进一步拆清 failure surface 与 monitor 插入点，而不是把文本规则直接升级成 execution hard boundary。
 
 ---
 
@@ -55,6 +55,8 @@
 - 无法单独保证 side-effect boundary
 
 因此，这一层更像**行为建议与认知引导层**，而不是硬执行边界。
+
+对这一层，一个容易被高估的误解是：只要把规则写得更清楚，模型就会自然稳定地遵守它们。`Where Instruction Hierarchy Breaks` 提醒我们，即使问题完全留在 prompt / context 内部，失效也仍可拆成规则识别、冲突解析和响应实现三段；而 `PIM` / `SOM` 这类 monitor 的作用，本质上也还是在这一软约束层内补一个前置扫描或后置复核，而不是替代更下层执行治理。
 
 ### 3.2 Capability Surface / Tool Contract
 
