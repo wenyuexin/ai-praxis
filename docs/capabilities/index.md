@@ -28,12 +28,26 @@ docs/capabilities/
 - **我想理解系统如何基于已有知识回答问题，同时不越过 Evidence 边界**：读 [`answer.md`](./answer.md)
 - **我想理解这套系统长期如何维护、哪些对象需要持续校准**：读 [`maintain.md`](./maintain.md)
 
+## AI 协作者默认工作流
+
+处理仓库内的目录定位、落位判断与新材料吸收问题时，默认先按下面顺序判断：
+
+```text
+问题 / 新材料
+  → Navigate：先找最可能的主入口目录或候选支路
+  → Place：再判断应停在哪一层、写正文还是元信息文件
+  → Ingest：如果手上是外部输入或临时材料，再判断 Evidence 状态、临时落点与回流路径
+  → Contributing rules：最后再查具体 stop-line、文件职责与执行细则
+```
+
+不要把规则层当成 `Navigate` / `Place` / `Ingest` 的替代品；规则层负责约束执行，能力层负责先把问题类型和动作顺序分清。
+
 ## 按角色找后续能力
 
 - **普通读者**：通常先用 `navigate.md` 找到入口，再用 `answer.md` 判断现有知识能回答到哪里。
 - **文档贡献者**：通常先用 `navigate.md` 找到区域，再用 `place.md` / `ingest.md` 判断层级、文件类型与材料处理方式。
 - **结构维护者**：通常从 `structure.md` / `maintain.md` 进入，必要时回到 `navigate.md` 检查入口链是否顺畅。
-- **AI 协作者**：先遵守 `AGENTS.md` 与 `CONTRIBUTING.md` 的规则路由；能力文档只说明如何理解和使用能力，不替代规则层。
+- **AI 协作者**：先遵守 `AGENTS.md` 与 `CONTRIBUTING.md` 的规则路由；在目录定位、落位判断与新材料进入系统这三类任务上，优先按 `Navigate` → `Place` → `Ingest` 的顺序工作；能力文档不替代规则层。
 
 ## 当前能力文档
 

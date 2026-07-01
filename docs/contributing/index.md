@@ -72,6 +72,7 @@ docs/contributing/
 - [`cases/learning-materials-readme-backlog.md`](./cases/learning-materials-readme-backlog.md)
 - [`cases/training-infra-landscape-before-overview.md`](./cases/training-infra-landscape-before-overview.md)
 - [`cases/agent-system-modeling-readme-candidates.md`](./cases/agent-system-modeling-readme-candidates.md)
+- [`cases/capability-first-routing-placement.md`](./cases/capability-first-routing-placement.md)
 
 ## 已稳定的专题规则
 

@@ -8,7 +8,17 @@
 
 ## 2. 任务路由
 
-完成 `AGENTS.md` 与 [`CONTRIBUTING.md`](./CONTRIBUTING.md) 的阅读后，再按当前操作选择最相关的规则文件；不要为了小任务一次性通读所有规则。如果你想先理解规则层整体分工，读 [`docs/contributing/README.md`](./docs/contributing/README.md)；如果已经进入规则层但拿不准下一步该读哪篇，读 [`docs/contributing/index.md`](./docs/contributing/index.md)。如果你想先理解这套系统提供哪些公共能力，读 [`docs/capabilities/README.md`](./docs/capabilities/README.md)；如果你要判断 capability layer 自己的边界、增长方式与联动更新面，读 [`docs/capabilities/meta.md`](./docs/capabilities/meta.md)；如果已经进入能力层但拿不准下一步该读哪篇，读 [`docs/capabilities/index.md`](./docs/capabilities/index.md)。
+完成 `AGENTS.md` 与 [`CONTRIBUTING.md`](./CONTRIBUTING.md) 的阅读后，再按当前操作选择最相关的能力文档与规则文件；不要为了小任务一次性通读所有规则。如果你想先理解规则层整体分工，读 [`docs/contributing/README.md`](./docs/contributing/README.md)；如果已经进入规则层但拿不准下一步该读哪篇，读 [`docs/contributing/index.md`](./docs/contributing/index.md)。如果你想先理解这套系统提供哪些公共能力，读 [`docs/capabilities/README.md`](./docs/capabilities/README.md)；如果你要判断 capability layer 自己的边界、增长方式与联动更新面，读 [`docs/capabilities/meta.md`](./docs/capabilities/meta.md)；如果已经进入能力层但拿不准下一步该读哪篇，读 [`docs/capabilities/index.md`](./docs/capabilities/index.md)。
+
+### 2.1 先判断能力类型
+
+在进入具体规则文件前，先判断当前任务主要属于哪类公共能力：
+
+- 如果你在**从问题、关键词或对象名出发，想找到最可能的目录入口、目标区域或候选支路**：先读 [`docs/capabilities/navigate.md`](./docs/capabilities/navigate.md)
+- 如果你在**已经找到大致区域后，想判断应停在哪一层、应写正文还是哪类元信息文件**：先读 [`docs/capabilities/place.md`](./docs/capabilities/place.md)
+- 如果你在**处理新材料、外部调研、博客摘录、网页搜索结果或临时笔记，想判断今天先落到哪里、能否进入正文**：先读 [`docs/capabilities/ingest.md`](./docs/capabilities/ingest.md)
+
+能力文档负责回答“这套系统怎么找、怎么放、怎么吸收”；具体 stop-line、文件职责与执行细则仍回到 `docs/contributing/`。如果你不确定该先走哪条路由，默认先走本节的能力路由，再回到下面的规则路由。
 
 - 如果你在**研究论文、开源项目、产品、benchmark 或具体案例**：读 [`research-artifacts.md`](./docs/contributing/research-artifacts.md)
 - 如果你在**新建/改名/迁移目录**：读 [`structure-refactoring-rules.md`](./docs/contributing/structure-refactoring-rules.md)
