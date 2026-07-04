@@ -5,8 +5,8 @@
 | 维度 | 内容 |
 |------|------|
 | 对象 | GLM-5.2 |
-| 文档类型 | Overview |
-| 当前状态 | Overview based on official blog, product docs, Hugging Face release pages, and release note |
+| 文档类型 | Versioned object study |
+| 当前状态 | Versioned object study based on official blog, product docs, Hugging Face release pages, and release note |
 | 主要材料 | Z.ai 官方博客、BigModel 官方文档、Z.ai 官方文档、Hugging Face 模型页 / 博客、Z.ai release note |
 | 最后整理 | 2026-07-01 |
 
@@ -71,14 +71,15 @@ GLM-5.2 在目前公开的一手材料里，被一致定位为**面向长程任�
 
 ### 3.1 从 GLM-5.1 到 GLM-5.2 的升级叙事
 
-官方博客明确把 GLM-5.2 描述为相对 GLM-5.1 的显著跃迁，核心升级叙事集中在：
+官方博客与系列 README 已明确把 GLM-5.2 描述为相对 GLM-5.1 的后续跃迁版本，核心升级叙事集中在：
 
 - 长程任务能力提升
 - 首次把这一能力稳定建立在 `1M` 上下文上
 - 编码任务能力更强
 - 引入 effort level control，在能力、延迟与成本之间提供更灵活的平衡
+- 官方直接将 `GLM-5.1` 写成其 `predecessor`
 
-这类表述可以支撑“官方如何讲 GLM-5.2 的代际差异”，但目前仍属于发布口径，不宜直接写成独立验证后的性能事实。
+这类表述可以较稳支撑“GLM-5.2` 是 `GLM-5.1` 的后续主版本节点”这一层判断；但更细的能力优势描述目前仍主要属于发布口径，不宜直接写成独立验证后的性能事实。
 
 ### 3.2 Agentic coding 方向的明确强化
 
@@ -93,14 +94,24 @@ GLM-5.2 在目前公开的一手材料里，被一致定位为**面向长程任�
 
 ### 3.3 架构与推理效率的公开线索
 
-官方博客还给出了一些技术线索，例如：
+当前公开材料已经不只是给出零散线索，而是对 `GLM-5.2` 的部分架构增量做了更直接的一手表述，例如：
 
 - `IndexShare`：跨若干稀疏注意力层复用同一 indexer
 - 对 `MTP` 层的改进，用于 speculative decoding
 - 在 `1M` 上下文长度下，降低每 token FLOPs
 - 提升 speculative decoding 的 acceptance length
+- NVIDIA 覆盖页还把它与 `GLM-5.1` 的差异概括为 `IndexShare DSA, TileLang sparse-kernel`
 
-这些信息说明官方并非只做产品包装，也开始暴露部分架构优化方向；但由于目前手头不是完整 technical report，这些内容更适合作为后续研究线索，而不是在 overview 中展开成技术定论。
+这说明 `GLM-5.2` 已经可以较稳地视为：
+
+- 仍位于 `glm_moe_dsa` 这一系列架构谱系中
+- 但相对 `GLM-5.1` 已出现明确的架构级增量，而不只是普通发布叙事
+
+不过现阶段仍要保守：
+
+- 这些足以支撑“有明确架构增量”这一层判断
+- 仍不足以直接写成完整架构复原
+- `IndexShare` 与 `MTP` 的更细实现关系，仍应继续等待更直接 config / model card / repo 说明
 
 ## 四、公开发布与开源形态
 
@@ -119,19 +130,22 @@ GLM-5.2 在目前公开的一手材料里，被一致定位为**面向长程任�
 
 ### 4.2 目前能较稳引用的规格信息
 
-基于 Hugging Face 模型页与相关发布材料，当前可以较稳补充的规格包括：
+基于 Hugging Face 模型页、系列 GitHub 仓库与相关发布材料，当前可以较稳补充的规格包括：
 
 - 上下文长度：`1M`
 - 最大输出：`128K`
-- 许可：`MIT`
+- 许可：`MIT`（权重发布页）
 - Hugging Face 模型页可作为公开发布与引用入口
+- ModelScope 也被官方系列仓库列为下载入口之一
 
-此外，公开材料中还出现了较稳定的参数规模口径：
+此外，公开材料中还出现了较稳定但仍需解释层级的参数规模口径：
 
-- 总参数约 `753B`
+- `744B`：更像 `GLM-5` 基础版本口径
+- `753B`：已比早先更像 `GLM-5.2` 的主公开数字之一
+- `754B`：多见于第三方量化或托管统计口径
 - 激活参数约 `40B`
 
-但这里需要保守处理：这些规格在当前材料里主要通过 Hugging Face 发布页及其同源转载链路出现，已经足以作为公开发布规格记录，但若后续出现更正式的 model card / technical report / 官方仓库说明，应优先以后者校准。
+这里仍要特别保守：`753B`、`754B` 之间的差异，很可能与是否计入 shared expert、MTP、embedding 或托管平台自己的求和方式有关；因此此处仍不宜把总参数数字写成完全确定的单一事实。现阶段更稳的写法仍是：GLM-5.2 属于约 `740B+` 总参数、约 `40B` 激活参数的大规模 MoE 模型；待后续更正式的 model card / technical report / 官方仓库说明统一口径后再收敛到单一数字。
 
 ### 4.3 架构名与技术线索
 
@@ -143,7 +157,29 @@ GLM-5.2 在目前公开的一手材料里，被一致定位为**面向长程任�
 
 这些信息适合视为“公开发布页给出的技术线索”，可以帮助后续继续找更完整的技术报告或源码材料；但目前仍不宜直接在 overview 中写成完整架构复原。
 
-### 4.4 当前最接近的技术报告其实是 GLM-5 报告
+### 4.4 公开发布对象与下载/部署入口
+
+从当前公开链路看，GLM-5.2 的“对象承接方式”并不是一个独立 GitHub 仓库 + 一份独立技术报告，而是分散在几个不同角色的入口里：
+
+- `github.com/zai-org/GLM-5`：承接 `GLM-5 / 5.1 / 5.2` 系列的统一发布说明与下载入口
+- `huggingface.co/zai-org/GLM-5.2`：承接 GLM-5.2 的开放权重发布与 citation 入口
+- ModelScope：作为官方系列仓库列出的并行下载入口
+- Z.ai / BigModel 文档站：承接 API、能力说明与推荐场景
+
+这说明 GLM-5.2 目前更像一个**由系列仓库 + 权重页 + 产品文档共同构成的发布对象**，而不是“一个独立仓库对应一个独立 technical report”的简单形态。
+
+在本地部署支持上，当前公开 README 已明确列出若干开源推理框架，例如：
+
+- SGLang
+- vLLM
+- Transformers
+- KTransformers
+- Unsloth
+- 以及面向 Ascend NPU 的若干推理框架支持
+
+这些信息适合写入当前版本对象文，因为它们回答的是“这个模型作为开放发布对象，今天怎样被下载、承接和部署”，而不是去推断尚未公开的训练细节。
+
+### 4.5 当前最接近的技术报告其实是 GLM-5 报告
 
 一个关键发现是：`GLM-5.2` 的 Hugging Face 模型页在 citation 中并没有指向名为“GLM-5.2 Technical Report”的独立报告，而是要求引用：
 
@@ -181,7 +217,7 @@ GLM-5.2 在目前公开的一手材料里，被一致定位为**面向长程任�
 
 因此，当前更稳的做法仍然是：
 
-- 足以支撑一篇 **Overview**
+- 足以支撑一篇版本对象文
 - 已能比最初版本多写一层“公开发布与开源形态”
 - 可以把 `GLM-5` 技术报告当作前代技术背景
 - 仍不足以支撑一篇严格意义上的“GLM-5.2 独立 Technical Report”
@@ -218,9 +254,10 @@ GLM-5.2 在目前公开的一手材料里，被一致定位为**面向长程任�
   - https://huggingface.co/zai-org/GLM-5.2
   - https://huggingface.co/blog/zai-org/glm-52-blog
   - https://docs.z.ai/release-notes/new-released
+  - https://github.com/zai-org/GLM-5
   - https://arxiv.org/abs/2602.15763
-- Trace: Overview started from three official GLM-5.2 pages, then expanded with the public Hugging Face release page, the Hugging Face mirror blog, and the official release note to strengthen claims about open-weight release, MIT license, and public release framing. The GLM-5 technical report is currently used only as background for the series' technical route, not as proof that every GLM-5 detail transfers directly to GLM-5.2.
+- Trace: This versioned object study started from three official GLM-5.2 pages, then expanded with the public Hugging Face release page, the Hugging Face mirror blog, the official release note, and the GLM-5 series GitHub repo to strengthen claims about open-weight release, MIT license, unified series-level release structure, and local deployment support. The GLM-5 technical report is currently used only as background for the series' technical route, not as proof that every GLM-5 detail transfers directly to GLM-5.2.
 - Needs:
   - A GLM-5.2-specific technical report or model card with fuller architecture details
-  - Official repo / weight release materials that clarify architecture and deployment details more systematically
-  - Independent benchmark or third-party observations if later needed for stronger comparative claims
+  - More direct config or repo-level evidence explaining `753B` / `754B` wording and how it relates to the `GLM-5` base-version `744B` count
+  - More direct official explanation of the finer implementation relationship between `IndexShare`, `MTP`, and later deployment kernels
