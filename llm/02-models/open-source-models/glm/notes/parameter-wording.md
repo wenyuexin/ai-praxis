@@ -51,9 +51,11 @@
 - 托管服务页面的部署 / 量化 / serving 配置口径
 - 是否计入 shared expert、MTP、embedding、lm_head 等模块的统计口径差异
 
-这意味着“数字不同”不一定等于谁真谁假，也可能是：
+`GLM-5` 原报告已明确写出：参数统计**计入 MTP 层参数，不计入词嵌入和输出层**。这是目前已有直接文本依据的统计边界，适用于理解 `744B` 这个数字，但不能自动推广到 `GLM-5.1` / `GLM-5.2` 的统计方式。
 
-- 统计口径不同
+这意味着"数字不同"不一定等于谁真谁假，也可能是：
+
+- 统计口径不同（如是否计入 embedding、lm_head、MTP）
 - 版本对象不同
 - 展示字段被简化或写错
 - 第三方聚合页面存在单位错误
@@ -124,4 +126,5 @@
   - `llm/02-models/open-source-models/glm/temp/1.md`
   - `llm/02-models/open-source-models/glm/temp/2.md`
   - `llm/02-models/open-source-models/glm/temp/glm-5.1-evidence-cleanup.md`
-- This note preserves unresolved parameter wording issues extracted from temp materials so the version-object docs do not overstate unstable numeric details.
+  - `llm/02-models/open-source-models/glm/glm-5-report.md`（arXiv `2602.15763` LaTeX 源）
+- This note preserves unresolved parameter wording issues extracted from temp materials so the version-object docs do not overstate unstable numeric details. The GLM-5 original report now provides a grounded boundary for `744B`: MTP included, embeddings and output layer excluded.
