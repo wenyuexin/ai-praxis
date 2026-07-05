@@ -106,4 +106,4 @@
 - 需要判断一个理论材料究竟应独立起位，还是只做应用层局部背景
 - 需要向其他 AI 说明：为什么“当前论证有用”不等于“当前目录拥有该对象”
 
-如果只是日常判断元信息文件职责，优先回到 `docs/contributing/metadata-files.md`；如果只是想理解元信息文件为什么按问题触发，再优先回到 `docs/contributing/intent/metadata-files.md`。
+如果只是日常判断元信息文件职责，优先回到 `docs/contributing/rules/metadata-files.md`；如果只是想理解元信息文件为什么按问题触发，再优先回到 `docs/contributing/intent/metadata-files.md`。

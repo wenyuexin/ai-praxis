@@ -213,9 +213,9 @@ skill 如果只是经验描述，遵守率通常不稳定。
 - Sources:
   - `../../../backlog.md`
   - `./execution-governance-layers.md`
-  - `../../../../docs/contributing/evidence-and-traceability.md`
-  - `../../../../docs/contributing/documentation-workflow.md`
-  - `../../../../docs/contributing/metadata-files.md`
+  - `../../../../docs/contributing/rules/evidence-and-traceability.md`
+  - `../../../../docs/contributing/rules/documentation-workflow.md`
+  - `../../../../docs/contributing/rules/metadata-files.md`
   - `../../../../docs/capabilities/place.md`
   - `../../../../docs/capabilities/navigate.md`
   - `Instruction Boosting` — https://arxiv.org/html/2510.14842v1

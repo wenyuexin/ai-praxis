@@ -59,8 +59,8 @@
 
 当前承接：
 
-- [`../contributing/documentation-workflow.md`](../contributing/documentation-workflow.md)
-- [`../contributing/metadata-files.md`](../contributing/metadata-files.md)
+- [`../contributing/rules/documentation-workflow.md`](../contributing/rules/documentation-workflow.md)
+- [`../contributing/rules/metadata-files.md`](../contributing/rules/metadata-files.md)
 - [`../capabilities/place.md`](../capabilities/place.md)
 
 当前状态：已有规则承接，并已补出首份独立能力文档；后续仍可继续补强示例、边界案例与用户侧说明。
@@ -78,10 +78,10 @@
 
 当前承接：
 
-- [`../contributing/documentation-workflow.md`](../contributing/documentation-workflow.md)
-- [`../contributing/evidence-and-traceability.md`](../contributing/evidence-and-traceability.md)
-- [`../contributing/evidence-rules.md`](../contributing/evidence-rules.md)
-- [`../contributing/traceability-rules.md`](../contributing/traceability-rules.md)
+- [`../contributing/rules/documentation-workflow.md`](../contributing/rules/documentation-workflow.md)
+- [`../contributing/rules/evidence-and-traceability.md`](../contributing/rules/evidence-and-traceability.md)
+- [`../contributing/rules/evidence-rules.md`](../contributing/rules/evidence-rules.md)
+- [`../contributing/rules/traceability-rules.md`](../contributing/rules/traceability-rules.md)
 - [`../capabilities/ingest.md`](../capabilities/ingest.md)
 
 当前状态：规则层现已收缩为较薄的执行护栏，`Ingest` 已开始承接更完整的分流、吸收与回流能力；后续仍可继续补强输入类型样式、对象目录 `notes/` 作为中间稳定层的判断，以及回流正文前的能力链说明。
@@ -99,10 +99,10 @@
 
 当前承接：
 
-- [`../contributing/readme-rules.md`](../contributing/readme-rules.md)
-- [`../contributing/metadata-files.md`](../contributing/metadata-files.md)
-- [`../contributing/organization-principles.md`](../contributing/organization-principles.md)
-- [`../contributing/structure-refactoring-rules.md`](../contributing/structure-refactoring-rules.md)
+- [`../contributing/rules/readme-rules.md`](../contributing/rules/readme-rules.md)
+- [`../contributing/rules/metadata-files.md`](../contributing/rules/metadata-files.md)
+- [`../contributing/rules/organization-principles.md`](../contributing/rules/organization-principles.md)
+- [`../contributing/rules/structure-refactoring-rules.md`](../contributing/rules/structure-refactoring-rules.md)
 - [`../capabilities/structure.md`](../capabilities/structure.md)
 
 当前状态：已有较完整规则承接，并已补出首份独立能力文档；后续仍可继续补强结构退化样式、分工误判样例与层间协作模式。
@@ -137,8 +137,8 @@
 
 当前承接：
 
-- [`../contributing/structure-refactoring-rules.md`](../contributing/structure-refactoring-rules.md)
-- [`../contributing/meta-rules.md`](../contributing/meta-rules.md)
+- [`../contributing/rules/structure-refactoring-rules.md`](../contributing/rules/structure-refactoring-rules.md)
+- [`../contributing/rules/meta-rules.md`](../contributing/rules/meta-rules.md)
 - [`../contributing/cases/README.md`](../contributing/cases/README.md)
 - [`../capabilities/maintain.md`](../capabilities/maintain.md)
 

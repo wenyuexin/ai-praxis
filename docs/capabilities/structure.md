@@ -4,7 +4,7 @@
 
 它面向普通读者、人类维护者与 AI 协作者，关注的是一种公共能力：**让知识系统持续保持结构清晰的能力**。
 
-它不替代 `docs/contributing/readme-rules.md`、`docs/contributing/metadata-files.md` 或 `docs/contributing/organization-principles.md` 的具体规则细则。本文只把 Structure 这项能力单独显式化，避免它长期只散落在 README 规则、元信息文件规则和结构原则里。
+它不替代 `docs/contributing/rules/readme-rules.md`、`docs/contributing/rules/metadata-files.md` 或 `docs/contributing/rules/organization-principles.md` 的具体规则细则。本文只把 Structure 这项能力单独显式化，避免它长期只散落在 README 规则、元信息文件规则和结构原则里。
 
 ## 1. Structure 不是一次重构，也不是单篇文档写法
 
@@ -203,9 +203,9 @@ README 变详细，常常只是说明它已经开始吞并导航、结构或路�
 
 如果你当前要做的是：
 
-- 想判断目录为什么这样组织、长期是否合理：优先读 [`../contributing/organization-principles.md`](../contributing/organization-principles.md)
-- 想看 README 的具体写法和触发条件：优先读 [`../contributing/readme-rules.md`](../contributing/readme-rules.md)
-- 想看各类元信息文件的完整职责边界：读 [`../contributing/metadata-files.md`](../contributing/metadata-files.md)
+- 想判断目录为什么这样组织、长期是否合理：优先读 [`../contributing/rules/organization-principles.md`](../contributing/rules/organization-principles.md)
+- 想看 README 的具体写法和触发条件：优先读 [`../contributing/rules/readme-rules.md`](../contributing/rules/readme-rules.md)
+- 想看各类元信息文件的完整职责边界：读 [`../contributing/rules/metadata-files.md`](../contributing/rules/metadata-files.md)
 - 想理解为什么这些文件不能重新混写成几个万能入口：从本文开始
 
 ## 13. 本文的边界

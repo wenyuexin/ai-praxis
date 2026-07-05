@@ -4,7 +4,7 @@
 
 它面向普通读者、人类维护者与 AI 协作者，关注的是一种公共能力：**系统进入长期运行阶段后，如何持续校准而不把维护动作混成一次次局部补丁。**
 
-它不替代 `docs/contributing/meta-rules.md` 的规则维护约束，也不替代 `docs/contributing/structure-refactoring-rules.md` 的低风险重构执行细则。本文只把 Maintain 这项能力单独显式化，避免它长期分散在规则、案例和设计讨论里。
+它不替代 `docs/contributing/rules/meta-rules.md` 的规则维护约束，也不替代 `docs/contributing/rules/structure-refactoring-rules.md` 的低风险重构执行细则。本文只把 Maintain 这项能力单独显式化，避免它长期分散在规则、案例和设计讨论里。
 
 ## 1. Maintain 不是日常写作，也不是单次重构
 
@@ -370,8 +370,8 @@ Maintain 的难点，不是单个对象怎么改，而是它们之间会相互�
 
 如果你当前要做的是：
 
-- 判断什么时候该改规则：优先读 [`../contributing/meta-rules.md`](../contributing/meta-rules.md)
-- 已经决定做结构重构，想看执行顺序：优先读 [`../contributing/structure-refactoring-rules.md`](../contributing/structure-refactoring-rules.md)
+- 判断什么时候该改规则：优先读 [`../contributing/rules/meta-rules.md`](../contributing/rules/meta-rules.md)
+- 已经决定做结构重构，想看执行顺序：优先读 [`../contributing/rules/structure-refactoring-rules.md`](../contributing/rules/structure-refactoring-rules.md)
 - 想复核某个案例是否仍然成立：读 [`../contributing/cases/README.md`](../contributing/cases/README.md)
 - 想理解长期维护为什么不能只靠局部修补：从本文开始
 

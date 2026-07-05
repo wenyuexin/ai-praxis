@@ -2,7 +2,7 @@
 
 本文件定义仓库内不同类型文档之间如何建立引用关系、如何保持边界，以及什么时候应链接、什么时候应把内容留在原文档或转移到其他承接位。
 
-相关入口：[`CONTRIBUTING.md`](../../CONTRIBUTING.md) / [`docs/contributing/README.md`](./README.md) / [`仓库文档功能地图`](../repo-map.md) / [`元信息文件模型`](./metadata-files.md) / [`研究产物组织规则`](./research-artifacts.md) / [`README 规则`](./readme-rules.md)。
+相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`docs/contributing/README.md`](../README.md) / [`仓库文档功能地图`](../repo-map.md) / [`元信息文件模型`](./metadata-files.md) / [`研究产物组织规则`](./research-artifacts.md) / [`README 规则`](./readme-rules.md)。
 
 ## 1. 适用范围
 

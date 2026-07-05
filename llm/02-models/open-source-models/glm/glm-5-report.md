@@ -559,8 +559,8 @@ CC-Bench-V2 补上了从"benchmark 能力"到"真实 agent 工程执行"之间�
 - Sources:
   - https://arxiv.org/abs/2602.15763
   - https://arxiv.org/html/2602.15763v2
-  - `llm/02-models/open-source-models/glm/temp/arXiv-2602.15763v2.tar.gz`（LaTeX source，用于补全 HTML 版本中不便直接提取的公式、表格与训练细节）
-- Trace: This document is built from the original GLM-5 arXiv paper treated as a report object. Technical details are extracted directly from the paper text and LaTeX source only; the latest two rounds added DSA training/RL details, mid-training stage/data details, post-training formulas and teacher setup, exact CC-Bench-V2 and ARC benchmark scores, plus the asynchronous Agentic RL objective, TITO, token-level clipping, off-policy filtering, and environment-scaling details without adding external interpretation.
+  - https://arxiv.org/e-print/2602.15763
+- Trace: Technical details extracted from arXiv HTML and LaTeX source package. The LaTeX source was used to recover formulas, architecture spec tables, and training hyperparameters not directly extractable from the HTML rendering.
 - Needs:
   - DSA indexer 的 relevance scoring 公式级细节；当前原报告只进一步暴露了 `score calculation + ReLU + TopK` 的 fused-kernel 线索
   - Explicit Agentic RL clipping hyperparameters if the original report states them elsewhere

@@ -2,7 +2,7 @@
 
 本文件定义子领域研究与具体案例研究的职责边界、案例研究内部的三类产物（正文、机制专题、辅助材料）的组织方式，以及研究辅助材料的命名和使用细则。
 
-相关入口：[`CONTRIBUTING.md`](../../CONTRIBUTING.md) / [`docs/contributing/README.md`](./README.md) / [`元信息文件模型`](./metadata-files.md) / [`材料处理与文档增改流程`](./documentation-workflow.md)。
+相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`docs/contributing/README.md`](../README.md) / [`元信息文件模型`](./metadata-files.md) / [`材料处理与文档增改流程`](./documentation-workflow.md)。
 
 ## 1. 适用范围
 

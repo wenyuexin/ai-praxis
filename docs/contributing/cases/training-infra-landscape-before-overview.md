@@ -101,7 +101,7 @@ README 只需要让读者先判断这个目录是否相关；`landscape.md` 则�
 
 ## 8. 这个案例对规则系统的直接启发
 
-本案例的核心价值，不是重复主规则或 `intent/` 中已经给出的时机模型，而是提供一个可观察的真实样本，说明“结构支架先成熟”在仓库里会长成什么样。相关结论应回到 `docs/contributing/metadata-files.md` §2.2 / §4.4，以及 `docs/contributing/intent/metadata-files.md` §10 / §12 统一理解。
+本案例的核心价值，不是重复主规则或 `intent/` 中已经给出的时机模型，而是提供一个可观察的真实样本，说明“结构支架先成熟”在仓库里会长成什么样。相关结论应回到 `docs/contributing/rules/metadata-files.md` §2.2 / §4.4，以及 `docs/contributing/intent/metadata-files.md` §10 / §12 统一理解。
 
 它对应的是一种很典型的研究建设流程：
 
@@ -119,4 +119,4 @@ README 只需要让读者先判断这个目录是否相关；`landscape.md` 则�
 - 需要复盘为什么某些目录不该急着补 `overview.md`
 - 需要给其他 AI 一个真实样本，说明 `landscape-before-overview` 不是纸上规则
 
-如果只是日常判断元信息文件职责，优先回到 `docs/contributing/metadata-files.md`；如果只是想理解这些职责为什么这样定义，再优先回到 `docs/contributing/intent/metadata-files.md`。
+如果只是日常判断元信息文件职责，优先回到 `docs/contributing/rules/metadata-files.md`；如果只是想理解这些职责为什么这样定义，再优先回到 `docs/contributing/intent/metadata-files.md`。

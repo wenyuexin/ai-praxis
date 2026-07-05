@@ -2,7 +2,7 @@
 
 本文件定义当前仓库的知识可信度规则。
 
-相关入口：[`CONTRIBUTING.md`](../../CONTRIBUTING.md) / [`docs/contributing/README.md`](./README.md) / [`Evidence 与 Traceability 工作流`](./evidence-and-traceability.md) / [`Traceability 规则`](./traceability-rules.md)。
+相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`docs/contributing/README.md`](../README.md) / [`Evidence 与 Traceability 工作流`](./evidence-and-traceability.md) / [`Traceability 规则`](./traceability-rules.md)。
 
 Evidence 负责回答：**这条知识凭什么成立？**
 

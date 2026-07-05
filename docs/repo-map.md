@@ -103,7 +103,7 @@
 - `roadmap.md`
 - `conflict.md`
 
-它们回答的问题不是同一个，因此不应机械补齐，也不应随意混写。详细边界见 [`contributing/metadata-files.md`](./contributing/metadata-files.md)。
+它们回答的问题不是同一个，因此不应机械补齐，也不应随意混写。详细边界见 [`contributing/rules/metadata-files.md`](./contributing/rules/metadata-files.md)。
 
 对普通读者来说，可以先这样理解：
 
@@ -161,7 +161,7 @@
 - 分流
 - 等待回流
 
-而不在于直接成为稳定正文。详细流程见 [`contributing/documentation-workflow.md`](./contributing/documentation-workflow.md)。
+而不在于直接成为稳定正文。详细流程见 [`contributing/rules/documentation-workflow.md`](./contributing/rules/documentation-workflow.md)。
 
 ## 3. 五类文档之间的关系
 
@@ -260,10 +260,10 @@
 
 本文件只负责“仓库里有哪些文档类型”的总览，不直接改写已有规则文件中的细分边界：
 
-- 元信息文件的细则，见 [`contributing/metadata-files.md`](./contributing/metadata-files.md)
-- README 的写法与导航边界，见 [`contributing/readme-rules.md`](./contributing/readme-rules.md)
-- 研究对象、案例研究与辅助材料组织，见 [`contributing/research-artifacts.md`](./contributing/research-artifacts.md)
-- 外部材料如何分流与回流，见 [`contributing/documentation-workflow.md`](./contributing/documentation-workflow.md)
-- 为什么仓库要这样分层组织，见 [`contributing/organization-principles.md`](./contributing/organization-principles.md)
+- 元信息文件的细则，见 [`contributing/rules/metadata-files.md`](./contributing/rules/metadata-files.md)
+- README 的写法与导航边界，见 [`contributing/rules/readme-rules.md`](./contributing/rules/readme-rules.md)
+- 研究对象、案例研究与辅助材料组织，见 [`contributing/rules/research-artifacts.md`](./contributing/rules/research-artifacts.md)
+- 外部材料如何分流与回流，见 [`contributing/rules/documentation-workflow.md`](./contributing/rules/documentation-workflow.md)
+- 为什么仓库要这样分层组织，见 [`contributing/rules/organization-principles.md`](./contributing/rules/organization-principles.md)
 
 这篇文档的作用，是在读者进入这些细则之前，先给出一张足够稳定的文档功能地图。

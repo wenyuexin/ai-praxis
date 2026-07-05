@@ -20,24 +20,24 @@
 
 能力文档负责回答“这套系统怎么找、怎么放、怎么吸收”；具体 stop-line、文件职责与执行细则仍回到 `docs/contributing/`。如果你不确定该先走哪条路由，默认先走本节的能力路由，再回到下面的规则路由。
 
-- 如果你在**研究论文、开源项目、产品、benchmark 或具体案例**：读 [`research-artifacts.md`](./docs/contributing/research-artifacts.md)
-- 如果你在**新建/改名/迁移目录**：读 [`structure-refactoring-rules.md`](./docs/contributing/structure-refactoring-rules.md)
-- 如果你在**判断 `README.md` / `index.md` / `overview.md` / `landscape.md` / `backlog.md` / `candidates.md` / `conflict.md` 该如何分工或落位**：读 [`metadata-files.md`](./docs/contributing/metadata-files.md)
-- 如果你在**修改 README 本身的写法、出现条件、入口说明或导航边界**：读 [`readme-rules.md`](./docs/contributing/readme-rules.md)
-- 如果你在**修改 `index.md` 本身的结构、粒度、父子层导航方式或 stop-line**：读 [`index-rules.md`](./docs/contributing/index-rules.md)
-- 如果你在**修改目录树、查找导航，或判断结构展示是否应从 README 迁到 `index.md`**：先读 [`metadata-files.md`](./docs/contributing/metadata-files.md)；涉及 `index.md` 的专项细则时继续读 [`index-rules.md`](./docs/contributing/index-rules.md)；README 写法问题再按需读 [`readme-rules.md`](./docs/contributing/readme-rules.md)
-- 如果你在**处理 temp / 外部调研 / 回流正文**：读 [`documentation-workflow.md`](./docs/contributing/documentation-workflow.md)
-- 如果你在**讨论结构是否长期合理**：读 [`organization-principles.md`](./docs/contributing/organization-principles.md)
-- 如果你在**标注 Evidence 或 Trace**：先读 [`evidence-and-traceability.md`](./docs/contributing/evidence-and-traceability.md)；需要细则时，再读 [`evidence-rules.md`](./docs/contributing/evidence-rules.md) 和 [`traceability-rules.md`](./docs/contributing/traceability-rules.md)
+- 如果你在**研究论文、开源项目、产品、benchmark 或具体案例**：读 [`research-artifacts.md`](./docs/contributing/rules/research-artifacts.md)
+- 如果你在**新建/改名/迁移目录**：读 [`structure-refactoring-rules.md`](./docs/contributing/rules/structure-refactoring-rules.md)
+- 如果你在**判断 `README.md` / `index.md` / `overview.md` / `landscape.md` / `backlog.md` / `candidates.md` / `conflict.md` 该如何分工或落位**：读 [`metadata-files.md`](./docs/contributing/rules/metadata-files.md)
+- 如果你在**修改 README 本身的写法、出现条件、入口说明或导航边界**：读 [`readme-rules.md`](./docs/contributing/rules/readme-rules.md)
+- 如果你在**修改 `index.md` 本身的结构、粒度、父子层导航方式或 stop-line**：读 [`index-rules.md`](./docs/contributing/rules/index-rules.md)
+- 如果你在**修改目录树、查找导航，或判断结构展示是否应从 README 迁到 `index.md`**：先读 [`metadata-files.md`](./docs/contributing/rules/metadata-files.md)；涉及 `index.md` 的专项细则时继续读 [`index-rules.md`](./docs/contributing/rules/index-rules.md)；README 写法问题再按需读 [`readme-rules.md`](./docs/contributing/rules/readme-rules.md)
+- 如果你在**处理 temp / 外部调研 / 回流正文**：读 [`documentation-workflow.md`](./docs/contributing/rules/documentation-workflow.md)
+- 如果你在**讨论结构是否长期合理**：读 [`organization-principles.md`](./docs/contributing/rules/organization-principles.md)
+- 如果你在**标注 Evidence 或 Trace**：先读 [`evidence-and-traceability.md`](./docs/contributing/rules/evidence-and-traceability.md)；需要细则时，再读 [`evidence-rules.md`](./docs/contributing/rules/evidence-rules.md) 和 [`traceability-rules.md`](./docs/contributing/rules/traceability-rules.md)
 
 ## 3. 硬约束
 
 - 知识正文放主题目录，治理规则放 `docs/contributing/`，模板放 `docs/templates/`，测试材料放 `docs/test/`；不要把仓库建设约束写进知识正文目录，也不要把具体领域知识写进 `docs/contributing/`。
-- 处理新材料时，按这个顺序判断：材料类型 → Evidence 状态 → 目标落位 → 是否需要 Trace；拿不准时先写元信息文件或保留在 `temp/`，不要抢写正文。细则见 [`documentation-workflow.md`](./docs/contributing/documentation-workflow.md)。
-- 外部 AI 调研、网页搜索、博客摘录、issue/PR 讨论都只是上游输入，不要直接写成主线结论；回流时必须说明 Evidence 状态和 Trace；模型综合判断默认标为 `Inferred` 或 `Unverified`，不要写成已验证事实。细则见 [`evidence-and-traceability.md`](./docs/contributing/evidence-and-traceability.md)。
-- README 只做目录说明与最小入口分流，不列出元信息文件；目录结构与查找导航优先由 `index.md` 承接。细则见 [`readme-rules.md`](./docs/contributing/readme-rules.md)。
-- `candidates.md`、`roadmap.md` 按需创建；`conflict.md` 仅在发现冲突时创建。细则见 [`metadata-files.md`](./docs/contributing/metadata-files.md)。
-- 只改与当前任务直接相关的文件；文档重组时先移动，再小改；删除前先确认内容已迁移或确实不再需要；不要无任务依据地保留临时反馈文件；不要主动创建新规则文档。细则见 [`structure-refactoring-rules.md`](./docs/contributing/structure-refactoring-rules.md)。
+- 处理新材料时，按这个顺序判断：材料类型 → Evidence 状态 → 目标落位 → 是否需要 Trace；拿不准时先写元信息文件或保留在 `temp/`，不要抢写正文。细则见 [`documentation-workflow.md`](./docs/contributing/rules/documentation-workflow.md)。
+- 外部 AI 调研、网页搜索、博客摘录、issue/PR 讨论都只是上游输入，不要直接写成主线结论；回流时必须说明 Evidence 状态和 Trace；模型综合判断默认标为 `Inferred` 或 `Unverified`，不要写成已验证事实。细则见 [`evidence-and-traceability.md`](./docs/contributing/rules/evidence-and-traceability.md)。
+- README 只做目录说明与最小入口分流，不列出元信息文件；目录结构与查找导航优先由 `index.md` 承接。细则见 [`readme-rules.md`](./docs/contributing/rules/readme-rules.md)。
+- `candidates.md`、`roadmap.md` 按需创建；`conflict.md` 仅在发现冲突时创建。细则见 [`metadata-files.md`](./docs/contributing/rules/metadata-files.md)。
+- 只改与当前任务直接相关的文件；文档重组时先移动，再小改；删除前先确认内容已迁移或确实不再需要；不要无任务依据地保留临时反馈文件；不要主动创建新规则文档。细则见 [`structure-refactoring-rules.md`](./docs/contributing/rules/structure-refactoring-rules.md)。
 - 如果用户要求和仓库规则冲突，先说明冲突点；交付时再说明偏离了哪条规则。
 
 ## 4. 自检

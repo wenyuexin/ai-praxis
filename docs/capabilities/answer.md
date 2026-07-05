@@ -4,7 +4,7 @@
 
 它面向普通读者、人类维护者与 AI 协作者，关注的是一种公共能力：**基于已有知识进行回答与解释的能力**。
 
-它不替代 `docs/contributing/evidence-and-traceability.md` 的组合工作流，也不替代 AI 协作者在 `AGENTS.md` 与 `CONTRIBUTING.md` 下必须遵守的行为约束。本文只把 Answer 这项能力单独显式化，避免它长期只停留在行为提醒层，而没有形成公共说明。
+它不替代 `docs/contributing/rules/evidence-and-traceability.md` 的组合工作流，也不替代 AI 协作者在 `AGENTS.md` 与 `CONTRIBUTING.md` 下必须遵守的行为约束。本文只把 Answer 这项能力单独显式化，避免它长期只停留在行为提醒层，而没有形成公共说明。
 
 ## 1. Answer 不是写作，也不是搜索本身
 

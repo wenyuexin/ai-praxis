@@ -2,7 +2,7 @@
 
 本文回答：**维护 `docs/capabilities/` 这一层时，哪些内容属于 capability layer，哪些不属于；什么时候该补能力文档，什么时候应回到 design layer 或 rules layer。**
 
-它的作用类似 `docs/contributing/meta-rules.md` 对规则层的约束，但对象不同：这里约束的是 capability layer 的边界、增长方式与联动更新面，而不是具体维护规则。
+它的作用类似 `docs/contributing/rules/meta-rules.md` 对规则层的约束，但对象不同：这里约束的是 capability layer 的边界、增长方式与联动更新面，而不是具体维护规则。
 
 ## 1. 先守住 capability layer 的职责
 

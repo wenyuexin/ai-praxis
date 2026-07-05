@@ -181,13 +181,13 @@
 
 如果你已经找到目标区域，下一步需要决定“写什么文件”，应回到维护规则层：
 
-- 文档处理流程：`docs/contributing/documentation-workflow.md`
-- 元信息文件模型：`docs/contributing/metadata-files.md`
-- README 规则：`docs/contributing/readme-rules.md`
+- 文档处理流程：`docs/contributing/rules/documentation-workflow.md`
+- 元信息文件模型：`docs/contributing/rules/metadata-files.md`
+- README 规则：`docs/contributing/rules/readme-rules.md`
 
 ## 12. 阅读建议
 
 - 想理解仓库为什么这样设计：读 `docs/design/system-design.md`
 - 想找规则或治理文档：读 `docs/contributing/README.md`
-- 想做具体文档修改：读 `docs/contributing/documentation-workflow.md`
-- 想判断某种元信息文件是否该出现：读 `docs/contributing/metadata-files.md`
+- 想做具体文档修改：读 `docs/contributing/rules/documentation-workflow.md`
+- 想判断某种元信息文件是否该出现：读 `docs/contributing/rules/metadata-files.md`

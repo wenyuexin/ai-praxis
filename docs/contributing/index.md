@@ -10,36 +10,39 @@
 docs/contributing/
 ├── README.md
 ├── index.md
-├── meta-rules.md
-├── documentation-workflow.md
-├── research-artifacts.md
-├── metadata-files.md
-├── document-linking-rules.md
-├── readme-rules.md
-├── index-rules.md
-├── organization-principles.md
-├── structure-refactoring-rules.md
-├── evidence-and-traceability.md
-├── evidence-rules.md
-├── traceability-rules.md
+├── rules/
+│   ├── meta-rules.md
+│   ├── documentation-workflow.md
+│   ├── research-artifacts.md
+│   ├── metadata-files.md
+│   ├── document-linking-rules.md
+│   ├── readme-rules.md
+│   ├── index-rules.md
+│   ├── organization-principles.md
+│   ├── structure-refactoring-rules.md
+│   ├── evidence-and-traceability.md
+│   ├── evidence-rules.md
+│   └── traceability-rules.md
 ├── intent/
-└── cases/
+├── cases/
+└── incidents/
 ```
 
 ## 按任务找入口
 
-- **我现在要处理新材料、外部调研、`temp/` 内容或正文回流**：读 [`documentation-workflow.md`](./documentation-workflow.md)
-- **我现在要判断 `README.md` / `index.md` / `overview.md` / `landscape.md` / `backlog.md` / `candidates.md` 等元信息文件该怎么分工**：读 [`metadata-files.md`](./metadata-files.md)
-- **我现在要修改 README 本身的写法、出现条件、入口说明或导航边界**：读 [`readme-rules.md`](./readme-rules.md)
-- **我现在要修改 `index.md` 本身的结构、粒度、父子层导航方式或 stop-line**：读 [`index-rules.md`](./index-rules.md)
-- **我现在要修改目录树、查找导航，或判断结构展示是否应从 README 迁到 `index.md`**：先读 [`metadata-files.md`](./metadata-files.md)；涉及 `index.md` 的专项细则时继续读 [`index-rules.md`](./index-rules.md)；README 写法问题再回到 [`readme-rules.md`](./readme-rules.md)
-- **我现在要优化搜索 / 导航体验，或判断目录导航与定向搜索应如何配合**：先读 [`metadata-files.md`](./metadata-files.md) 与 [`index-rules.md`](./index-rules.md)；需要能力层说明时继续读 [`../capabilities/navigate.md`](../capabilities/navigate.md)
-- **我现在要讨论结构是否长期合理、分类轴是否该调整**：读 [`organization-principles.md`](./organization-principles.md)
-- **我现在已经决定做目录迁移、结构收敛或重构执行**：读 [`structure-refactoring-rules.md`](./structure-refactoring-rules.md)
-- **我现在要标注 Evidence / Traceability，或判断一条说法该用什么证据状态**：先读 [`evidence-and-traceability.md`](./evidence-and-traceability.md)
-- **我现在要处理研究对象、案例研究、辅助材料如何组织**：读 [`research-artifacts.md`](./research-artifacts.md)
-- **我现在要判断不同类型文档之间该如何引用、链接、回写或保持边界**：读 [`document-linking-rules.md`](./document-linking-rules.md)
-- **我现在要判断规则本身该不该改、怎么最小改动**：读 [`meta-rules.md`](./meta-rules.md)
+- **我现在要处理新材料、外部调研、`temp/` 内容或正文回流**：读 [`documentation-workflow.md`](./rules/documentation-workflow.md)
+- **我现在要判断 `README.md` / `index.md` / `overview.md` / `landscape.md` / `backlog.md` / `candidates.md` 等元信息文件该怎么分工**：读 [`metadata-files.md`](./rules/metadata-files.md)
+- **我现在要修改 README 本身的写法、出现条件、入口说明或导航边界**：读 [`readme-rules.md`](./rules/readme-rules.md)
+- **我现在要修改 `index.md` 本身的结构、粒度、父子层导航方式或 stop-line**：读 [`index-rules.md`](./rules/index-rules.md)
+- **我现在要修改目录树、查找导航，或判断结构展示是否应从 README 迁到 `index.md`**：先读 [`metadata-files.md`](./rules/metadata-files.md)；涉及 `index.md` 的专项细则时继续读 [`index-rules.md`](./rules/index-rules.md)；README 写法问题再回到 [`readme-rules.md`](./rules/readme-rules.md)
+- **我现在要优化搜索 / 导航体验，或判断目录导航与定向搜索应如何配合**：先读 [`metadata-files.md`](./rules/metadata-files.md) 与 [`index-rules.md`](./rules/index-rules.md)；需要能力层说明时继续读 [`../capabilities/navigate.md`](../capabilities/navigate.md)
+- **我现在要讨论结构是否长期合理、分类轴是否该调整**：读 [`organization-principles.md`](./rules/organization-principles.md)
+- **我现在已经决定做目录迁移、结构收敛或重构执行**：读 [`structure-refactoring-rules.md`](./rules/structure-refactoring-rules.md)
+- **我现在要标注 Evidence / Traceability，或判断一条说法该用什么证据状态**：先读 [`evidence-and-traceability.md`](./rules/evidence-and-traceability.md)
+- **我现在要处理研究对象、案例研究、辅助材料如何组织**：读 [`research-artifacts.md`](./rules/research-artifacts.md)
+- **我现在要判断不同类型文档之间该如何引用、链接、回写或保持边界**：读 [`document-linking-rules.md`](./rules/document-linking-rules.md)
+- **我现在要判断规则本身该不该改、怎么最小改动**：先读 [`meta-rules.md`](./rules/meta-rules.md) 和 [`intent/meta-rules.md`](./intent/meta-rules.md)
+- **我想查某个治理问题是否出现过、是否有可对照的轨迹**：读 [`incidents/README.md`](./incidents/README.md)
 
 ## 何时进入 `intent/` 与 `cases/`
 
@@ -76,18 +79,18 @@ docs/contributing/
 
 ## 已稳定的专题规则
 
-- [`meta-rules.md`](./meta-rules.md)：规则如何修改
-- [`documentation-workflow.md`](./documentation-workflow.md)：材料处理、分流、落位与回流流程
-- [`research-artifacts.md`](./research-artifacts.md)：研究产物组织方式
-- [`metadata-files.md`](./metadata-files.md)：元信息文件职责边界
-- [`document-linking-rules.md`](./document-linking-rules.md)：文档引用、链接、回写与边界规则
-- [`readme-rules.md`](./readme-rules.md)：README 出现条件、展开深度与导航边界
-- [`index-rules.md`](./index-rules.md)：`index.md` 的触发条件、结构模型与导航细则
-- [`organization-principles.md`](./organization-principles.md)：知识树设计与长期组织原则
-- [`structure-refactoring-rules.md`](./structure-refactoring-rules.md)：目录重构与结构演进规则
-- [`evidence-and-traceability.md`](./evidence-and-traceability.md)：Evidence + Traceability 组合入口
-- [`evidence-rules.md`](./evidence-rules.md)：Evidence 规则
-- [`traceability-rules.md`](./traceability-rules.md)：Traceability 规则
+- [`meta-rules.md`](./rules/meta-rules.md)：规则如何修改
+- [`documentation-workflow.md`](./rules/documentation-workflow.md)：材料处理、分流、落位与回流流程
+- [`research-artifacts.md`](./rules/research-artifacts.md)：研究产物组织方式
+- [`metadata-files.md`](./rules/metadata-files.md)：元信息文件职责边界
+- [`document-linking-rules.md`](./rules/document-linking-rules.md)：文档引用、链接、回写与边界规则
+- [`readme-rules.md`](./rules/readme-rules.md)：README 出现条件、展开深度与导航边界
+- [`index-rules.md`](./rules/index-rules.md)：`index.md` 的触发条件、结构模型与导航细则
+- [`organization-principles.md`](./rules/organization-principles.md)：知识树设计与长期组织原则
+- [`structure-refactoring-rules.md`](./rules/structure-refactoring-rules.md)：目录重构与结构演进规则
+- [`evidence-and-traceability.md`](./rules/evidence-and-traceability.md)：Evidence + Traceability 组合入口
+- [`evidence-rules.md`](./rules/evidence-rules.md)：Evidence 规则
+- [`traceability-rules.md`](./rules/traceability-rules.md)：Traceability 规则
 
 ## 最小分工
 

@@ -2,7 +2,7 @@
 
 本文件定义仓库中 README 的出现条件、说明职责、导航边界和类型化结构建议。
 
-相关入口：[`CONTRIBUTING.md`](../../CONTRIBUTING.md) / [`docs/contributing/README.md`](./README.md) / [`元信息文件模型`](./metadata-files.md) / [`Index 规则`](./index-rules.md) / [`Evidence 与 Traceability 工作流`](./evidence-and-traceability.md)。
+相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`docs/contributing/README.md`](../README.md) / [`元信息文件模型`](./metadata-files.md) / [`Index 规则`](./index-rules.md) / [`Evidence 与 Traceability 工作流`](./evidence-and-traceability.md)。
 
 ## 1. README 的说明职责
 

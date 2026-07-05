@@ -2,7 +2,7 @@
 
 本文件定义仓库中元信息文件的职责边界、出现条件和最小使用方式。
 
-相关入口：[`CONTRIBUTING.md`](../../CONTRIBUTING.md) / [`docs/contributing/README.md`](./README.md) / [`README 规则`](./readme-rules.md) / [`Index 规则`](./index-rules.md) / [`Evidence 规则`](./evidence-rules.md) / [`Traceability 规则`](./traceability-rules.md)。如需理解这些边界为什么这样设计、最容易被误读成什么，读 [`intent/metadata-files.md`](./intent/metadata-files.md)。
+相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`docs/contributing/README.md`](../README.md) / [`README 规则`](./readme-rules.md) / [`Index 规则`](./index-rules.md) / [`Evidence 规则`](./evidence-rules.md) / [`Traceability 规则`](./traceability-rules.md)。如需理解这些边界为什么这样设计、最容易被误读成什么，读 [`intent/metadata-files.md`](../intent/metadata-files.md)。
 
 元信息文件不是知识正文，而是帮助读者和维护者完成说明、导航、理解、结构、推进、选题、路径、校验等认知任务的辅助文件。
 

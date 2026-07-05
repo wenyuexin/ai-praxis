@@ -1,6 +1,6 @@
 # Overview / Landscape 的设计意图
 
-本文件不重复 `../metadata-files.md` 的条文，而是解释：**为什么这个仓库需要同时保留 `overview.md` 与 `landscape.md` 两种不同职责的文档，以及为什么 AI 特别容易把它们误写成一组对称、通用的文件类型。**
+本文件不重复 `../rules/metadata-files.md` 的条文，而是解释：**为什么这个仓库需要同时保留 `overview.md` 与 `landscape.md` 两种不同职责的文档，以及为什么 AI 特别容易把它们误写成一组对称、通用的文件类型。**
 
 ## 1. 这个文件回答什么问题
 

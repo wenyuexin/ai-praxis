@@ -4,7 +4,7 @@
 
 它面向普通读者、人类维护者与 AI 协作者，关注的是一种公共能力：**输入进入系统时的分流、吸收与回流能力**。
 
-它不替代 [`docs/contributing/documentation-workflow.md`](../contributing/documentation-workflow.md) 的规则化执行入口，也不替代 Evidence / Traceability 规则的原子定义。本文只把 `Ingest` 这项能力单独显式化，避免它长期分散在流程规则、案例结构规则和证据规则里。
+它不替代 [`docs/contributing/rules/documentation-workflow.md`](../contributing/rules/documentation-workflow.md) 的规则化执行入口，也不替代 Evidence / Traceability 规则的原子定义。本文只把 `Ingest` 这项能力单独显式化，避免它长期分散在流程规则、案例结构规则和证据规则里。
 
 ## 1. Ingest 不是写作，而是写作前后的吸收动作
 
@@ -262,10 +262,10 @@
 
 如果你当前要做的是：
 
-- 实际执行新增、迁移、修改流程：优先读 [`../contributing/documentation-workflow.md`](../contributing/documentation-workflow.md)
-- 判断具体的 Evidence / Trace 字段怎么写：优先读 [`../contributing/evidence-and-traceability.md`](../contributing/evidence-and-traceability.md)
+- 实际执行新增、迁移、修改流程：优先读 [`../contributing/rules/documentation-workflow.md`](../contributing/rules/documentation-workflow.md)
+- 判断具体的 Evidence / Trace 字段怎么写：优先读 [`../contributing/rules/evidence-and-traceability.md`](../contributing/rules/evidence-and-traceability.md)
 - 已经找到稳定区域，想判断该写什么文件：读 [`place.md`](./place.md)
-- 想理解对象目录里的 `notes/` / 正文 / 机制专题怎么分工：读 [`../contributing/research-artifacts.md`](../contributing/research-artifacts.md)
+- 想理解对象目录里的 `notes/` / 正文 / 机制专题怎么分工：读 [`../contributing/rules/research-artifacts.md`](../contributing/rules/research-artifacts.md)
 - 想理解为什么新输入不能直接跳过分流写成正文：从本文开始
 
 ## 15. 本文的边界

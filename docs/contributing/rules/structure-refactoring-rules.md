@@ -4,7 +4,7 @@
 
 它关注的问题不是“新材料写到哪里”，而是：**当既有目录结构已经形成后，如何低风险地重构、改名、收敛导航，并把过程中的结构性判断沉淀为可复用规则。**
 
-相关入口：[`CONTRIBUTING.md`](../../CONTRIBUTING.md) / [`README 规则`](./readme-rules.md) / [`元信息文件模型`](./metadata-files.md) / [`材料处理与文档增改流程`](./documentation-workflow.md)
+相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`README 规则`](./readme-rules.md) / [`元信息文件模型`](./metadata-files.md) / [`材料处理与文档增改流程`](./documentation-workflow.md)
 
 ## 1. 适用范围
 
@@ -38,7 +38,7 @@
 
 ### 3.1 先移动，再小改
 
-目录重构默认遵循 [`AGENTS.md`](../../AGENTS.md) 的“先移动再小改”原则。具体到结构重构场景，推荐按以下顺序执行：
+目录重构默认遵循 [`AGENTS.md`](../../../AGENTS.md) 的“先移动再小改”原则。具体到结构重构场景，推荐按以下顺序执行：
 
 1. 先重命名或移动原目录
 2. 再同步更新 README、overview、backlog、conflict 和相对链接

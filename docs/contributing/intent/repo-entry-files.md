@@ -15,7 +15,7 @@
 
 本文件只解释这层分工原意，不替代具体规则：
 
-- 改规则前的工作流，见 [`../meta-rules.md`](../meta-rules.md)
+- 改规则前的工作流，见 [`../rules/meta-rules.md`](../rules/meta-rules.md)
 - 规则为什么需要 `intent/` 解释层，见 [`meta-rules.md`](./meta-rules.md)
 
 ## 2. 为什么 `AGENTS.md` 与 `CONTRIBUTING.md` 不合并
@@ -80,7 +80,7 @@
 
 这些内容更适合放在：
 
-- `docs/contributing/meta-rules.md`
+- `docs/contributing/rules/meta-rules.md`
 - `docs/contributing/intent/*.md`
 - 必要时的 `cases/` 或临时交接材料
 
@@ -105,7 +105,7 @@
 默认顺序应是：
 
 1. 先判断问题是否只是下层规则或正文分工问题
-2. 若涉及修改规则或判断是否改规则，先读 [`../meta-rules.md`](../meta-rules.md)；若准备做重大规则变更，先重新通读一遍，不要依赖长上下文中的记忆
+2. 若涉及修改规则或判断是否改规则，先读 [`../rules/meta-rules.md`](../rules/meta-rules.md)；若准备做重大规则变更，先重新通读一遍，不要依赖长上下文中的记忆
 3. 只有当问题稳定属于入口层误导时，才回到 `AGENTS.md` 或 `CONTRIBUTING.md`
 
 ## 5. 为什么低频维护路由只应最小进入顶层
@@ -128,7 +128,7 @@
 
 三者的关系应理解为：
 
-- [`../meta-rules.md`](../meta-rules.md)：什么时候改规则、规则应该怎么改
+- [`../rules/meta-rules.md`](../rules/meta-rules.md)：什么时候改规则、规则应该怎么改
 - [`meta-rules.md`](./meta-rules.md)：为什么需要一层专门处理“规则如何维护”的规则与解释
 - `repo-entry-files.md`：为什么仓库顶层入口文件要分层存在、各自承接什么、修改时应优先判断哪一层；以及什么时候入口层应直接暴露 capability 的最短触发路由
 

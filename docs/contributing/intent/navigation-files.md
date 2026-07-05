@@ -1,6 +1,6 @@
 # 导航入口文件的设计意图
 
-本文件不重复 `../metadata-files.md`、`../readme-rules.md` 或 `../index-rules.md` 的条文，而是解释：**为什么这个仓库要把 `README.md`、`index.md`、`roadmap.md` 这组三个入口/导航文件拆开，以及为什么 `index.md` 不能继续退回 README 的附属物。**
+本文件不重复 `../rules/metadata-files.md`、`../rules/readme-rules.md` 或 `../rules/index-rules.md` 的条文，而是解释：**为什么这个仓库要把 `README.md`、`index.md`、`roadmap.md` 这组三个入口/导航文件拆开，以及为什么 `index.md` 不能继续退回 README 的附属物。**
 
 ## 1. 这个文件回答什么问题
 

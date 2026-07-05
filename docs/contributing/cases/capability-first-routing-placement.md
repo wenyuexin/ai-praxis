@@ -18,7 +18,7 @@
 在最初回答“`glm5.2` 模型的公开报告和博客应该放在哪里”时，AI 的实际动作是：
 
 1. 先读 `AGENTS.md` 与 `CONTRIBUTING.md`
-2. 再读 `docs/contributing/research-artifacts.md` 与 `docs/contributing/metadata-files.md`
+2. 再读 `docs/contributing/rules/research-artifacts.md` 与 `docs/contributing/rules/metadata-files.md`
 3. 然后查看目标主题目录的 `README.md` / `index.md`
 4. 最后给出落位建议
 

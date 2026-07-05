@@ -9,7 +9,7 @@
 - 子领域内部如何建立稳定分类轴
 - 为什么某些目录应该保留，某些目录应该拆分、改名或降级为辅助材料
 
-相关入口：[`CONTRIBUTING.md`](../../CONTRIBUTING.md) / [`结构重构规则`](./structure-refactoring-rules.md) / [`README 规则`](./readme-rules.md) / [`元信息文件模型`](./metadata-files.md) / [`研究产物组织规则`](./research-artifacts.md)
+相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`结构重构规则`](./structure-refactoring-rules.md) / [`README 规则`](./readme-rules.md) / [`元信息文件模型`](./metadata-files.md) / [`研究产物组织规则`](./research-artifacts.md)
 
 ## 1. 长期主义优先于当前内容状态
 

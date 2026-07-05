@@ -179,10 +179,10 @@ AI 协作者不是系统外部的使用者，而是系统的一部分。
 
 当前主要由以下文档承接：
 
-- `docs/contributing/documentation-workflow.md`
-- `docs/contributing/evidence-and-traceability.md`
-- `docs/contributing/evidence-rules.md`
-- `docs/contributing/traceability-rules.md`
+- `docs/contributing/rules/documentation-workflow.md`
+- `docs/contributing/rules/evidence-and-traceability.md`
+- `docs/contributing/rules/evidence-rules.md`
+- `docs/contributing/rules/traceability-rules.md`
 
 ### 3.2 Place：定位后的落位决策
 
@@ -211,10 +211,10 @@ Place 与 Navigate 会共享“沿着 `README.md` / `index.md` 缩小范围”�
 
 当前主要由以下文档承接：
 
-- `docs/contributing/readme-rules.md`
-- `docs/contributing/metadata-files.md`
-- `docs/contributing/organization-principles.md`
-- `docs/contributing/structure-refactoring-rules.md`
+- `docs/contributing/rules/readme-rules.md`
+- `docs/contributing/rules/metadata-files.md`
+- `docs/contributing/rules/organization-principles.md`
+- `docs/contributing/rules/structure-refactoring-rules.md`
 
 ### 3.4 Navigate：搜索与导航
 
@@ -277,10 +277,10 @@ Navigate 关注的是“如何找到位置”，而不是“找到位置以后�
 
 典型文档：
 
-- `docs/contributing/documentation-workflow.md`
-- `docs/contributing/metadata-files.md`
-- `docs/contributing/readme-rules.md`
-- `docs/contributing/research-artifacts.md`
+- `docs/contributing/rules/documentation-workflow.md`
+- `docs/contributing/rules/metadata-files.md`
+- `docs/contributing/rules/readme-rules.md`
+- `docs/contributing/rules/research-artifacts.md`
 
 ### 5.3 Behavioral constraints
 
@@ -297,7 +297,7 @@ Navigate 关注的是“如何找到位置”，而不是“找到位置以后�
 
 - `AGENTS.md`
 - `CONTRIBUTING.md`
-- `docs/contributing/meta-rules.md`
+- `docs/contributing/rules/meta-rules.md`
 
 共同承接。
 
@@ -398,10 +398,10 @@ docs/
 这些问题应回到对应专题文件：
 
 - `docs/contributing/` 的专项层设计：[`contributing-design.md`](./contributing-design.md)
-- 元信息文件职责：`docs/contributing/metadata-files.md`
-- README 规则：`docs/contributing/readme-rules.md`
-- 材料处理流程：`docs/contributing/documentation-workflow.md`
-- Evidence / Traceability：`docs/contributing/evidence-and-traceability.md`
+- 元信息文件职责：`docs/contributing/rules/metadata-files.md`
+- README 规则：`docs/contributing/rules/readme-rules.md`
+- 材料处理流程：`docs/contributing/rules/documentation-workflow.md`
+- Evidence / Traceability：`docs/contributing/rules/evidence-and-traceability.md`
 
 ## 10. 阅读建议
 
@@ -409,7 +409,7 @@ docs/
 - 想看 capability layer 的专项设计与当前映射状态：读 [`capability-design.md`](./capability-design.md)
 - 想理解为什么“外部临时材料 → 稳定知识层”的处理更接近一条 skill-like workflow：读 [`research-ingestion-design.md`](./research-ingestion-design.md)
 - 想判断复杂案例长期应属于 contributing 附属案例、capability 案例，还是独立 case layer：读 [`cases-layer-design.md`](./cases-layer-design.md)
-- 想实际新增、迁移、修改文档：读 `docs/contributing/documentation-workflow.md`
-- 想判断某种元信息文件该不该出现：读 `docs/contributing/metadata-files.md`
-- 想理解 README / index / overview / landscape 如何分工：读 `docs/contributing/readme-rules.md` 与 `docs/contributing/metadata-files.md`
+- 想实际新增、迁移、修改文档：读 `docs/contributing/rules/documentation-workflow.md`
+- 想判断某种元信息文件该不该出现：读 `docs/contributing/rules/metadata-files.md`
+- 想理解 README / index / overview / landscape 如何分工：读 `docs/contributing/rules/readme-rules.md` 与 `docs/contributing/rules/metadata-files.md`
 - 想看复杂边界样本与误判复盘：进入 `docs/contributing/cases/`

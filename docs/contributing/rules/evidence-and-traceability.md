@@ -2,7 +2,7 @@
 
 本文件是 Evidence 与 Traceability 的组合执行入口，不重复定义两套规则。
 
-相关入口：[`CONTRIBUTING.md`](../../CONTRIBUTING.md) / [`docs/contributing/README.md`](./README.md) / [`Evidence 规则`](./evidence-rules.md) / [`Traceability 规则`](./traceability-rules.md)。
+相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`docs/contributing/README.md`](../README.md) / [`Evidence 规则`](./evidence-rules.md) / [`Traceability 规则`](./traceability-rules.md)。
 
 核心策略：**正式 Evidence + 轻量 Traceability**。
 

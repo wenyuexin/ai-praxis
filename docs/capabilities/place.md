@@ -4,7 +4,7 @@
 
 它面向普通读者、人类维护者与 AI 协作者，关注的是一种公共能力：**定位完成后的落位决策**。
 
-它不替代 `docs/contributing/documentation-workflow.md` 的操作流程，也不替代 `docs/contributing/metadata-files.md` 的完整职责定义。本文只把 Place 这项能力单独显式化，避免它长期混在 Navigate 或规则细则里。
+它不替代 `docs/contributing/rules/documentation-workflow.md` 的操作流程，也不替代 `docs/contributing/rules/metadata-files.md` 的完整职责定义。本文只把 Place 这项能力单独显式化，避免它长期混在 Navigate 或规则细则里。
 
 ## 1. Place 不是 Navigate
 
@@ -170,8 +170,8 @@ Place 的第一步，不是选文件名，而是先找当前内容的**最高稳
 ## 9. 与其他文档的关系
 
 - 想从问题出发找到目录入口：读 [`navigate.md`](./navigate.md)
-- 想看元信息文件的完整职责边界：读 [`../contributing/metadata-files.md`](../contributing/metadata-files.md)
-- 想看材料处理的完整操作流程：读 [`../contributing/documentation-workflow.md`](../contributing/documentation-workflow.md)
+- 想看元信息文件的完整职责边界：读 [`../contributing/rules/metadata-files.md`](../contributing/rules/metadata-files.md)
+- 想看材料处理的完整操作流程：读 [`../contributing/rules/documentation-workflow.md`](../contributing/rules/documentation-workflow.md)
 - 想理解能力层为什么要把 Place 单独抽出来：读 [`../design/system-design.md`](../design/system-design.md)
 
 ## 10. 本文的边界

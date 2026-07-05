@@ -2,7 +2,7 @@
 
 本文件定义当前仓库的轻量内容链路规则。
 
-相关入口：[`CONTRIBUTING.md`](../../CONTRIBUTING.md) / [`docs/contributing/README.md`](./README.md) / [`Evidence 与 Traceability 工作流`](./evidence-and-traceability.md) / [`Evidence 规则`](./evidence-rules.md)。
+相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`docs/contributing/README.md`](../README.md) / [`Evidence 与 Traceability 工作流`](./evidence-and-traceability.md) / [`Evidence 规则`](./evidence-rules.md)。
 
 Traceability 负责回答：**这条内容从哪里来、为什么落在这里？**
 
@@ -46,15 +46,17 @@ Trace 是内容进入仓库的轻量链路记录。
 
 记录内容输入来自哪里。
 
-**Stop-line：正式 Trace、Evidence、Version Basis 和类似来源字段中，不要写仓库外本机绝对路径。**
+**Stop-line：正式 Trace、Evidence、Version Basis 和类似来源字段中，不要写本机绝对路径或 `temp/` 暂存路径。**
 
-来源标识应优先使用对读者和协作者可共享、可复现的引用形式。对于当前仓库内的材料，正式 Trace 应优先记录仓库内相对路径；对于 GitHub 等开源社区的公开仓库，即使实际核验发生在本机本地副本上，正式 Trace 也应优先记录上游仓库 URL、上游仓库标识（如 `owner/repo`）或“基准 URL + 相对路径”的可还原写法，而不是机器私有的本地文件系统路径。
+来源标识应优先使用对读者和协作者可共享、可复现的引用形式。对于当前仓库内的材料，正式 Trace 应优先记录仓库内相对路径（但 `temp/` 是暂存区，不是稳定来源端点）；对于 GitHub 等开源社区的公开仓库，即使实际核验发生在本机本地副本上，正式 Trace 也应优先记录上游仓库 URL、上游仓库标识（如 `owner/repo`）或"基准 URL + 相对路径"的可还原写法，而不是机器私有的本地文件系统路径。当上游提供 source package（如 arXiv LaTeX source、GitHub release assets）时，优先引用上游链接，不写本地暂存路径。
 
-在满足“可共享、可复现”前提下，引用表达可以保持适度灵活，避免机械重复冗长前缀：如果一篇文档会反复引用同一个外部仓库、文档站或其他外部资源，可以先在文中声明一次上游基准 URL，后续条目使用“基准 URL + 相对路径 / 相对资源路径”的写法；只要读者能够稳定还原到完整来源，这种缩写式引用是允许的。禁止的是机器私有路径和无法还原来源的模糊简称，不是对外部 URL 的合理去重。
+"source package 被用来补全 HTML 中不便提取的信息"这类过程性说明，写进 `Trace`，不写进 `Sources`。
+
+在满足"可共享、可复现"前提下，引用表达可以保持适度灵活，避免机械重复冗长前缀：如果一篇文档会反复引用同一个外部仓库、文档站或其他外部资源，可以先在文中声明一次上游基准 URL，后续条目使用"基准 URL + 相对路径 / 相对资源路径"的写法；只要读者能够稳定还原到完整来源，这种缩写式引用是允许的。禁止的是机器私有路径和无法还原来源的模糊简称，不是对外部 URL 的合理去重。
 
 示例：
 
-- `docs/contributing/documentation-workflow.md`
+- `docs/contributing/rules/documentation-workflow.md`
 - 某篇论文原文或论文笔记
 - `https://github.com/openai/codex`
 - 基准来源：`https://docs.anthropic.com/claude/docs/`；后续引用：`prompt-design#structured-outputs`

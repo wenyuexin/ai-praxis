@@ -125,4 +125,4 @@
 - 需要判断“为什么这个对象能留在相关主题树下，但又不是同层主题节点”
 - 需要复盘类似 `PageIndex` 这样的高价值边界案例
 
-如果只是日常研究组织，优先回到 `docs/contributing/research-artifacts.md`，不要把本案例当成默认入口。
+如果只是日常研究组织，优先回到 `docs/contributing/rules/research-artifacts.md`，不要把本案例当成默认入口。

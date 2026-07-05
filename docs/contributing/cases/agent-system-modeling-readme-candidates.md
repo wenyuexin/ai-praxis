@@ -119,7 +119,7 @@ README 在这里的职责只是：
 
 ## 9. 这个案例对规则系统的直接启发
 
-本案例的核心价值，不是重复主规则或 `intent/` 中已经给出的时机模型，而是提供一个可观察的真实样本，说明“对象队列先成熟”在仓库里会长成什么样。相关结论应回到 `docs/contributing/metadata-files.md` §2.2 / §5.2，以及 `docs/contributing/intent/metadata-files.md` §10 / §12 统一理解。
+本案例的核心价值，不是重复主规则或 `intent/` 中已经给出的时机模型，而是提供一个可观察的真实样本，说明“对象队列先成熟”在仓库里会长成什么样。相关结论应回到 `docs/contributing/rules/metadata-files.md` §2.2 / §5.2，以及 `docs/contributing/intent/metadata-files.md` §10 / §12 统一理解。
 
 它对应的是另一种很典型的研究建设流程：
 
@@ -158,4 +158,4 @@ README 在这里的职责只是：
 - 需要判断候选对象已经形成正式产出后，队列条目是否该收缩成“状态 + 指针 + gap”
 - 需要给其他 AI 一个真实样本，说明 `README + candidates` 也是合理的早期组合
 
-如果只是日常判断元信息文件职责，优先回到 `docs/contributing/metadata-files.md`；如果只是想理解这些职责为什么这样定义，再优先回到 `docs/contributing/intent/metadata-files.md`。
+如果只是日常判断元信息文件职责，优先回到 `docs/contributing/rules/metadata-files.md`；如果只是想理解这些职责为什么这样定义，再优先回到 `docs/contributing/intent/metadata-files.md`。

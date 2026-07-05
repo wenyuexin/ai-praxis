@@ -148,4 +148,4 @@
 - 需要判断“为什么这里已经有 `overview` 信号，但仍不应马上创建 `overview.md`”
 - 需要复盘某个横向目录为什么总把结构、导航、路径重新混写
 
-如果只是日常判断元信息文件职责，优先回到 `docs/contributing/metadata-files.md`；如果只是想理解这些职责为什么这样定义，再优先回到 `docs/contributing/intent/metadata-files.md`。
+如果只是日常判断元信息文件职责，优先回到 `docs/contributing/rules/metadata-files.md`；如果只是想理解这些职责为什么这样定义，再优先回到 `docs/contributing/intent/metadata-files.md`。

@@ -58,9 +58,9 @@
 当前更合理的分层是：
 
 - `docs/capabilities/ingest.md`：回答“系统如何识别并吸收新输入”
-- `docs/contributing/documentation-workflow.md`：回答“真正执行时，哪些判断顺序、门槛和 stop-line 不能跳过”
-- `docs/contributing/research-artifacts.md`：回答“当输入已经归属于某个对象目录时，中间产物如何落到 `notes/` / 正文 / 机制专题”
-- `docs/contributing/evidence-and-traceability.md`：回答“Evidence 与 Trace 如何组合执行”
+- `docs/contributing/rules/documentation-workflow.md`：回答“真正执行时，哪些判断顺序、门槛和 stop-line 不能跳过”
+- `docs/contributing/rules/research-artifacts.md`：回答“当输入已经归属于某个对象目录时，中间产物如何落到 `notes/` / 正文 / 机制专题”
+- `docs/contributing/rules/evidence-and-traceability.md`：回答“Evidence 与 Trace 如何组合执行”
 
 因此，这条链不是取代这些文档，而是解释它们为什么必须共同存在。
 

@@ -2,7 +2,7 @@
 
 本文件定义仓库中 `index.md` 的职责、触发条件、结构模型和层级导航细则。
 
-相关入口：[`CONTRIBUTING.md`](../../CONTRIBUTING.md) / [`docs/contributing/README.md`](./README.md) / [`docs/contributing/index.md`](./index.md) / [`元信息文件模型`](./metadata-files.md) / [`README 规则`](./readme-rules.md)。如需理解这些规则为什么这样设计、为什么 `README.md` / `index.md` / `roadmap.md` 不能重新混回去，读 [`intent/metadata-files.md`](./intent/metadata-files.md)。
+相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`docs/contributing/README.md`](../README.md) / [`docs/contributing/index.md`](../index.md) / [`元信息文件模型`](./metadata-files.md) / [`README 规则`](./readme-rules.md)。如需理解这些规则为什么这样设计、为什么 `README.md` / `index.md` / `roadmap.md` 不能重新混回去，读 [`intent/metadata-files.md`](../intent/metadata-files.md)。
 
 ## 1. 使用边界
 
@@ -120,5 +120,5 @@ README 负责目录说明，`index.md` 负责结构展示与查找导航。
 
 ## 9. 代表样本
 
-- [`cases/interdisciplinarity-readme-index-roadmap.md`](./cases/interdisciplinarity-readme-index-roadmap.md)：复杂目录中 `README.md`、`index.md`、`roadmap.md` 的拆分样本
-- [`intent/metadata-files.md`](./intent/metadata-files.md)：`index.md` 为什么要更早触发、为什么不能退回 README 的设计解释
+- [`cases/interdisciplinarity-readme-index-roadmap.md`](../cases/interdisciplinarity-readme-index-roadmap.md)：复杂目录中 `README.md`、`index.md`、`roadmap.md` 的拆分样本
+- [`intent/metadata-files.md`](../intent/metadata-files.md)：`index.md` 为什么要更早触发、为什么不能退回 README 的设计解释

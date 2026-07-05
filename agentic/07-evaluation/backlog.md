@@ -92,5 +92,5 @@
 
 - `README.md` 已建立 `07-evaluation/` 的目录骨架与主题边界。
 - `overview.md` 已提供结果质量、benchmark、可观测性、人工评估与鲁棒性五个核心视角。
-- 当前目录中的新增 overview 与正文专题仍以结构化归纳为主，后续需要按 `docs/contributing/evidence-rules.md` 和 `docs/contributing/traceability-rules.md` 继续补充 Evidence 状态与必要的 Trace 字段。
+- 当前目录中的新增 overview 与正文专题仍以结构化归纳为主，后续需要按 `docs/contributing/rules/evidence-rules.md` 和 `docs/contributing/rules/traceability-rules.md` 继续补充 Evidence 状态与必要的 Trace 字段。
 - 后续若某个问题获得更稳定证据，应优先拆成专题文档，而不是长期停留在 backlog。
