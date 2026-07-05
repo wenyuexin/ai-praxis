@@ -4,7 +4,7 @@
 
 - 它是 `docs/contributing/` 中的**规则化执行入口**，不是完整的材料吸收能力说明。
 - 它引用 [`metadata-files.md`](./metadata-files.md) 的元信息文件模型，但不重新展开每个文件的完整定义。
-- 它也不替代 [`docs/capabilities/ingest.md`](../capabilities/ingest.md) 对“为什么输入要先分流、降级、暂存与回流”的能力说明。
+- 它也不替代 [`docs/capabilities/ingest.md`](../../capabilities/ingest.md) 对“为什么输入要先分流、降级、暂存与回流”的能力说明。
 - 如果你在处理具体案例研究目录中的 `notes/` / 正文 / 机制专题分工，继续读 [`research-artifacts.md`](./research-artifacts.md)。
 
 本文的核心原则是：
@@ -125,7 +125,7 @@
 - **不要因为调研稿结构完整，就跳过 Claim 拆分、Evidence 分级和落位判断。**
 - **不要让主干文档在删除临时文件后失去证据链。**
 
-外部临时材料的完整吸收逻辑、回流工序与中间稳定层判断，继续读 [`../capabilities/ingest.md`](../capabilities/ingest.md)；对象目录中的 `notes/` / 正文 / 机制专题分工，继续读 [`research-artifacts.md`](./research-artifacts.md)。
+外部临时材料的完整吸收逻辑、回流工序与中间稳定层判断，继续读 [`../../capabilities/ingest.md`](../../capabilities/ingest.md)；对象目录中的 `notes/` / 正文 / 机制专题分工，继续读 [`research-artifacts.md`](./research-artifacts.md)。
 
 ## 7. 默认策略
 

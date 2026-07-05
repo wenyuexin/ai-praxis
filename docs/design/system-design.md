@@ -48,18 +48,23 @@ repo/
     │
     ├── contributing/
     │   ├── README.md                 # rules / methods 层入口
-    │   ├── meta-rules.md             # 规则如何修改
-    │   ├── documentation-workflow.md # 新材料处理与文档增改流程
-    │   ├── metadata-files.md         # 元信息文件模型
-    │   ├── readme-rules.md           # README 规则
-    │   ├── organization-principles.md# 知识树组织原则
-    │   ├── structure-refactoring-rules.md # 结构重构规则
-    │   ├── research-artifacts.md     # 研究产物组织规则
-    │   ├── evidence-and-traceability.md   # Evidence + Trace 组合入口
-    │   ├── evidence-rules.md         # Evidence 规则
-    │   ├── traceability-rules.md     # Traceability 规则
+    │   ├── index.md                  # 规则层查找导航页
+    │   ├── rules/                    # 可执行治理规则
+    │   │   ├── meta-rules.md         # 规则如何修改
+    │   │   ├── documentation-workflow.md # 新材料处理与文档增改流程
+    │   │   ├── metadata-files.md     # 元信息文件模型
+    │   │   ├── readme-rules.md       # README 规则
+    │   │   ├── index-rules.md        # index.md 规则
+    │   │   ├── document-linking-rules.md # 文档引用与关联规则
+    │   │   ├── organization-principles.md # 知识树组织原则
+    │   │   ├── structure-refactoring-rules.md # 结构重构规则
+    │   │   ├── research-artifacts.md # 研究产物组织规则
+    │   │   ├── evidence-and-traceability.md # Evidence + Trace 组合入口
+    │   │   ├── evidence-rules.md     # Evidence 规则
+    │   │   └── traceability-rules.md # Traceability 规则
     │   ├── intent/                   # 设计意图与长解释（按需）
-    │   └── cases/                    # 边界样本与误判复盘（按需）
+    │   ├── cases/                    # 边界样本与误判复盘（按需）
+    │   └── incidents/                # 单次治理问题轨迹记录（按需）
     │
     ├── capabilities/
     │   ├── README.md                 # capability layer 入口

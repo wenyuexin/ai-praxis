@@ -1,0 +1,16 @@
+/* 强制PDF主体背景为白色 */
+body {
+    background: white !important;
+}
+
+/* 针对预览容器，确保背景也为白色 */
+.markdown-preview {
+    background: white !important;
+}
+
+/* 在打印模式下也强制使用白色背景 */
+@media print {
+    body, .markdown-preview {
+        background: white !important;
+    }
+}

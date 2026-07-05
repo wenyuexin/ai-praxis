@@ -1,7 +1,6 @@
 # GLM-5 技术报告研究
 
-> [!NOTE]
-> **标题**：`GLM-5: from Vibe Coding to Agentic Engineering`
+> **标题**：`GLM-5: from Vibe Coding to Agentic Engineering` 
 > **来源**：arXiv
 > **arXiv**：`2602.15763`
 > **DOI**：`10.48550/arXiv.2602.15763`
@@ -13,13 +12,40 @@
 
 ---
 
-## 一、文档定位
+[TOC]
 
-本文档把 `GLM-5: from Vibe Coding to Agentic Engineering` 这份原报告本身当作研究对象，承接报告提出了什么问题、给出了哪些技术贡献、如何组织实验与论证。
+## 一、阅读说明
 
-与 `glm-5.md` 的分工：`glm-5.md` 承接 GLM-5 作为系列基础版本对象的角色；本文档承接报告本身的技术内容与论证结构。
+本文档把 `GLM-5: from Vibe Coding to Agentic Engineering` 这份原报告本身当作研究对象，适合已经知道 `GLM-5.x` 大致背景、想继续深入报告技术细节的读者。
 
-## 二、报告核心问题
+如果只想快速理解版本关系，优先读 [`glm-5.x-evolution.md`](./glm-5.x-evolution.md)；如果要理解报告如何论证 `GLM-5` 的模型架构、训练流程、RL 系统和评测设计，再读本文。
+
+需要先保留一个边界：本文研究的是 `GLM-5` technical report，不等于 `GLM-5.1` 或 `GLM-5.2` 的独立技术报告。报告中的训练细节、参数规模和 benchmark 结果，不能自动外推到后续版本。
+
+## 二、TL;DR
+
+- `GLM-5` 报告的主线不是单纯发布一个更强代码模型，而是把路线从 `vibe coding` 推向 `agentic engineering`
+- 模型侧的关键变化包括更大规模 MoE、DSA / sparse attention、长上下文扩展，以及围绕长程任务的效率设计
+- 训练侧分成 pre-training、mid-training、post-training，并在 mid-training 中显式强化 long-context agentic data、repo-level code 和 issue-PR 数据
+- Post-training 采用 progressive alignment strategy，把 Multi-task SFT、Reasoning RL、Agentic RL、General RL 和 Cross-stage Distillation 串成分阶段能力收敛流程
+- RL 系统侧的重点不是单个奖励函数，而是 GRPO + IcePop、异步 agentic RL、TITO、Direct Double-sided Importance Sampling、DP-aware routing 等组合设计
+- 评测侧用 CC-Bench-V2 与 ARC benchmarks 共同支撑结论：前者检验真实 agentic engineering 工作流，后者把 GLM-5 放回更广的 frontier model 对比
+- 阅读本文时应区分“报告原文事实”“本文为便于阅读做的结构化重组”和“仍待进一步核验的技术细节”
+
+## 三、术语预备
+
+| 术语 | 本文中的含义 |
+|------|--------------|
+| `vibe coding` | 偏短交互、单次或局部代码生成的使用形态 |
+| `agentic engineering` | 更长链路、更持续执行、更多工具参与的工程任务形态 |
+| `DSA` | DeepSeek Sparse Attention，通过 indexer 检索 top-k key-value 条目来降低长上下文 attention 成本 |
+| `MoE` | Mixture-of-Experts，只激活部分专家以扩大总参数规模并控制单次计算成本 |
+| `MTP` | Multi-Token Prediction，报告中作为模型结构和推理效率相关组件出现 |
+| `GRPO` / `IcePop` | RL 算法骨架与 training-inference mismatch 控制机制 |
+| `TITO` | Token-in-Token-out，直接复用 rollout 产生的 tokenization 与 token stream 来支撑异步 agentic RL |
+| `CC-Bench-V2` | 报告提出的 agentic engineering 评测套件，重点看模型在真实工作流中能否完成端到端任务 |
+
+## 四、报告核心问题
 
 报告要解决的核心问题不是"GLM-5 比前代强多少"，而是：
 
@@ -30,9 +56,9 @@
 
 报告的核心对象是"一条技术路线及其实现论证"，而不只是一个模型发布公告。
 
-## 三、报告技术主线
+## 五、报告技术主线
 
-### 3.1 路线转向：从 vibe coding 到 agentic engineering
+### 5.1 路线转向：从 vibe coding 到 agentic engineering
 
 报告明确提出一种路线转向：不再把模型主要理解为单次代码生成或浅层辅助工具，而是放到更长链路、更持续执行、更多工具参与的 `agentic engineering` 场景里理解。
 
@@ -41,9 +67,9 @@
 - coding 与 tool-use 的协同
 - 在真实工程任务中持续保持约束、上下文与执行状态
 
-### 3.2 架构与效率设计
+### 5.2 架构与效率设计
 
-#### 3.2.1 DSA (DeepSeek Sparse Attention)
+#### 5.2.1 DSA (DeepSeek Sparse Attention)
 
 GLM-5 采用 DSA 替代传统密集 O(L²) attention。DSA 的核心机制：
 
@@ -79,7 +105,7 @@ GLM-5 采用 DSA 替代传统密集 O(L²) attention。DSA 的核心机制：
 
 DSA 相对 GLM-4.5 的标准 MoE 效率改进路线，目标不是单纯省算力，而是在不牺牲长上下文保真度与推理深度的前提下降低计算开销。
 
-#### 3.2.2 MoE 规模与结构
+#### 5.2.2 MoE 规模与结构
 
 - 总参数：`744B`（GLM-4.5 为 `355B`）
 - 激活参数：`40B`（GLM-4.5 为 `32B`）
@@ -92,7 +118,7 @@ DSA 相对 GLM-4.5 的标准 MoE 效率改进路线，目标不是单纯省算�
 - MoE Intermediate Dim：`2048`（GLM-4.5 为 `1536`）
 - Vocabulary Size：`154880`（GLM-4.5 为 `151552`）
 
-#### 3.2.3 注意力结构变化
+#### 5.2.3 注意力结构变化
 
 | 字段 | GLM-4.5 | GLM-5 |
 |------|---------|-------|
@@ -107,20 +133,20 @@ DSA 相对 GLM-4.5 的标准 MoE 效率改进路线，目标不是单纯省算�
 
 GLM-5 移除了 GLM-4.5 中的 Key-Value Heads（原为 8），新增了 Indexer Attn Heads（32 个，Head Dim 128）和 Q/KV LoRA Dim。这组变化说明 DSA 不是抽象口号——indexer 和 LoRA 维度已经写入模型结构定义中。
 
-#### 3.2.4 参数统计口径
+#### 5.2.4 参数统计口径
 
 报告明确说明：参数统计计入 MTP 层参数，不计入词嵌入和输出层。这解释了为什么 `744B` 不应与别处的 `753B` / `754B` 直接混写——不同来源可能采用了不同的统计边界。
 
-### 3.3 训练流程
+### 5.3 训练流程
 
-#### 3.3.1 Pre-training
+#### 5.3.1 Pre-training
 
 - 总训练 token 预算：`28.5T`（base model 全部阶段合计）
 - Pre-training 阶段：`27T` tokens
 - 数据策略：优先引入 code 和 reasoning 数据
 - 结构：pre-training + mid-training 两阶段
 
-#### 3.3.2 Mid-training
+#### 5.3.2 Mid-training
 
 **Context extension 阶段**
 
@@ -145,9 +171,9 @@ GLM-5 移除了 GLM-4.5 中的 Key-Value Heads（原为 8），新增了 Indexer
 - Relevant files 扩展：为每个 issue–PR pair 检索更大规模 relevant files，增强 development context 覆盖
 - 数据规模：过滤后约 `160B unique tokens`
 
-#### 3.3.3 Post-training
+#### 5.3.3 Post-training
 
-![GLM-5 overall training pipeline](./temp/arxiv-2602.15763v2-src/figures/overall_pipeline.png)
+![GLM-5 overall training pipeline](./images/overall_pipeline.png)
 
 图：GLM-5 整体训练流程。
 
@@ -205,7 +231,7 @@ Agentic RL 阶段主要包括：
 
 - 目标任务是 `coding` 与 `search agent` tasks，采用 `fully asynchronous and decoupled RL framework`
 - 核心动机是解决 naive synchronous RL 在 long-horizon agent rollouts 中造成的严重 GPU idle time
-- 具体训练设计、目标函数、异步稳定性机制与基础设施归属见 §3.4.2
+- 具体训练设计、目标函数、异步稳定性机制与基础设施归属见 §5.4.2
 
 **各阶段质量标准对照**
 
@@ -216,14 +242,19 @@ Agentic RL 阶段主要包括：
 - General RL 阶段：`foundational correctness`（回答先达到基本可用）、`emotional intelligence`（回答更接近自然人类交流）、`task-specific quality`（不只正确，而且在具体任务中完成得更好）
 - Agentic RL 与评测阶段：长链路任务中的真实完成效果，而不只是局部回答看起来正确
 
-### 3.4 RL 算法与训练系统
+### 5.4 RL 算法与训练系统
 
-#### 3.4.1 RL 算法
+#### 5.4.1 RL 算法
 
-- **算法骨架**：GRPO + IcePop
-- **IcePop 的作用**：缓解 training-inference mismatch（训练分布与推理分布之间的偏差）
-- **关键修改**：相比原始 IcePop，移除了 KL regularization 项以加速 RL 改进
-- **最终优化目标**：
+报告中的标准 RL 阶段采用 `GRPO + IcePop`。其中，GRPO 提供 group-wise policy optimization 的基本骨架；IcePop 则负责处理 `training-inference mismatch`，也就是训练侧重算 token 概率时的分布，和 rollout / 推理侧实际生成 token 时的分布不一致。
+
+这点容易和 KL regularization 混淆。IcePop 在这里比较的不是当前策略模型与 reference model 的距离，而是同一个 old policy 在 `train` 与 `infer` 两种口径下对同一 token 的概率差异。换句话说，它关心的不是“新策略是否离参考策略太远”，而是“这条 rollout 轨迹拿回训练系统后，token 概率是否还能和生成它时的推理口径对得上”。
+
+如果这种 train / infer 口径差异过大，某些 token 的梯度更新会被不可靠的分布偏差放大。IcePop 因此更像一个 token-level 训练信号筛选门：rollout 轨迹先由 $\pi_{\text{old}}^{\text{infer}}$ 生成；训练时再用 $\pi_{\text{old}}^{\text{train}}$ 重算同一 token 的概率，得到 mismatch ratio $\rho_{i,t}$；$\rho_{i,t}$ 落在可接受区间内时保留该 token 的 loss 贡献，偏差过大时将贡献置零。
+
+报告还写明，GLM-5 相比原始 IcePop 移除了 KL regularization 项，以加速 RL 改进。也就是说，这里的稳定性主要依赖 `pop(·)` 对 train / infer mismatch 的过滤，而不是额外用 KL 项持续拉住策略分布。
+
+**总体目标函数**
 
 $$
 \mathcal{L}(\theta)=
@@ -251,7 +282,9 @@ r_{i,t},
 \Bigg],
 $$
 
-- **Mismatch ratio 定义**：
+这条 loss 可以拆成两层看：$\operatorname{pop}(\rho_{i,t}, 1/\beta, \beta)$ 决定这个 token 的训练信号是否可信；后面的 PPO-style clipped objective 决定当前策略 $\pi_\theta$ 如何相对 old policy 更新。
+
+**Mismatch ratio 与 `pop(·)`**
 
 $$
 \rho_{i,t}
@@ -263,8 +296,6 @@ $$
 }.
 $$
 
-- **`pop(·)` 算子定义**：
-
 $$
 \operatorname{pop}(\rho_{i,t}, 1/\beta, \beta)
 =
@@ -274,7 +305,9 @@ $$
 \end{cases}
 $$
 
-- **PPO-style importance ratio 与 group-normalized advantage**：
+这里的 $\rho_{i,t}$ 对当前参数更新来说是固定筛选因子：它只由 old policy 的 `train` / `infer` 概率口径决定。报告给出的超参数是 $\beta=2$，即 mismatch ratio 超出 $[1/2, 2]$ 区间时，该 token 的贡献被置零。
+
+**Policy ratio**
 
 $$
 r_{i,t}
@@ -283,8 +316,14 @@ r_{i,t}
 \pi_\theta^{\text{train}}(y_{i,t}\mid x,y_{i,<t})
 }{
 \pi_{\theta_{\text{old}}}^{\text{train}}(y_{i,t}\mid x,y_{i,<t})
-},
-\quad
+}.
+$$
+
+小写 $r_{i,t}$ 不是 reward，而是 policy ratio。它衡量当前策略相对 old policy 在训练口径下对同一 token 的概率变化幅度，因此和 KL regularization 一样，都有防止策略更新过猛的作用；区别在于 KL 更像整体分布距离约束，而这里的 clipped objective 是在 token / sample 级别限制 policy ratio 的有效更新范围。
+
+**Advantage**
+
+$$
 \hat{A}_{i,t}
 =
 \frac{
@@ -294,10 +333,11 @@ R_i - \operatorname{mean}(R_1,\dots,R_G)
 }.
 $$
 
-- **Training-inference mismatch 控制**：通过 `pop(·)` 算子抑制 mismatch ratio 偏差过大的样本，超参数 `β=2`，`ε_low=0.2`，`ε_high=0.28`
-- **标准 RL 阶段**：group size = 32，batch size = 32，完全 on-policy
+大写 $R_i$ 才是第 $i$ 条 response / trajectory 的 reward，承接任务级别的好坏判断；$\hat{A}_{i,t}$ 则把这个 reward 放到同组样本里归一化，形成真正指引优化方向的 advantage。
 
-#### 3.4.2 Agentic RL 异步训练设计与 Cross-stage Distillation
+因此，这个目标函数里可以把 $\operatorname{pop}(\rho)$ 理解为“训练信号可信度过滤”，把 $r_{i,t}$ 和 clipped objective 理解为“策略更新幅度控制”，把 $R_i / \hat{A}_{i,t}$ 理解为“任务奖励与优化方向”。标准 RL 阶段采用 group size = 32、batch size = 32，并保持完全 on-policy。
+
+#### 5.4.2 Agentic RL 异步训练设计与 Cross-stage Distillation
 
 **Agentic RL：**
 
@@ -333,7 +373,7 @@ $$
 - **统一轨迹表示**：所有 agentic tasks 的 trajectories 被标准化为 unified `message-list representation`
 - **并发能力**：orchestrator 支持 `over 1k concurrent rollouts`
 - **TITO 机制**：`Token-in-Token-out` 直接消费 inference engine 产生的 exact tokenization 与 decoded-token stream；报告写明 TITO Gateway 会记录 each trajectory's token IDs and metadata
-- **Direct Double-sided Importance Sampling 的动机**：在 asynchronous setting 下，单条 trajectory 生成过程中 rollout engine 可能经历多次更新，导致精确追踪 `\pi_{\theta_{\text{old}}}` 代价过高，需要避免维护大量历史 checkpoints
+- **Direct Double-sided Importance Sampling 的动机**：在 asynchronous setting 下，单条 trajectory 生成过程中 rollout engine 可能经历多次更新，导致精确追踪 $\pi_{\theta_{\text{old}}}$ 代价过高，需要避免维护大量历史 checkpoints
 - **Importance ratio 定义**：
 
 $$
@@ -359,7 +399,7 @@ $$
 **稳定性与过滤机制**
 
 - **策略含义**：报告写明它复用 rollout 阶段生成的 log-probabilities 作为 direct behavior proxy，并通过双边 masking 丢弃超出 trust region 的 token
-- **Off-policy sample 过滤**：记录 response 对应的 model version sequence `(w_0, \ldots, w_k)`；若当前 policy version `w'` 与最旧 rollout version 的差超过阈值 `\tau`，则丢弃该样本
+- **Off-policy sample 过滤**：记录 response 对应的 model version sequence $(w_0, \ldots, w_k)$；若当前 policy version $w'$ 与最旧 rollout version 的差超过阈值 $\tau$，则丢弃该样本
 - **Noisy sample 过滤**：若样本失败原因来自 environment collapse，则排除；对 group-based sampling，当移除失败样本后 group 不完整时，若 valid samples 超过 group size 一半则重复填充，否则丢弃整个 group
 - **DP-aware routing**：对同一 rollout ID 使用 consistent hashing 绑定固定 DP rank，并配合 lightweight dynamic load rebalancing，以减少 cross-rank cache misses 与冗余 prefill
 
@@ -387,21 +427,21 @@ $$
 
 三者关系：异步 RL 基础设施提供运行效率 → sequential RL pipeline 安排能力对齐顺序 → cross-stage distillation 降低阶段切换带来的能力回退。
 
-#### 3.4.3 RL 训练基础设施：slime Framework
+#### 5.4.3 RL 训练基础设施：slime Framework
 
 - **框架名称**：slime
 - **核心能力**：高度可定制的 rollout 接口 + server-based rollout execution
 - **支持的 rollout 逻辑**：multi-turn interaction loops、tool invocation、environment feedback handling、verifier-guided branching
 - **统一训练栈**：reasoning RL、general RL、agentic RL、on-policy distillation 全部在同一个训练栈内完成，无需 task-specific forks
 
-#### 3.4.4 工程优化与 GPU 适配
+#### 5.4.4 工程优化与 GPU 适配
 
 - 从底层 kernel 到上层 inference framework 的完整工程优化
 - 适配 7 个国产 GPU 平台：Huawei Ascend、Moore Threads、Hygon、Cambricon、Kunlunxin、MetaX、Enflame
 
-### 3.5 评测方法与基准设计
+### 5.5 评测方法与基准设计
 
-#### 3.5.1 CC-Bench-V2
+#### 5.5.1 CC-Bench-V2
 
 CC-Bench-V2 是报告专门提出的内部评测套件，评估模型在真实 agentic engineering 环境中能否完成端到端任务。
 
@@ -417,7 +457,7 @@ CC-Bench-V2 是报告专门提出的内部评测套件，评估模型在真实 a
 - 结合 unit tests 与 Agent-as-a-Judge 技术
 - 评测单位不是"单题回答"，而是"agent 在可验证环境里是否完成了一项工作"
 
-![Agent-as-a-Judge evaluation pipeline](./temp/arxiv-2602.15763v2-src/figures/agent-as-judge.png)
+![Agent-as-a-Judge evaluation pipeline](./images/agent-as-judge.png)
 
 图：Agent-as-a-Judge 评测流程。
 
@@ -451,7 +491,7 @@ CC-Bench-V2 是报告专门提出的内部评测套件，评估模型在真实 a
 
 **结果：** GLM-5 在 frontend、backend、long-horizon 任务上显著优于 GLM-4.7，缩小了与 Claude Opus 4.5 的差距。
 
-#### 3.5.2 ARC Benchmarks
+#### 5.5.2 ARC Benchmarks
 
 报告在 ARC benchmarks 上将 GLM-5 与以下模型对比：
 
@@ -485,7 +525,7 @@ CC-Bench-V2 是报告专门提出的内部评测套件，评估模型在真实 a
 | $\tau^2$-Bench | 89.7 | 87.4 | 85.3 | 80.2 | 91.6 | 90.7 | 85.5 |
 | MCP-Atlas (Public Set) | 67.8 | 52.0 | 62.2 | 63.8 | 65.2 | 66.6 | 68.0 |
 | Tool-Decathlon | 39.2 | 23.8 | 35.2 | 27.8 | 43.5 | 36.4 | 46.3 |
-| Vending-Bench 2 | $4,432 | $2,377 | $1,034 | $1,198 | $4,967 | $5,478 | $3,591 |
+| Vending-Bench 2 | \$4,432 | \$2,377 | \$1,034 | \$1,198 | \$4,967 | \$5,478 | \$3,591 |
 | GDPval-AA Elo | 1,409 | 1,198 | 1,195 | 1,288 | 1,400 | 1,201 | 1,462 |
 
 补充说明：
@@ -496,14 +536,14 @@ CC-Bench-V2 是报告专门提出的内部评测套件，评估模型在真实 a
 
 GLM-5 在开源模型中达到 SOTA，缩小了与 proprietary models 的差距。
 
-#### 3.5.3 两套评测的互补关系
+#### 5.5.3 两套评测的互补关系
 
 - ARC benchmarks：把 GLM-5 放回更广的 frontier model 比较
 - CC-Bench-V2：证明这些能力是否真正迁移到了真实 agent 工作流中
 
 CC-Bench-V2 补上了从"benchmark 能力"到"真实 agent 工程执行"之间的论证链。
 
-### 3.6 GLM-4.5 至 GLM-5 结构规格差异
+### 5.6 GLM-4.5 至 GLM-5 结构规格差异
 
 完整对比表：
 
@@ -538,13 +578,13 @@ CC-Bench-V2 补上了从"benchmark 能力"到"真实 agent 工程执行"之间�
 - **新增低秩维度**：Q LoRA Dim=2048、KV LoRA Dim=512（GLM-4.5 中不存在）
 - **参数口径**：计入 MTP 层，不计入词嵌入和输出层
 
-## 四、版本外推边界
+## 六、版本外推边界
 
 - 不把 GLM-5 报告中的训练细节、参数规模、benchmark 表现自动外推到 GLM-5.1 或 GLM-5.2
 - 不因为 GLM-5.1 / GLM-5.2 回引这份报告，就把它们也当成各自拥有独立 technical report
 - 不把报告里的技术路线背景，直接写成后续版本已经独立验证过的完整事实
 
-## 五、后续研究方向
+## 七、后续研究方向
 
 当前版本已从原报告提取了主要技术内容，但仍可继续深化的方向：
 
@@ -559,7 +599,7 @@ CC-Bench-V2 补上了从"benchmark 能力"到"真实 agent 工程执行"之间�
 - Sources:
   - https://arxiv.org/abs/2602.15763
   - https://arxiv.org/html/2602.15763v2
-  - https://arxiv.org/e-print/2602.15763
+  - https://arxiv.org/src/2602.15763v2
 - Trace: Technical details extracted from arXiv HTML and LaTeX source package. The LaTeX source was used to recover formulas, architecture spec tables, and training hyperparameters not directly extractable from the HTML rendering.
 - Needs:
   - DSA indexer 的 relevance scoring 公式级细节；当前原报告只进一步暴露了 `score calculation + ReLU + TopK` 的 fused-kernel 线索

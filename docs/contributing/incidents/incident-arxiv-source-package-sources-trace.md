@@ -40,7 +40,7 @@
 - Sources:
   - https://arxiv.org/abs/2602.15763
   - https://arxiv.org/html/2602.15763v2
-  - https://arxiv.org/e-print/2602.15763
+  - https://arxiv.org/src/2602.15763v2
 - Trace: Technical details extracted from arXiv HTML and LaTeX source package. The LaTeX source was used to recover formulas, architecture spec tables, and training hyperparameters not directly extractable from the HTML rendering.
 ```
 
