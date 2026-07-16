@@ -21,6 +21,7 @@
 
 - 想看任务成功标准、完成度指标或结果质量定义：先看 `task-completion-metrics/`
 - 想看通用 Agent benchmark、长程任务或多工具任务评测：先看 `agent-benchmarks/`
+- 想直接看 verifier 如何同时服务于 benchmark selection、progress monitoring 与 reward shaping：读 `agent-benchmarks/llm-as-a-verifier_2607.05391.md`
 - 想看 SWE-bench 等软件工程专项基准：先看 `swe-benchmarks/`
 - 想看安全性、鲁棒性、稳定性或失败边界：先看 `safety-and-robustness/`
 - 想看人工评估、主观反馈或协作体验验证：先看 `human-evaluation/`

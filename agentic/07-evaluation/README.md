@@ -10,6 +10,7 @@
 ## 快速入口
 
 - 从 `agent-benchmarks/`、`swe-benchmarks/`、`observability-and-debugging/` 进入当前已有的主要子主题。
+- 若想先看一篇把 verifier、benchmark selection、progress monitoring 与 reward shaping 串起来的对象化案例，可从 `agent-benchmarks/llm-as-a-verifier_2607.05391.md` 进入。
 - 若关注环境如何影响评测可信度，可联动阅读 `../05-environments/`。
 - 若关注框架或工具在真实任务中的效果，可再回看 `../06-frameworks-and-tools/` 的对象案例。
 

@@ -6,6 +6,8 @@
 
 Evidence 负责回答：**这条知识凭什么成立？**
 
+快速执行路径：先在第 2、3 节识别关键 Claim 并判断 Evidence 状态；再看第 5 节决定是否需要标注；需要记录时按第 6--9 节选择承载层级、证据记录落位与呈现格式；高风险机制说明再看第 10.1 节。基于源码的 Claim 同时阅读 [`traceability-rules.md`](./traceability-rules.md) 第 3.5 节，补齐版本链路字段。
+
 ## 1. 适用范围
 
 本规则适用于进入主题目录的知识内容，尤其是：
@@ -64,7 +66,7 @@ Evidence 是支持 Claim 的材料或观察。
 
 - 论文原文中的方法、实验结果、定义或结论
 - 官方文档中的功能说明、接口行为、版本说明
-- 源码或 release notes 中可直接观察到的实现行为
+- release notes 中明确说明的实现行为或版本变更
 - 多个高质量来源相互印证的事实
 
 使用要求：
@@ -80,12 +82,14 @@ Evidence 是支持 Claim 的材料或观察。
 适用场景：
 
 - 某个开源项目采用了某种设计
+- 某个代码库在已记录的 branch / tag / commit 上体现出某种实现行为
 - 多篇博客或社区讨论反复提到同一问题
 - 某个 benchmark 或产品案例显示出某种趋势
 
 使用要求：
 
 - 必须说明观察对象和范围
+- 对代码库版本观察，必须同时记录 Version Basis 和 Observed At；字段细则见 [`traceability-rules.md`](./traceability-rules.md) 第 3.5 节。
 - 不应写成“行业共识”或“通用规律”
 - 如要进入正文，应保留适用范围说明
 
@@ -178,7 +182,9 @@ Evidence 是支持 Claim 的材料或观察。
 - 把 issue / PR 中讨论中的未来功能写成当前分支已具备的事实。
 - 把某个 feature branch、实验目录或未发布 PR 的能力写成该项目总体能力。
 
-## 5. 先决定写多少 Evidence
+基于源码的 Claim 缺少 Version Basis 或 Observed At 时，先判断被观察版本能否可复现地找回：能找回时，补齐版本、观察时间和适用范围，并按 `Observed` 重新标注后再保留该 Claim；不能找回时，不得保留为稳定正文，只能作为 `Unverified` 线索留在 `temp/`，或将待核验缺口写入 `backlog.md`。
+
+## 5. Evidence 标注的适用范围与密度
 
 Evidence 标注的对象是关键 Claim，不是每个普通句子。
 
@@ -224,7 +230,7 @@ Evidence 标注的对象是关键 Claim，不是每个普通句子。
 
 如果完全没有 Evidence 说明，通常说明文档还没有达到主线正文可信度要求；不要把它写成稳定定论。
 
-## 6. Evidence 写在哪里
+## 6. Evidence 的承载层级
 
 Evidence 不默认新增独立元信息文档。
 
@@ -240,11 +246,38 @@ Evidence 不默认新增独立元信息文档。
 
 对于具体案例研究，`notes/evidence.md` 或 `evidence-notes.md` 可以作为该案例内部的证据对照层：它从 `notes/general.md`、`notes/source.md` 等研究过程材料中提炼 Claim-Source 对照，服务案例正文的关键判断。它仍不属于七层元信息文件，也不替代正文 `## Evidence` 摘要；正文应保留关键证据结论，并在证据过长时链接到对应的案例 evidence notes。
 
-### 6.1 主题级 evidence registry 的启用条件
+### 6.1 主题级 Evidence registry 的启用条件
 
-Evidence registry 不是默认元信息文件，也不是每个目录都要补齐的额外层。启用条件和命名建议见 `evidence-and-traceability.md` 第 8 节。
+Evidence registry 不是默认元信息文件，也不是每个目录都要补齐的额外层。仅当证据对照本身已经成为主题维护负担时，才按需启用。
 
-## 7. Evidence 放在文档什么位置
+可以考虑启用的条件：
+
+- 单篇正文的 `## Evidence` 已超过约 10 条关键 Claim，继续放在正文中会明显影响阅读。
+- 多篇正文反复引用同一批论文、官方文档、源码、benchmark 或产品案例。
+- 同一主题需要长期维护来源版本、commit、发布日期、适用范围或证据废弃状态。
+- 某个主题存在多组证据冲突，需要集中维护 claim-source matrix 或跨系统 evidence table。
+- 证据对照本身已经成为读者需要查询的对象，而不只是正文结论的附属说明。
+
+不应启用的情况：
+
+- 只有少量来源可以直接写在正文 `## Evidence` 小节中。
+- 只是发现了待补证方向，应优先写入 `backlog.md` 或 `candidates.md`。
+- 只是存在定义、事实或适用边界冲突，应优先写入 `conflict.md`。
+- 只是为了让目录结构更完整而机械创建 `evidence.md`。
+
+命名建议：
+
+- 优先使用具体主题名，例如 `workspace-evidence.md`、`evaluation-evidence.md`。
+- 如果作用范围覆盖整个目录，可使用 `evidence-registry.md`。
+- 不建议把通用 `evidence.md` 作为所有目录的默认文件名，除非该目录已经明确把 Evidence registry 作为稳定维护对象。
+
+使用要求：
+
+- registry 中的每条证据仍应标注 `Status / Sources / Trace / Needs` 或等价字段。
+- 正文中的关键 Claim 应指向 registry 中的相关条目，避免证据与结论脱钩。
+- registry 只承接证据索引与对照，不替代正文解释、`backlog.md`、`candidates.md` 或 `conflict.md`。
+
+## 7. 文档内的 Evidence 位置
 
 ### 7.1 默认位置：文档末尾集中写
 
@@ -296,13 +329,11 @@ Evidence: Observed; needs official docs or implementation examples.
   - Evidence need: HCI papers and product docs
 ```
 
-## 8. Claim 写在哪里
+## 8. Claim 的证据记录写在哪里
 
-Claim 不默认写到单独文件。
+Claim 本身写在其服务的知识正文中。本节规定关键 Claim 的证据记录如何随不同文档类型落位；不默认为该记录新建单独文件。
 
-Claim 应写在它支撑的知识文档里，位置取决于文档类型：
-
-| 文档类型 | Claim 写法 | 位置 |
+| 文档类型 | 证据记录写法 | 位置 |
 |---|---|---|
 | 正文专题 | `## Evidence` 小节中的 Claim 表格或摘要 bullet | 文档末尾集中写，必要时局部短标注 |
 | `overview.md` | 支撑核心分类、边界、trade-off 的 Claim 列表 | 文档末尾 `## Evidence` |
@@ -310,7 +341,7 @@ Claim 应写在它支撑的知识文档里，位置取决于文档类型：
 | `candidates.md` | 研究理由不是稳定 Claim，写成对象条目的 `Why` / `Evidence need` | 条目内部 |
 | `conflict.md` | 冲突双方都可以是 Claim，写明来源和冲突类型 | 冲突条目内部 |
 
-## 9. Claim 怎么写
+## 9. Claim 证据记录的呈现格式
 
 ### 9.1 Claim 表格
 
@@ -345,7 +376,7 @@ Claim 应写在它支撑的知识文档里，位置取决于文档类型：
 Evidence: Unverified synthesis; needs official docs or implementation examples.
 ```
 
-## 10. Claim 写作要求
+## 10. Claim 的质量与表达边界
 
 一个 Claim 应尽量满足。对能力较弱的模型，最稳妥的写法是先写一句 Claim，再补 `Status`，然后补 `Sources` 或 `Needs`：
 
@@ -355,9 +386,19 @@ Evidence: Unverified synthesis; needs official docs or implementation examples.
 - **有状态**：必须标注 `Verified / Observed / Inferred / Unverified / Conflicting / Deprecated` 之一。
 - **有来源或缺口**：有来源就写 Sources；没有来源就写 Needs。
 
-## 11. AI 协作者要求
+### 10.1 高风险机制说明的分层写法
 
-与 `evidence-and-traceability.md` 中的 AI 协作者要求一致，详见该文件第 2 节。
+当论文方法、算法调度、协议、API、公式语义或源码机制等段落，混合或并置来源直接事实、解释性推论、未确认实现或教学性内容中的两类以上，且不分层会改变读者对来源边界的理解时，按适用层组织。
+
+- 事实：先写来源直接支持的定义、行为、数据或流程。
+- 解释：说明由这些事实推出的理解，不得写成来源直接结论。
+- 边界：说明尚未确认的实现细节，或标明可选实现、教学例子和反事实不是来源规定的实际流程；两类同时出现时，应使读者能区分“未确认”与“作者构造的说明”。
+
+可用段落分隔或简短框架语区分各层；不新增 Evidence Status、字段或逐句标注要求。普通背景、概念综述和低风险总结不必套用本结构。
+
+## 11. AI 协作者的执行入口
+
+新增或修改知识文档时，先按 [`evidence-and-traceability.md`](./evidence-and-traceability.md) 第 3 节执行最小流程；仓库级协作者入口与硬约束见 [`AGENTS.md`](../../../AGENTS.md)。
 
 ## 12. 后续扩展方向
 

@@ -17,6 +17,12 @@
 - 已经找到区域，想判断该停在哪一层、该写什么文件：先读 [`place.md`](./place.md)
 - 手上是新材料，想判断能否进入正文，还是应先进入 `temp/`、元信息文件或对象 `notes/`：先读 [`ingest.md`](./ingest.md)
 
+常见衔接方式：
+
+- 如果问题还停留在“这份材料今天应不应该继续留在 `temp/`”，通常先经过 [`ingest.md`](./ingest.md)
+- 如果 `Ingest` 已经把问题推进到“它不适合继续停在临时层了，那接下来该归到哪里”，再转到 [`place.md`](./place.md)
+- 如果落位判断进一步涉及“主题 / 对象 / 混合型”这类研究产物边界，再回到 [`../contributing/rules/research-artifacts.md`](../contributing/rules/research-artifacts.md)
+
 完成能力判断后，再回到 [`../contributing/README.md`](../contributing/README.md) 查具体规则、stop-line 与执行细则。
 
 ## 阅读建议
