@@ -245,7 +245,9 @@ Stop-line：
 
 ## 4. 少量证据写在哪里
 
-少量证据不需要单独拆文件时，主线案例正文仍应按 [`evidence-recording-rules.md`](./evidence-recording-rules.md) 保留 `## Evidence` 摘要，并至少回答 `Status / Sources / Trace / Needs`。局部段落用于补充，不替代该最低摘要：
+少量证据不需要单独拆文件时，主线案例正文仍应按 [`evidence-recording-rules.md`](./evidence-recording-rules.md) 保留统一的 `## Evidence` 汇总层，并至少回答 `Status / Sources / Trace / Needs`。局部段落用于补充，不替代该最低汇总层。简单内容可使用摘要式 bullet；多组 Claim 的证据映射需要升级时，按该规则 §4 组织，但仍保持单一 `## Evidence`。
+
+**Stop-line：正文收束时，不要把结论、适用边界、阅读提示、来源入口和 Evidence 机械拆成连续的同级尾部章节。先把结论、解释和适用边界归入正文，把 `Status / Sources / Trace / Needs` 统一交给 `## Evidence`；局部章节只有在承担独立阅读任务时才保留。**
 
 - **简短来源依据**：可在对应结论后补充 `Evidence` 或 `Source` 段落。
 - **适用范围、限制和未闭合问题**：可在 `Limitations`、`Open Questions` 或 `Gap` 段落展开。

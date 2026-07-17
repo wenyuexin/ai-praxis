@@ -154,3 +154,13 @@ Evidence registry 不是默认元信息文件。仅当证据对照本身已经�
 ```md
 Evidence: Unverified synthesis; needs official docs or implementation examples.
 ```
+
+### 4.4 何时升级 Evidence 呈现结构
+
+默认按当前信息复杂度选择最轻的可恢复结构：
+
+- 单组关键 Claim 共享相同 `Status / Sources / Trace / Needs` 时，使用 §4.2 摘要式 bullet。
+- 多组关键 Claim 的 Status、核验范围或 Needs 不同，继续扩写 bullet 会使 Claim 与证据的对应关系不清时，切换到 §4.1 Claim 表格。
+- 多行共享相同来源或文档处理链路时，可以使用短引用，并在表格后集中说明共享信息；Claim 特有的 Status、Sources、Trace 和 Needs 仍保留在对应行中。
+
+**Stop-line：`Status / Sources / Trace / Needs` 是必须可恢复的语义字段，不是固定的四条 bullet。不要继续用括号或分号链承接多组 Claim；也不要因为 `## Evidence` 内部结构升级，就自动创建独立 Evidence 文件或多个同级尾部章节。只有证据对照本身形成长期维护负担时，才按 §2.1 考虑 registry。**

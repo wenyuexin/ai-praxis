@@ -9,7 +9,9 @@ note: manual_fallback=true；基于原文文本阅读。Phase 1 出现 meta_fetc
 
 # LLM-as-a-Verifier（2607.05391）
 
-## 这篇论文真正研究什么
+> LLM-as-a-Verifier 的核心价值，是把 agent 系统中的“选择正确轨迹”从粗粒度打分问题，改造成可扩展、可预算控制、可复用的连续验证问题；它真正启发人的地方，不只是 benchmark 提升，而是把 verifier 变成了 ranking、monitoring 和 reward shaping 都能共享的系统信号。
+
+## 研究问题与核心定位
 
 这篇论文研究的不是“怎么让 LLM agent 生成更多候选”，而是一个更靠后的系统瓶颈：**当 agent 已经采样出多个候选轨迹后，怎样可靠挑出真正正确的那个**。
 
@@ -333,68 +335,76 @@ RoboRewardBench 采用不同指标：Qwen 3.6 35B VLM 作为 verifier，在多�
 
 这里要谨慎理解：这不是说 verifier 已经解决了 RL reward design，而是说明在机器人和数学推理这两个实验设置中，它可以在稀疏奖励之外提供训练信号，并改善 on-policy 与 off-policy 算法的样本效率。
 
-## 论文真正值得带走什么
+## 核心结论与适用边界
 
-### 1. Verification scaling 是主贡献
+### 核心结论
 
-这篇论文最强的想法是：agent 系统不是只有生成阶段可以扩展，验证本身也可以扩展。更强的 verifier 能把已有候选池里的正确轨迹选出来，从而回收 oracle 上界所代表的提升空间。
+> **综合判断。** 以下结论基于论文方法与实验的整体归纳，其中工程迁移判断不等同于作者的直接表述。
 
-### 2. 连续评分比离散评分更适合长轨迹
+1. **Verification scaling 是主贡献。** 这篇论文最强的想法是：agent 系统不是只有生成阶段可以扩展，验证本身也可以扩展。更强的 verifier 能把已有候选池里的正确轨迹选出来，从而回收 oracle 上界所代表的提升空间。
+2. **连续评分比离散评分更适合长轨迹。** 长时程 agent 轨迹的失败常常是细微的；连续概率评分比离散整数评分更适合表达这种不确定性差异。
+3. **Criteria decomposition 是工程上最容易迁移的部分。** 即使没有完全复现论文的 logprob-based verifier，拆分评价标准本身也很有用。对于 agent 评估，几个较小、更可验证的问题通常比一个过大的问题更容易检查。
+4. **PPT 是落地关键。** 如果 verifier 太贵，就算它更准也很难放进真实系统。PPT 把更细的验证变成有预算约束下仍可用的选择器。
+5. **更细粒度提高的是判断分辨率，不是输入信息量。** Score granularity 可以减少离散评分造成的 tie，但不会补充轨迹中缺失的状态，也不能修复错误 criteria 或能力不足的 verifier；收益仍受轨迹可观测性和 verifier backbone 限制。
 
-长时程 agent 轨迹的失败常常是细微的：某个测试没真跑、某个环境状态被错误验证、某个工具输出被误读。连续概率评分比离散整数评分更适合表达这种不确定性差异。
+### 推理期适用条件与成本边界
 
-### 3. Criteria decomposition 是工程上最容易迁移的部分
+LLM-as-a-Verifier 可以用于推理期，但更准确的定位是“有预算约束的候选选择与过程监控”，而不是默认开启的通用 agent 解码方式。其端到端成本同时来自候选生成和候选验证：
 
-即使没有完全复现论文的 logprob-based verifier，拆分评价标准这件事本身也很有用。对于任何 agent 评估，问一个大问题通常不如问几个较小、更可验证的问题。
+```text
+总成本
+  ≈ N 条候选轨迹的生成与环境执行
+  + 候选对比较 × 评价标准数 × 重复验证次数
+```
 
-### 4. PPT 是落地关键
+PPT 只压缩第二部分的候选对比较预算，不减少生成 `N` 条轨迹所需的模型调用、工具执行和环境交互成本。并行生成可以降低墙钟延迟，但不会降低总计算量。
 
-如果 verifier 太贵，就算它更准也很难放进真实系统。PPT 把“更细的验证”变成“有预算约束下仍可用的选择器”。
+| 使用方式 | 适用场景 | 主要边界 |
+|------|------|------|
+| 完整轨迹 Best-of-N | coding、规划和可并行 sandbox 中的高价值终态选择 | 需要生成多条完整轨迹；收益受候选池 oracle 上界约束 |
+| 每步候选选择 | 错误代价高、可以接受额外延迟的在线 agent | 每一步都增加生成和验证成本，长任务中会持续累积 |
+| 轨迹前缀监控 | 需要暂停、回滚或人工介入的长时程任务 | verifier 分数只是进度代理，不是真实状态或正确性的无误差标签 |
 
-## 不应过度泛化的地方
+只有当候选池相对单次生成存在明显 oracle gap、候选具有足够多样性，并且错误提交代价高于额外计算成本时，这种推理期扩展才更可能值得。对于低延迟交互、候选高度同质或不可并行复制的真实环境，不应默认启用完整 Best-of-N 流程。
 
-| 风险 | 为什么要保守 |
+论文报告了候选对查询预算和选择准确率，但没有完整报告端到端延迟、总 token 成本、TurboAgent 常开后的吞吐，以及 `N / C / K / k` 的生产预算选择方法；因此现有实验不能直接证明该方案适合低延迟在线部署。
+
+### 方法适用边界
+
+| 边界 | 含义 |
 |------|------|
-| “verification 解决 agent reliability” | 它只解决 selection / monitoring 的一部分，仍依赖候选质量和 verifier backbone |
-| “同一 verifier 到处可用” | 论文展示了跨域能力，但不同 domain 仍需要合适 prompt、criteria、backbone |
-| “RL reward 已经成熟” | RL 部分是有力扩展，但实证范围目前限于机器人与数学推理；本文未展开其余超参数和附录消融 |
-| “closed frontier model 可直接套用” | 框架要求访问评分 token logits；论文给出两阶段 workaround：闭源模型负责推理，logits 可访问的开放 verifier 负责验证，但这不是无代价的直接套用 |
-
-## 读者最容易卡住的点
-
-1. **为什么 logits expectation 不是小修小补**
-   它保留了评分分布中的不确定性，而这正是复杂轨迹比较时有用的信息。
-
-2. **三条扩展轴怎么分工**
-   分数粒度负责分辨率，重复评估负责方差，标准分解负责评价问题的偏置。
-
-3. **PPT 为什么必要**
-   没有 PPT，pairwise verification 成本会随候选数量快速膨胀。
-
-4. **progress / RL 为什么是同一个信号的复用**
-   只要 verifier score 足够连续，它就不只能选 winner，也能看过程、给 reward。
-
-## 证据边界
-
-本对比版仍是 `degraded_ready`，原因不是主线理解不清，而是上游证据链不完整：
-
-- Phase 1 `meta_fetch_failed`，缺少稳定论文元信息。
-- 没有 `_evidence.json`，资源索引不如标准路径完整。
-- 聚合后的 `2607.05391_src.txt` 中，部分公式和表格数字以 `[FORMULA_INLINE]` 形式出现；但本文补读了原始 TeX 章节，因此 Oracle Pass@K、四基准协议、TurboAgent 与 RL 表中的数值可直接回溯到源码。
-- 未能从原始 TeX 明确核验的图表趋势、消融细节或公式推导，仍不作精确复述。
-
-## 一句话总结
-
-LLM-as-a-Verifier 的核心价值，是把 agent 系统中的“选择正确轨迹”从粗粒度打分问题，改造成可扩展、可预算控制、可复用的连续验证问题；它真正启发人的地方，不只是 benchmark 提升，而是把 verifier 变成了 ranking、monitoring 和 reward shaping 都能共享的系统信号。
-
-## 主要证据入口
-
-- 原论文摘要页：`https://arxiv.org/abs/2607.05391`
-- 原论文 PDF：`https://arxiv.org/pdf/2607.05391.pdf`
+| 候选池上界 | Verifier 只能选择已有候选；候选池中没有正确轨迹时，验证不能创造正确答案 |
+| 连续分数语义 | 连续 reward 提高排序分辨率，但论文没有证明它是经过校准的任务成功概率 |
+| 轨迹可观测性 | 缺失的环境状态、工具结果和终态不会被更细的评分粒度自动恢复 |
+| 与确定性检查的关系 | 测试、编译和状态校验仍应优先使用；LLM verifier 主要补充难以形式化的规格符合度和轨迹质量判断 |
+| 跨领域迁移 | 论文展示了跨域能力，但不同 domain 仍需要合适的 prompt、criteria 和 verifier backbone |
+| 监控与 RL | Monitoring 目前主要由进度相关性支持，RL 实证范围限于机器人与数学推理；二者不能视为与轨迹选择同等成熟 |
+| 模型接口 | 完整框架依赖评分 token logits；闭源模型的两阶段 workaround 会增加成本和系统复杂度 |
 
 ## Evidence
 
-- Status: `Observed`（基于 arXiv 摘要页、PDF 与原始 TeX 章节的直接核读，覆盖本文引用的主要方法、Terminal-Bench V2 / SWE-Bench Verified / MedAgentBench 主结果、RoboRewardBench 偏好准确率、VOC、TurboAgent 与 RL 扩展结论）；`Inferred`（对“真正值得带走什么”“不应过度泛化的地方”“读者最容易卡住的点”等综合解释性段落）。
-- Sources: 原始论文来自 arXiv `2607.05391`。本文以 arXiv 摘要页与 PDF 为公开来源，并以本地 scholar pipeline 聚合文本 `2607.05391_src.txt` 和补读的原始 TeX 章节做交叉核对；由于 Phase 1 出现 `meta_fetch_failed`，且未生成稳定 `_evidence.json`，精确元数据、附录细节与部分消融数值仍处于降级状态。
-- Trace: 本文最初来自 `temp/2607.05391_comparison.md` 的论文对比笔记；在确认其主题稳定落入 `agentic/07-evaluation/agent-benchmarks/` 后，转写为该目录下的主干论文对象文档，并补做对原论文的直接复核。
-- Needs: 若后续要把本文从 `degraded_ready` 提升到更完整状态，需要补齐稳定论文元信息与资源索引，并继续对附录中的公式、图表趋势、消融明细和未在正文精确复述的数值做逐项回溯标注。
+### Claim coverage
+
+| Claim group | Status | Sources | Trace | Needs |
+|------|------|------|------|------|
+| 连续评分协议、三条 verification scaling 轴与 PPT | `Observed` | [S1]、[S2]、[S3] | 通过 PDF 与原始 TeX 核对评分 prompt、reward 公式、Bradley--Terry 偏好和 PPT 排序过程 | 论文未公开的 tokenizer、structured decoding 与 API logprob 返回细节仍不作实现定论 |
+| Terminal-Bench V2、SWE-Bench Verified 与 MedAgentBench 选择结果 | `Observed` | [S1]、[S2]、[S3] | 通过原始 TeX 核对 Pass@1、Oracle、Ours、候选协议与 PPT 预算数据 | 继续回溯附录中的完整实验配置、图表趋势与消融明细 |
+| RoboRewardBench 与轨迹进度监控 | `Observed` | [S1]、[S2]、[S3] | 核对多帧 rollout 偏好准确率和 VOC 数据 | 仍需验证 VOC 信号用于在线暂停、回滚或重规划时的可靠性 |
+| TurboAgent 与 RL 扩展 | `Observed` | [S1]、[S2]、[S3] | 核对 TurboAgent 系统描述，以及机器人和数学推理中的 RL 结果 | 缺少端到端延迟、总 token 成本、常开吞吐与更广泛 RL 场景验证 |
+| 核心结论、推理期成本与方法适用边界 | `Inferred` | [S1]、[S2]、[S3] | 基于上述方法、实验和系统描述进行综合解释，不视为作者直接表述 | 需要真实生产部署数据验证成本收益、参数预算与跨场景稳定性 |
+
+### Sources
+
+- [S1] `https://arxiv.org/abs/2607.05391`
+- [S2] `https://arxiv.org/pdf/2607.05391.pdf`
+- [S3] `https://arxiv.org/e-print/2607.05391`
+
+### Document trace
+
+本文最初来自 `temp/2607.05391_comparison.md` 的论文对比笔记，随后转写为 `agentic/07-evaluation/agent-benchmarks/` 下的主干论文对象文档。处理过程中使用 scholar pipeline 生成 `2607.05391_src.txt`；由于部分公式和表格数字以 `[FORMULA_INLINE]` 形式出现，之后补读原始 TeX 章节，对本文引用的主要方法、Oracle Pass@K 数值、四基准协议，以及 TurboAgent 与 RL 数值进行交叉核对。Phase 1 出现 `meta_fetch_failed`，且未生成稳定 `_evidence.json`。
+
+### Remaining needs
+
+- 补齐稳定论文元信息与资源索引，使文档脱离 `degraded_ready`。
+- 继续对附录公式、图表趋势、消融明细和未在正文精确复述的数值做逐项回溯标注。
+- 未能从原始 TeX 明确核验的内容不作精确复述。
