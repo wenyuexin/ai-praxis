@@ -60,7 +60,9 @@ repo/
     │   │   ├── structure-refactoring-rules.md # 结构重构规则
     │   │   ├── research-artifacts.md # 研究产物组织规则
     │   │   ├── evidence-and-traceability.md # Evidence + Trace 组合入口
-    │   │   ├── evidence-rules.md     # Evidence 规则
+    │   │   ├── evidence-assessment-rules.md # Evidence 判断规则
+    │   │   ├── evidence-recording-rules.md # Evidence 记录规则
+    │   │   ├── evidence-source-rules.md # Evidence 来源边界
     │   │   └── traceability-rules.md # Traceability 规则
     │   ├── intent/                   # 设计意图与长解释（按需）
     │   ├── cases/                    # 边界样本与误判复盘（按需）
@@ -186,7 +188,9 @@ AI 协作者不是系统外部的使用者，而是系统的一部分。
 
 - `docs/contributing/rules/documentation-workflow.md`
 - `docs/contributing/rules/evidence-and-traceability.md`
-- `docs/contributing/rules/evidence-rules.md`
+- `docs/contributing/rules/evidence-assessment-rules.md`
+- `docs/contributing/rules/evidence-recording-rules.md`
+- `docs/contributing/rules/evidence-source-rules.md`
 - `docs/contributing/rules/traceability-rules.md`
 
 ### 3.2 Place：定位后的落位决策

@@ -10,7 +10,7 @@
 docs/contributing/
 ├── README.md
 ├── index.md
-├── rules/
+├── rules/    # 规则文档
 │   ├── meta-rules.md
 │   ├── documentation-workflow.md
 │   ├── research-artifacts.md
@@ -21,11 +21,13 @@ docs/contributing/
 │   ├── organization-principles.md
 │   ├── structure-refactoring-rules.md
 │   ├── evidence-and-traceability.md
-│   ├── evidence-rules.md
+│   ├── evidence-assessment-rules.md
+│   ├── evidence-recording-rules.md
+│   ├── evidence-source-rules.md
 │   └── traceability-rules.md
-├── intent/
-├── cases/
-└── incidents/
+├── intent/    # 设计意图
+├── cases/    # 典型案例
+└── incidents/    # 问题轨迹
 ```
 
 ## 按任务找入口
@@ -38,7 +40,10 @@ docs/contributing/
 - **我现在要优化搜索 / 导航体验，或判断目录导航与定向搜索应如何配合**：先读 [`metadata-files.md`](./rules/metadata-files.md) 与 [`index-rules.md`](./rules/index-rules.md)；需要能力层说明时继续读 [`../capabilities/navigate.md`](../capabilities/navigate.md)
 - **我现在要讨论结构是否长期合理、分类轴是否该调整**：读 [`organization-principles.md`](./rules/organization-principles.md)
 - **我现在已经决定做目录迁移、结构收敛或重构执行**：读 [`structure-refactoring-rules.md`](./rules/structure-refactoring-rules.md)
-- **我现在要标注 Evidence / Traceability，或判断一条说法该用什么证据状态**：先读 [`evidence-and-traceability.md`](./rules/evidence-and-traceability.md)
+- **我现在要同时处理 Evidence 判断、记录、落位与 Trace，或执行 `temp/` 回流**：读 [`evidence-and-traceability.md`](./rules/evidence-and-traceability.md)
+- **我现在要判断 Claim、Evidence Status 或高风险表达边界**：读 [`evidence-assessment-rules.md`](./rules/evidence-assessment-rules.md)
+- **我现在要决定 Evidence 是否需要记录、写在哪里、用什么格式**：读 [`evidence-recording-rules.md`](./rules/evidence-recording-rules.md)
+- **我现在要处理论文、代码库、release notes、实验报告、issue / PR 或其他来源类型**：读 [`evidence-source-rules.md`](./rules/evidence-source-rules.md)
 - **我现在要处理研究对象、案例研究、辅助材料如何组织**：读 [`research-artifacts.md`](./rules/research-artifacts.md)
 - **我现在要判断不同类型文档之间该如何引用、链接、回写或保持边界**：读 [`document-linking-rules.md`](./rules/document-linking-rules.md)
 - **我现在要判断规则本身该不该改、怎么最小改动**：先读 [`meta-rules.md`](./rules/meta-rules.md) 和 [`intent/meta-rules.md`](./intent/meta-rules.md)
@@ -63,6 +68,8 @@ docs/contributing/
 - [`intent/research-artifacts.md`](./intent/research-artifacts.md)：研究产物组织总原则与混合型研究单元
 - [`intent/deep-research.md`](./intent/deep-research.md)：研究方法簇中的深度研究脚手架专项
 - [`intent/reflections.md`](./intent/reflections.md)：研究方法簇中的反思层专项
+- [`intent/evidence-governance.md`](./intent/evidence-governance.md)：Evidence 判断、记录和来源模块的设计分工
+- [`intent/evidence-source-boundaries.md`](./intent/evidence-source-boundaries.md)：Evidence 来源类型边界的设计理由
 - [`intent/traceability-rules.md`](./intent/traceability-rules.md)：Traceability 规则的设计意图
 - [`intent/repo-entry-files.md`](./intent/repo-entry-files.md)：仓库入口文件设计原理
 
@@ -89,7 +96,9 @@ docs/contributing/
 - [`organization-principles.md`](./rules/organization-principles.md)：知识树设计与长期组织原则
 - [`structure-refactoring-rules.md`](./rules/structure-refactoring-rules.md)：目录重构与结构演进规则
 - [`evidence-and-traceability.md`](./rules/evidence-and-traceability.md)：Evidence + Traceability 组合入口
-- [`evidence-rules.md`](./rules/evidence-rules.md)：Evidence 规则
+- [`evidence-assessment-rules.md`](./rules/evidence-assessment-rules.md)：Claim、Evidence Status 和高风险表达判断
+- [`evidence-recording-rules.md`](./rules/evidence-recording-rules.md)：Evidence 记录位置、registry 和呈现格式
+- [`evidence-source-rules.md`](./rules/evidence-source-rules.md)：论文、代码库、实验报告等来源边界
 - [`traceability-rules.md`](./rules/traceability-rules.md)：Traceability 规则
 
 ## 最小分工

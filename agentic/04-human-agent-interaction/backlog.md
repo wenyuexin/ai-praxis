@@ -113,5 +113,5 @@
 - `overview.md` 已提供 delegation、human-in-the-loop、UI 与 trust 四个核心视角的总体框架。
 - `human-in-the-loop/vibe-coding-human-harness.md` 已提供 coding-agent 场景下的人类外部支架案例，backlog 后续主要追踪其可泛化边界与仍未沉淀的专题。
 - `evidence-registry.md` 已删除；其剩余内容已迁回本文件与正文专题。不再在 sub domain 根目录保留辅助材料文件。
-- 当前目录中的新增 overview 与正文专题仍以结构化归纳为主，后续需要按 `docs/contributing/rules/evidence-rules.md` 和 `docs/contributing/rules/traceability-rules.md` 继续补充 Evidence 状态与必要的 Trace 字段。
+- 当前目录中的新增 overview 与正文专题仍以结构化归纳为主，后续应先按 `docs/contributing/rules/evidence-and-traceability.md` 执行组合流程，再按具体任务补充 Evidence 状态、记录位置、来源边界与必要的 Trace 字段。
 - 后续若某个问题获得更稳定证据，应优先拆成专题文档，而不是长期停留在 backlog。

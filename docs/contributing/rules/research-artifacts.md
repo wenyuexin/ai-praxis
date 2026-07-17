@@ -8,7 +8,7 @@
 
 本文件负责研究产物组织，不负责以下内容（这些由对应文件承接）：
 
-- Evidence 状态判断与标注细则：见 [`evidence-rules.md`](./evidence-rules.md)
+- Evidence 状态判断与标注细则：见 [`evidence-assessment-rules.md`](./evidence-assessment-rules.md)、[`evidence-recording-rules.md`](./evidence-recording-rules.md) 和 [`evidence-source-rules.md`](./evidence-source-rules.md)
 - Traceability 链路记录：见 [`traceability-rules.md`](./traceability-rules.md)
 - 材料分流与回流流程（拿到材料后怎么做）：见 [`documentation-workflow.md`](./documentation-workflow.md)
 - 元信息文件模型（README / overview / backlog / candidates / roadmap / conflict）：见 [`metadata-files.md`](./metadata-files.md)
@@ -209,8 +209,8 @@
 - **Notes 回答研究过程**：研究者或 AI 看到了什么、查了什么、哪些路径失败了、哪些观察尚未整理。
 - **Evidence 回答结论支撑**：某个正文 Claim 凭什么成立、Evidence 状态是什么、来源和限制是什么。
 - **Notes 是原材料池**：可以包含源码片段、搜索路径、失败搜索、长引用、临时判断和待查问题，允许杂乱和未完成。
-- **Evidence 是论证结构**：应围绕 Claim / Status / Sources / Notes / Needs 等字段组织，服务正文可信度和复核。
-- **代码库研究需要版本语义**：当 notes 或 evidence 指向开源代码库时，应遵守 [`evidence-rules.md`](./evidence-rules.md) 的版本基线规则和 [`traceability-rules.md`](./traceability-rules.md) 的版本链路字段要求。
+- **Evidence 是论证结构**：应围绕 Claim / Status / Sources / Trace / Needs 等字段组织，服务正文可信度和复核。
+- **代码库研究需要版本语义**：当 notes 或 evidence 指向开源代码库时，应遵守 [`evidence-source-rules.md`](./evidence-source-rules.md) 的源码版本边界和 [`traceability-rules.md`](./traceability-rules.md) 的版本链路字段要求。
 
 因此，`notes/evidence.md` 或 `evidence-notes.md` 不是普通杂项 notes，而是从 notes 原材料中整理出来的 claim-source 对照层。正文中的关键判断应优先引用正文 `## Evidence` 或 `notes/evidence.md`，而不是要求读者从 `notes/general.md`、`notes/source.md` 这类过程材料中自行还原论证。
 
@@ -245,12 +245,12 @@ Stop-line：
 
 ## 4. 少量证据写在哪里
 
-少量证据不需要单独拆文件时，应放在正文的固定位置，而不是散落在叙事段落中：
+少量证据不需要单独拆文件时，主线案例正文仍应按 [`evidence-recording-rules.md`](./evidence-recording-rules.md) 保留 `## Evidence` 摘要，并至少回答 `Status / Sources / Trace / Needs`。局部段落用于补充，不替代该最低摘要：
 
-- **简短来源依据**：放在对应结论后的 `Evidence` 或 `Source` 段落。
-- **适用范围、限制和未闭合问题**：放在 `Limitations`、`Open Questions` 或 `Gap` 段落。
-- **与子领域文档的关系**：放在 `Relation to Topics`、`Trace` 或 `Placement` 段落。
-- **证据超载**：如果证据开始超过正文可读性承载，迁移到研究辅助材料，并在正文中只保留摘要和链接。
+- **简短来源依据**：可在对应结论后补充 `Evidence` 或 `Source` 段落。
+- **适用范围、限制和未闭合问题**：可在 `Limitations`、`Open Questions` 或 `Gap` 段落展开。
+- **与子领域文档的关系**：可在 `Relation to Topics`、`Trace` 或 `Placement` 段落展开。
+- **证据超载**：如果证据开始超过正文可读性承载，迁移到研究辅助材料，并在正文 `## Evidence` 中保留摘要和链接。
 
 ## 5. 研究辅助材料如何组织
 
@@ -314,7 +314,7 @@ Stop-line：
 
 不同重要程度的案例采用不同目录结构：
 
-- **小案例**：可以只有 `README.md` + 一篇正文；少量证据放正文 `Evidence` / `Gap` 段落。
+- **小案例**：可以只有 `README.md` + 一篇正文；少量证据写入正文 `## Evidence` 摘要，限制与缺口可按需在 `Gap` 等局部段落展开。
 - **中等案例**：建议有 `overview.md` 或 `architecture.md`，再按机制拆少量专题；少量研究过程材料可放案例根目录的 `notes.md`，但不同时创建 `notes/`。
 - **重要案例**：建议保留"读者正文 + 机制专题 + 辅助材料层"；一旦启用 `notes/`，源码核验、证据表、失败搜索和其他 notes 都放入 `notes/`，根目录只保留读者正文与机制专题。
 - **被明确标记为高研究价值、且未来大概率持续扩展的对象**：即使当前材料还不多，也应优先按长期稳定形态判断是否直接建立对象目录；不要因为“当前文件少”而延后，除非能证明该对象不会稳定长出更多研究产物。
@@ -328,7 +328,7 @@ Stop-line：
 | [`documentation-workflow.md`](./documentation-workflow.md) | 负责材料处理、分流和回流流程；当材料进入案例研究或子领域专题组织阶段时，转由本文件定义产物结构 |
 | [`metadata-files.md`](./metadata-files.md) | 本文件定义 `notes.md` / `source-notes.md` / `evidence-notes.md` 等辅助材料的具体组织方式；元信息模型只说明它们不是七层元信息文件 |
 | [`readme-rules.md`](./readme-rules.md) | 本文件定义案例目录内的文档结构；README 规则补充说明案例目录 README 如何导航这些产物 |
-| [`evidence-rules.md`](./evidence-rules.md) | 本文件不替代 Evidence 规则，只说明少量证据如何写在正文中、何时迁移到辅助材料 |
+| [`evidence-assessment-rules.md`](./evidence-assessment-rules.md)、[`evidence-recording-rules.md`](./evidence-recording-rules.md)、[`evidence-source-rules.md`](./evidence-source-rules.md) | 本文件不替代 Evidence 规则，只说明少量证据如何写在正文中、何时迁移到辅助材料 |
 | [`traceability-rules.md`](./traceability-rules.md) | 本文件说案例目录中的 Trace / Gap 段落位置；详细 Trace 规则由该文件定义 |
 
 ## 9. 默认策略

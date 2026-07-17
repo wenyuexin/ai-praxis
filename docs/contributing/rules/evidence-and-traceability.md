@@ -2,7 +2,7 @@
 
 本文件是 Evidence 与 Traceability 的组合执行入口，不重复定义两套规则。
 
-相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`docs/contributing/README.md`](../README.md) / [`Evidence 规则`](./evidence-rules.md) / [`Traceability 规则`](./traceability-rules.md)。
+相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`docs/contributing/README.md`](../README.md) / [`Evidence 判断规则`](./evidence-assessment-rules.md) / [`Evidence 记录规则`](./evidence-recording-rules.md) / [`Evidence 来源边界规则`](./evidence-source-rules.md) / [`Traceability 规则`](./traceability-rules.md)。
 
 核心策略：**正式 Evidence + 轻量 Traceability**。
 
@@ -11,22 +11,18 @@
 
 ## 1. 文件职责
 
-`evidence-rules.md` 和 `traceability-rules.md` 是并列的原子规则文件：
+Evidence 规则按任务拆成三个原子文件，Traceability 仍是并列的原子规则：
 
-- [`evidence-rules.md`](./evidence-rules.md)：定义 Claim、Evidence、Evidence 状态、Evidence 写法和 Evidence 放置位置。
-- [`traceability-rules.md`](./traceability-rules.md)：定义 Trace、Trace Unit、Source / Decision / Placement / Gap 和轻量标注方式。
+- [`evidence-assessment-rules.md`](./evidence-assessment-rules.md)：定义 Claim、Evidence Status、Claim 质量和高风险表达边界。
+- [`evidence-recording-rules.md`](./evidence-recording-rules.md)：定义 Evidence 标注范围、承载位置、registry 条件和呈现格式。
+- [`evidence-source-rules.md`](./evidence-source-rules.md)：定义论文、代码库、实验报告等来源类型的使用边界。
+- [`traceability-rules.md`](./traceability-rules.md)：定义 Trace、Trace Unit、Source / Decision / Placement / Gap 和版本链路。
 
-本文件只处理两者一起执行时的顺序和最低门槛，避免形成第三套 Evidence 或 Traceability 规则。
+本文件只处理这些规则一起执行时的顺序和最低门槛，避免形成第二套 Evidence 或 Traceability 规则。
 
-## 2. 为什么需要组合入口
+## 2. 何时使用组合入口
 
-新增或修改知识文档时，Evidence 和 Traceability 通常同时发生：
-
-- 判断 Claim 是否可信时，需要知道来源和证据状态。
-- 判断内容该放在哪里时，需要知道材料来源、处理决策和证据缺口。
-- 从 `temp/`、外部 AI 调研、联网检索或网页抓取结果回流正文时，既不能缺 Evidence 状态，也不能缺 Trace 说明。
-
-因此贡献者可以先读本文件获得最小流程，再进入两个原子规则文件查细则。
+当任务同时涉及 Evidence 判断、记录、落位与 Trace，或正在执行 `temp/` 回流时，按本文件完成最小组合流程；已知单一子任务时，直接进入对应原子规则。只有遇到边界情况时，才追加阅读其他细则。
 
 ## 3. 最小执行流程
 
@@ -34,10 +30,11 @@
 
 ```text
 材料输入
-  → 判断材料类型和目标落位
+  → 判断材料类型
   → 识别关键 Claim
-  → 高风险时判断是否需要按“事实 → 解释 → 边界”组织正文
   → 判断 Evidence 状态
+  → 判断目标落位
+  → 高风险时按“事实 → 解释 → 边界”组织正文
   → 写入正文、元信息文件或继续保留在 temp/
   → 记录 Sources / Trace / Needs
 ```
@@ -61,11 +58,12 @@
 - Needs: 还缺什么证据、验证或对照
 ```
 
-如果 Source 包含开源代码库、release notes、issue / PR 或源码文件，除基本字段外还应补版本链路信息；最低要求与字段定义见 [`traceability-rules.md`](./traceability-rules.md)，Claim 级使用边界见 [`evidence-rules.md`](./evidence-rules.md)。
+如果结论基于源码观察，除基本字段外必须补 `Version Basis` 和 `Observed At`；Source 指向开源代码库、release notes 或 issue / PR 时，可按版本范围和可恢复性需要补充版本链路信息。最低要求与字段定义见 [`traceability-rules.md`](./traceability-rules.md)，Claim 级使用边界见 [`evidence-assessment-rules.md`](./evidence-assessment-rules.md)，来源类型边界见 [`evidence-source-rules.md`](./evidence-source-rules.md)。
 
-字段归属。若拿不准，先按这组最小顺序补：`Status → Sources → Trace → Needs`；版本链路字段只在源码 / release notes / issue / PR 等代码库材料中再补：
+字段归属。若拿不准，先按这组最小顺序补：`Status → Sources → Trace → Needs`；源码观察必须补版本链路字段，release notes、issue / PR 等其他代码库材料按需补充：
 
-- `Status`、`Sources` 的细则见 [`evidence-rules.md`](./evidence-rules.md)。
+- `Status` 的细则见 [`evidence-assessment-rules.md`](./evidence-assessment-rules.md)；来源类型边界见 [`evidence-source-rules.md`](./evidence-source-rules.md)。
+- `Sources` 的记录位置和呈现方式见 [`evidence-recording-rules.md`](./evidence-recording-rules.md)。
 - `Trace`、`Needs` 的细则见 [`traceability-rules.md`](./traceability-rules.md)。
 - `Version Basis`、`Observed At`、`Scope`、`Drift Risk` 是 `Trace` 的版本链路补充字段；其中 `Version Basis`、`Observed At` 是源码实现结论的最低字段，`Scope` 按适用范围补充，`Drift Risk` 仅对快速迭代对象按需补充。
 - 同一文档反复引用同一个外部仓库或文档站时，可以先声明一次基准 URL，后续用相对路径补充；前提是读者仍能还原完整来源。
@@ -87,28 +85,21 @@
 `temp/` 内容默认只是输入材料，不是主线知识；`web_search` / `web_fetch` 等联网工具获取的结果也按外部输入处理。迁移出 `temp/` 或将联网结果写入正文前，至少满足：
 
 - 已判断材料类型：整体认知、主题缺口、待研究对象、冲突问题或正文专题材料。
+- 已判断 Evidence 状态：进入 `overview.md` 或正文专题的内容至少能标为 `Observed` 或 `Inferred`；只能标为 `Unverified` 时，只能继续留在 `temp/`，或作为待核验缺口进入 `backlog.md` / `candidates.md`，不得写成正文定论。
 - 已判断目标落位：`overview.md`、`backlog.md`、`candidates.md`、`conflict.md` 或某篇正文专题。
-- 已判断 Evidence 状态：至少能标为 `Observed` 或 `Inferred`；只能标为 `Unverified` 时，不得写成正文定论。
 - 已记录 Trace：能说明 `Source / Decision / Placement / Gap` 或等价信息（链路简单时用 `Sources / Trace / Needs` 即可）。
 - 主线正文与正式元信息文件中的最终 `Sources` 不再停留在 `temp/` 路径；若内容原本来自 `temp/`，回流时应优先改写为论文原文、官方文档、上游公开仓库 URL，或摘要性 Trace。更细的回流硬约束、检查单与 stop-line 见 [`documentation-workflow.md`](./documentation-workflow.md) 第 5、6、8 节。
 - 已说明缺口：写清还缺论文、官方文档、源码实现、社区观察或跨系统比较中的哪一类。
 
-最小回流标注（字段映射说明：这里的 `Sources / Trace / Needs` 分别对应 `traceability-rules.md` 中的 `Source`、`Decision+Placement`、`Gap`）：
-
-```md
-## Evidence
-
-- Status: Inferred
-- Sources: 外部调研涉及的论文原文与官方文档
-- Trace: First-pass synthesis moved out of `temp/`; temporary notes were used only as input staging, not as final sources.
-- Needs: External validation from papers, official docs, or open-source implementations.
-```
+回流时按 §4 补齐最小字段；`Sources` 必须写可恢复的论文、官方文档、上游仓库 URL 或仓库内相对路径，具体呈现格式见 [`evidence-recording-rules.md`](./evidence-recording-rules.md)。
 
 ## 6. 适用边界
 
 本文件不负责：
 
-- 重新定义 Evidence 状态、Claim 写法或 evidence registry 条件；见 [`evidence-rules.md`](./evidence-rules.md)。
+- 重新定义 Evidence 状态或 Claim 写法；见 [`evidence-assessment-rules.md`](./evidence-assessment-rules.md)。
+- 重新定义 Evidence 记录、registry 条件或呈现格式；见 [`evidence-recording-rules.md`](./evidence-recording-rules.md)。
+- 重新定义来源类型边界；见 [`evidence-source-rules.md`](./evidence-source-rules.md)。
 - 重新定义 Source / Decision / Placement / Gap 或 Trace Unit；见 [`traceability-rules.md`](./traceability-rules.md)。
 - 说明 `overview.md`、`backlog.md`、`candidates.md`、`conflict.md` 的完整职责；见 [`metadata-files.md`](./metadata-files.md)。
 - 说明案例研究、机制专题、`notes/` 和 `notes/evidence.md` 的组织方式；见 [`research-artifacts.md`](./research-artifacts.md)。

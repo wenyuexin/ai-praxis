@@ -28,7 +28,7 @@
 - 如果你在**修改目录树、查找导航，或判断结构展示是否应从 README 迁到 `index.md`**：先读 [`metadata-files.md`](./docs/contributing/rules/metadata-files.md)；涉及 `index.md` 的专项细则时继续读 [`index-rules.md`](./docs/contributing/rules/index-rules.md)；README 写法问题再按需读 [`readme-rules.md`](./docs/contributing/rules/readme-rules.md)
 - 如果你在**处理 temp / 外部调研 / 回流正文**：读 [`documentation-workflow.md`](./docs/contributing/rules/documentation-workflow.md)
 - 如果你在**讨论结构是否长期合理**：读 [`organization-principles.md`](./docs/contributing/rules/organization-principles.md)
-- 如果你在**标注 Evidence 或 Trace**：先读 [`evidence-and-traceability.md`](./docs/contributing/rules/evidence-and-traceability.md)；需要细则时，再读 [`evidence-rules.md`](./docs/contributing/rules/evidence-rules.md) 和 [`traceability-rules.md`](./docs/contributing/rules/traceability-rules.md)
+- 如果任务同时涉及 **Evidence 判断、记录、落位与 Trace**，或正在处理 `temp/` 回流：读 [`evidence-and-traceability.md`](./docs/contributing/rules/evidence-and-traceability.md) 完成最小组合流程；如果子任务已经明确，直接按需读取对应原子规则：判断 Claim 和 Status 读 [`evidence-assessment-rules.md`](./docs/contributing/rules/evidence-assessment-rules.md)，决定记录位置和格式读 [`evidence-recording-rules.md`](./docs/contributing/rules/evidence-recording-rules.md)，处理来源类型边界读 [`evidence-source-rules.md`](./docs/contributing/rules/evidence-source-rules.md)，处理链路字段读 [`traceability-rules.md`](./docs/contributing/rules/traceability-rules.md)
 
 ## 3. 硬约束
 

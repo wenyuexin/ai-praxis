@@ -16,7 +16,7 @@
 真正动手新增、迁移、修改文档前，至少先完成下面四个判断：
 
 1. **材料类型**：它是整体认知、主题缺口、待研究对象、冲突问题，还是正文专题材料？
-2. **Evidence 状态**：它属于 `Verified`、`Observed`、`Inferred`、`Unverified`、`Conflicting` 还是 `Deprecated`？具体状态与标注方式见 [`evidence-rules.md`](./evidence-rules.md)，内容链路记录见 [`traceability-rules.md`](./traceability-rules.md)。
+2. **Evidence 状态**：它属于 `Verified`、`Observed`、`Inferred`、`Unverified`、`Conflicting` 还是 `Deprecated`？具体状态见 [`evidence-assessment-rules.md`](./evidence-assessment-rules.md)，标注位置和呈现方式见 [`evidence-recording-rules.md`](./evidence-recording-rules.md)，来源类型边界见 [`evidence-source-rules.md`](./evidence-source-rules.md)，内容链路记录见 [`traceability-rules.md`](./traceability-rules.md)。
 3. **目标落位**：它更适合进入 `overview.md`、`backlog.md`、`candidates.md`、`conflict.md`，还是某篇正文专题？
 4. **临时落点**：如果今天不写正文，最合适的暂存位置是什么？
 
@@ -36,7 +36,7 @@
 
 ## 3. 外部材料先做证据分级
 
-从 `temp/`、联网检索 / 网页抓取、外部 AI 调研或临时笔记回流主线时，先判断 Evidence 状态。完整定义见 [`evidence-rules.md`](./evidence-rules.md)，本节只保留处理摘要：
+从 `temp/`、联网检索 / 网页抓取、外部 AI 调研或临时笔记回流主线时，先判断 Evidence 状态。完整定义见 [`evidence-assessment-rules.md`](./evidence-assessment-rules.md)，来源类型边界见 [`evidence-source-rules.md`](./evidence-source-rules.md)，本节只保留处理摘要：
 
 - **Verified**：可追溯到论文原文、官方文档、release notes、维护者正式说明等一手材料，且关键结论能被直接支撑。
 - **Observed**：在具体系统、项目、案例或多个二手来源中观察到，但尚不足以成为稳定通用结论；直接源码观察属于此类，必须保留版本基线、观察对象和适用范围。

@@ -2,7 +2,7 @@
 
 本文件定义当前仓库的轻量内容链路规则。
 
-相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`docs/contributing/README.md`](../README.md) / [`Evidence 与 Traceability 工作流`](./evidence-and-traceability.md) / [`Evidence 规则`](./evidence-rules.md)。
+相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`docs/contributing/README.md`](../README.md) / [`Evidence 与 Traceability 工作流`](./evidence-and-traceability.md) / [`Evidence 判断规则`](./evidence-assessment-rules.md) / [`Evidence 来源边界规则`](./evidence-source-rules.md)。
 
 Traceability 负责回答：**这条内容从哪里来、为什么落在这里？**
 
@@ -57,12 +57,13 @@ Trace 是内容进入仓库的轻量链路记录。
 示例：
 
 - `docs/contributing/rules/documentation-workflow.md`
-- 某篇论文原文或论文笔记
+- 论文原文：`https://arxiv.org/abs/2607.05391`；仓库内论文笔记：`agentic/07-evaluation/agent-benchmarks/llm-as-a-verifier_2607.05391.md`
 - `https://github.com/openai/codex`
 - 基准来源：`https://docs.anthropic.com/claude/docs/`；后续引用：`prompt-design#structured-outputs`
 - 基准来源：`https://github.com/OpenHands/OpenHands`；后续引用：`frontend/src/routes/conversation.tsx`、`openhands/app_server/sandbox/remote_sandbox_service.py`
 - 基准来源：`https://docs.openhands.dev/sdk/`；后续引用：`arch/workspace`、`guides/convo-persistence`
-- AI 协作者基于已有目录的综合整理
+
+AI 协作者参与综合整理时，`Sources` 应列出实际输入的 URL 或仓库内路径；“由 AI 综合整理”属于处理过程，应写入 `Trace`，不单独作为 Source。
 
 ### 3.2 Decision
 
@@ -116,44 +117,19 @@ Trace 是内容进入仓库的轻量链路记录。
 - 如果引用的是 release notes 或 tag，对应源码观察应尽量指向同一版本窗口。
 - 如果只观察了当前默认分支，必须让读者看出这是“当前截面观察”，不是无条件长期定论。
 
-## 4. 标注方式
+## 4. 不同承载场景的 Trace 要求
 
 ### 4.1 正文专题
 
-正文专题中可以在 `Evidence` 小节内合并记录 Trace：
-
-```md
-## Evidence
-
-- Status: Inferred
-- Sources: 当前仓库相关正文、论文原文与官方文档
-- Trace: First-pass synthesis moved from temporary notes into a mainline topic; `temp/` was input staging only, not the final source endpoint.
-- Needs: External validation.
-```
+正文专题在 `## Evidence` 中合并记录 `Sources / Trace / Needs`；位置和呈现格式统一见 [`evidence-recording-rules.md`](./evidence-recording-rules.md)，本文件不维护第二份 Evidence 模板。
 
 ### 4.2 Backlog / Candidates
 
-`backlog.md` 或 `candidates.md` 中可以按条目记录 Trace。字段顺序尽量稳定，便于能力较弱的模型照着填：
-
-```md
-- Topic: Trust calibration in agent UI
-  - Source: Current overview gap
-  - Decision: Keep as backlog
-  - Placement: `04-human-agent-interaction/trust-and-alignment/`
-  - Gap: Need HCI papers
-```
+`backlog.md` 或 `candidates.md` 在条目内部记录 `Source / Decision / Placement / Gap`；字段定义见 §3，Evidence 条目位置见 [`evidence-recording-rules.md`](./evidence-recording-rules.md) §3.3。
 
 ### 4.3 Conflict
 
-`conflict.md` 中的 Trace 应重点记录冲突来源和待核验问题。最少保留 `Sources / Decision / Placement / Gap` 这组骨架，不要随意省字段：
-
-```md
-- Conflict: Workspace traceability core unit
-  - Sources: `workspace-traceability.md`
-  - Decision: Keep conflict open
-  - Placement: `05-environments/conflict.md`
-  - Gap: Need cross-system comparison
-```
+`conflict.md` 中的 Trace 应重点记录冲突来源和待核验问题，至少保留 `Sources / Decision / Placement / Gap`，不要随意省字段。
 
 ## 5. 与 Evidence 的关系
 

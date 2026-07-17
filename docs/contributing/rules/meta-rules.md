@@ -6,7 +6,7 @@
 
 本文件按需使用，不是 AI 协作者日常任务路由的一部分。只在人类维护者准备改规则、并需要 AI 协助时才读。
 
-它不定义知识正文写法，也不替代 `evidence-rules.md`、`traceability-rules.md`、`documentation-workflow.md` 等专题规则。
+它不定义知识正文写法，也不替代 `evidence-assessment-rules.md`、`evidence-recording-rules.md`、`evidence-source-rules.md`、`traceability-rules.md`、`documentation-workflow.md` 等专题规则。
 
 ## 1. 什么时候改规则
 
@@ -77,7 +77,7 @@
 
 ## 5. 放到哪里
 
-- **专题内容规则**：放回对应规则文件，如 `evidence-rules.md`、`traceability-rules.md`、`documentation-workflow.md`。
+- **专题内容规则**：放回对应规则文件，如 `evidence-assessment-rules.md`、`evidence-recording-rules.md`、`evidence-source-rules.md`、`traceability-rules.md`、`documentation-workflow.md`。
 - **规则职责边界**：优先改 `README.md` 或相关专题文件。
 - **规则如何维护、何时改规则**：放在 `meta-rules.md`。
 

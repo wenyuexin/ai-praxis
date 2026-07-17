@@ -202,4 +202,4 @@ Traceability 的目标之一是让后来者能够还原输入材料，而不是�
 - 需要解释为什么版本链路字段必须出现
 - 需要解释为什么 Git 不能替代当前仓库的治理链路记录
 
-平时执行文档任务，仍优先读 `traceability-rules.md` 和 `evidence-and-traceability.md`。
+平时执行文档任务时，单独处理链路字段读 `traceability-rules.md`；同时处理 Evidence 判断、记录、落位与 Trace 时读 `evidence-and-traceability.md`。

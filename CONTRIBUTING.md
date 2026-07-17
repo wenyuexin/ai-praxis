@@ -1,6 +1,6 @@
 # 仓库组织与写作规范
 
-本文件定义仓库的组织规则与笔记写作规范。这个仓库不仅保存多个研究领域下的知识内容，也在持续沉淀一套面向研究型知识工作的结构化研究方法体系。更细的仓库建设、文档治理、证据分级与可追溯性规则，沉淀在 [`docs/contributing/`](./docs/contributing/)；本文件保留仓库级强约束和入口说明。规则层目录说明入口见 [`docs/contributing/README.md`](./docs/contributing/README.md)，按任务继续查找具体规则时读 [`docs/contributing/index.md`](./docs/contributing/index.md)。如需理解这套系统提供的公共能力，可转到 [`docs/capabilities/README.md`](./docs/capabilities/README.md)；如需理解能力层自己的边界、增长方式与联动更新面，读 [`docs/capabilities/meta.md`](./docs/capabilities/meta.md)；进入能力层后按问题继续查找时读 [`docs/capabilities/index.md`](./docs/capabilities/index.md)。AI 协作者入口见 [`AGENTS.md`](./AGENTS.md)。Evidence 与 Traceability 的统一工作流见 [`docs/contributing/rules/evidence-and-traceability.md`](./docs/contributing/rules/evidence-and-traceability.md)，细则见 [`evidence-rules.md`](./docs/contributing/rules/evidence-rules.md) 和 [`traceability-rules.md`](./docs/contributing/rules/traceability-rules.md)。
+本文件定义仓库的组织规则与笔记写作规范。这个仓库不仅保存多个研究领域下的知识内容，也在持续沉淀一套面向研究型知识工作的结构化研究方法体系。更细的仓库建设、文档治理、证据分级与可追溯性规则，沉淀在 [`docs/contributing/`](./docs/contributing/)；本文件保留仓库级强约束和入口说明。规则层目录说明入口见 [`docs/contributing/README.md`](./docs/contributing/README.md)，按任务继续查找具体规则时读 [`docs/contributing/index.md`](./docs/contributing/index.md)。如需理解这套系统提供的公共能力，可转到 [`docs/capabilities/README.md`](./docs/capabilities/README.md)；如需理解能力层自己的边界、增长方式与联动更新面，读 [`docs/capabilities/meta.md`](./docs/capabilities/meta.md)；进入能力层后按问题继续查找时读 [`docs/capabilities/index.md`](./docs/capabilities/index.md)。AI 协作者入口见 [`AGENTS.md`](./AGENTS.md)。Evidence 与 Traceability 的统一工作流见 [`docs/contributing/rules/evidence-and-traceability.md`](./docs/contributing/rules/evidence-and-traceability.md)，判断细则见 [`evidence-assessment-rules.md`](./docs/contributing/rules/evidence-assessment-rules.md)，记录细则见 [`evidence-recording-rules.md`](./docs/contributing/rules/evidence-recording-rules.md)，来源边界见 [`evidence-source-rules.md`](./docs/contributing/rules/evidence-source-rules.md)，链路细则见 [`traceability-rules.md`](./docs/contributing/rules/traceability-rules.md)。
 
 ## 快速导读
 
@@ -8,7 +8,7 @@
 
 | 你要做什么 | 优先阅读 | 目的 |
 |---|---|---|
-| 新增一篇笔记 | [文档增改流程](./docs/contributing/rules/documentation-workflow.md) 第 1、2、4 节 + 第二章；证据规则见 [Evidence 规则](./docs/contributing/rules/evidence-rules.md)，链路规则见 [Traceability 规则](./docs/contributing/rules/traceability-rules.md) | 先判断材料是否适合写成正文，再确定目录、命名和证据状态 |
+| 新增一篇笔记 | [文档增改流程](./docs/contributing/rules/documentation-workflow.md) 第 1、2、4 节 + 第二章；需要同时处理 Evidence、落位与 Trace 时读[组合入口](./docs/contributing/rules/evidence-and-traceability.md)，已知单一子任务时直接进入对应细则 | 先判断材料是否适合写成正文，再确定目录、命名和证据状态 |
 | 新增一个子目录 | 第一章、第二章、第三章；子领域/案例研究组织见[研究产物规则](./docs/contributing/rules/research-artifacts.md)；目录迁移或重构见[结构重构规则](./docs/contributing/rules/structure-refactoring-rules.md) | 先确定目录定位、层级和 README 要求 |
 | 处理外部 AI 调研、网页搜索或临时笔记 | [文档增改流程](./docs/contributing/rules/documentation-workflow.md) 第 2、3、5、6 节；统一流程见 [Evidence 与 Traceability 工作流](./docs/contributing/rules/evidence-and-traceability.md) | 先做证据分级和材料分流，不直接写正文 |
 | 记录主题缺口或待研究对象 | 第四章 L4/L5 + [文档增改流程](./docs/contributing/rules/documentation-workflow.md) 第 2、4、7 节；文件职责见 [元信息文件模型](./docs/contributing/rules/metadata-files.md) | 区分问题缺口与研究对象 |
@@ -104,7 +104,7 @@ README 的详细规则见 [`docs/contributing/rules/readme-rules.md`](./docs/con
 - **先判断，再落位，最后写正文**：新材料进入主线前，先判断材料类型、Evidence 状态、目标落位和临时落点。
 - **正文不承接未稳定材料**：正文负责表达经过整理和判断后的知识；`overview.md` 承接领域全貌和现状理解，`backlog.md`、`candidates.md`、`conflict.md` 等元信息文件承接尚未稳定、尚待分流、尚待核验的缺口、对象和冲突材料。
 - **外部材料先分级分流**：`temp/`、网页搜索、外部 AI 调研、博客摘录、issue/PR 讨论等默认只是上游输入或候选证据，不直接写成主线结论。
-- **证据状态必须显式判断**：从外部材料回流主线时，先区分 `Verified`、`Observed`、`Inferred`、`Unverified`、`Conflicting`、`Deprecated`；完整规则见 [`docs/contributing/rules/evidence-rules.md`](./docs/contributing/rules/evidence-rules.md)。
+- **证据状态必须显式判断**：从外部材料回流主线时，先区分 `Verified`、`Observed`、`Inferred`、`Unverified`、`Conflicting`、`Deprecated`；完整判断规则见 [`docs/contributing/rules/evidence-assessment-rules.md`](./docs/contributing/rules/evidence-assessment-rules.md)，来源类型边界见 [`docs/contributing/rules/evidence-source-rules.md`](./docs/contributing/rules/evidence-source-rules.md)。
 - **链路字段按需保留**：涉及迁移、回流、冲突处理或外部来源时，应能说明 `Source / Decision / Placement / Gap`；完整规则见 [`docs/contributing/rules/traceability-rules.md`](./docs/contributing/rules/traceability-rules.md)。
 
 默认策略：**拿不准时，先写元信息文件或保留在 `temp/`，不要抢写正文。** 七层模型提供职责基线；是否真的需要某个文件，应结合对应的问题触发信号判断，而不是机械补齐。

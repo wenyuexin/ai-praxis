@@ -26,5 +26,5 @@
 - 想先分清仓库里有哪些不同组织功能的文档，再判断规则文档在其中处于什么位置：读 [`../repo-map.md`](../repo-map.md)
 - 想理解规则层为什么存在、与 capability layer / design layer 如何分工：读 [`../design/contributing-design.md`](../design/contributing-design.md)
 - 想按任务查找具体规则文件：读 [`index.md`](./index.md)
-- 想理解规则背后的设计原理与常见误读：按需进入 `intent/`
+- 想理解规则背后的设计原理与常见误读：按需进入 `intent/`，具体入口见 [`index.md`](./index.md)
 - 想看复杂真实样本与误判复盘：按需进入 `cases/`

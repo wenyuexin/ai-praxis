@@ -2,7 +2,7 @@
 
 本文件定义仓库中元信息文件的职责边界、出现条件和最小使用方式。
 
-相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`docs/contributing/README.md`](../README.md) / [`README 规则`](./readme-rules.md) / [`Index 规则`](./index-rules.md) / [`Evidence 规则`](./evidence-rules.md) / [`Traceability 规则`](./traceability-rules.md)。如需理解这些边界为什么这样设计、最容易被误读成什么，读 [`intent/metadata-files.md`](../intent/metadata-files.md)。
+相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`docs/contributing/README.md`](../README.md) / [`README 规则`](./readme-rules.md) / [`Index 规则`](./index-rules.md) / [`Evidence 记录规则`](./evidence-recording-rules.md) / [`Traceability 规则`](./traceability-rules.md)。如需理解这些边界为什么这样设计、最容易被误读成什么，读 [`intent/metadata-files.md`](../intent/metadata-files.md)。
 
 元信息文件不是知识正文，而是帮助读者和维护者完成说明、导航、理解、结构、推进、选题、路径、校验等认知任务的辅助文件。
 
@@ -24,7 +24,7 @@
 - 用它判断 `README.md`、`index.md`、`overview.md`、`landscape.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 的职责边界和出现条件。
 - 材料处理流程见 [`documentation-workflow.md`](./documentation-workflow.md)。
 - 项目研究辅助材料（`notes.md`、`notes/`、`source-notes.md`、`evidence-notes.md` 等）不在本文，见 [`research-artifacts.md`](./research-artifacts.md)。
-- Evidence registry 不是默认元信息文件；仅在证据对照本身成为稳定维护对象时启用，见 [`evidence-rules.md`](./evidence-rules.md)。
+- Evidence registry 不是默认元信息文件；仅在证据对照本身成为稳定维护对象时启用，具体条件见 [`evidence-recording-rules.md`](./evidence-recording-rules.md)。
 - 单篇文档表达、头尾字段布局不在本文。
 
 ## 2. 核心原则

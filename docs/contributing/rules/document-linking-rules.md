@@ -12,7 +12,7 @@
 
 - 元信息文件各自的职责边界：见 [`metadata-files.md`](./metadata-files.md)
 - 案例研究内部的正文 / 机制专题 / 辅助材料组织：见 [`research-artifacts.md`](./research-artifacts.md)
-- Evidence 状态判断与 Traceability 字段细则：见 [`evidence-rules.md`](./evidence-rules.md) 与 [`traceability-rules.md`](./traceability-rules.md)
+- Evidence 状态判断与 Traceability 字段细则：见 [`evidence-assessment-rules.md`](./evidence-assessment-rules.md) 与 [`traceability-rules.md`](./traceability-rules.md)
 - 材料进入主线前的分流与回流流程：见 [`documentation-workflow.md`](./documentation-workflow.md)
 
 ## 2. 核心原则

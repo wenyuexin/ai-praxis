@@ -80,7 +80,7 @@
 
 - [`../contributing/rules/documentation-workflow.md`](../contributing/rules/documentation-workflow.md)
 - [`../contributing/rules/evidence-and-traceability.md`](../contributing/rules/evidence-and-traceability.md)
-- [`../contributing/rules/evidence-rules.md`](../contributing/rules/evidence-rules.md)
+- [`../contributing/rules/evidence-assessment-rules.md`](../contributing/rules/evidence-assessment-rules.md), [`../contributing/rules/evidence-recording-rules.md`](../contributing/rules/evidence-recording-rules.md), [`../contributing/rules/evidence-source-rules.md`](../contributing/rules/evidence-source-rules.md)
 - [`../contributing/rules/traceability-rules.md`](../contributing/rules/traceability-rules.md)
 - [`../capabilities/ingest.md`](../capabilities/ingest.md)
 
@@ -139,10 +139,11 @@
 
 - [`../contributing/rules/structure-refactoring-rules.md`](../contributing/rules/structure-refactoring-rules.md)
 - [`../contributing/rules/meta-rules.md`](../contributing/rules/meta-rules.md)
+- [`../contributing/incidents/README.md`](../contributing/incidents/README.md)：规则调整前查询既有问题轨迹，用于判断是否复发、是否已有处理结论
 - [`../contributing/cases/README.md`](../contributing/cases/README.md)
 - [`../capabilities/maintain.md`](../capabilities/maintain.md)
 
-当前状态：已有规则与案例承接，并已补出首份独立能力文档；后续仍可继续补强对象级示例与生命周期判断样式。
+当前状态：已有规则、incident 与案例承接，并已补出首份独立能力文档；后续仍可继续补强对象级示例与生命周期判断样式。
 
 ## 4. 当前映射总表
 
@@ -163,7 +164,7 @@
 | Ingest | `documentation-workflow.md`（薄规则入口）+ Evidence / Traceability 规则 + `docs/capabilities/ingest.md` | 规则层已收缩为执行护栏，能力层开始承接更完整的分流、吸收与回流说明 |
 | Structure | README / 元信息 / 组织原则 / 结构重构规则 + `docs/capabilities/structure.md` | 已有较完整规则承接，并已补出首份能力文档 |
 | Answer | AI 协作者行为 + Evidence 约束 + `docs/capabilities/answer.md` | 已有行为约束，并已补出首份独立能力文档 |
-| Maintain | meta-rules + structure-refactoring + cases + `docs/capabilities/maintain.md` | 已有首份能力文档，后续仍可继续补强 |
+| Maintain | meta-rules + structure-refactoring + incidents + cases + `docs/capabilities/maintain.md` | 已有首份能力文档，后续仍可继续补强 |
 
 ## 5. 常见能力链路
 
