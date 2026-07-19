@@ -27,9 +27,17 @@ note: manual_fallback=true；基于原文文本阅读。Phase 1 出现 meta_fetc
 
 所以，本文的核心贡献不是又做了一个打分 prompt，而是把 **verification** 当成一条可以独立扩展的系统轴。
 
-## 方法核心：从离散 judge 到连续 verifier
+## 原论文贡献（按作者表述归纳）
 
-### 普通 LM judge 的问题
+1. 提出 LLM-as-a-Verifier：不再只取单个评分 token，而是利用 scoring token logits 的分布期望生成连续分数。
+2. 把 verification 明确为一条可扩展的系统轴，并将其拆成三条可操作的 scaling 方向：分数粒度、重复评估、标准分解。
+3. 提出成本可控的候选排序算法 Probabilistic Pivot Tournament（PPT，详见后文），并展示该框架可同时服务于 test-time selection、progress monitoring 和 dense reward shaping。
+
+## 方法框架
+
+### 从离散 Judge 到连续 Verifier
+
+#### 普通 LM Judge 的问题
 
 普通 LM judge 通常这样工作：
 
@@ -41,11 +49,11 @@ note: manual_fallback=true；基于原文文本阅读。Phase 1 出现 meta_fetc
 
 这个流程会丢掉评分分布。比如两个候选都被打成 17 分，但一个候选的概率质量可能主要集中在 16-18，另一个可能分散在 10-18。离散 score token 把这些差异压没了，导致复杂轨迹之间大量 tie。
 
-### LLM-as-a-Verifier 的核心动作
+#### LLM-as-a-Verifier 的核心动作
 
-LLM-as-a-Verifier 不把评分分布压成单一的最高概率 token，而是保留预先定义的评分 token 集合上的概率分布，并将其映射为连续 reward。完整的评分协议、公式、pairwise preference 与排序过程见下文“原文定义的评分协议”和“PPT 的实际排序过程”。
+LLM-as-a-Verifier 不把评分分布压成单一的最高概率 token，而是保留预先定义的评分 token 集合上的概率分布，并将其映射为连续 reward。完整的评分协议、公式和 pairwise preference 见下文“原文定义的评分协议”；多候选排序算法在后文单独介绍。
 
-### 原文定义的评分协议
+#### 原文定义的评分协议
 
 **原文事实。** 论文对一对候选轨迹 A、B 构造 pairwise scoring prompt。完整 prompt 由输入上下文、评分约束和紧随其后的输出 schema 组成；`[domain]`、`[domain specific criteria]` 与花括号内容由任务实例填充：
 
@@ -87,7 +95,7 @@ $$
 
 连续 verifier 保留 $V_{\mathrm{score}}$ 上的完整概率分布并计算期望；离散 judge 仅取 $\operatorname*{arg\,max}$ token。论文强调，扩大 $V_{\mathrm{score}}$ 不增加轨迹输入信息，却提供更细的内部信念投影空间，从而减少原本会被舍入到同一离散分数的 tie。
 
-### 对评分字段的实现理解
+#### 对评分字段的实现理解
 
 > **解释性推论。** 本节解释上述 prompt 与 reward 公式在自回归模型中的含义；论文未公开 tokenizer 切分、tag 生成约束或 API 返回结构，因此不等同于论文披露的具体解码实现。
 
@@ -104,21 +112,7 @@ $$
 
 一次评分字段处的 token 分布可同时包含 $V_{\mathrm{score}}$ 中各 $v_g$ 的概率；因此 $v_1, \ldots, v_G$ 表示同一评分字段的档位，而 `<score_A>`、`<score_B>` 区分被比较的两条轨迹。A/B 双字段让同一共同上下文中的两条轨迹分别得到 reward，再由二者差值形成 pairwise preference。这里的“同一次”指共同评审上下文，不意味着两个评分 token 在同一解码时间步并行生成。
 
-### PPT 的实际排序过程
-
-**原文事实。** PPT 的 ring pass 采样随机 Hamiltonian 环，并比较环上 $N$ 个相邻候选对。每个候选恰好一次出现在 A 位、一次出现在 B 位，但两次面对的是不同的相邻候选，因此位置偏置在环上抵消。随后，论文用 ring-pass 的 $w_i/c_i$ 选出 top-$k$ pivots；再比较非 pivot--pivot 与 pivot--pivot 对；所有比较的 pairwise preference probability 累积为 win mass $w_i$ 和比较次数 $c_i$，最后返回 $w_i/c_i$ 最高的候选。
-
-```text
-Task + criterion + Trajectory A + Trajectory B
-  -> 分别计算 R_A、R_B
-  -> Bradley--Terry：将 R_A - R_B 转为 pairwise preference probability
-  -> 累积 win mass 与比较次数
-  -> 按 w_i / c_i 排序与选择
-```
-
-> **教学性反事实。** 若人为对同一无序对 $\{A, B\}$ 同时评估 $(A, B)$ 与 $(B, A)$，概念上会得到四个字段 reward，可帮助理解 A/B 位置偏置。这不是论文 ring pass 的实际调度；论文通过环上不同对手的比较让每个候选各经历一次 A 位和 B 位。
-
-### 未由论文确认的实现细节
+#### 未由论文确认的实现细节
 
 论文没有公开以下实现细节，不能将其写成论文协议：
 
@@ -127,7 +121,7 @@ Task + criterion + Trajectory A + Trajectory B
 - API 返回完整词表 logits，还是仅返回覆盖 $V_{\mathrm{score}}$ 的 top-logprobs；
 - 标准 prompt 是否允许或生成额外分析文本。标准 prompt 未定义独立的 `<reasoning>` 输出字段；显式 `<reasoning>...</reasoning>` 仅在后文的闭源 API 两阶段 workaround 中出现。
 
-### 论文的计算例子
+#### 论文的计算例子
 
 论文用 100 对 Terminal-Bench 轨迹说明，同一评分位置的分布在被 $\operatorname*{arg\,max}$ 压缩前后会产生不同的排序能力：
 
@@ -143,13 +137,7 @@ Task + criterion + Trajectory A + Trajectory B
 
 这个动作的意义是：**模型不只是给出一个分数，它的评分不确定性也被拿来用**。对于长时程 agent 轨迹，这很关键，因为失败常常不是肉眼一眼可见，而是藏在执行过程、工具输出、测试步骤或环境状态里。
 
-## 原论文贡献（按作者表述归纳）
-
-1. 提出 LLM-as-a-Verifier：不再只取单个评分 token，而是利用 scoring token logits 的分布期望生成连续分数。
-2. 把 verification 明确为一条可扩展的系统轴，并将其拆成三条可操作的 scaling 方向：分数粒度、重复评估、标准分解。
-3. 提出成本可控的候选排序算法 PPT，并展示该框架可同时服务于 test-time selection、progress monitoring 和 dense reward shaping。
-
-## 三条 verification scaling 轴
+### 三条 Verification Scaling 轴
 
 论文把 verifier 的提升拆成三条互补 scaling 轴。这一组 claim 基本对应作者在引言中总结的 verification scaling 主体：`score granularity`、`repeated evaluation`、`criteria decomposition`。
 
@@ -177,34 +165,40 @@ Task + criterion + Trajectory A + Trajectory B
 
 这个拆分很实用，因为长轨迹里“正确”不是一个单点判断，而是规格、输出、工具行为和错误处理共同决定的。
 
-## Probabilistic Pivot Tournament：为什么不是全量两两比较
+### Probabilistic Pivot Tournament（PPT）
 
-有了连续 verifier 之后，还要解决成本问题。如果有 `n` 个候选，完整 round-robin pairwise comparison 会变得很贵。论文提出 **Probabilistic Pivot Tournament (PPT)** 来压缩比较预算。
+PPT 是论文为多候选轨迹设计的预算受控排序算法：它先通过环形比较初筛出一组高分参照候选（pivots），再让其他候选主要与这些 pivots 比较，以减少全量两两比较的成本。Pivot 只是后续比较的参照候选，不是已经确定的最终优胜者。
 
-### PPT 的最短流程
+有了连续 verifier 之后，还要解决排序成本。如果有 `N` 个候选，完整 round-robin pairwise comparison 需要比较所有候选对，成本随候选数量快速增长。PPT 的目标是在减少比较次数的同时，尽量保留全量排序的选择质量。
+
+#### PPT 的排序过程
+
+**原文事实。** PPT 的 ring pass 采样随机 Hamiltonian 环，并比较环上 `N` 个相邻候选对。每个候选恰好一次出现在 A 位、一次出现在 B 位，但两次面对的是不同的相邻候选，因此位置偏置在环上抵消。随后，论文用 ring-pass 的 $w_i/c_i$ 选出 top-$k$ pivots；第二阶段让每个非 pivot 候选与 pivots 比较，并补充 pivots 之间的比较。所有比较的 pairwise preference probability 累积为 win mass $w_i$ 和比较次数 $c_i$，最后返回 $w_i/c_i$ 最高的候选。
 
 ```text
 候选池
   -> 随机 Hamiltonian 环 / 环形比较
   -> 每个候选各以 A 和 B 的身份出现一次
   -> 计算早期环形比较分数
-  -> 选择排名靠前的候选作为枢轴
-  -> 其余候选主要与枢轴比较
-  -> 对每次比较得到的 preference probability 累积 win mass
+  -> 选择排名靠前的候选作为 pivots
+  -> 其余候选与 pivots 比较，并补充 pivots 之间的比较
+  -> 对 preference probability 累积 win mass
   -> 按 w_i / c_i 排序与选择
 ```
+
+> **教学性反事实。** 若人为对同一无序对 $\{A, B\}$ 同时评估 $(A, B)$ 与 $(B, A)$，概念上会得到四个字段 reward，可帮助理解 A/B 位置偏置。这不是论文 ring pass 的实际调度；论文通过环上不同对手的比较让每个候选各经历一次 A 位和 B 位。
 
 这里有三个细节很重要。
 
 | 机制 | 作用 |
 |------|------|
 | Ring-pass | 让每个候选都在 A/B 两个位置出现，减轻 position bias |
-| Pivot selection | 不把预算浪费在明显弱的候选上，而是集中比较最可能正确的一组 |
+| Pivot selection | 选出较强的参照候选，让后续预算集中在最有区分价值的比较上 |
 | Win mass 累积（BT 提供偏好概率） | 将每次比较的 soft preference 累积为 $w_i$，再用 $w_i/c_i$ 形成可排序的全局信号 |
 
 所以 PPT 不是附属小算法，而是让这个 verifier 能用于真实 best-of-n agent pipeline 的工程关键。如果没有预算控制，连续 verifier 可能准确但太贵。
 
-#### PPT 的预算-准确率数据
+#### PPT 的预算与选择准确率
 
 以下是 Terminal-Bench V2 上 `N=20` 条候选轨迹、89 个任务、Terminus-2 harness 的选择准确率。`查询的候选对数` 是整个评测中实际查询的候选对总数；因此比较的是预算与选中正确轨迹的准确率，而不是最终任务成功率。
 
@@ -224,7 +218,9 @@ Task + criterion + Trajectory A + Trajectory B
 
 在该设置中，PPT `k=3` 已以 4,723 对超过 V1 的最佳结果（65.85%）；`k=9` 用 9,630 对达到 67.13%，以约 73% 的全量比较对数接近 full round-robin 的 67.42%。这说明 PPT 在这组固定候选池中压缩预算的同时保留了接近全量比较的选择质量；不能外推为所有任务、所有 `N` 下都存在同样数值关系。
 
-## 主文 benchmark 覆盖面
+## 实验设计与结果
+
+### Benchmark 与评测协议
 
 论文主文把 LLM-as-a-Verifier 作为 trajectory reward model 做 test-time scaling，覆盖三个 domain、四个 benchmark：
 
@@ -237,9 +233,7 @@ Task + criterion + Trajectory A + Trajectory B
 
 这部分很重要，因为论文的主张不是“只在一个 coding benchmark 上调了选择器”，而是“同一 verification framework 可以跨 domain 复用，但每个 domain 仍需合适的 criteria 和 backbone”。
 
-## 实验链路：每组实验在证明什么
-
-### 1. Verification scaling 本身是否有效
+### Verification Scaling 实验
 
 第一组证据在 Terminal-Bench V2 轨迹对上观察三条 scaling 轴。
 
@@ -263,7 +257,7 @@ $\operatorname{SNR} = \mathbb{E}[s_{\mathrm{correct}} - s_{\mathrm{incorrect}}] 
 
 这张表支持的具体结论是：增大评分 token 的粒度没有增加轨迹输入信息，却让模型能以更细的刻度表达内部判断，从而提升正确与错误轨迹的分数分离信噪比。它是机制诊断，不是跨任务的最终成功率。
 
-### 2. Test-time scaling：三项选择任务与一项偏好评测
+### Test-time Scaling 实验
 
 论文将 LLM-as-a-Verifier 作为轨迹奖励模型（TRM）用于 test-time scaling。Terminal-Bench V2、SWE-Bench Verified 和 MedAgentBench 共享如下选择协议：生成策略为每个任务采样 `N` 条候选轨迹，verifier 用 PPT 对轨迹对评分，提交归一化分数最高的轨迹。RoboRewardBench 则在给定的多帧机器人 rollout 视频对上输出进展偏好，指标为 pairwise preference accuracy；它复用连续评分公式，但不是 Best-of-N 选择实验。
 
@@ -298,9 +292,9 @@ RoboRewardBench 采用不同指标：Qwen 3.6 35B VLM 作为 verifier，在多�
 
 这些数据支持的是：同一个 verification 思路在 coding、robotics、medical 三类 agentic setting 中都进行了检验。但四个任务的输入模态和评价指标不同，不能将这些百分比横向视为同一种能力尺度；实验更直接支持的是，在给定候选池和预算下，细粒度验证与排序能够带来额外收益。
 
-## 两个扩展：进度监控与稠密奖励
+### 扩展应用
 
-### 进度监控
+#### 进度监控
 
 论文进一步把 verifier 用在轨迹前缀上，而不是只看最终轨迹。直觉是：如果一个 agent 真在朝正确方向推进，前缀分数应该随时间更稳定地上升；如果它卡住、回退或走偏，分数会变平或停滞。
 
@@ -324,7 +318,7 @@ RoboRewardBench 采用不同指标：Qwen 3.6 35B VLM 作为 verifier，在多�
 
 论文实际实现了 **TurboAgent**：一个面向 Claude Code 和其他兼容 OpenAI API 客户端的 drop-in extension。它作为推理期代理置于客户端与 LLM provider 之间，无需改动 agent harness 或后端模型；每次请求并行派发 `N` 条候选轨迹，以 PPT 选择最佳响应。论文还描述了一个 Web 界面，用于可视化 verifier 输出并实时监控 agent 进展；在进度监控语境下，作者将该信号用于支持长时程任务在提交错误状态前被监控、暂停或回滚。论文未展开具体的重规划建议或上下文压缩策略。
 
-### 面向 RL 的稠密奖励
+#### 面向 RL 的稠密奖励
 
 同一个连续 verifier signal 还被用作稠密奖励。这里要把边界说清楚：论文 abstract 中“without requiring additional training”指的是 verifier framework 作为通用验证器本身不依赖额外训练；但这一节讨论的是把 verifier 分数继续拿去训练下游策略或推理模型，因此实验本身包含 RL fine-tuning。“无需额外训练”和“后续可以拿它做训练信号”并不矛盾。
 
