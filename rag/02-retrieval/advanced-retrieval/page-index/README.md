@@ -16,7 +16,8 @@
 - [pdf-indexing.md](./pdf-indexing.md) — PDF 树索引构建机制
 - [tree-and-navigation.md](./tree-and-navigation.md) — 树结构抽象、构树收敛路径与本地导航行为链
 - [retrieval-protocol.md](./retrieval-protocol.md) — 检索协议、树导航模式、示例层 reasoning pattern
-- [sdk-and-workspace.md](./sdk-and-workspace.md) — 本地 SDK 架构、workspace、多文档存储、Cloud API 边界
+- [sdk-and-workspace.md](./sdk-and-workspace.md) — 本地 SDK 架构、DocStore 存储、本地模式边界
+- [capability-boundary.md](./capability-boundary.md) — 开源版与闭源产品线（Cloud/Enterprise）的能力边界与 File System
 
 ## 辅助材料
 
@@ -24,4 +25,4 @@
 
 ---
 
-*最后更新: 2026-06-14*
+*最后更新: 2026-08-19（复核 commit `ae2a5b4`；原研究截面 `5a18553284ed`）*

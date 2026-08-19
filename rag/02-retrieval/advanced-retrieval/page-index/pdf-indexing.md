@@ -2,15 +2,15 @@
 
 ## 核心流程
 
-PageIndex 的 PDF 索引管线负责将长 PDF 文档转化为层级树结构。`pageindex/page_index.py`（1154 行）实现了完整的 LLM-driven 管线。
+PageIndex 的 PDF 索引管线负责将长 PDF 文档转化为层级树结构。`pageindex/page_index_classic.py`（1323 行，原 `page_index.py`）实现了完整的 LLM-driven 管线；另有 `flash/` 快速管线（pypdfium2 解析）。本地 SDK 中 `submit_document` 默认走 flash 模式，`mode="standard"` 走本文所述的经典管线（`local_api.py:85-88`、`local_api.py:172-190`）。
 
-源码入口：`page_index.py` 中的 `page_index()` 函数，被 `client.py:55-130` 的 `PageIndexClient.index()` 和 `run_pageindex.py` 的 `page_index_main()` 调用。
+源码入口：`page_index_classic.py` 中的 `page_index_main()` 函数，被 `local_api.py:59` 的 `LocalAPI.submit_document()`（standard 模式，仅 PDF）和 `run_pageindex.py` 的 `page_index_main()` 调用。
 
 完整调用链：
 
 ```
 run_pageindex.py → page_index_main(path, opt) [run_pageindex.py]
-  → page_index(doc, model, ...) [page_index.py]
+  → page_index(doc, model, ...) [page_index_classic.py]
     → get_pdf_title() [utils.py]
     → get_page_tokens() [utils.py]（按页解析 + token 计数）
     → LLM 调用提取 TOC 和章节结构（多轮）
@@ -25,7 +25,7 @@ run_pageindex.py → page_index_main(path, opt) [run_pageindex.py]
 
 ### 1. 页面解析与 token 计数
 
-`pageindex/utils.py:387-410` 的 `get_page_tokens()` 是 PDF 文本抽取的单一入口，返回 `[(text, token_count), ...]` 列表。
+`pageindex/utils.py:501` 的 `get_page_tokens()` 是 PDF 文本抽取的单一入口，返回 `[(text, token_count), ...]` 列表。
 
 它内部有两条**互斥**路径：
 
@@ -43,7 +43,7 @@ run_pageindex.py → page_index_main(path, opt) [run_pageindex.py]
 
 ### 2. TOC 识别与章节结构提取
 
-`page_index.py` 里的 TOC 路线不是“一条 prompt 直接出树”，而是一组串联的检测、提取、校验和降级步骤。
+`page_index.py`（现 `page_index_classic.py`）里的 TOC 路线不是“一条 prompt 直接出树”，而是一组串联的检测、提取、校验和降级步骤。
 
 主干调用关系现在可以更明确地写成：
 
@@ -115,7 +115,7 @@ TOC 路线和无 TOC 路线在中段都会收敛到一种扁平结构，大致�
 {structure, title, physical_index, appear_start}
 ```
 
-`utils.py:433-452` 的 `post_processing()` 会基于这组中间字段做两件事：
+`utils.py:553` 的 `post_processing()` 会基于这组中间字段做两件事：
 
 1. 计算每个条目的 `start_index` / `end_index`。
 2. 调用树化逻辑，把点分层级编号（如 `1`、`1.1`、`1.1.1`）转成真正的父子树。
@@ -153,7 +153,7 @@ TOC 路线和无 TOC 路线在中段都会收敛到一种扁平结构，大致�
 
 ### 9. 摘要生成
 
-`utils.py:578-596` 的 `generate_summaries_for_structure()` 使用 `asyncio.gather` 并行为每个树节点调用 LLM 生成摘要。这在索引构建阶段预计算了每个节点的摘要信息，使得后续检索时 LLM 可以直接读摘要而非全文，大幅节省 token。
+`utils.py:711` 的 `generate_summaries_for_structure()` 使用 `asyncio.gather` 并行为每个树节点调用 LLM 生成摘要。这在索引构建阶段预计算了每个节点的摘要信息，使得后续检索时 LLM 可以直接读摘要而非全文，大幅节省 token。
 
 ## 控制参数
 
@@ -165,7 +165,7 @@ TOC 路线和无 TOC 路线在中段都会收敛到一种扁平结构，大致�
 - `model: "gpt-4o-2024-11-20"` — 索引阶段的主要 LLM。
 - `if_add_node_summary: "yes"` — 是否为节点预生成摘要。
 
-这些参数在 `utils.py:654-685` 的 `ConfigLoader` 类中被加载，支持 `config.yaml` 默认值 + 运行时参数覆盖。
+这些参数在 `utils.py:1029` 的 `ConfigLoader` 类中被加载，支持 `config.yaml` 默认值 + 运行时参数覆盖。
 
 其中两个容易漏掉的关系是：
 
@@ -176,20 +176,20 @@ TOC 路线和无 TOC 路线在中段都会收敛到一种扁平结构，大致�
 
 | 维度 | PDF 索引 | Markdown 索引 |
 |---|---|---|
-| 核心源码 | `page_index.py`（1154 行） | `page_index_md.py`（342 行） |
+| 核心源码 | `page_index_classic.py`（1323 行；另有 `flash/` 快速管线） | `page_index_md.py`（344 行） |
 | 结构提取方式 | LLM 驱动（多轮调用） | 正则表达式（无 LLM） |
 | 标题页验证 | LLM 验证标题是否出现在页面 | 不再需要（行号天然对应） |
 | 章节映射 | 需要建立标题→页码映射 | 标题行号即位置 |
-| 主依赖 | PyPDF2 / PyMuPDF | 纯文本处理 |
+| 主依赖 | PyPDF2 / PyMuPDF（`utils.py:501`）；flash 管线用 pypdfium2 | 纯文本处理 |
 | 索引复杂度 | 高 | 低 |
 
 ## Evidence
 
-- Status: `Verified`（`get_page_tokens()` 的双路径文本抽取、无 OCR、`check_toc()` 的 TOC 检测与再搜索逻辑、三种结构提取路径的真实触发关系、`meta_processor()` 的验证/修正/降级顺序、局部错页修复链路、双重标题校验、`post_processing()` 的树化与页范围切分、递归大节点细化）
-- Sources: 基准来源：`https://github.com/VectifyAI/PageIndex`；后续引用：`pageindex/page_index.py`、`pageindex/page_index_md.py`、`pageindex/utils.py`、`pageindex/config.yaml`；研究输入：`temp/chat/round13-feedback.md`
-- Version Basis: `branch main`, `commit 5a18553284ed`
-- Observed At: `2026-06-13`
-- Scope: 本文中的 PDF/Markdown 索引实现判断仅适用于本次观察到的本地 Python 仓库截面
+- Status: `Verified`（`get_page_tokens()` 的双路径文本抽取、无 OCR、`check_toc()` 的 TOC 检测与再搜索逻辑、三种结构提取路径的真实触发关系、`meta_processor()` 的验证/修正/降级顺序、局部错页修复链路、双重标题校验、`post_processing()` 的树化与页范围切分、递归大节点细化——所有被引用函数在复核截面中均存在）
+- Sources: 基准来源：`https://github.com/VectifyAI/PageIndex`；后续引用：`pageindex/page_index_classic.py`、`pageindex/page_index_md.py`、`pageindex/utils.py`、`pageindex/config.yaml`、`pageindex/local_api.py`；研究输入：`temp/chat/round13-feedback.md`
+- Version Basis: 复核截面 `branch main`, `commit ae2a5b4`（2026-08-17）；原研究截面 `commit 5a18553284ed`（2026-06-13）
+- Observed At: `2026-08-19`（复核，本地克隆 `/Volumes/ZGY93B6F/github/PageIndex`）；原截面 `2026-06-13`
+- Scope: 本文中的 PDF/Markdown 索引实现判断适用于 2026-08-19 复核的 `ae2a5b4` 截面；`page_index.py` 改名 `page_index_classic.py` 后管线函数名与机制未变，行号与入口按新截面更新
 - Drift Risk: `medium`
-- Trace: 第一轮核心库核验 + 第四轮 PDF 管线补读（`temp/chat/round13-feedback.md`）+ 本轮直接补读 `pageindex/page_index.py` 中段源码
+- Trace: 第一轮核心库核验 + 第四轮 PDF 管线补读（`temp/chat/round13-feedback.md`）+ 2026-08-19 复核（函数存在性逐一核验、行号更新、入口改为 `LocalAPI.submit_document` / flash 默认模式）
 - Needs: 若后续要继续提升研究价值，可再单独整理 `fix_incorrect_toc()` / `single_toc_item_index_fixer()` 的 prompt 设计模式，但当前主路由已经足够闭环

@@ -3,13 +3,13 @@
 - **对象名称**：PageIndex
 - **对象类型**：开源检索框架 / 索引库
 - **开发者/机构**：VectifyAI（Mingtian Zhang, Yu Tang）
-- **上游地址**：https://github.com/VectifyAI/PageIndex（MIT License, 32.9k+ stars）
+- **上游地址**：https://github.com/VectifyAI/PageIndex （MIT License, 35.2k+ stars, 2026-08-19 观察）
 - **官方文档**：https://docs.pageindex.ai
-- **研究范围**：长文档层级树索引构建、vectorless 检索协议、单文档树导航
+- **研究范围**：长文档层级树索引构建、vectorless 检索协议、单文档树导航、开源/闭源能力边界
 
 ---
 
-## 它是什么
+## 对象定位与定义
 
 PageIndex 是 VectifyAI 于 2025 年 9 月发布的开源检索索引库。它的核心主张不是把文档切成 chunks 后送入向量数据库，而是先把长文档恢复成一个可导航的层级树，再让 LLM 基于这棵树定位应读取的章节或页范围，最后只取局部正文完成回答。
 
@@ -17,15 +17,15 @@ PageIndex 是 VectifyAI 于 2025 年 9 月发布的开源检索索引库。它�
 
 > "PageIndex — a vectorless, reasoning-based RAG system that builds a hierarchical tree index from long documents and uses LLMs to reason over that index for agentic, context-aware retrieval."
 
-核心 Python SDK 位于本地 `pageindex/` 目录，约 2600 行，包含两个独立索引管线（PDF / Markdown）、一个本地客户端封装和一个检索工具函数层。（另有 TypeScript SDK、MCP server 和云 API 作为独立的外部扩展层，不在本地仓库范围内。）
+核心 Python SDK（main 分支 `ae2a5b4`，2026-08-17）约 8700 行，包含：PDF 索引管线（`page_index_classic.py` 经典管线 + `flash/` 快速管线）、Markdown 索引管线（`page_index_md.py`，仅由 CLI 接入）、本地/云双模式客户端（`client.py` + `local_api.py` + `cloud_api.py`）、文档存储层（`local_store.py`）与 agent 工具层（`agent_tools.py`、`mcp_bridge.py`）。（TypeScript SDK 与云平台服务端为仓库外的独立产品线；云客户端接口在仓内，见 `capability-boundary.md`。）
 
 **证据等级**：`Observed`（官方自述）；`Verified`（本地 SDK 核心库结构与该定位中的索引/检索部分一致）。
 
-## 它怎么工作
+## 工作闭环
 
 从单篇文档的角度看，PageIndex 的最小工作闭环可以概括为五步：
 
-1. **先把文档构造成层级树**：PDF 路径会从分页文本中恢复章节结构，再生成带页范围的树；Markdown 路径直接从标题层级构树。
+1. **先把文档构造成层级树**：PDF 路径会从分页文本中恢复章节结构，再生成带页范围的树；Markdown 路径直接从标题层级构树（仅 CLI 接入，见"核心机制骨架"）。
 2. **先暴露结构，不先暴露全文**：调用方先获取文档树结构，而不是直接把完整正文交给 LLM。
 3. **由 LLM 或上层 agent 做结构化粗定位**：基于树结构判断相关章节、候选节点或页范围。
 4. **只读取局部正文**：再按推理结果获取紧凑页段或局部文本，而不是整篇文档全文读取。
@@ -33,7 +33,7 @@ PageIndex 是 VectifyAI 于 2025 年 9 月发布的开源检索索引库。它�
 
 因此，PageIndex 在本地 SDK 中更像“结构优先的检索底座”：树负责缩小范围，页内容负责支撑答案，真正把这条链串起来的是上层 agent 或调用方逻辑。
 
-## 为什么值得研究
+## 研究价值
 
 PageIndex 不只是另一个开源检索项目。它在源码层面实现了几个当前仓库中没有第二份同等深度研究的关键机制：
 
@@ -48,9 +48,9 @@ PageIndex 不只是另一个开源检索项目。它在源码层面实现了几�
 
 从本地源码可见实现看，PageIndex 的主体可以收敛为“两条索引管线 + 一个检索协议层”：
 
-1. **PDF 索引管线**（`page_index.py`，1154 行）：从 PDF 提取页文本 → LLM 辅助目录页识别 → 章节结构提取 → 标题-页面验证 → 树构建 → 可选 LLM 摘要。
-2. **Markdown 索引管线**（`page_index_md.py`，342 行）：正则提取标题（跳过代码块） → 按层级建树 → 可选 tree thinning → 可选 LLM 摘要。
-3. **检索协议层**（`retrieve.py`、`client.py`）：`get_document()` → 元数据；`get_document_structure()` → 树结构（不含文本，省 token）；`get_page_content(doc_id, "5-7")` → 特定页面内容。
+1. **PDF 索引管线**（`page_index_classic.py`，1323 行；另有 `flash/` 快速管线）：从 PDF 提取页文本 → LLM 辅助目录页识别 → 章节结构提取 → 标题-页面验证 → 树构建 → 可选 LLM 摘要。
+2. **Markdown 索引管线**（`page_index_md.py`，344 行）：正则提取标题（跳过代码块） → 按层级建树 → 可选 tree thinning → 可选 LLM 摘要。仅由 `run_pageindex.py` CLI 接入；SDK 客户端 `submit_document()` 本地模式只接受 PDF。
+3. **检索协议层**（`client.py` + `local_api.py` + `agent_tools.py`）：`get_document(doc_id)` → 元数据；`get_tree(doc_id)` / `get_document_structure(doc_id)` → 树结构（后者不含文本，省 token）；`get_ocr(doc_id, format)` / `get_page_content(doc_id, "5-7")` → 特定页内容；`browse_documents()` / `list_documents()` → 文档级列举与选择。
 
 这里最关键的不是“有树”，而是**树在检索中承担了结构化粗定位职责**：调用方先利用树判断应该去哪几页，再按页段取内容。也正因为如此，PageIndex 的本地实现更像“树导航协议”而不是传统意义上的“向量召回器”。
 
@@ -61,7 +61,7 @@ PageIndex 不只是另一个开源检索项目。它在源码层面实现了几�
 | 维度 | 传统 RAG | PageIndex |
 |---|---|---|
 | 文档表示 | 分块，固定或语义分割 | 层级树，页面级或章节级节点 |
-| 索引存储 | 向量嵌入到向量数据库 | `_meta.json` + 单个 doc JSON 文件（本地 workspace） |
+| 索引存储 | 向量嵌入到向量数据库 | `manifest.json` + `docs/{doc_id}/`（tree.json / pages.json / doc.json，`DocStore`） |
 | 检索方式 | 语义相似度匹配 | LLM 先读树结构，推理定位页码范围，再读目标页 |
 | 分块问题 | chunking 切碎文档逻辑结构 | 无 chunking，页级精度 |
 | 向量依赖 | 必需 | 零依赖 |
@@ -69,15 +69,18 @@ PageIndex 不只是另一个开源检索项目。它在源码层面实现了几�
 
 更白话地说，传统 RAG 通常是“先把全文打散再召回”，而 PageIndex 更接近“先恢复结构，再缩小阅读范围”。
 
-**证据等级**：`Verified` — `client.py:55-130` 索引流程无向量操作；`retrieve.py:100-107` 返回结构不返回文本。
+**证据等级**：`Verified` — 索引与检索流程无向量操作（`local_api.py` / `cloud_api.py` 无 embedding 调用）；`client.py:343` `get_document_structure` 返回树结构不返回文本。
 
-## 单文档与多文档的真实边界
+## 能力边界（单文档 / 多文档 / 开源 / 云）
 
 PageIndex 当前最稳的本地能力边界是：**单文档树导航检索闭环成立，多文档只解决存储，不解决跨文档检索。**
 
-- 本地 `workspace` 支持同时保存多个文档索引：每篇文档各自一个 JSON 文件，并由 `_meta.json` 做文档级注册。
-- 但三个公共检索接口 `get_document(doc_id)`、`get_document_structure(doc_id)`、`get_page_content(doc_id, pages)` 都要求显式传入 `doc_id`。
+- 本地 `DocStore`（`local_store.py`）支持同时保存多个文档索引：每篇文档各自一个 `docs/{doc_id}/` 目录（tree.json / pages.json / doc.json），并由 `manifest.json` 做文档级注册。
+- 但所有公共检索接口（`get_document` / `get_tree` / `get_document_structure` / `get_ocr` / `get_page_content`）都要求显式传入 `doc_id`。
 - 这意味着本地 SDK 默认前提是：调用方已经先选定要查哪一篇文档；PageIndex 负责的是这篇文档内部的结构化定位，而不是多篇文档之间的路由与聚合。
+- 本地客户端路径只接受 PDF 文件（`local_api.py:96`，`submit_document` 对非 `.pdf` 直接报错）；Markdown 索引仅经 CLI（`run_pageindex.py --md_path`）可用。
+- 文档级管理接口（`browse_documents` / `list_documents`）只做列举与分页，不提供语义排序或文件夹组织（两者均为 cloud-only）；文档选择由调用方按名称与描述自行匹配。
+- 上游宣称的语料级索引能力 "PageIndex File System"（query-time 虚拟节点树 + 查询相关索引构建，面向百万级文档）是 Enterprise / Cloud 产品特性：开源仓库中无任何实现代码（全仓 grep 仅 README 一处博客链接），机制描述仅来自官方博客。`Observed` —— 完整对照见 [`capability-boundary.md`](./capability-boundary.md)
 
 因此，多文档关系更像“文档集合 + 每篇文档各自一棵树”，而不是“跨文档总树 + 统一树导航”。如果需要跨文档问答，上层系统仍需先完成文档选择，再进入单文档树导航。
 
@@ -87,11 +90,12 @@ PageIndex 本地核心库不内建完整的 tree-search agent，也不直接保�
 
 - `get_document_structure()` 只返回结构树，不返回全文文本
 - `get_page_content()` 支持按紧页范围读取局部内容
+- 新版 SDK 进一步提供 `agent_tools`（`browse_documents` / `get_document` / `get_document_structure` / `get_page_content` 工具契约）、`agent_instructions()`（检索 playbook）与 OpenAI / Anthropic Agents SDK / MCP 适配（`client.py:779-1084`），示例 demo 直接用 `PageIndexLocalClient` + `openai_agent_config` 组装 agent
 - 调用方天然更容易走“先看结构，再读局部正文”的路径
 
 因此，PageIndex 能较强地**引导**上层 agent 采用按树粗定位 → 局部精读 → 汇总回答的流程，但真正的搜索策略、候选节点筛选、多跳推理和最终回答生成，仍属于调用方或外部 agent 框架的职责。
 
-## 它代表什么，不等于什么
+## 代表性边界
 
 PageIndex 能代表上述索引思路，**但不等于**该思路已在开源生态中形成成熟、丰富、可充分横向比较的对象簇。基于当前研究范围，几点观察：
 
@@ -103,7 +107,7 @@ PageIndex 能代表上述索引思路，**但不等于**该思路已在开源生
 
 ## 与 OpenKB / LLM Wiki 的边界
 
-`pageindex/` 代码中无 OpenKB 引用、无 wiki 编译或多文档知识库管理能力。PageIndex 是完全独立的索引库。OpenKB 是把它用作长文档检索引擎的一条 LLM Wiki 系统实现路线，两者是系统—组件关系，不是同一层级的范式归属关系。
+仓库代码中无 OpenKB 引用、无 wiki 编译或多文档知识库管理能力。PageIndex 是完全独立的索引库。OpenKB 是把它用作长文档检索引擎的一条 LLM Wiki 系统实现路线，两者是系统—组件关系，不是同一层级的范式归属关系。
 
 这一区分很重要：研究 PageIndex 时，应优先抓住它作为“文档结构恢复 + 树导航检索协议”的对象本体，而不是把它与上层知识系统实现混写成同一件事。
 
@@ -113,18 +117,20 @@ PageIndex 能代表上述索引思路，**但不等于**该思路已在开源生
 
 当前最值得明确保留的限制和未定点包括：
 
-1. **本地核心库不包含完整推理循环**：示例层已有“先树定位，再局部取页”的 pattern，但未被封装为统一抽象。`Verified / Observed`
-2. **多文档检索闭环未在本地 SDK 中成立**：workspace 支持多文档存储，但跨文档检索仍需调用方自建。`Verified`
-3. **Cloud API 具体能力仍不可充分核验**：`submit_document`、`chat_completions` 等方法不在本地 SDK 中，服务端对多文档、增强 OCR、流式检索的真实支持范围仍需独立验证。`Unverified`
-4. **PageIndex 之外的同思路对象仍然稀少**：当前尚难把它直接上升为一个已成熟、可充分横向比较的开源对象簇。`Inferred`
+1. **本地核心库不包含完整推理循环**：示例层已有“先树定位，再局部取页”的 pattern，并封装为 agent 工具契约，但推理循环仍由 Agents SDK / 调用方驱动。`Verified / Observed`
+2. **多文档检索闭环未在本地 SDK 中成立**：`DocStore` 支持多文档存储，但跨文档检索仍需调用方自建。`Verified`
+3. **本地客户端路径仅支持 PDF 索引**：`submit_document` 拒绝非 `.pdf` 文件（`local_api.py:96`）；Markdown 索引只经 CLI 接入。`Verified`
+4. **语料级索引（File System）不在开源仓库**：为 Enterprise / Cloud 特性，机制描述（virtual-node synthesis、query-dependent index construction、dynamic flattening）仅来自官方博客，无代码可核验；cloud 版上线时间无独立证据。`Observed`（详见 [`capability-boundary.md`](./capability-boundary.md)）
+5. **Cloud API 服务端实现仍不可核验**：`submit_document`、`chat_completions`、`submit_query`、`get_retrieval` 等方法已随 `cloud_api.py` 进入 SDK（cloud 模式，接口面可见），但服务端对多文档、增强 OCR、流式检索的真实支持范围仍需独立验证。`Unverified`
+6. **PageIndex 之外的同思路对象仍然稀少**：当前尚难把它直接上升为一个已成熟、可充分横向比较的开源对象簇。`Inferred`
 
 ## Evidence
 
-- Status: `Verified`（核心事实）、`Observed`（绩效数据与生态比较）、`Inferred`（抽象定位判断）
-- Sources: 基准来源：`https://github.com/VectifyAI/PageIndex`；后续引用：`pageindex/page_index.py`、`pageindex/page_index_md.py`、`pageindex/client.py`、`pageindex/retrieve.py`；官方 GitHub README、官方 blog
-- Version Basis: `branch main`, `commit 5a18553284ed`
-- Observed At: `2026-06-13`
-- Scope: 本页中所有源码结论仅适用于本次观察到的 `PageIndex` 默认分支当前截面
+- Status: `Verified`（核心事实）、`Observed`（绩效数据、File System 产品特性与生态比较）、`Inferred`（抽象定位判断）
+- Sources: 基准来源：`https://github.com/VectifyAI/PageIndex`；后续引用：`pageindex/page_index_classic.py`、`pageindex/page_index_md.py`、`pageindex/client.py`、`pageindex/local_api.py`、`pageindex/local_store.py`、`pageindex/cloud_api.py`、`pageindex/agent_tools.py`、`examples/agentic_vectorless_rag_demo.py`、`cookbook/agentic_retrieval.ipynb`；官方 GitHub README、官方 blog（`https://pageindex.ai/blog/pageindex-filesystem`，`Observed`）
+- Version Basis: 复核截面 `branch main`, `commit ae2a5b4`（2026-08-17）；原研究截面 `commit 5a18553284ed`（2026-06-13）
+- Observed At: `2026-06-13`（原截面）；`2026-08-19`（复核截面，本地克隆 `/Volumes/ZGY93B6F/github/PageIndex`）
+- Scope: 本页源码结论适用于 2026-08-19 复核的 `ae2a5b4` 截面；原截面（2026-06-13）结论已被复核截面替代，差异见 `notes/evidence.md`
 - Drift Risk: `medium`
-- Trace: 基于本地源码核验（`pageindex/page_index.py`、`pageindex/client.py`、`pageindex/retrieve.py`、`pageindex/utils.py`、`pageindex/page_index_md.py`；示例层 `examples/agentic_vectorless_rag_demo.py`、`cookbook/agentic_retrieval.ipynb`）
-- Needs: Cloud API 与本地 SDK 的能力差异需产品文档或代码级确认
+- Trace: 2026-06-13 原截面研究（源码核验 + `temp/chat` 多轮）；2026-08-19 复核：SDK 重构（`page_index.py`→`page_index_classic.py`、`retrieve.py` 移除、workspace→`DocStore`、Cloud API 客户端入仓）、本地客户端仅 PDF、folders/语义排序 cloud-only、File System 企业版特性（`Observed`）
+- Needs: Cloud API 端服务实现需独立验证；File System 的 cloud 版可用性无独立证据

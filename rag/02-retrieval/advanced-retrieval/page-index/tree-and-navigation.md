@@ -2,7 +2,7 @@
 
 `PageIndex` 的核心不只是把长文档切成可检索片段，而是先把文档恢复为可导航的层级结构，再让 agent 或调用方基于这棵树逐步定位正文。对 `PageIndex` 的深入理解，不能只停留在“它支持树导航”这类高层描述，还需要进一步回答：这里的树到底是什么，两条构树路径如何收敛，以及这棵树在本地检索链里究竟扮演什么角色。
 
-## 1. `PageIndex` 的树到底是什么
+## 1. 树的统一抽象
 
 从源码看，`PageIndex` 的统一树抽象不是某个 PDF 专属数据结构，而是一个共享骨架明确、路径特有载荷不同的层级章节树。
 
@@ -18,7 +18,7 @@
 
 因此，`PageIndex` 的树不是单一静态 schema，而是一个**共享树骨架 + 路径特有载荷**的树模型。`summary`、`prefix_summary`、`node_id` 等字段可以附加在节点上，但它们更像索引增强信息，而不是树存在的前提。
 
-## 2. 两条构树路径如何收敛到同一抽象
+## 2. 构树路径的收敛
 
 ### 2.1 Markdown：直接从标题层级构树
 
@@ -53,7 +53,7 @@ PDF 路径不直接从天然层级结构出发，而是先从分页文本里恢�
 
 因此，PDF 路径与 Markdown 路径共享的不是同一个建树算法，而是同一个最终树形输出：**带 `nodes` 的层级章节树**。
 
-## 3. PDF 树为什么不是一次性生成
+## 3. PDF 树的递进式构建
 
 PDF 树的一个关键特点是：它不是“一次生成完毕”的静态结果，而是一个逐步逼近的结构恢复过程。
 
@@ -88,13 +88,15 @@ PDF 树的一个关键特点是：它不是“一次生成完毕”的静态结�
 
 因此，更稳的理解是：PDF 路径中的树既有统一骨架，也有“初始恢复节点”和“局部再生长节点”这类来源与粒度差异。
 
-## 4. 树在本地检索链里扮演什么角色
+## 4. 树在本地检索链中的角色
 
 如果只看本地可见 SDK，`PageIndex` 并没有暴露一个显式名为 search 或 navigate 的独立树上搜索器。可直接看到的工具接口只有三类：
 
-- `get_document()`：取文档元信息
-- `get_document_structure()`：取无正文文本的树结构
-- `get_page_content()`：取指定页范围或 Markdown 节点对应文本
+- `get_document(doc_id)`：取文档元信息（`client.py:732`）
+- `get_tree(doc_id, ...)` / `get_document_structure(doc_id)`：取树结构，后者显式去掉正文文本（`client.py:320/343`）
+- `get_ocr(doc_id, format)` / `get_page_content(doc_id, pages)`：按页或节点取内容（`client.py:278/297`；format 取值 `page` / `node` / `raw`，`local_api.py:250-251`）
+
+文档级列举由 `agent_tools.py` 的 `browse_documents` 承担（本地模式仅时间排序，见 `sdk-and-workspace.md`）。
 
 这说明在本地实现中，树首先承担的是**结构定位与导航**作用，而不是一个直接返回答案的检索器。
 
@@ -107,7 +109,7 @@ PDF 树的一个关键特点是：它不是“一次生成完毕”的静态结�
 
 `get_document_structure()` 会显式去掉 `text` 字段，只返回树骨架；这进一步说明它的主要用途是让 agent 或用户先看结构，而不是直接拿树节点正文作答。
 
-## 5. 搜索和导航在这里如何区分
+## 5. 搜索与导航的区分
 
 在 `PageIndex` 的本地可见实现里，“搜索”和“导航”不太像两个并列的独立模块，而更像同一行为链中的两个阶段：
 
@@ -122,7 +124,7 @@ PDF 树的一个关键特点是：它不是“一次生成完毕”的静态结�
 
 因此，把 `PageIndex` 简单描述成“树搜索器”并不准确。更稳的说法是：**它提供了树结构索引，供 agent 先做结构导航与范围定位，再取页内容完成回答。**
 
-## 6. 这棵树的边界与限制
+## 6. 树的边界与限制
 
 这条树主线并不意味着 `PageIndex` 已经把所有输入都稳定映射成高质量结构。尤其在 PDF 路径中，树质量仍然高度依赖结构恢复质量。
 
@@ -145,20 +147,17 @@ Markdown 路径直接从标题层级得到这棵树，PDF 路径则先从分页�
 ## Evidence
 
 - Claim type: Source-based implementation summary
-- Status: Observed
+- Status: Observed（机制主线基于 2026-06-13 原截面研究，2026-08-19 复核确认函数存在性与树 schema 未变）
 - Sources:
-  - `pageindex/page_index_md.py:190`
-  - `pageindex/utils.py:324`
-  - `pageindex/utils.py:433`
-  - `pageindex/utils.py:132`
-  - `pageindex/page_index.py:1000`
-  - `pageindex/page_index.py:1029`
-  - `pageindex/retrieve.py:100`
-  - `pageindex/retrieve.py:110`
-  - `examples/agentic_vectorless_rag_demo.py:44`
+  - `pageindex/page_index_md.py:192`（`build_tree_from_nodes`）
+  - `pageindex/utils.py:553`（`post_processing`；`find_node` 等树操作函数）
+  - `pageindex/page_index_classic.py`（`tree_parser` / `meta_processor` / `process_large_node_recursively` / `check_title_appearance_in_start` 等，复核截面逐一存在）
+  - `pageindex/client.py:297`（`get_page_content`）、`client.py:343`（`get_document_structure`）
+  - `examples/agentic_vectorless_rag_demo.py`（agentic demo；原 `AGENT_SYSTEM_PROMPT` 引用随示例重构失效）
 - Trace:
   - Consolidated from `notes/deep-research-question-tree.md` after three rounds of source verification focused on tree schema, construction paths, and local retrieval behavior.
-- Version Basis: branch `main` of `VectifyAI/PageIndex`
-- Observed At: 2026-06-14
+  - 2026-08-19 复核：`page_index.py`→`page_index_classic.py`、`retrieve.py` 移除，树 schema 与构树函数保持；接口清单按 `client.py` / `local_api.py` / `agent_tools.py` 更新。
+- Version Basis: 复核截面 `branch main`, `commit ae2a5b4`（2026-08-17）；原研究截面 `commit 5a18553284ed`（2026-06-13）
+- Observed At: `2026-08-19`（复核，本地克隆 `/Volumes/ZGY93B6F/github/PageIndex`）；原截面 `2026-06-14`
 - Scope: local source paths for Markdown tree construction, PDF tree construction, recursive refinement, and local SDK retrieval behavior
 - Drift Risk: medium — tree schema is relatively stable, but retrieval behavior and interface exposure may evolve across SDK / service layers
