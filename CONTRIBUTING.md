@@ -1,8 +1,10 @@
 # 仓库组织与写作规范
 
-本文件定义仓库的组织规则与笔记写作规范。这个仓库不仅保存多个研究领域下的知识内容，也在持续沉淀一套面向研究型知识工作的结构化研究方法体系。更细的仓库建设、文档治理、证据分级与可追溯性规则，沉淀在 [`docs/contributing/`](./docs/contributing/)；本文件保留仓库级强约束和入口说明。规则层目录说明入口见 [`docs/contributing/README.md`](./docs/contributing/README.md)，按任务继续查找具体规则时读 [`docs/contributing/index.md`](./docs/contributing/index.md)。如需理解这套系统提供的公共能力，可转到 [`docs/capabilities/README.md`](./docs/capabilities/README.md)；如需理解能力层自己的边界、增长方式与联动更新面，读 [`docs/capabilities/meta.md`](./docs/capabilities/meta.md)；进入能力层后按问题继续查找时读 [`docs/capabilities/index.md`](./docs/capabilities/index.md)。AI 协作者入口见 [`AGENTS.md`](./AGENTS.md)。Evidence 与 Traceability 的统一工作流见 [`docs/contributing/rules/evidence-and-traceability.md`](./docs/contributing/rules/evidence-and-traceability.md)，判断细则见 [`evidence-assessment-rules.md`](./docs/contributing/rules/evidence-assessment-rules.md)，记录细则见 [`evidence-recording-rules.md`](./docs/contributing/rules/evidence-recording-rules.md)，来源边界见 [`evidence-source-rules.md`](./docs/contributing/rules/evidence-source-rules.md)，链路细则见 [`traceability-rules.md`](./docs/contributing/rules/traceability-rules.md)。
+本文件定义仓库的组织规则与笔记写作规范。这个仓库不仅保存多个研究领域下的知识内容，也在持续沉淀一套面向研究型知识工作的结构化研究方法体系。更细的仓库建设、文档治理、证据分级与可追溯性规则，沉淀在 [`docs/contributing/`](./docs/contributing/)；本文件保留仓库级强约束和入口说明。规则层目录说明入口见 [`docs/contributing/README.md`](./docs/contributing/README.md)，按任务继续查找具体规则时读 [`docs/contributing/index.md`](./docs/contributing/index.md)。如需理解这套系统提供的公共能力，可转到 [`docs/capabilities/README.md`](./docs/capabilities/README.md)；如需理解能力层自己的边界、增长方式与联动更新面，读 [`docs/capabilities/meta.md`](./docs/capabilities/meta.md)；进入能力层后按问题继续查找时读 [`docs/capabilities/index.md`](./docs/capabilities/index.md)。AI 协作者入口见 [`AGENTS.md`](./AGENTS.md)。改控制面（开发态：修改规则 / 结构 / 设计 / 方法论本身）的入口见 [`docs/DEVELOPING.md`](./docs/DEVELOPING.md)。Evidence 与 Traceability 的统一工作流见 [`docs/contributing/rules/evidence-and-traceability.md`](./docs/contributing/rules/evidence-and-traceability.md)，判断细则见 [`evidence-assessment-rules.md`](./docs/contributing/rules/evidence-assessment-rules.md)，记录细则见 [`evidence-recording-rules.md`](./docs/contributing/rules/evidence-recording-rules.md)，来源边界见 [`evidence-source-rules.md`](./docs/contributing/rules/evidence-source-rules.md)，链路细则见 [`traceability-rules.md`](./docs/contributing/rules/traceability-rules.md)。
 
 ## 快速导读
+
+**定位**：本文件是**贡献知识（运行态）时遵守的规则书**。如果你这次是要**改控制面本身**（规则 / 结构 / 设计 / 方法论 = 开发态），不要在这里找路由，先去 [`docs/DEVELOPING.md`](./docs/DEVELOPING.md)。
 
 如果你带着具体任务阅读，优先按任务入口跳转：
 
@@ -21,7 +23,7 @@
 | 查仓库建设规则的承接位置 | [`docs/contributing/`](./docs/contributing/) | 区分知识正文与贡献、治理、证据、可追溯性约束 |
 | 优化单篇文档表达 | 第五章 | 调整结构、公式、表格或论文笔记写法 |
 
-如果任务涉及修改规则文件或判断是否改规则，先读 [规则的规则](./docs/contributing/rules/meta-rules.md)；如果准备做重大规则变更，必须在动手前重新通读一遍，不要依赖当前长上下文中的记忆。
+如果任务涉及**改控制面本身**（修改规则文件、结构、设计或方法论），那是开发态——转 [`docs/DEVELOPING.md`](./docs/DEVELOPING.md) 走开发态入口（它再带你到 [规则的规则](./docs/contributing/rules/meta-rules.md) 等 owner）；重大规则变更必须在动手前重新通读一遍，不要依赖当前长上下文中的记忆。
 
 如果只记一条默认策略：**拿不准时，先写元信息文件，不要着急写正文。**
 

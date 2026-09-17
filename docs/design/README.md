@@ -16,6 +16,10 @@
 - `evolution-design.md`：知识与方法论协同进化的专项设计文档，解释为什么积累知识与沉淀方法论是一对协同进化过程，以及其节奏、评价尺度与实践/理论两种来源。
 - `runtime-development-design.md`：运行态 / 开发态双模式的专项设计文档，解释两态为何必须显式分离、与控制面 / 数据面的关系，以及为什么开发态应在 `docs/` 层有独立入口。
 
+以上为**系统架构文档**（描述系统怎么运作）。一次性**设计决策**（某时点的具体选择 + 备选 + 理由）单独收在子目录：
+
+- `decisions/`：一次性设计决策记录（ADR 式），当前含 `repo-naming/`（为本仓库选名）。详见 [`decisions/README.md`](./decisions/README.md)。
+
 ## 阅读建议
 
 - 想理解这个仓库为什么这样分层：读 [`system-design.md`](./system-design.md)
@@ -26,9 +30,10 @@
 - 想理解为什么需要 `docs/contributing/` 这一层，以及它为什么继续拆成主规则、`intent/`、`cases/`：读 [`contributing-design.md`](./contributing-design.md)
 - 想理解索引与查找为何应体系化、以及在没有 MEMORY 时仓库如何自导航：读 [`navigation-design.md`](./navigation-design.md)
 - 想理解为什么积累知识与沉淀方法论是一对协同进化过程、以及这个循环怎么跑：读 [`evolution-design.md`](./evolution-design.md)
-- 想理解运行态与开发态为何要分开、以及开发态为什么需要 `docs/AGENTS.md` 这样的独立入口：读 [`runtime-development-design.md`](./runtime-development-design.md)
+- 想理解运行态与开发态为何要分开、以及开发态为什么需要 `docs/DEVELOPING.md` 这样的独立入口：读 [`runtime-development-design.md`](./runtime-development-design.md)
 
 ## 边界说明
 
 - 本 README 只做设计层入口，不重复系统设计正文。
+- 本层顶层的 `*.md` 只承载**系统架构**（描述系统怎么运作）；**一次性设计决策**（如仓库命名）放 [`decisions/`](./decisions/)，不与架构文档平级混放。判据：描述系统怎么运作 → 架构；记录一次选择 → 决策。
 - 若未来设计层继续增长，再按实际需要决定是否补 `index.md` 或更多专项设计文档。

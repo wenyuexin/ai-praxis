@@ -1,6 +1,6 @@
 # Runtime / Development Design
 
-本文回答：**这个仓库为什么要显式区分“运行态”和“开发态”两种模式、两者各是什么、边界在哪，以及为什么 `docs/` 层要为开发态单独设入口。** 它是 `docs/AGENTS.md`（开发态入口）与根 `AGENTS.md`（运行态入口）分工的实现依据。
+本文回答：**这个仓库为什么要显式区分“运行态”和“开发态”两种模式、两者各是什么、边界在哪，以及为什么 `docs/` 层要为开发态单独设入口。** 它是 `docs/DEVELOPING.md`（开发态入口）与根 `AGENTS.md`（运行态入口）分工的实现依据。
 
 它属于 design layer：不替代任何规则条文，只解释这套“双模式 + 入口分离”为什么成立、如何落到具体入口文件。
 
@@ -84,10 +84,10 @@ LLM 应用特殊在 **AI 在两态都在场**，但角色不同：
 入口按**模式**分，不按面分：
 
 - **根 `AGENTS.md` = 运行态入口**：取用知识 + 遵守规则，保持傻瓜式、精简；强制先读。
-- **`docs/AGENTS.md` = 开发态入口**（待建）：改治理（规则 / 设计 / 方法论）时的第二跳入口，由根入口一条按任务类型的下潜触发器指过去（机制见 [`navigation-design.md`](./navigation-design.md) §4）。
+- **`docs/DEVELOPING.md` = 开发态入口**：改控制面（规则 / 结构 / 设计 / 方法论）时的第二跳入口，由根入口一条按任务类型的下潜触发器指过去（机制见 [`navigation-design.md`](./navigation-design.md) §4）。
 - **`ingest`**（运行态 × 数据面）不单列入口，归运行态、走 [`../capabilities/ingest.md`](../capabilities/ingest.md)。
 
-`docs/AGENTS.md` 的具体承接清单、根入口指针原文，依本文为据在落地时给出。
+`docs/DEVELOPING.md` 的具体承接清单、根入口指针原文，已依本文落地。
 
 ## 9. 与其他 design 文档的边界
 
@@ -99,7 +99,7 @@ LLM 应用特殊在 **AI 在两态都在场**，但角色不同：
 
 本文不负责：
 
-- 规定 `docs/AGENTS.md` 的逐字内容（依本文另行给出清单）。
+- 规定 `docs/DEVELOPING.md` 的逐字内容（见该文件本身）。
 - 代替 `navigation-design.md` 给出入口机制条文。
 - 现在就改 `evolution-design.md`（术语收编只需其中一处最小交叉引用，落地时做）。
 

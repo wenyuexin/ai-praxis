@@ -1,6 +1,6 @@
 # AGENTS.md
 
-本文件是 AI 协作者在本仓库工作的入口说明。它不替代 `CONTRIBUTING.md`，只保留执行时必须优先遵守的规则。首次进入本仓库时，必须先读完本文件，再立即阅读 [`CONTRIBUTING.md`](./CONTRIBUTING.md)；未完成这两步前，不要响应任何仓库相关的分析、修改或结构建议。
+本文件是 AI 协作者在本仓库工作的入口说明。它不替代 `CONTRIBUTING.md`，只保留执行时必须优先遵守的规则。首次进入本仓库时，必须先读完本文件。之后按模式分流：只做取用 / 导航 / 检索知识（纯读取）时，读完本文件即可、按需再下潜；一旦要写入知识、修改文件或提出结构 / 规则 / 设计变更，动手前必须先读 [`CONTRIBUTING.md`](./CONTRIBUTING.md)，再按下面的任务路由继续。未完成对应阅读前，不要贸然写入或改动仓库。
 
 ## 1. 一句话原则
 
@@ -8,7 +8,7 @@
 
 ## 2. 任务路由
 
-完成 `AGENTS.md` 与 [`CONTRIBUTING.md`](./CONTRIBUTING.md) 的阅读后，再按当前操作选择最相关的能力文档与规则文件；不要为了小任务一次性通读所有规则。如果你想先理解规则层整体分工，读 [`docs/contributing/README.md`](./docs/contributing/README.md)；如果已经进入规则层但拿不准下一步该读哪篇，读 [`docs/contributing/index.md`](./docs/contributing/index.md)。如果你想先理解这套系统提供哪些公共能力，读 [`docs/capabilities/README.md`](./docs/capabilities/README.md)；如果你要判断 capability layer 自己的边界、增长方式与联动更新面，读 [`docs/capabilities/meta.md`](./docs/capabilities/meta.md)；如果已经进入能力层但拿不准下一步该读哪篇，读 [`docs/capabilities/index.md`](./docs/capabilities/index.md)。
+读完本文件后，先分清模式：**如果你这次是要改控制面本身（规则 / 结构 / 设计 / 方法论 = 开发态），先读 [`docs/DEVELOPING.md`](./docs/DEVELOPING.md)**，它会把你路由到对应的元规则与设计文档；如果你是在取用、导航、放置或吸收知识（运行态），再按当前操作选择最相关的能力文档与规则文件。不要为了小任务一次性通读所有规则。如果你想先理解规则层整体分工，读 [`docs/contributing/README.md`](./docs/contributing/README.md)；如果已经进入规则层但拿不准下一步该读哪篇，读 [`docs/contributing/index.md`](./docs/contributing/index.md)。如果你想先理解这套系统提供哪些公共能力，读 [`docs/capabilities/README.md`](./docs/capabilities/README.md)；如果你要判断 capability layer 自己的边界、增长方式与联动更新面，读 [`docs/capabilities/meta.md`](./docs/capabilities/meta.md)；如果已经进入能力层但拿不准下一步该读哪篇，读 [`docs/capabilities/index.md`](./docs/capabilities/index.md)。
 
 ### 2.1 先判断能力类型
 

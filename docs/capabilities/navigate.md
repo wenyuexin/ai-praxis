@@ -134,7 +134,7 @@
 
 如果你的目标不是找知识，而是做事：
 
-- 想改规则：去 `docs/contributing/`
+- 想改规则 / 结构 / 设计（改控制面本身 = 开发态）：先去 `docs/DEVELOPING.md`
 - 想理解系统设计：读 `docs/design/system-design.md`
 - 想找学习资料：去 `learning-materials/`
 

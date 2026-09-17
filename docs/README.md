@@ -10,6 +10,7 @@
 - `capabilities/`：公共能力文档目录，用来承接这套系统提供什么能力、如何使用这些能力，以及能力之间如何衔接；进入后先读 `capabilities/README.md`，需要理解能力层自身边界时读 `capabilities/meta.md`，需要按能力问题查找具体文档时再读 `capabilities/index.md`。
 - `contributing/`：仓库建设、贡献协作、文档治理、Evidence、Traceability 等规则目录；进入后先读 `contributing/README.md`，需要按任务查找具体规则时再读 `contributing/index.md`。
 - `index.md`：`docs/` 级查找导航页；当你已经知道自己要找的是规则、能力、设计还是支撑材料时，从这里继续分流。
+- `DEVELOPING.md`：**开发态入口（改控制面）**；当你要改规则 / 结构 / 设计 / 方法论本身时，从这里路由到对应的元规则与设计文档。贡献知识、取用与导航（运行态）仍走根 `AGENTS.md` 与 `CONTRIBUTING.md`。
 - `design/`：专项设计文档目录；承接系统设计说明、能力矩阵等设计侧文档，进入后先读 `design/README.md`。
 - `templates/`：仓库文档模板，例如综述写作模板。
 - `test/`：Markdown、Mermaid 等文档渲染兼容性测试材料。
