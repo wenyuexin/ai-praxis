@@ -128,6 +128,7 @@ AI 最容易犯的错，不是完全读不到条文，而是：
 只有在以下情况才读：
 
 - 需要修改 `metadata-files.md` 中与 `overview.md` / `landscape.md` 相关的条文
+- 需要向他人解释或对比 `overview.md` 与 `landscape.md` 的区别（这是最容易当场把它们压平成对称类型的时刻，务必先读本文再作答）
 - 发现 AI 在这两个文件上反复误读
 - 需要解释 `overview.md` / `landscape.md` 的原意
 - 需要复盘为什么这两者不能被重写成一组抽象、对称文件类型
