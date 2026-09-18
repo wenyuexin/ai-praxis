@@ -1,15 +1,15 @@
 # docs/DEVELOPING.md — 开发态入口（改控制面）
 
-本文件是**开发态入口**：当你这次的任务是**改控制面本身**——规则、结构、设计、方法论——从这里进。它是第二跳入口，由根 [`AGENTS.md`](../AGENTS.md) 的模式分流指过来；为什么把开发态单独设入口，见 [`design/runtime-development-design.md`](./design/runtime-development-design.md)。
+本文件是**开发态入口**：当你这次的任务是**改或评判控制面本身**——规则、结构、设计、方法论——从这里进。它是第二跳入口，由根 [`AGENTS.md`](../AGENTS.md) 的模式分流指过来；为什么把开发态单独设入口，见 [`design/runtime-development-design.md`](./design/runtime-development-design.md)。
 
 注意与 [`../CONTRIBUTING.md`](../CONTRIBUTING.md) 的区别：CONTRIBUTING 是**控制面规则书**，你**贡献知识（运行态）时读它、遵守它**；本文件是你**要改那本规则书 / 控制面（开发态）时**走的入口。本文件只做**路由 + 下潜触发器**，不复制任何 owner 的条文。
 
 ## 1. 先确认：你真的在开发态吗
 
 - **在开发态**（继续读本文件）：改规则 / 改能力边界 / 改目录结构 / 改设计 / 改方法论——即动到控制面本身。
-- **不在开发态**（别从这里走）：**贡献知识**（写笔记、`ingest` 灌材料、整理综述）是运行态 × 数据面——读 [`../CONTRIBUTING.md`](../CONTRIBUTING.md) 规则书 + 走 [`capabilities/`](./capabilities/README.md)；**只是取用 / 导航知识**回根 `AGENTS.md`。
+- **不在开发态**（别从这里走）：**贡献知识**（写笔记、`ingest` 灌材料、整理综述）默认是运行态 × 数据面（若目的是验证控制面改动，则属开发态 × 数据面，见 [`design/runtime-development-design.md`](./design/runtime-development-design.md) §4）——读 [`../CONTRIBUTING.md`](../CONTRIBUTING.md) 规则书 + 走 [`capabilities/`](./capabilities/README.md)；**只是取用 / 导航知识**回根 `AGENTS.md`。
 
-判据：**这次会不会改到控制面文件本身**（`contributing/` 规则、`design/`、能力边界）？改，才是开发态；只是遵守它们去写知识，是运行态。
+判据：**看主导意图，不看这一刻改的是哪个面的文件。** 只要任务是**作者化或评判控制面本身**（`contributing/` 规则、`design/`、能力边界）——改它，或判断它该不该改 / 够不够好——就是开发态，**哪怕还没落笔改任何文件**；只是遵守它们去导航 / 取用 / 写知识，才是运行态。（按意图而非文件判模式，见 [`design/runtime-development-design.md`](./design/runtime-development-design.md) §4）
 
 ## 2. 下行路由：按“要改什么”进对应 owner
 
@@ -33,4 +33,4 @@
 
 - 本文件是**入口**，不是规则本身：条文与 stop-line 一律回到上面链接的 owner。
 - 它**不替代**根 `AGENTS.md` 的通用硬约束（证据纪律、正文 vs `contributing/` 落位、只改相关文件、提交前自检）——那些两态都成立。
-- 本文件只管**改控制面（开发态）**；**贡献知识（运行态）**读 [`../CONTRIBUTING.md`](../CONTRIBUTING.md) 规则书，不从这里走。
+- 本文件只管**改或评判控制面（开发态）**；**贡献知识（运行态）**读 [`../CONTRIBUTING.md`](../CONTRIBUTING.md) 规则书，不从这里走。
