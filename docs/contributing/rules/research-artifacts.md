@@ -218,6 +218,8 @@
 
 当输入材料来自 `temp/`、外部 AI 调研、联网检索 / 网页抓取结果、博客整理或临时笔记时，默认先按 [`documentation-workflow.md`](./documentation-workflow.md) 第 2、3、5、6 节判断 Claim、Evidence 状态与落位；在**已经确定它属于某个具体对象目录**、但**又不足以直接进入对象正文或机制专题正文**时，允许先回流到该对象目录的 `notes/`。
 
+本节判断**外部 / `temp/` 材料能否由对象内辅助材料承接**（本支准入条件的 owner）；**迁出 `temp/` 仍须满足回流门槛**，见 [`documentation-workflow.md §7`](./documentation-workflow.md) 与 [`evidence-and-traceability.md §5`](./evidence-and-traceability.md)，本节不代替该门槛。准入**不自动要求创建 `notes/` 目录**——平铺文件与 `notes/` 的形态按 §5「研究辅助材料如何组织」按体量决定。落位排序见 [`documentation-workflow.md §9 通用落位序`](./documentation-workflow.md)，本节不复述顺序与形态。
+
 适合先进入 `notes/` 的典型情形：
 
 - 材料已经和某个具体对象强绑定，但仍包含较多未压实的源码线索、长引用、对照表或待核验问题。

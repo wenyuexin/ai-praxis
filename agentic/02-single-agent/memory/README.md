@@ -31,5 +31,6 @@ memory/
 ├── images/
 ├── long-term-memory/
 ├── retrieval-methods/
-└── short-term-memory/
+├── short-term-memory/
+└── project-studies/          # 对象研究（如 Mem0）
 ```

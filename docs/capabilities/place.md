@@ -113,6 +113,12 @@ Place 的第一步，不是选文件名，而是先找当前内容的**最高稳
 
 这不是固定顺序，而是最小识别表。真正决定先出现哪一类文件，取决于先稳定下来的是什么问题。
 
+### 6.1 辅助材料的落位去向（指针）
+
+当材料属于服务正文构建的辅助材料（临时输入 / 对象内研究过程材料 / 缺口·候选·冲突·路径元信息）时，落位顺序不在本页展开：顺序见 [`documentation-workflow.md §9 通用落位序`](../contributing/rules/documentation-workflow.md)，作用域属性见 [`metadata-files.md §2`](../contributing/rules/metadata-files.md)，对象辅助材料的形态与 `notes/` 准入见 [`research-artifacts.md §5 / §3.9`](../contributing/rules/research-artifacts.md)，跨子目录共享证据的窄例外见 [`research-artifacts.md §5.1`](../contributing/rules/research-artifacts.md)。本页只回答“该去哪一层”，不承接有序协议与 stop-line。
+
+这层辅助材料的分工与“端到端吸收过程”是两件事：`research-ingestion-design.md` 讲输入如何分流、暂存与回流，本页与上述 owner 只处理进入稳定落位后的去向，不复制完整的 `Ingest` 协议。
+
 ## 7. 几种最常见的 Place 误判
 
 ### 7.1 误判一：找到目录就等于知道该写什么文件

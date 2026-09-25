@@ -117,7 +117,7 @@
 - `candidates.md`：当前首先稳定的是待研究对象
 - `conflict.md`：当前首先稳定的是定义、事实、版本或口径冲突
 
-这四类落点不是“次优垃圾桶”，而是系统防止过早写定论的重要缓冲层。
+这四类落点不是“次优垃圾桶”，而是系统防止过早写定论的重要缓冲层。**是否已满足迁出 `temp/` 的门槛在规则层裁决——见 [`documentation-workflow.md §7`](../contributing/rules/documentation-workflow.md) 与回流门槛 [`evidence-and-traceability.md §5`](../contributing/rules/evidence-and-traceability.md)（本能力层 §7 只解释“离开后先进哪类稳定中间层”）；离开 `temp/` 后，元信息文件、`notes/` 与正文之间的落位顺序按 [`documentation-workflow.md §9`](../contributing/rules/documentation-workflow.md) 判断。本节只说明这些缓冲层各自的作用。**
 
 ## 7. 何时从临时层进入稳定中间层
 
@@ -128,36 +128,15 @@
 - **元信息文件层**：`backlog.md`、`candidates.md`、`conflict.md`
 - **对象目录内的辅助材料层**：具体案例研究目录下的 `notes/`
 
-最小判断是：
-
-- 如果当前首先稳定的是**缺口 / 对象 / 冲突**，优先进入对应元信息文件。
-- 如果材料已经**明确归属于某个具体对象目录**，但还不足以直接形成对象正文或机制专题，可先进入该对象目录的 `notes/`。
-- 如果连对象归属都还不稳，继续留在 `temp/`，不要为了离正文更近而强行塞进某个对象目录。
+最小判断的**落位顺序与优先级，以 [`documentation-workflow.md §9 通用落位序`](../contributing/rules/documentation-workflow.md) 为准**；本节只解释“为什么要先进中间层、有哪两类中间层”，不复述顺序与各腿准入条件。
 
 ## 8. 外部临时材料何时先回流到对象目录 `notes/`
 
-当输入材料来自 `temp/`、外部 AI 调研、联网检索 / 网页抓取结果、博客整理或临时笔记时，不要直接“把材料改写进正文”。
-
-如果它已经同时满足下面两个条件：
-
-1. **对象归属已经稳定**：已经明确知道它属于哪个具体论文、代码库、产品、协议或 benchmark 目录。
-2. **正文条件仍未满足**：虽然已经不该只留在 `temp/`，但还不足以直接进入 `overview.md`、`architecture.md` 或 `<mechanism>.md`。
-
-那么它就可以先进入该对象目录的 `notes/`，作为对象内的稳定中间层。
-
-典型情形包括：
-
-- 材料已经和某个具体对象强绑定，但仍包含较多未压实的源码线索、长引用、对照表或待核验问题。
-- 当前价值主要在于为后续正文提供 claim-source 对照、来源恢复、局部核验或研究脚手架，而不是直接形成给普通读者的稳定叙述。
-- 结论已经不适合继续只留在 `temp/`，但还不足以直接写进对象正文。
-
-在对象目录中，最常见的进一步分流是：
-
-- `notes/source.md`：上游来源摘录、源码核验路径、长引用、失败搜索和版本语义。
-- `notes/evidence.md`：Claim-Source 对照、Evidence 状态、局部结论和待补证点。
-- `notes/general.md`：尚未结构化为 source / evidence 的对象内研究过程材料。
+当输入材料来自 `temp/`、外部 AI 调研、联网检索 / 网页抓取结果、博客整理或临时笔记时，不要直接“把材料改写进正文”。对象内辅助材料，为**尚未形成读者向稳定叙述**的研究过程，提供一个对象内可维护的落点。
 
 这一步的关键不是“给临时材料找个地方放”，而是：**让已经完成对象归属判断的材料，从输入层进入对象内可维护的稳定中间层。**
+
+是否已可迁出 `temp/`（拿不准仍可先留，见 [`documentation-workflow.md §7`](../contributing/rules/documentation-workflow.md)）、缺口 / 冲突型材料的去向见 [`metadata-files.md §2`](../contributing/rules/metadata-files.md)（不因对象归属就进 `notes/`）、能否进入对象辅助材料的准入见 [`research-artifacts.md §3.9`](../contributing/rules/research-artifacts.md)、平铺与 `notes/` 的形态见 [`research-artifacts.md §5`](../contributing/rules/research-artifacts.md)：分别按相应规则判断。本节只解释“为什么需要对象内中间层”，不作充分条件裁决，也不复述准入与文件分流。
 
 ## 9. 外部临时材料回流正文时的标准能力链
 

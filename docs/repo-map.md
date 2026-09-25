@@ -202,6 +202,8 @@
 
 前一张图偏“按组织功能分组”，这一张偏“按阅读和研究过程理解关系”。
 
+其中 `研究辅助文档`、`临时输入文档`，以及 `元信息文档` 里的 `backlog`/`candidates`/`conflict`/`roadmap`，换一个横切视角看，都是服务正文构建的“构造辅助层”——按治理角色（临时暂存 / 对象内研究过程辅助 / 缺口·候选·冲突·路径元信息）与作用域分工；`README`/`index` 这类稳定导航说明**不**属于该家族，`overview`/`landscape` 暂作未决。这层横切视角不替代上面按组织功能分的五类，只解释它们在构建正文时如何配合；**落位决策**见 [`contributing/rules/documentation-workflow.md`](./contributing/rules/documentation-workflow.md) §9「通用落位序」与 [`capabilities/place.md`](./capabilities/place.md)，**理由**见 [`design/auxiliary-layers-design.md`](./design/auxiliary-layers-design.md)（初稿）。
+
 ## 4. 什么文档更适合独立，什么文档更适合引用别人
 
 这份文档只给一个最小判断，不展开细则。
