@@ -125,7 +125,7 @@ README 是入口文件，但不是默认万能文件。只有当目录说明问�
 - 对重要案例，导航以下文件：
   - `overview.md` / `architecture.md` 等面向读者的对象正文入口
   - 机制专题文档（如 `runtime.md`、`sandbox.md`）
-  - `notes.md` 等少量平铺辅助材料，或 `notes/` 统一辅助材料目录
+  - `notes/` 对象级研究辅助材料目录
 - 说明哪些文件适合人类直接阅读，哪些只是研究辅助材料（服务于 traceability 和后续维护）
 - 避免导航案例目录中的元信息文件（如 `backlog.md`、`candidates.md`、`conflict.md`）；这些文件仍遵循通用 README 规则
 
@@ -138,7 +138,7 @@ README 是入口文件，但不是默认万能文件。只有当目录说明问�
 
 - `overview.md` / `architecture.md` 在案例目录中是**对象正文入口**，而不是七层元信息文件中的"理解"文件（`overview.md` 在子领域目录中属于 L3 元信息文件，但在案例目录中是读者面向的正文）。
 - 因此，案例目录 README 导航 `overview.md` / `architecture.md` **不违**"不主动列出元信息文件"的规则。
-- `notes.md`、`source-notes.md`、`evidence-notes.md` 或 `notes/` 属于研究辅助材料，不是七层元信息文件，也可在 README 中导航；但同一案例应避免同时维护根目录平铺辅助文件和 `notes/` 两套入口。
+- `notes/` 属于研究辅助材料，不是七层元信息文件，也可在 README 中作为辅助材料入口导航；对象级案例不再同时维护根目录平铺辅助文件和 `notes/` 两套入口。跨子目录共享证据的窄例外按 `research-artifacts.md §5.1` 处理。
 - 但案例目录中的元信息文件（`backlog.md`、`candidates.md`、`conflict.md`）仍遵循通用规则，README 不主动列出。
 
 案例研究内部的三类产物组织方式，详见 [`research-artifacts.md`](./research-artifacts.md)。

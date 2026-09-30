@@ -60,8 +60,8 @@
 
 所以它最合适的落位是：
 
-- 已有 `notes/` 时，放在 `notes/reflections.md`
-- 辅助材料还很少时，可临时在目录根下用 `reflections.md`
+- 需要独立对象辅助材料时，放在 `notes/reflections.md`
+- 如果内容仍适合贴着正文理解、不需要独立维护，则放在正文或专题文件的局部 `## Research Notes`，不为反思单独创建根目录文件
 
 ## 5. 为什么这层可以更自由，但仍要有最低约束
 
@@ -111,7 +111,7 @@
 主规则文件里，应该保留足够短、足够稳的内容，例如：
 
 - 反思层属于研究辅助材料层
-- 推荐使用 `reflections.md` / `notes/reflections.md`
+- 推荐在对象辅助层中使用 `notes/reflections.md`
 - 允许记录基于现状的自由发散
 - 不要把反思层直接当作正式正文或 Evidence 来源
 

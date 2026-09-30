@@ -136,7 +136,7 @@
 
 这一步的关键不是“给临时材料找个地方放”，而是：**让已经完成对象归属判断的材料，从输入层进入对象内可维护的稳定中间层。**
 
-是否已可迁出 `temp/`（拿不准仍可先留，见 [`documentation-workflow.md §7`](../contributing/rules/documentation-workflow.md)）、缺口 / 冲突型材料的去向见 [`metadata-files.md §2`](../contributing/rules/metadata-files.md)（不因对象归属就进 `notes/`）、能否进入对象辅助材料的准入见 [`research-artifacts.md §3.9`](../contributing/rules/research-artifacts.md)、平铺与 `notes/` 的形态见 [`research-artifacts.md §5`](../contributing/rules/research-artifacts.md)：分别按相应规则判断。本节只解释“为什么需要对象内中间层”，不作充分条件裁决，也不复述准入与文件分流。
+是否已可迁出 `temp/`（拿不准仍可先留，见 [`documentation-workflow.md §7`](../contributing/rules/documentation-workflow.md)）、缺口 / 冲突型材料的去向见 [`metadata-files.md §2`](../contributing/rules/metadata-files.md)（不因对象归属就进 `notes/`）、能否进入对象辅助材料及是否需要 `notes/` 容器见 [`research-artifacts.md §3.9、§5`](../contributing/rules/research-artifacts.md)：分别按相应规则判断。本节只解释“为什么需要对象内中间层”，不作充分条件裁决，也不复述准入与文件分流。
 
 ## 9. 外部临时材料回流正文时的标准能力链
 

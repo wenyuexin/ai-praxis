@@ -38,15 +38,17 @@
 - **容器范围**：对象目录 / 知识目录子树 / 仓库根（可递归）
 - **结构程度**：仅描述内容形态，**不是决策轴**（`temp/` 可装结构完整的调研稿，`notes/evidence.md` 可高度结构化，`backlog` 可只是散 bullet）。
 
-## 4. 三个角色的边界与何时用
+## 4. 三个角色的边界与判据归属
 
-- **`temp/`** — 临时输入暂存。装外部调研稿、网页抓取、arXiv 包、聊天 / handoff、未归属输入；材料刚进来、归属或证据状态未定，或跨对象暂无处归时用。不提交；其路径**永不**写进正式 Trace / Sources。
-- **`notes/`** — 承接对象内研究**过程**材料（缺口 / 冲突等治理语义不进这里，走元信息文件，见 §6）。装 `general`（兜底过程材料）/ `source`（来源 · 核验）/ `evidence`（claim-source 对照）/ `reflections`（现状触发的直觉 · 假说）/ 深度研究脚手架 / `<mechanism>.md` 等开放槽；材料**已完成对象归属**、但还不足以进正文时用。类型是**默认词表非封闭枚举**（`general` 兜底 + 开放槽承接不在预设内的 notes）。规模小平铺 `notes.md` / `source-notes.md`，大才建 `notes/` 目录（见 §5.1）。
-- **`backlog` / `candidates` / `conflict` / `roadmap`** — 持久认知 / 规划元信息（缺口 / 待研究对象 / 口径冲突 / 有先后的路径）。当前首先稳定的是这类**规划 · 认知**信息、而非过程材料时用。它们**在仓库多个层级递归存在**——对象目录（如 `codex/`）也有 `backlog` / `conflict`，子领域、根层亦然。
+本节只给三个角色**装什么、不装什么**，以及**判据由谁裁决**；具体准入条件、门槛与 stop-line 一律回到对应 owner，本稿不复述。
+
+- **`temp/`** — 临时输入暂存。装外部调研稿、网页抓取、arXiv 包、聊天 / handoff、未归属输入。它是**输入层**：材料的对象归属或证据状态尚未定型时停在这里。**是否已可迁出**见 [`documentation-workflow.md §7`](../contributing/rules/documentation-workflow.md) 与 [`evidence-and-traceability.md §5`](../contributing/rules/evidence-and-traceability.md)；**其路径不作为正式 Sources / Trace 端点**由 [`traceability-rules.md`](../contributing/rules/traceability-rules.md) 承接；**不提交**由 `.gitignore` 承接。这三件事分属不同 owner，拆分见 §5.3。
+- **`notes/`** — 承接对象内研究**过程**材料（缺口 / 冲突等治理语义不进这里，走元信息文件，见 §6）。它的容器形态是“无独立辅助层 / 有独立辅助层”二态，而不是按材料体量在平铺文件与目录之间切换；**启用条件、首文件命名与内部组织以 [`research-artifacts.md §3.9、§5`](../contributing/rules/research-artifacts.md) 为准，本稿不复述**。目录内的 `general`（未分类过程材料）/ `source`（来源 · 核验）/ `evidence`（claim-source 对照）/ `reflections`（现状触发的直觉 · 假说）/ 深度研究脚手架 / `<mechanism>.md` 是**默认词表非封闭枚举**，这是本稿关心的家族属性（见本稿 §5.1）。跨子目录共享证据的窄例外见 [`research-artifacts.md §5.1`](../contributing/rules/research-artifacts.md)。
+- **`backlog` / `candidates` / `conflict` / `roadmap`** — 持久认知 / 规划元信息（缺口 / 待研究对象 / 口径冲突 / 有先后的路径）。它们承接**规划 · 认知**信息而非研究过程材料，这是与 `notes/` 的家族分界；**各自的出现条件与作用域属性以 [`metadata-files.md §2`](../contributing/rules/metadata-files.md) 为准**。本稿只借它们的一个 Observed 事实说明作用域不是落位判据：它们在多个层级递归存在（对象目录如 `codex/` 也有 `backlog` / `conflict`，子领域、根层亦然），所以“单对象”并不把材料推向 `notes/`（见 §3、§6）。
 
 ## 5. 关键设计决定
 
-- **5.1 需求引出容器**：先有对某类辅助文档的需求，才结晶出具名文件；文件够多才长出目录。目录是涌现物，不预建空壳。小 / 中规模平铺，大规模才建 `notes/`。
+- **5.1 需求引出容器**：容器由“是否已出现独立于正文的过程材料”这一需求引出，而不是由材料体量引出。理由是：体量分档没有可执行阈值，会让同一份材料在平铺与目录之间反复摇摆；“有无独立辅助层”则是一次布尔判断，路径与文件名从第一天就稳定。另需分开的是：**“是否创建容器”与“容器内拆几个文件”是两个决定**，只有后者与材料类型、机制边界和维护频率有关。执行条件见 [`research-artifacts.md §5`](../contributing/rules/research-artifacts.md)，本稿只给理由。
 - **5.2 按作用域递归**：三个角色都可多层存在，每层管子树；跨层材料上移到更靠近根的层。多层 `temp/` 不是碎片化，是这条的自然结果。
 - **5.3 `temp/` 的“可撤销”是对共享知识可撤销，不等于本地随手可删、也不等于自动清理**：三件事分属不同 owner——① `.gitignore` 让未跟踪的 `temp/` 默认不进常规 Git 提交；② Traceability 保证正式 Sources / Trace 不以 `temp/` 路径为端点；③ 删除前仍须按 `AGENTS.md` 确认内容已迁移或不再需要。所以清理 `temp/` 不破坏已提交 / 共享的知识，但它可能仍含尚未回流的本地工作，**不是随手即删**；gitignore 也**不**保证 inbox 被清空（本地滞留会发生）。离开 `temp/` 的门槛与回退见 `research-ingestion-design.md`，本稿不重复生命周期。
 - **5.4 位置不携带 committed 语义**：`temp/` 的层级只表达本地作用域；"原始 → 知识"的链由回流 **Trace** 承载（指向真实上游，不留 `temp/` 路径）。

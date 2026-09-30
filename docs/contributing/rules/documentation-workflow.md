@@ -152,7 +152,7 @@ AI 协作者在创建新文件、修改正文或迁移 `temp/` 内容前，必�
 对**已完成材料类型与 Evidence 判断、正在选择稳定落点**的材料，以下三腿去向的**相对顺序**以本节为唯一权威（不要求材料曾经过 `temp/`）。材料**是否已满足迁出 `temp/` 的门槛**不由本节裁决，见 §7 与 [`evidence-and-traceability.md §5`](./evidence-and-traceability.md)。各腿的准入条件、作用域属性与 stop-line 由对应 owner 承接；本节只给顺序与指针，不复述各腿条件。跨子目录共享辅助材料属独立窄例外（见 [`research-artifacts.md §5.1`](./research-artifacts.md)），不纳入本通用序。
 
 1. 缺口 / 候选 / 冲突 / 路径 → 对应元信息文件（`backlog.md` / `candidates.md` / `conflict.md` / `roadmap.md`）；作用域属性（含对象层级）见 [`metadata-files.md §2`](./metadata-files.md)。
-2. 对象归属稳定但正文不足 → 对象辅助材料；平铺文件与 `notes/` 的形态选择见 [`research-artifacts.md §5`](./research-artifacts.md)，其中外部 / `temp/` 材料何时先回流进 `notes/` 见 [`§3.9`](./research-artifacts.md)。
+2. 对象归属稳定但正文不足 → 对象辅助材料；是否需要独立对象辅助层及其 `notes/` 形态见 [`research-artifacts.md §3.9、§5`](./research-artifacts.md)。
 3. 已成稳定叙述 → `overview.md` / 正文专题；其落位仍由 [`place.md`](../../capabilities/place.md) 的既有分支与各自 owner 负责，本节不改。
 
 本节是通用序；外部材料场景的最短强制要求与 stop-line 见 §5、§6，不在此重复。

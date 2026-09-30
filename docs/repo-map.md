@@ -39,10 +39,9 @@
 │   ├── overview.md / landscape.md
 │   └── backlog.md / candidates.md / roadmap.md / conflict.md
 ├── 研究辅助文档
-│   ├── notes/
-│   ├── notes.md
-│   ├── source.md / evidence.md
-│   └── reflections.md 等
+│   └── notes/                       # 对象级独立辅助材料目录
+│       ├── source.md / evidence.md
+│       └── reflections.md 等（按需）
 └── 临时输入文档
     └── temp/
 ```
@@ -122,12 +121,10 @@
 
 典型位置与形态：
 
-- `notes/`
-- `notes.md`
-- `source.md`
-- `evidence.md`
-- `reflections.md`
-- 其他以过程、摘录、对照、暂存分析为主的辅助文件
+- 对象级独立辅助材料：对象目录下的 `notes/`
+- `notes/source.md`、`notes/evidence.md`、`notes/reflections.md` 等按需文件
+- 其他以过程、摘录、对照、暂存分析为主的 `notes/` 内辅助文件
+- 跨子目录共享证据的窄例外，见 `research-artifacts.md §5.1`
 
 它们常承接：
 

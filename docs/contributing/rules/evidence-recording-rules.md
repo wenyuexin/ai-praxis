@@ -64,7 +64,7 @@ Evidence 不默认新增独立元信息文档。
 
 只有当某个主题的证据记录变多、正文 `## Evidence` 小节明显过长时，才考虑新增主题级 evidence registry。当前不要求为每个目录机械创建 evidence 元信息文档。Evidence registry 的元信息身份见 [`metadata-files.md`](./metadata-files.md)。
 
-对于具体案例研究，`notes/evidence.md` 或 `evidence-notes.md` 可以作为该案例内部的证据对照层：它从 `notes/general.md`、`notes/source.md` 等研究过程材料中提炼 Claim-Source 对照，服务案例正文的关键判断。它仍不属于七层元信息文件，也不替代正文 `## Evidence` 摘要；正文应保留关键证据结论，并在证据过长时链接到对应的案例 evidence notes。
+对于具体案例研究，`notes/evidence.md` 可以作为该案例内部的证据对照层：它从 `notes/general.md`、`notes/source.md` 等研究过程材料中提炼 Claim-Source 对照，服务案例正文的关键判断。对象根目录的 `evidence-notes.md` 不再是默认路径；跨子目录共享证据的窄例外见 [`research-artifacts.md §5.1`](./research-artifacts.md)。`notes/evidence.md` 仍不属于七层元信息文件，也不替代正文 `## Evidence` 摘要；正文应保留关键证据结论，并在证据过长时链接到对应的案例 evidence notes。
 
 ### 2.1 主题级 Evidence registry 的启用条件
 

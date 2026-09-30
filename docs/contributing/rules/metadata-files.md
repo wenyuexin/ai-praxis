@@ -23,7 +23,7 @@
 
 - 用它判断 `README.md`、`index.md`、`overview.md`、`landscape.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 的职责边界和出现条件。
 - 材料处理流程见 [`documentation-workflow.md`](./documentation-workflow.md)。
-- 项目研究辅助材料（`notes.md`、`notes/`、`source-notes.md`、`evidence-notes.md` 等）不在本文，见 [`research-artifacts.md`](./research-artifacts.md)。
+- 项目研究辅助材料（对象目录下的 `notes/` 及其内部文件）不在本文，见 [`research-artifacts.md`](./research-artifacts.md)。
 - Evidence registry 不是默认元信息文件；仅在证据对照本身成为稳定维护对象时启用，具体条件见 [`evidence-recording-rules.md`](./evidence-recording-rules.md)。
 - 单篇文档表达、头尾字段布局不在本文。
 

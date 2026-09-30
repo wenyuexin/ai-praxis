@@ -127,7 +127,7 @@
 
 承接源码笔记、证据表、局部核验、长引用、失败搜索、未闭合问题和临时判断。它们服务于 traceability 和后续维护，不要求像正文一样完整叙事。
 
-典型文件：`notes.md`、`source-notes.md`、`evidence-notes.md`、`notes/`。
+独立对象辅助材料统一放在对象目录的 `notes/` 中；目录内文件按材料类型、机制或来源命名，不要求预建固定文件集合。跨子目录共享证据的窄例外见 §5.1，不改变对象级辅助材料的默认落位。
 
 ### 3.4 何时从总览切到深度研究脚手架
 
@@ -177,9 +177,8 @@
 
 推荐文件名：
 
-- 已启用 `notes/`：使用 `notes/reflections.md`
-- 尚未启用 `notes/` 但确有需要：可在目录根下暂用 `reflections.md`
-- 一旦后续辅助材料增多并启用 `notes/`，应把根目录下的 `reflections.md` 收进 `notes/`
+- 需要独立对象辅助材料时：使用 `notes/reflections.md`
+- 不需要独立对象辅助材料时：不要为反思层单独创建根目录文件；如内容仍适合贴着正文理解、不需要独立维护，可保留在正文或专题文件的局部 `## Research Notes` 中
 
 这层允许写：
 
@@ -212,13 +211,13 @@
 - **Evidence 是论证结构**：应围绕 Claim / Status / Sources / Trace / Needs 等字段组织，服务正文可信度和复核。
 - **代码库研究需要版本语义**：当 notes 或 evidence 指向开源代码库时，应遵守 [`evidence-source-rules.md`](./evidence-source-rules.md) 的源码版本边界和 [`traceability-rules.md`](./traceability-rules.md) 的版本链路字段要求。
 
-因此，`notes/evidence.md` 或 `evidence-notes.md` 不是普通杂项 notes，而是从 notes 原材料中整理出来的 claim-source 对照层。正文中的关键判断应优先引用正文 `## Evidence` 或 `notes/evidence.md`，而不是要求读者从 `notes/general.md`、`notes/source.md` 这类过程材料中自行还原论证。
+因此，`notes/evidence.md` 不是普通杂项 notes，而是从 notes 原材料中整理出来的 claim-source 对照层。正文中的关键判断应优先引用正文 `## Evidence` 或 `notes/evidence.md`，而不是要求读者从 `notes/general.md`、`notes/source.md` 这类过程材料中自行还原论证。
 
 ### 3.9 外部临时材料何时先回流到 `notes/`
 
 当输入材料来自 `temp/`、外部 AI 调研、联网检索 / 网页抓取结果、博客整理或临时笔记时，默认先按 [`documentation-workflow.md`](./documentation-workflow.md) 第 2、3、5、6 节判断 Claim、Evidence 状态与落位；在**已经确定它属于某个具体对象目录**、但**又不足以直接进入对象正文或机制专题正文**时，允许先回流到该对象目录的 `notes/`。
 
-本节判断**外部 / `temp/` 材料能否由对象内辅助材料承接**（本支准入条件的 owner）；**迁出 `temp/` 仍须满足回流门槛**，见 [`documentation-workflow.md §7`](./documentation-workflow.md) 与 [`evidence-and-traceability.md §5`](./evidence-and-traceability.md)，本节不代替该门槛。准入**不自动要求创建 `notes/` 目录**——平铺文件与 `notes/` 的形态按 §5「研究辅助材料如何组织」按体量决定。落位排序见 [`documentation-workflow.md §9 通用落位序`](./documentation-workflow.md)，本节不复述顺序与形态。
+本节判断**外部 / `temp/` 材料能否由对象内辅助材料承接**（本支准入条件的 owner）；**迁出 `temp/` 仍须满足回流门槛**，见 [`documentation-workflow.md §7`](./documentation-workflow.md) 与 [`evidence-and-traceability.md §5`](./evidence-and-traceability.md)，本节不代替该门槛。只要判断结果是“需要独立对象辅助材料”，首篇材料即进入对象目录的 `notes/`；不需要独立辅助材料时，不为迁移而创建 `notes/`。落位排序见 [`documentation-workflow.md §9 通用落位序`](./documentation-workflow.md)，本节不复述顺序。
 
 适合先进入 `notes/` 的典型情形：
 
@@ -260,14 +259,14 @@ Stop-line：
 
 研究辅助材料不是七层元信息文件，也不是普通正文。它们是具体案例研究中的辅助材料层。具体使用方式：
 
-- **辅助材料很少**：不创建 `notes/`，放在专题文件末尾的 `## Research Notes`，或在案例根目录保留一个 `notes.md`。
-- **中等规模辅助材料**：不创建 `notes/`，可在案例根目录使用 `notes.md`、`source-notes.md`、`evidence-notes.md` 或 `<mechanism>-notes.md`，但数量应保持很少。
-- **辅助材料很多**：创建 `notes/` 子目录，所有辅助材料统一放入 `notes/`；案例根目录不再同时保留 `notes.md`、`source-notes.md`、`evidence-notes.md` 等平铺辅助文件。
+- **不需要独立对象辅助材料**：不创建 `notes/`；仍适合贴着正文理解的过程记录可放在专题文件末尾的 `## Research Notes`。
+- **需要独立对象辅助材料**：从第一篇独立辅助材料开始就创建对象目录下的 `notes/`，后续同类材料继续进入该目录。
+- **不预建空模板**：只创建当前确有内容和用途的文件；首文件不要求统一命名为 `general.md`，应按材料类型、机制或来源命名。
 - **外部临时材料的对象内过渡落点**：如果一份外部调研 / 网页抓取 / 临时整理材料已经完成对象归属判断，但还不足以直接进入对象正文，可先按第 3.9 节整理进 `notes/`，而不是继续停留在 `temp/` 或直接润色进正文。
-- **`notes/` 内部命名**：可使用 `general.md` 承接原 `notes.md`，记录杂项研究过程和临时观察；`source.md` 承接源码核验、长引用、外部来源摘录和失败搜索；`evidence.md` 承接已整理的证据表、Claim-Source 对照与 Evidence 状态；`reflections.md` 承接基于当前客观现状的个人观察、直觉和阶段性理解；也可按机制或来源命名为 `<mechanism>.md`、`<source-name>.md`。
+- **`notes/` 内部命名**：可使用 `general.md` 承接未进一步分类的研究过程和临时观察；`source.md` 承接源码核验、长引用、外部来源摘录和失败搜索；`evidence.md` 承接已整理的证据表、Claim-Source 对照与 Evidence 状态；`reflections.md` 承接基于当前客观现状的个人观察、直觉和阶段性理解；也可按机制或来源命名为 `<mechanism>.md`、`<source-name>.md`。
 - **导航边界**：不要把 `notes/` 当成正文目录，也不要在 README 目录树中把它提升为主要阅读入口；只说明它是研究辅助材料入口。
 
-核心原则：拆分不是"每个研究点固定两篇"，但也不是"混乱后再救火"。**重要案例一开始就允许存在正文与辅助材料两个层次**；这里的“允许”不是“必须”，小案例或证据很少的案例可以只保留正文中的 `Evidence` / `Gap` 段落。正文保持读者可读，辅助材料保持证据可追溯。是否拆成多个文件，取决于材料体量、机制数量和后续维护频率，而不是等到不可读才触发。
+核心原则：拆分不是"每个研究点固定两篇"，但也不是"混乱后再救火"。**重要案例一开始就允许存在正文与辅助材料两个层次**；这里的“允许”不是“必须”，小案例或证据很少的案例可以只保留正文中的 `Evidence` / `Gap` 段落。正文保持读者可读，辅助材料保持证据可追溯。容器选择由是否需要独立对象辅助材料决定；进入 `notes/` 后，是否拆成多个文件再根据材料类型、机制边界和后续维护需要决定。
 
 ### 5.1 跨子目录辅助材料
 
@@ -277,7 +276,7 @@ Stop-line：
 
 这种辅助材料 **不是新的元信息层**，也不是默认配置。它只承接共享 caveat、未闭环证据边界和少量 claim-source 对照；**不承接**对象级详细研究、长过程 notes、候选对象队列或正文主体分析。
 
-当且仅当以下四条同时满足、且没有更轻量的替代手段时，才可考虑在 **该知识目录的根目录** 临时保留一个很小的辅助材料文件（如 `evidence-notes.md`，或 `notes/` 下的 `evidence.md`）：
+当且仅当以下四条同时满足、且没有更轻量的替代手段时，才可考虑在 **该知识目录的根目录** 临时保留一个很小的辅助材料文件（如 `evidence-notes.md`，或 `notes/` 下的 `evidence.md`）。这是跨子目录共享证据的窄例外，不适用于单个对象的研究辅助材料：
 
 - 同一批证据边界或 caveat 已被至少两篇正文专题反复引用且出现过口径分歧；
 - 放回单篇正文会造成明显重复、口径漂移或反复误写；
@@ -305,11 +304,11 @@ Stop-line：
 │           ├── architecture.md      # 可选：研究对象的架构与关键机制总览
 │           ├── <mechanism-a>.md     # 案例机制专题正文
 │           ├── <mechanism-b>.md     # 案例机制专题正文
-│           └── notes/               # 可选：辅助材料很多时启用；启用后辅助材料不再平铺在根目录
+│           └── notes/               # 按需：需要独立对象辅助材料时启用
 │               ├── README.md        # 可选：说明 notes 内部组织
-│               ├── general.md       # 原 notes.md：一般研究过程材料
-│               ├── source.md        # 原 source-notes.md：源码核验、长引用、失败搜索
-│               ├── evidence.md      # 原 evidence-notes.md：证据表、Evidence 对照
+│               ├── general.md       # 一般研究过程材料
+│               ├── source.md        # 源码核验、长引用、失败搜索
+│               ├── evidence.md      # 证据表、Evidence 对照
 │               ├── <mechanism-a>.md
 │               └── <source-name>.md
 ```
@@ -319,8 +318,8 @@ Stop-line：
 不同重要程度的案例采用不同目录结构：
 
 - **小案例**：可以只有 `README.md` + 一篇正文；少量证据写入正文 `## Evidence` 摘要，限制与缺口可按需在 `Gap` 等局部段落展开。
-- **中等案例**：建议有 `overview.md` 或 `architecture.md`，再按机制拆少量专题；少量研究过程材料可放案例根目录的 `notes.md`，但不同时创建 `notes/`。
-- **重要案例**：建议保留"读者正文 + 机制专题 + 辅助材料层"；一旦启用 `notes/`，源码核验、证据表、失败搜索和其他 notes 都放入 `notes/`，根目录只保留读者正文与机制专题。
+- **中等案例**：建议有 `overview.md` 或 `architecture.md`，再按机制拆少量专题；如果研究过程材料不需要独立对象辅助层，就保留在正文或专题文件的 `## Research Notes` 中；如果需要独立辅助层，从第一篇材料开始使用 `notes/`。
+- **重要案例**：建议保留"读者正文 + 机制专题 + 辅助材料层"；需要独立辅助材料时，源码核验、证据表、失败搜索和其他 notes 都放入 `notes/`，根目录只保留读者正文与机制专题。
 - **被明确标记为高研究价值、且未来大概率持续扩展的对象**：即使当前材料还不多，也应优先按长期稳定形态判断是否直接建立对象目录；不要因为“当前文件少”而延后，除非能证明该对象不会稳定长出更多研究产物。
 
 **子领域目录不复制完整案例分析**，只在专题正文中摘要引用案例证据，并通过 Evidence / Trace / Gap 指回案例目录。
@@ -330,7 +329,7 @@ Stop-line：
 | 文件 | 与本文件的关系 |
 |---|---|
 | [`documentation-workflow.md`](./documentation-workflow.md) | 负责材料处理、分流和回流流程；当材料进入案例研究或子领域专题组织阶段时，转由本文件定义产物结构 |
-| [`metadata-files.md`](./metadata-files.md) | 本文件定义 `notes.md` / `source-notes.md` / `evidence-notes.md` 等辅助材料的具体组织方式；元信息模型只说明它们不是七层元信息文件 |
+| [`metadata-files.md`](./metadata-files.md) | 本文件定义对象 `notes/` 及其内部辅助材料的具体组织方式；元信息模型只说明它们不是七层元信息文件 |
 | [`readme-rules.md`](./readme-rules.md) | 本文件定义案例目录内的文档结构；README 规则补充说明案例目录 README 如何导航这些产物 |
 | [`evidence-assessment-rules.md`](./evidence-assessment-rules.md)、[`evidence-recording-rules.md`](./evidence-recording-rules.md)、[`evidence-source-rules.md`](./evidence-source-rules.md) | 本文件不替代 Evidence 规则，只说明少量证据如何写在正文中、何时迁移到辅助材料 |
 | [`traceability-rules.md`](./traceability-rules.md) | 本文件说案例目录中的 Trace / Gap 段落位置；详细 Trace 规则由该文件定义 |
@@ -340,4 +339,4 @@ Stop-line：
 - **重要案例预防式保留正文层与辅助材料层**，不等文档混乱再拆。
 - **子领域文档只摘要引用案例证据**，不复制完整案例分析。
 - **研究辅助材料不提升为新的元信息层**；它们服务于具体案例研究的 traceability；极少数跨子目录场景见 5.1 节。
-- **拿不准目录深度时，先观察材料体量和维护频率**，按裁剪规则调整。
+- **先判断是否需要独立对象辅助材料**：需要就从第一篇材料开始使用 `notes/`，不需要就不创建该目录；不要以“材料还少”为理由延迟进入稳定容器。
