@@ -2,7 +2,7 @@
 
 > 研究单元：**对象**（`research-artifacts.md` §2.2；"记忆层"这一想法有众多同类对象，故不按混合型处理）。
 > 阶段：notes（研究过程 + claim-source 对照），**非正文**；结论压实后按 §3.6 提炼 overview / 版本对象正文。
-> 目的：拉一手来源，逐条核对 [`../../candidates.md`](../../candidates.md) 中来自 DeepSeek 综述、默认 `Inferred` 的 Mem0 核验点。
+> 目的：拉一手来源，逐条核对 [`../../../candidates.md`](../../../candidates.md) 中来自 DeepSeek 综述、默认 `Inferred` 的 Mem0 核验点。
 
 ## 本轮来源（Sources / Trace）
 
@@ -36,4 +36,4 @@
 - 拉 **Letta 对 Mem0 的原始反驳**（一手），核 LOCOMO 之争口径 → 大概率进 memory 的 `conflict.md`。
 - 核 OSS 三条缺陷（过度提取 / 置信度 / 同步阻塞）的原始 issue 与适用版本。
 - 新版 "只累积不删" 相对旧版 DELETE 的取舍，是否带来新的膨胀 / 污染问题。
-- 分类法（CoALA 等）合流回 [`../../memory-taxonomy-conflicts.md`](../../memory-taxonomy-conflicts.md) 前，先核一手（CoALA 原论文）。
+- 分类法（CoALA 等）合流回 [`../../../memory-taxonomy-conflicts.md`](../../../memory-taxonomy-conflicts.md) 前，先核一手（CoALA 原论文）。
