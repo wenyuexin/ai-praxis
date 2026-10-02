@@ -8,7 +8,7 @@
 
 README 的核心任务是解释目录是什么、为什么存在、与相邻目录如何区分，并在入口处给出最小阅读分流。
 
-README 不再默认承担目录结构展示；目录结构与查找导航默认由 `index.md` 承接。`README.md` 与 `index.md`、`overview.md`、`landscape.md` 的通用职责边界，统一以 [`metadata-files.md`](./metadata-files.md) 为准；`index.md` 自身的专项细则见 [`index-rules.md`](./index-rules.md)；本文件只补 README 自身的出现条件、写法与导航约束。
+README 不再默认承担目录结构展示；目录结构与查找导航默认由 `index.md` 承接。`README.md` 与 `index.md`、`overview.md`、研究辅助材料的通用职责边界，统一以 [`metadata-files.md`](./metadata-files.md) 和 [`research-artifacts.md`](./research-artifacts.md) 为准；`index.md` 自身的专项细则见 [`index-rules.md`](./index-rules.md)；本文件只补 README 自身的出现条件、写法与导航约束。
 
 ## 2. 出现条件
 
@@ -99,14 +99,13 @@ README 的核心职责是目录说明，不是替代正文或导航文件。
 
 README 可以提供最小入口分流，但不应承担主要查找导航，也不应默认展示目录结构。
 
-README 在少数情况下可以用一句方向性说明提及已稳定存在的 `overview.md` 或 `landscape.md`，例如提示“想先恢复主题主线”或“想判断结构边界时”应继续走哪类入口；但这类提及只用于补足入口说明，不应把这些文件列成常规导航项，也不应用 README 直接替代 `index.md` 的转交职责。
+README 在少数情况下可以用一句方向性说明提及已稳定存在的 `overview.md`，或提示读者需要结构研究时应先看哪类入口；但这类提及只用于补足入口说明，不应把研究辅助材料列成常规导航项，也不应用 README 直接替代 `index.md` 的转交职责。
 
-README 是入口文件，但不是默认万能文件。只有当目录说明问题真实存在或已经出现时，才需要补强 README；`README.md` 与 `index.md`、`overview.md`、`landscape.md` 的通用分工，统一以 [`metadata-files.md`](./metadata-files.md) 为准。本文件只强调 README 自身不应持续吞并这些职责，也不应演化为长篇综述或主要导航页。
+README 是入口文件，但不是默认万能文件。只有当目录说明问题真实存在或已经出现时，才需要补强 README；`README.md` 与 `index.md`、`overview.md`、研究辅助材料的通用分工，统一以 [`metadata-files.md`](./metadata-files.md) 和 [`research-artifacts.md`](./research-artifacts.md) 为准。本文件只强调 README 自身不应持续吞并这些职责，也不应演化为长篇综述或主要导航页。
 
 不要在 README 中主动列出以下元信息文件，除非它们本身就是当前目录的正文入口，或前文所述的少量方向性说明确有必要：
 
 - `overview.md`
-- `landscape.md`
 - `backlog.md`
 - `candidates.md`
 - `roadmap.md`
@@ -118,7 +117,7 @@ README 是入口文件，但不是默认万能文件。只有当目录说明问�
 
 ## 8. 案例目录 README
 
-案例目录（如 `project-studies/<case-name>/`）的 README 仍遵循"定向和导航"的核心职责，不替代正文。
+案例目录（例如某些目录采用的 `project-studies/<case-name>/`）的 README 仍遵循"定向和导航"的核心职责，不替代正文。`project-studies/` 只是集中组织多个案例的可选上层容器；案例也可以直接位于主题目录或其他局部对象集合中，不应把这个路径外推为所有案例都必须采用的固定结构。
 
 案例目录 README 可以：
 

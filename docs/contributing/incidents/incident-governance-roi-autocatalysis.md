@@ -34,7 +34,7 @@
 5. 加元层 GC 触发：定期审计，每篇规则 / intent / design 须能指出最近触发的 incident / case 或被引用，否则进合并 / 退役。
 6. 加数据面度量：证据状态分布、backlog 消化率、candidates→正文晋升率。
 7. 冷启动验收固化为 `docs/test/` 测试：定义 3–5 个标准任务，定期用无记忆会话跑，记录最小必读集与路由正确性。
-8. 陷阱覆盖不全：overview/landscape 的“先读 intent”下潜触发器目前只在 `metadata-files §4.4` + `intent §8`，未覆盖 `place.md` / `documentation-workflow.md` 路径；按 `navigation-design §6`「陷阱覆盖」应补齐或提炼为通用机制。
+8. 陷阱覆盖不全：overview / 结构研究辅助材料的“先读 intent”下潜触发器目前只在 `metadata-files §4.4` + `intent §8`，未覆盖 `place.md` / `documentation-workflow.md` 路径；按 `navigation-design §6`「陷阱覆盖」应补齐或提炼为通用机制。这里的“结构研究辅助材料”是当前 B+C 术语；历史上的 `landscape.md` 固定文件类型已退役。
 9. 根 `README.md` 目录树疑与 `agentic/` 实际目录名多处不一致（flash 评审报 8 处，未独立核实）；且根 README 不在入口协议内却是读者最自然的第一站。待核实后决定是否更新 / 纳入协议。
 
 （评审给出的“元层 94→~55、路由 800→~300”是目标锚点，`Inferred`，到达前先量化。）

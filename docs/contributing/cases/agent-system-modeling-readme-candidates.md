@@ -1,5 +1,7 @@
 # Agent System Modeling：`README.md` + `candidates.md` 先成立的案例
 
+> **历史案例（B+C 生效前）**：本文中的 `landscape.md` 仅用于记录旧规则下的对照项；当前不再把它作为固定元信息文件。
+
 本案例用于说明：**当一个目录最先稳定出现的是候选研究对象队列，而不是内容缺口、结构支架或人类向主线判断时，为什么更合理的落位是 `README.md` + `candidates.md`，并暂不创建 `backlog.md`、`landscape.md` 或 `overview.md`。**
 
 ## 1. 这个案例回答什么问题

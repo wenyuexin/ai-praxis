@@ -1,6 +1,6 @@
 # 构造辅助层家族设计（初稿 · 待讨论）
 
-> **状态**：设计透镜 / rationale（初稿）。本稿只解释这几层为何相关、为何不物理嵌套，**不再充当运行态落位模型**：运行态落位序见 [`../contributing/rules/documentation-workflow.md`](../contributing/rules/documentation-workflow.md) §9「通用落位序」，能力侧分流见 [`../capabilities/place.md`](../capabilities/place.md)。已按两轮外部 CONDITIONAL 评审整改（分类模型 + 边界）；已注册进 `design/README.md`；notes 生成原则已沉淀进 `intent/research-artifacts.md §9`；`repo-map.md §3` 已加指向本稿的横切视角说明。
+> **状态**：设计透镜 / rationale（初稿）。本稿只解释这几层为何相关、为何不物理嵌套，**不再充当运行态落位模型**：运行态落位序见 [`../contributing/rules/documentation-workflow.md`](../contributing/rules/documentation-workflow.md) §9「通用落位序」，能力侧分流见 [`../capabilities/place.md`](../capabilities/place.md)。已按两轮外部 CONDITIONAL 评审整改（分类模型 + 边界）；已注册进 `design/README.md`；notes 二态原则与研究辅助层上下位关系已沉淀进 `intent/research-artifacts.md §9、§9.1`；`repo-map.md §3` 已加指向本稿的横切视角说明。
 > **已收口**：是否下沉为强制规则已决——有序落位序落规则层（`documentation-workflow.md` §9），本稿降为 rationale；三个角色各自的现行机制、文件位置与 `.gitignore` 不变。
 > **触发**：2026-09-21 本会话关于 `notes/` 与 `temp/` 定位的讨论。
 > **证据**：模型部分是设计提案（Inferred）；现状陈述（`temp/` 被 gitignore、现存 4 个 `temp/`、`backlog/candidates/conflict` 已递归多层存在、`research-artifacts.md §5.1` 的约束）为本会话直接观察（Observed）。
@@ -26,7 +26,7 @@
 成员之间真正稳定的区别是**治理角色**，不是内容形态：
 
 - **临时输入暂存** → `temp/`
-- **持久研究辅助**（承接对象内研究**过程**材料） → `notes/`（及 `research-artifacts.md §5.1` 极窄的跨子目录辅助材料）
+- **持久研究辅助**（按作用域承接研究**过程**材料） → 对象 `notes/`、C 的结构研究辅助材料（及 `research-artifacts.md §5.1` 极窄的跨子目录辅助材料）
 - **持久认知 / 规划元信息**（缺口 / 候选 / 冲突 / 路径） → `backlog` / `candidates` / `conflict` / `roadmap`
 
 角色是**治理功能**，作用域是**独立的描述属性**：元信息角色可出现在任意层级——对象目录也有 `backlog` / `conflict`，所以“单对象”并不把材料推向 `notes/`（见 §6）。
@@ -43,7 +43,7 @@
 本节只给三个角色**装什么、不装什么**，以及**判据由谁裁决**；具体准入条件、门槛与 stop-line 一律回到对应 owner，本稿不复述。
 
 - **`temp/`** — 临时输入暂存。装外部调研稿、网页抓取、arXiv 包、聊天 / handoff、未归属输入。它是**输入层**：材料的对象归属或证据状态尚未定型时停在这里。**是否已可迁出**见 [`documentation-workflow.md §7`](../contributing/rules/documentation-workflow.md) 与 [`evidence-and-traceability.md §5`](../contributing/rules/evidence-and-traceability.md)；**其路径不作为正式 Sources / Trace 端点**由 [`traceability-rules.md`](../contributing/rules/traceability-rules.md) 承接；**不提交**由 `.gitignore` 承接。这三件事分属不同 owner，拆分见 §5.3。
-- **`notes/`** — 承接对象内研究**过程**材料（缺口 / 冲突等治理语义不进这里，走元信息文件，见 §6）。它的容器形态是“无独立辅助层 / 有独立辅助层”二态，而不是按材料体量在平铺文件与目录之间切换；**启用条件、首文件命名与内部组织以 [`research-artifacts.md §3.9、§5`](../contributing/rules/research-artifacts.md) 为准，本稿不复述**。目录内的 `general`（未分类过程材料）/ `source`（来源 · 核验）/ `evidence`（claim-source 对照）/ `reflections`（现状触发的直觉 · 假说）/ 深度研究脚手架 / `<mechanism>.md` 是**默认词表非封闭枚举**，这是本稿关心的家族属性（见本稿 §5.1）。跨子目录共享证据的窄例外见 [`research-artifacts.md §5.1`](../contributing/rules/research-artifacts.md)。
+- **研究辅助材料** — 承接研究**过程**材料。对象研究时特化为 `notes/`；文档体系结构研究时，仅在 C 条件满足时形成独立材料；缺口 / 冲突等治理语义不进这里，走元信息文件，见 §6。对象 `notes/` 的二态、首文件命名与内部组织以 [`research-artifacts.md §3.9、§5`](../contributing/rules/research-artifacts.md) 为准；C 的准入与 stop-line 以 [`research-artifacts.md §5.2`](../contributing/rules/research-artifacts.md) 为准。本稿不复述运行规则。
 - **`backlog` / `candidates` / `conflict` / `roadmap`** — 持久认知 / 规划元信息（缺口 / 待研究对象 / 口径冲突 / 有先后的路径）。它们承接**规划 · 认知**信息而非研究过程材料，这是与 `notes/` 的家族分界；**各自的出现条件与作用域属性以 [`metadata-files.md §2`](../contributing/rules/metadata-files.md) 为准**。本稿只借它们的一个 Observed 事实说明作用域不是落位判据：它们在多个层级递归存在（对象目录如 `codex/` 也有 `backlog` / `conflict`，子领域、根层亦然），所以“单对象”并不把材料推向 `notes/`（见 §3、§6）。
 
 ## 5. 关键设计决定
@@ -76,12 +76,12 @@
 ## 8. 待讨论 / 未决
 
 - 这份视角的落点：独立成篇（现状），还是并入 `research-ingestion-design.md`。
-- 家族准入边界的灰区（如 `overview.md` / `landscape.md` 既像元信息又像正文）是否需单列判据。
+- 家族准入边界的灰区（如历史上的 `overview.md` / `landscape.md` 既像元信息又像正文）是否需单列判据。`landscape.md` 固定文件类型已退役；当前结构研究辅助材料的准入与 stop-line 见 [`research-artifacts.md §5.2`](../contributing/rules/research-artifacts.md)。
 - **是否下沉为强制规则：已决（2026-09-23）**——有序落位序落规则层（[`documentation-workflow.md §9 通用落位序`](../contributing/rules/documentation-workflow.md)），本稿降为 rationale，不再充当运行态模型。
 
 ## 9. 与现有文档的关系
 
 - `research-ingestion-design.md`：讲输入的分流 / 暂存 / 回流**过程**；本稿讲这些层的**分类与落位**。
-- `research-artifacts.md`（§3.3–3.9、§5、§5.1、§7）：定义 `notes/` 内部产物与跨子目录例外；本稿把它放进更大的家族视角。
+- `research-artifacts.md`（§3.3–3.9、§5、§5.1、§5.2、§7）：定义一般研究辅助层、对象 `notes/`、结构研究辅助材料与跨子目录例外；本稿把它们放进更大的家族视角。
 - `metadata-files.md`：定义 `backlog/candidates/conflict/roadmap`；本稿指出它们是家族"跨层 · 持久"角色。
 - `repo-map.md`：现有五类功能分类；本稿是其上的横切视角，不替代它（见 §2）。

@@ -36,9 +36,10 @@
 ├── 元信息文档
 │   ├── README.md
 │   ├── index.md
-│   ├── overview.md / landscape.md
+│   ├── overview.md
 │   └── backlog.md / candidates.md / roadmap.md / conflict.md
 ├── 研究辅助文档
+│   ├── 结构研究辅助材料（按 C 条件启用，非固定文件名）
 │   └── notes/                       # 对象级独立辅助材料目录
 │       ├── source.md / evidence.md
 │       └── reflections.md 等（按需）
@@ -89,14 +90,13 @@
 
 ### 2.3 元信息文档
 
-这类文档不是知识正文，而是帮助读者和维护者完成说明、导航、理解、结构研究、推进、选题、路径、冲突校验等认知任务。
+这类文档不是知识正文，而是帮助读者和维护者完成说明、导航、理解、推进、选题、路径、冲突校验等认知任务。尚未稳定的结构研究材料属于研究辅助层，不是固定元信息文件。
 
 典型文件：
 
 - `README.md`
 - `index.md`
 - `overview.md`
-- `landscape.md`
 - `backlog.md`
 - `candidates.md`
 - `roadmap.md`
@@ -109,7 +109,6 @@
 - `README.md`：这是什么地方
 - `index.md`：这里下面有什么、该去哪找
 - `overview.md`：如果只读一篇，先理解什么
-- `landscape.md`：这个主题内部怎么切、各部分怎么衔接
 - `backlog.md`：还有什么没覆盖
 - `candidates.md`：接下来值得研究哪些对象
 - `roadmap.md`：从哪开始、按什么顺序走
@@ -199,7 +198,7 @@
 
 前一张图偏“按组织功能分组”，这一张偏“按阅读和研究过程理解关系”。
 
-其中 `研究辅助文档`、`临时输入文档`，以及 `元信息文档` 里的 `backlog`/`candidates`/`conflict`/`roadmap`，换一个横切视角看，都是服务正文构建的“构造辅助层”——按治理角色（临时暂存 / 对象内研究过程辅助 / 缺口·候选·冲突·路径元信息）与作用域分工；`README`/`index` 这类稳定导航说明**不**属于该家族，`overview`/`landscape` 暂作未决。这层横切视角不替代上面按组织功能分的五类，只解释它们在构建正文时如何配合；**落位决策**见 [`contributing/rules/documentation-workflow.md`](./contributing/rules/documentation-workflow.md) §9「通用落位序」与 [`capabilities/place.md`](./capabilities/place.md)，**理由**见 [`design/auxiliary-layers-design.md`](./design/auxiliary-layers-design.md)（初稿）。
+其中 `研究辅助文档`、`临时输入文档`，以及 `元信息文档` 里的 `backlog`/`candidates`/`conflict`/`roadmap`，换一个横切视角看，都是服务正文构建的“构造辅助层”——按治理角色（临时暂存 / 按作用域的研究过程辅助 / 缺口·候选·冲突·路径元信息）与作用域分工；`README`/`index` 这类稳定导航说明**不**属于该家族，`overview` 是独立的人类向成果，结构研究辅助材料仅在 C 条件满足时出现。这层横切视角不替代上面按组织功能分的五类，只解释它们在构建正文时如何配合；**落位决策**见 [`contributing/rules/documentation-workflow.md`](./contributing/rules/documentation-workflow.md) §9「通用落位序」与 [`capabilities/place.md`](./capabilities/place.md)，**理由**见 [`design/auxiliary-layers-design.md`](./design/auxiliary-layers-design.md)（初稿）。
 
 ## 4. 什么文档更适合独立，什么文档更适合引用别人
 

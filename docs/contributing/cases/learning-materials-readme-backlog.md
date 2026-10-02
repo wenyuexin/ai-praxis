@@ -1,5 +1,7 @@
 # Learning Materials：`README.md` + `backlog.md` 先成立的案例
 
+> **历史案例（B+C 生效前）**：本文中的 `landscape.md` 仅用于记录旧规则下的对照项；当前不再把它作为固定元信息文件。
+
 本案例用于说明：**当一个目录最先稳定出现的是待补主题与方向缺口，而不是结构支架、候选对象队列或人类向主线判断时，为什么更合理的落位是 `README.md` + `backlog.md`，并暂不创建 `index.md`、`landscape.md`、`candidates.md` 或 `overview.md`。**
 
 ## 1. 这个案例回答什么问题

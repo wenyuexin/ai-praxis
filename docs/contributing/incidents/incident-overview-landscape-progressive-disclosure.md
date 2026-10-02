@@ -5,6 +5,8 @@
 - 记录日期：2026-09-16
 - 触发类别：§1 直接观察（表面 one-liner 会误导）+ 复发
 
+> **历史 incident 注记**：本文记录的是旧版 `landscape.md` 语义和当时采取的修复动作。`§解决方案` 中的节号属于历史动作记录，保留原样，不应按当前章节结构改写；当前规则以 [`docs/contributing/rules/metadata-files.md`](../rules/metadata-files.md) 和 [`docs/contributing/rules/research-artifacts.md`](../rules/research-artifacts.md) 为准。
+
 ## 问题背景
 
 在一次关于元信息体系的讨论中，AI 被要求对比 `overview.md` 与 `landscape.md`。AI 只读了表面规则文档 `metadata-files.md` 就作答，给出“overview 负责主线理解、landscape 负责结构板块”的压平版——正是 `intent/overview-landscape.md` §6 明确列为误读信号的说法。这个误读维护者此前已澄清多次，本次被再次当场复现。
@@ -22,7 +24,7 @@
 3. AI 读到表面即自认为懂，答出压平版，未加载 intent，也不自知在误读。
 4. 与 `cases/capability-first-routing-placement.md` 同类：表面顺畅、深层被跳过；区别是此次结果实际错误。
 
-## 解决方案
+## 解决方案（历史记录）
 
 - `metadata-files.md`（§3 表格、§4.4）：重写 landscape 一句话，明确“对象是文档体系、不是主题内容板块图”，去掉“研究地图”等诱导词；新增“常见误读（高频）”条并直指 `intent/overview-landscape.md`；`overview.md`（§4.3）补“须可独立阅读”。
 - `intent/overview-landscape.md`（§8）：把“解释或对比 overview 与 landscape”加入读取触发。

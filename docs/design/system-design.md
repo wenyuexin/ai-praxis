@@ -32,7 +32,7 @@ repo/
 │   ├── README.md                     # 语义定向接口
 │   ├── index.md                      # 结构路由接口
 │   ├── overview.md                   # 人类向主文（按需）
-│   ├── landscape.md                  # 结构化研究文（按需）
+│   ├── 结构研究辅助材料            # 按 C 条件启用，非固定文件名
 │   ├── backlog.md                    # 内容缺口（按需）
 │   ├── candidates.md                 # 候选对象队列（按需）
 │   ├── roadmap.md                    # 路径指引（按需）
@@ -124,14 +124,14 @@ repo/
 
 ### 2.3 元信息文件层
 
-`overview.md`、`landscape.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 等元信息文件，不是知识正文，而是这套系统的中间层能力位。
+`overview.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 等元信息文件，不是知识正文，而是这套系统的中间层能力位；尚未稳定的结构研究材料属于研究辅助层，不是固定元信息文件。
 
 它们负责把不同认知任务拆开承接，例如：
 
 - 说明
 - 导航
 - 理解
-- 结构化研究
+- 结构研究辅助
 - 缺口管理
 - 对象队列
 - 路径指引
@@ -203,7 +203,7 @@ AI 协作者不是系统外部的使用者，而是系统的一部分。
 
 - 在几个候选目录之间，哪个才是最高稳定归属
 - 应该停在当前层，还是继续下沉到更细的子目录
-- 找到位置后，应该写正文、`backlog.md`、`candidates.md`、`landscape.md` 还是其他元信息文件
+- 找到位置后，应该写正文、`backlog.md`、`candidates.md`、结构研究辅助材料还是其他元信息文件
 - 是先保留在元信息文件中，还是已经适合进入正文
 
 Place 与 Navigate 会共享“沿着 `README.md` / `index.md` 缩小范围”的前置动作，但两者的输出不同：Navigate 的输出是最可能的目标位置，Place 的输出是具体的落位决策。
@@ -215,7 +215,7 @@ Place 与 Navigate 会共享“沿着 `README.md` / `index.md` 缩小范围”�
 典型问题：
 
 - README 和 index 的分工是什么
-- overview 和 landscape 如何拆分
+- overview 与结构研究辅助材料如何分工
 - 什么时候该出现 backlog / candidates / roadmap / conflict
 - 父层 index 与子层 index 如何分工
 - 横向映射时，目录级浅链与少量深链例外如何控制
@@ -401,7 +401,7 @@ docs/
 本文不负责：
 
 - 定义单个元信息文件的完整职责
-- 规定 README、index、overview、landscape 的细节写法
+- 规定 README、index、overview 和研究辅助材料的细节写法
 - 展开 `docs/contributing/` 这一层的内部设计细分
 - 代替材料处理流程或证据规则
 - 给出具体目录的落位结论
@@ -422,5 +422,5 @@ docs/
 - 想判断复杂案例长期应属于 contributing 附属案例、capability 案例，还是独立 case layer：读 [`cases-layer-design.md`](./cases-layer-design.md)
 - 想实际新增、迁移、修改文档：读 `docs/contributing/rules/documentation-workflow.md`
 - 想判断某种元信息文件该不该出现：读 `docs/contributing/rules/metadata-files.md`
-- 想理解 README / index / overview / landscape 如何分工：读 `docs/contributing/rules/readme-rules.md` 与 `docs/contributing/rules/metadata-files.md`
+- 想理解 README / index / overview / 研究辅助材料如何分工：读 `docs/contributing/rules/readme-rules.md`、`docs/contributing/rules/metadata-files.md` 与 `docs/contributing/rules/research-artifacts.md`
 - 想看复杂边界样本与误判复盘：进入 `docs/contributing/cases/`

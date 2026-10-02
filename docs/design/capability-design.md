@@ -54,7 +54,7 @@
 典型问题：
 
 - 应停在当前层，还是继续下沉到更细子目录
-- 应写正文、`backlog.md`、`candidates.md`、`landscape.md` 还是 `conflict.md`
+- 应写正文、`backlog.md`、`candidates.md`、结构研究辅助材料还是 `conflict.md`
 - 是先保留在元信息文件里，还是已经适合进入正文
 
 当前承接：
@@ -93,7 +93,7 @@
 典型问题：
 
 - README 与 index 如何分工
-- overview 与 landscape 如何拆分
+- overview 与结构研究辅助材料如何分工
 - backlog / candidates / roadmap / conflict 何时出现
 - 父层与子层导航如何分工
 
