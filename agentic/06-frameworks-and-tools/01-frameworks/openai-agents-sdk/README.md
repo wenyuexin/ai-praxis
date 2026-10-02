@@ -76,5 +76,5 @@ openai-agents-sdk/
 
 - Status: Observed / Inferred / Unverified
 - Sources: `https://developers.openai.com/api/docs/guides/agents`、`https://openai.github.io/openai-agents-python/handoffs`、`https://openai.github.io/openai-agents-python/results`、`https://openai.github.io/openai-agents-python/sessions`、`https://github.com/openai/openai-agents-python/blob/main/docs/tracing.md`
-- Trace: 先由 `agentic/06-frameworks-and-tools/backlog.md` 与 `conflict.md` 中的候选对象 / 待核验条目推进；在 `overview.md` 中先沉淀可直接追到官方入口的对象边界，再等待更细 SDK 文档或源码回流机制级专题。
+- Trace: 先由 `agentic/06-frameworks-and-tools/backlog.md` 的恢复语义补证缺口与 `conflict.md` 中“七层架构”外部归纳的边界问题推进；在 `overview.md` 中先沉淀可直接追到官方入口的对象边界，再等待更细 SDK 文档或源码回流机制级专题。
 - Needs: `Results and state`、`Sessions`、`Sandbox agents`、run error handlers、MCP servers / manager、SDK 源码中的 `RunState` / session 实现与恢复边界。

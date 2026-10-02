@@ -1,161 +1,48 @@
-# Frameworks and Tools Backlog（候选对象与调研线索）
+# Frameworks and Tools Backlog（内容缺口与待核验问题）
 
-本文件用于记录 `06-frameworks-and-tools` 的候选对象、前沿观察项、证据不足项和后续调研入口。它不是任务列表，也不代表对象已经进入主干结构。
-
----
-
-## 一、收录规则
-
-### 1.1 主干收录信号
-
-对象进入 `01-frameworks/`、`02-coding-agents-and-tools/`、`03-project-studies/`、`04-skill-and-tool-systems/` 等主干目录前，至少应满足若干信号：
-
-- 有明确官方文档、GitHub 仓库、论文或技术报告
-- 有稳定 API、版本路线或持续维护记录
-- 在生态中具备代表性，而不是短期热点
-- 有清晰类别归属，能解释它为什么属于框架、工具、项目案例或 Skill/Tool 系统
-- 其价值不只是“热度高”，还应有明确架构特征或工程启发
-
-### 1.2 前沿观察信号
-
-即使对象不成熟，也可以进入 backlog 观察：
-
-- 提出了新的系统设计范式
-- 被学术综述、顶会论文、官方博客或主流 GitHub 项目明确讨论
-- 代表协议、记忆、沙箱、多 Agent 协作、coding agent 等方向的新分岔
-- 有可能在未来 1–3 年影响 Agent 工程生态
-
-### 1.3 不直接进入主干的情况
-
-以下对象默认先放 backlog：
-
-- 论文原型，无稳定工程实现
-- research prototype，非正式产品
-- 协议早期竞品，生态尚未形成
-- 商业或社区数据证据不足
-- 只有第三方热度描述，缺乏官方或高质量来源验证
+本文件记录 `06-frameworks-and-tools/` 尚未覆盖的内容缺口、比较缺口和证据缺口。候选研究对象单独记录在 [`candidates.md`](./candidates.md)；事实冲突或口径不一致记录在 [`conflict.md`](./conflict.md)。本文件中的条目仍是研究输入，不代表已经进入主干结论。
 
 ---
 
-## 二、主干候选对象
+## 1. Agent Adapter / Orchestrator 契约缺口
 
-### 2.1 Frameworks 候选
+当前仍缺少一套经过逐对象核验的比较材料，用来区分 Agent adapter、orchestrator、workflow state、runtime environment 和最终产物之间的契约边界。现有条目先记录“还缺什么证据”，不把候选对象队列重新混入本文件。
 
-| 对象 | 候选归属 | 观察理由 | 状态 |
-|------|----------|----------|------|
-| `Semantic Kernel` | `01-frameworks/` | 微软企业级 AI SDK，已可确认 `AgentGroupChat`、plugin/kernel、OpenTelemetry observability 等能力入口；但 durable checkpoint / resume 仍待补正式文档 | 待补正式文档 |
-| `Microsoft Agent Framework` | `01-frameworks/` | 后继整合框架，官方已明确区分 agents 与 workflows，并公开 checkpointing、agent session、middleware、MCP clients 等入口 | 待核验版本状态 |
-| `OpenAI Agents SDK / Responses API` | `01-frameworks/` | 官方已公开 handoffs、sessions、results/state、MCP、tracing、guardrails / human review、sandbox agents 等模块；对象目录已建立，当前进入深水区源码补证阶段，重点是 `RunState`、server-managed continuation、sandbox `session_state` / `snapshot`、local/hosted MCP lifecycle、error/retry/cancel 边界，细化 checklist 已统一收敛到 `openai-agents-sdk/notes/evidence.md` | 已进入主干，继续补证 |
-| `DSPy` | `01-frameworks/` 或 `05-comparisons/` | 声明式 LM program / prompt optimization 代表，与 Agent orchestration 有交集 | 观察中 |
-| `Google ADK` | `01-frameworks/` | 大厂 Agent Development Kit，可能影响协议与框架生态 | 证据不足，观察中 |
-| `Agno` | `01-frameworks/` | 轻量 Agent framework / runtime，工程化方向明确 | 观察中 |
-| `smolagents` | `01-frameworks/` | 轻量 code-as-action / ToolCallingAgent 范式 | 观察中 |
-
-### 2.2 Coding Tools 候选
-
-| 对象 | 候选归属 | 观察理由 | 状态 |
-|------|----------|----------|------|
-| `OpenHands / OpenDevin` | `02-coding-agents-and-tools/` | 开源 coding agent 代表，和 SWE-bench 生态关联强 | 候选主干 |
-| `SWE-agent` | `02-coding-agents-and-tools/` | 软件工程任务 Agent 代表项目 | 待调研 |
-| `Cline` | `02-coding-agents-and-tools/` | IDE 内编码 Agent 工具，产品形态有代表性 | 待调研 |
-| `GitHub Next Ace` | `02-coding-agents-and-tools/` | GitHub Next research prototype，关注团队部署 coding agents 的 alignment bottleneck | research prototype，先观察 |
-| `LocAgent` | `02-coding-agents-and-tools/` 或 `07-evaluation/swe-benchmarks/` 相关引用 | 图引导代码定位，可能成为 coding agent 标准组件 | 学术项目，先观察 |
-
-### 2.3 Project Studies 候选
-
-| 对象 | 候选归属 | 观察理由 | 状态 |
-|------|----------|----------|------|
-| `OpenClaw` | `03-project-studies/openclaw/` | 自托管 AI 自动化执行引擎，适合作完整系统案例 | 已创建目录 |
-| `Hermes Agent` | `03-project-studies/hermes-agent/` | 记忆、技能、网关、上下文、自动化等完整模块拆解 | 已在主干 |
-| `Ruflo` | `03-project-studies/` 或 `02-coding-agents-and-tools/` | Claude Code 编排平台，若资料可靠可做系统案例 | 证据不足，观察中 |
-| `Agency` | `03-project-studies/` 或 `01-frameworks/` | 多 Agent 编排热度高，但需核验官方资料与差异性 | 证据不足，观察中 |
-
-### 2.4 Skill / Tool Systems 候选
-
-| 对象 | 候选归属 | 观察理由 | 状态 |
-|------|----------|----------|------|
-| `MCP-Zero` | `04-skill-and-tool-systems/` | 主动工具发现范式，可能改变 tool-use agent 设计 | 论文原型，先观察 |
-| `Doc2Agent` | `04-skill-and-tool-systems/` | 从 API 文档自动生成工具和 tool-using agent | 论文原型，先观察 |
-| `AutoTool` | `04-skill-and-tool-systems/` | 工具选择数据集与推理-工具统一框架 | 论文原型，先观察 |
-| `Mem0` | 视内容归属到 `02-single-agent/memory/` 或具体框架实现案例 | 记忆基础设施，已有框架集成线索 | 需独立评估 |
-| `MemOS` | 视内容归属到 `02-single-agent/memory/` 或项目案例 | memory as OS 抽象有观察价值 | 观察中 |
+| 研究对象 | 仍需补足的内容缺口 | 当前承接 |
+|---|---|---|
+| `MCP` | 区分 tool discovery / invocation 与完整 orchestration contract；补齐 `tools/list`、`tools/call`、capabilities、timeout、cancel、large output、streaming / partial output 的协议边界 | `04-skill-and-tool-systems/mcp/` |
+| `LangGraph` | 补齐 checkpoint、thread、interrupt、retry、time travel、replay 的真实边界；区分 graph/workflow state 与 workspace filesystem recovery | `01-frameworks/langgraph/notes/evidence.md`；server 私有语义仍待补证 |
+| `OpenAI Agents SDK / Responses API` | 继续核验 sessions、results/state、handoff、tracing、guardrails、sandbox agents，以及 `RunState`、server continuation、sandbox state、MCP lifecycle、error/recovery 边界 | 对象目录与 `conflict.md` |
+| `CrewAI` | 补齐 Flow persistence、checkpoint、restore、fork lineage、retry / cancel / human input 的粒度和版本状态 | 待核验 |
+| `OpenHands` | 补齐 workspace、runtime、event log、sandbox、recovery 与环境层对象研究之间的边界 | `03-project-studies/openhands/`；环境层补证见 `05-environments/candidates.md` |
+| `SWE-agent` | 补齐 trajectory replay、checkpoint / resume、workspace / container / final artifact 的正式语义 | `03-project-studies/swe-agent/`；环境层补证见 `05-environments/candidates.md` |
+| `AutoGen` | 补齐 group chat、tool、MCP、handoff / delegation、trace、cancel / retry 的对象内边界，不与 Microsoft Agent Framework 混写 | 候选对象见 `candidates.md` |
+| `Microsoft Agent Framework` | 补齐 GA / RC / LTS 状态，以及 agents / workflows、AgentTool、MCP、checkpointing、session、middleware 和 AutoGen / Semantic Kernel 整合边界 | 候选对象见 `candidates.md` |
+| `Semantic Kernel` | 补齐 AgentGroupChat、plugin/kernel、observability 与 checkpoint / resume / durable execution 的边界，区分 SK 本体与 Azure / Foundry 集成 | 候选对象见 `candidates.md` |
 
 ---
 
-## 三、前沿观察对象
-
-### 3.1 P0：高优先级观察
-
-| 对象 | 方向 | 为什么值得观察 | 主归属提醒 |
-|------|------|----------------|------------|
-| `SAGE` | Memory / graph memory | 自演进图记忆，可能突破静态 GraphRAG/RAG 记忆模式 | 理论归 `02-single-agent/memory/`，工程案例再进 `06` |
-| `Hindsight` | Memory architecture | 多网络结构化记忆，探索“记忆作为一等执行对象” | 理论归 `02-single-agent/memory/` |
-| `ATOM` | Multi-agent collaboration | 将预算控制作为多 Agent 协作一等设计目标 | 理论归 `03-multi-agent/coordination/` |
-| `Fault-Tolerant Sandboxing` | Execution safety | 事务性沙箱，把回滚和安全拦截引入 Agent 执行环境 | 主归属 `05-environments/sandboxing-and-safety/` |
-| `AG-UI` | Agent UI protocol | Agent 与 UI 的交互协议标准化方向 | 主归属 `04-human-agent-interaction/interaction-surfaces/` |
-| `Code as Agent Harness` | Methodology | 将代码视为 Agent harness 的方法论框架；相关候选研究对象见 `../01-foundations/agent-system-modeling/candidates.md` | 主归属 `01-foundations/agent-system-modeling/` |
-
-### 3.2 P1：一般观察
-
-| 对象 | 方向 | 为什么值得观察 | 主归属提醒 |
-|------|------|----------------|------------|
-| `MANGO` | Multi-agent optimization | 用 flow network / gradient optimization 优化协作关系 | `03-multi-agent/coordination/` |
-| `Meta-Team / Collaborative Self-Evolution` | Multi-agent self-evolution | 多 Agent 证据交换与协同演进 | `03-multi-agent/collaboration/` |
-| `AgentBay` | Hybrid runtime | 同一 session 支持 AI 程序化接口和 human takeover | `05-environments/` 与 `04-human-agent-interaction/` |
-| `ceLLMate` | Browser sandbox | browser-level sandboxing，降低 prompt injection 攻击面 | `05-environments/browser-environments/` |
-| `SWE-Gym` | SWE training environment | 从 benchmark measurement 走向 training environment | `07-evaluation/swe-benchmarks/` |
-| `ScalingEval` | Evaluation infrastructure | 大规模自动化评估协议探索 | `07-evaluation/agent-benchmarks/` |
-
-### 3.3 P2：记录留存
-
-| 对象 | 方向 | 状态 |
-|------|------|------|
-| `Cognitive Kernel-Pro` | Research-oriented agent framework | 信息不足，等待更多公开资料 |
-| `MemEngine` | Memory library | 独立信息不足，仅作 citation 线索 |
-| `NVIDIA NemoClaw` | Secure execution / agent runtime | 定位与成熟度需核验 |
-
----
-
-## 四、证据不足与待核验项
-
-以下内容不能直接写入主干结论，只能作为后续调研线索：
-
-### 4.1 Agent Adapter / Orchestrator 契约核验队列
-
-这组对象用于核验 `Agent Adapter / Orchestrator` 契约问题，不代表它们已经形成统一抽象，也不代表对象间能力可直接横向比较。
-
-| 对象 | 核验重点 | 当前状态 |
-|------|----------|----------|
-| `MCP` | 区分 tool discovery / invocation 与完整 orchestration contract；核验 `tools/list`、`tools/call`、capabilities、timeout、cancel、large output、streaming / partial output 的协议边界 | 已完成第一轮官方规范核验，见 `04-skill-and-tool-systems/mcp/` |
-| `LangGraph` | 核验 checkpoint、thread、interrupt、retry、time travel、replay 的真实边界；特别区分 graph / workflow state 与 workspace filesystem recovery | 已完成 workflow state / checkpoint / replay 与 `update_state` / fork 第一轮源码边界核验，见 `01-frameworks/langgraph/notes/evidence.md`；interrupted thread 的 server 私有语义仍需补证 |
-| `OpenAI Agents SDK / Responses API` | 核验 sessions、results/state、handoff、tracing、guardrails、sandbox agents 的公开证据边界；避免把外部归纳的“七层架构”写成官方命名 | 已进入主干，继续补证 |
-| `CrewAI` | 核验 Flow persistence、checkpoint、restore、fork lineage、retry / cancel / human input 的粒度 | 观察中，需确认版本状态与官方语义 |
-| `OpenHands / OpenDevin` | 核验 workspace、runtime、event log、sandbox、recovery 是否足以支撑环境层对象研究 | 候选主干，需源码与官方文档补证 |
-| `SWE-agent` | 核验 trajectory replay 与 checkpoint / resume 的边界，以及 workspace / container / final artifact 的正式语义 | 待调研 |
-| `AutoGen` | 核验 group chat、tool、MCP、handoff / delegation、trace、cancel / retry 的对象内边界；不与 Microsoft Agent Framework 混写 | 观察中，需与 MAF 分开核验 |
-| `Microsoft Agent Framework` | 核验 agents / workflows、AgentTool、MCP、checkpointing、session、middleware 的版本状态与公开 API 边界 | 待核验版本状态 |
-| `Semantic Kernel` | 核验 AgentGroupChat、plugin/kernel、observability 与 checkpoint / resume / durable execution 的边界；区分 SK 本体与 Azure / Foundry 集成能力 | 待补正式文档 |
-
-### 4.2 其他证据不足项
+## 2. 其他证据与比较缺口
 
 - `OpenClaw`、`HermesAgent`、`Ruflo`、`Agency` 等项目的 GitHub stars、增长速度、生态排名等热度数据，需要官方仓库或可信统计源核验。
 - `CrewAI` 的 Fortune 500 使用比例、agent 月度运行量等数据，需要官方案例或可靠来源确认。
 - `Microsoft Agent Framework` 的 GA / RC / LTS 状态，需要 Microsoft 官方文档确认。
-- `AG-UI` 的标准状态、roadmap 和生态采纳度，需要官方文档确认。
+- `AG-UI` 的标准状态、roadmap 和生态采纳度，需要官方协议文档确认。
 - `SAGE`、`ATOM`、`MANGO`、`AgentBay`、`ceLLMate` 等论文原型，需要持续跟踪是否开源、是否被引用、是否形成真实工程实现。
-- `Mem0`、`MemOS`、`Hindsight` 等 memory infrastructure，需要区分“理论价值”“工程可用性”和“生态采用度”。
+- `Mem0`、`MemOS`、`Hindsight` 等 memory infrastructure，需要区分理论价值、工程可用性和生态采用度。
+
+## 3. 尚未形成稳定比较主线的方向
+
+以下方向已被识别，但尚未形成可以直接进入 overview 或比较专题的稳定材料：
+
+1. Agent adapter / orchestrator / workflow / runtime 的契约边界；
+2. checkpoint、resume、retry、cancel、human input 和 recovery 的跨对象粒度比较；
+3. coding agent 的 workspace、sandbox、event log 与最终 artifact 的关系；
+4. memory infrastructure 与完整 Agent project 的归属边界；
+5. Skill、Tool、MCP、permission、approval 和 sandbox 的执行治理分层。
+
+这些条目描述的是内容缺口，不是当前任务清单；具体研究计划仍放在 `docs/temp/`，稳定的跨轮次推进顺序才考虑提炼为 `roadmap.md`。
 
 ---
 
-## 五、后续建设建议
-
-1. 基于已完成的 `MCP` 与 `LangGraph` 窄口径核验，继续迭代 `05-comparisons/orchestration-implementations.md` 的契约维度初稿。
-2. 继续补 `01-frameworks/` 中 LangGraph、AutoGen、CrewAI、Semantic Kernel、MAF 的正式对象文档。
-3. 补 `02-coding-agents-and-tools/` 中 OpenHands / SWE-agent / Cline 的初步调研。
-4. 把 `OpenClaw` 拆成 architecture、safety、ecosystem 等专题文档。
-5. 在 `05-comparisons/` 中继续建立 `framework-selection.md` 和 `coding-agent-products.md`。
-6. 将 memory、multi-agent、sandbox、evaluation 等前沿对象分别回流到 `02/03/05/07` 的 backlog 或专题文档中，避免全部堆在 `06`。
-
----
-
-*最后更新: 2026-06-09*
+*迁移来源：历史 `landscape.md` 与原 `backlog.md` 的对象核验、证据不足和建设建议条目。候选对象已拆分至 `candidates.md`；本文件继续承接内容、比较和证据缺口，事实或口径冲突转入 `conflict.md`。*

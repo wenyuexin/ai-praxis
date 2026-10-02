@@ -29,7 +29,7 @@
 
 - **我想先判断这个目录是不是我要找的地方**：回读 [`README.md`](./README.md)
 - **我想回到框架与工具层的整体入口**：读 [`../index.md`](../index.md)
-- **我想恢复本层整体理解与对象分工**：读 [`../overview.md`](../overview.md) 和 [`../landscape.md`](../landscape.md)
+- **我想恢复本层整体理解与对象分工**：读 [`../overview.md`](../overview.md)、[`../README.md`](../README.md) 和 [`../index.md`](../index.md)
 
 ## 按比较类型找入口
 

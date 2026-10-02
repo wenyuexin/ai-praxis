@@ -141,7 +141,7 @@ MCP 适合作为 `Agent Adapter / Orchestrator` 研究中的“协议层对照�
   - `https://modelcontextprotocol.io/specification/2025-06-18/client/roots`
   - `https://modelcontextprotocol.io/specification/2025-06-18/client/sampling`
   - `https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization`
-- Trace: 本文从 `agentic/06-frameworks-and-tools/backlog.md` 的 MCP 核验队列进入，先按官方 `2025-06-18` specification 建立协议层 stop-line；正文中的对象定位和能力面为 `Observed`，对 Agent Adapter / Orchestrator 研究意义的归纳为 `Inferred`；更细 claim-source 对照下沉到 `notes/evidence.md`，正文只保留收敛后的边界结论。
+- Trace: 本文从 `agentic/06-frameworks-and-tools/backlog.md` 的 MCP 内容缺口进入，先按官方 `2025-06-18` specification 建立协议层 stop-line；正文中的对象定位和能力面为 `Observed`，对 Agent Adapter / Orchestrator 研究意义的归纳为 `Inferred`；更细 claim-source 对照下沉到 `notes/evidence.md`，正文只保留收敛后的边界结论。
 - Needs:
   - 核验具体 MCP host / SDK 如何实现 tool approval、timeout、retry、streaming output、large output 与 audit。
   - 对照 LangGraph 的 checkpoint / workflow state，避免把 MCP cancellation / progress 误写成恢复机制。

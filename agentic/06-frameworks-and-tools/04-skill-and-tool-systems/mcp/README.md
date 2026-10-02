@@ -46,7 +46,7 @@
   - `https://modelcontextprotocol.io/specification/2025-06-18/client/roots`
   - `https://modelcontextprotocol.io/specification/2025-06-18/client/sampling`
   - `https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization`
-- Trace: 从 `agentic/06-frameworks-and-tools/backlog.md` 的 `Agent Adapter / Orchestrator 契约核验队列` 中选择 `MCP` 做第一轮窄口径核验；本目录只沉淀协议层边界，不写 host / SDK 实现结论；claim-source 对照见 `notes/evidence.md`。
+- Trace: 从 `agentic/06-frameworks-and-tools/backlog.md` 的 `Agent Adapter / Orchestrator 契约缺口` 中选择 `MCP` 做第一轮窄口径核验；本目录只沉淀协议层边界，不写 host / SDK 实现结论；claim-source 对照见 `notes/evidence.md`。
 - Needs: 后续需要补 MCP host / SDK 的实现对照，尤其是 tool approval、timeout、retry、large output、streaming、side-effect governance 与 workspace policy 的对象内边界。
 
 *最后更新: 2026-06-09*

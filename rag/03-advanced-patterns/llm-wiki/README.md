@@ -29,16 +29,15 @@ LLM Wiki：将外部资料在摄入时编译为可持续维护的结构化知识
 
 ```text
 llm-wiki/
-├── project-studies/    # 代表实现与对象研究
-└── notes/              # 原始资料与研究辅助材料
+└── project-studies/    # 代表实现与对象研究
 ```
 
 ## 如何阅读
 
 - 想快速建立整体认知：从主文入口进入
-- 想理解本目录的板块划分和边界判断：查阅结构研究文
+- 想理解本目录的板块划分和边界判断：先看本目录现有 `overview.md`、`README.md` 与 `project-studies/`；不要把 `notes/` 当作结构入口，若出现尚未稳定且无法由既有 owner 承接的结构判断，再按治理规则评估研究辅助材料。
 - 想比较不同实现路线：进入 `project-studies/`
-- 底层有 `notes/` 存放原始资料与参考材料
+- Karpathy 原始模式的资料按需查看 `karpathy-pattern.md` 与 `notes/karpathy-raw.md`
 
 ---
 

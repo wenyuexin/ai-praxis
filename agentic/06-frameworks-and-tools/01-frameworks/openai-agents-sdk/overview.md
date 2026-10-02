@@ -84,7 +84,7 @@
 - `https://openai.github.io/openai-agents-python/sessions`
 - `https://github.com/openai/openai-agents-python/blob/main/docs/tracing.md`
 
-- Trace: 由 `agentic/06-frameworks-and-tools/backlog.md` 中的 `OpenAI Agents SDK / Responses API` 候选对象条目，以及 `agentic/06-frameworks-and-tools/conflict.md` 中关于 `RunState` / `Session` / `SandboxAgent` / pause-resume / workspace recovery 的待核验问题回流而来；当前仅把能直接追到官方 docs / SDK 文档的对象边界写入总览。
+- Trace: 由 `agentic/06-frameworks-and-tools/backlog.md` 中关于 `RunState` / `Session` / `SandboxAgent` / pause-resume / workspace recovery 的补证缺口，以及 `conflict.md` 中“七层架构”外部归纳的边界问题回流而来；当前仅把能直接追到官方 docs / SDK 文档的对象边界写入总览。
 - Needs:
   - `Results and state` 正文页
   - `Sessions` / session implementations

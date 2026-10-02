@@ -69,7 +69,7 @@
   - `https://github.com/openai/openai-agents-python/releases/tag/v0.14.0`
   - `https://openai.github.io/openai-agents-python/ref/sandbox`
   - `https://developers.openai.com/api/docs/guides/agents`
-- Trace: 由对象总览中对 `sandbox agents` 的入口级判断继续下沉，并结合 `14.md` 的清洗后核验结果，只保留 release notes 与 API reference 可以直接支撑的对象面和 stop-line。
+- Trace: 由对象总览中对 `sandbox agents` 的入口级判断继续下沉，并结合对象 `notes/evidence.md` 的 Claim / Needs 对照，只保留 release notes 与 API reference 可以直接支撑的对象面和 stop-line。
 - Needs:
   - `SandboxSessionState` / `SnapshotSpec` 字段级说明
   - 各 sandbox client / hosted provider 的行为对照

@@ -153,7 +153,7 @@
 - `03-multi-agent/backlog.md`：承接协调拓扑、失败模式、收益边界、通信与组织等多智能体缺口。
 - `04-human-agent-interaction/backlog.md`：承接人在回路、委托控制、交互表面、信任与对齐等缺口。
 - `05-environments/backlog.md`：承接执行环境、权限、安全、workspace、traceability、recovery 等环境层缺口。
-- `06-frameworks-and-tools/backlog.md`：承接框架、工具、产品、项目案例和前沿对象观察；对象队列过多时应进一步拆入 candidates 或对象目录。
+- `06-frameworks-and-tools/backlog.md`：承接框架、工具、产品和项目案例相关的内容、比较与证据缺口；候选研究对象统一见该目录的 `candidates.md`，对象正文和对象内辅助材料仍回到各自目录。
 - `07-evaluation/backlog.md`：承接任务完成度、benchmark、人工评估、安全鲁棒与可观测调试等评估缺口。
 
 如果某个问题已经能明确归入单一子目录，应优先移动到对应子目录 `backlog.md`；顶层只保留跨目录、跨层级或会影响 Agentic 总体理解的问题。

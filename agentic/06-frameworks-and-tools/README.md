@@ -26,7 +26,17 @@
 
 ## 归属规则
 
-本目录内子目录之间的归属判断（如 `02-coding-agents-and-tools/` 与 `03-project-studies/` 的分工、开源项目研究的组织方式），由本目录的结构化研究文继续承接。
+本目录内子目录之间的归属判断（如 `02-coding-agents-and-tools/` 与 `03-project-studies/` 的分工、开源项目研究的组织方式），稳定部分由本页、`index.md`、`overview.md` 或相应专题承接；仍未稳定且无法由既有 owner 承接的结构判断，再按治理规则评估研究辅助材料。
+
+最小归属判断如下：
+
+- 可复用框架、SDK 与编排平台优先进入 `01-frameworks/`；
+- 面向软件工程任务的产品与工具优先进入 `02-coding-agents-and-tools/`；
+- 需要系统拆解完整运行时、工具链、记忆、网关或部署面的项目优先进入 `03-project-studies/`；
+- Skill、Tool、插件与能力注册系统进入 `04-skill-and-tool-systems/`；
+- 跨对象的选型、比较和边界收口进入 `05-comparisons/`。
+
+同一对象同时具备产品视角和系统研究价值时，系统性架构研究以 `03-project-studies/` 为主，另一侧只保留必要入口或交叉引用；不要复制完整对象分析。
 
 ---
 
