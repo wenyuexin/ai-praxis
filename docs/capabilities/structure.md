@@ -11,14 +11,14 @@
 在这个仓库里，`Structure` 很容易被误当成两类更具体的事情：
 
 - 某次目录迁移、改名或链接修复
-- 某篇 README、overview 或 landscape 该怎么写
+- 某篇 README、overview 或研究辅助材料该怎么写
 
 但它们都还不是 `Structure` 本身。
 
 `Structure` 关注的是更上层的问题：
 
 - 这套目录树现在是否还能稳定承接后续内容增长
-- README、index、overview、landscape 之间是否仍然各答各的问题
+- README、index、overview 与研究辅助材料之间是否仍然各答各的问题
 - 读者与写作者进入一个目录时，是否还能自然知道该往哪走、该把内容放哪
 - 哪些职责已经开始重新混写，哪些边界已经开始漂移
 
@@ -30,14 +30,14 @@
 
 1. **目录树本身**：父子层级、分类轴、相邻目录边界
 2. **入口文件**：`README.md` 与 `index.md`
-3. **理解与结构文件**：`overview.md` 与 `landscape.md`
+3. **人类向理解成果与研究辅助材料**：`overview.md` 与按条件启用的结构研究辅助材料
 4. **其余元信息文件**：`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md`
 
 Structure 的难点不在于单个文件怎么定义，而在于这些对象会彼此牵动：
 
 - 目录边界不稳，README 就会越写越重
 - README 承担了目录树，index 就会被推迟甚至消失
-- overview 和 landscape 不拆，主线理解与结构研究就会互相打架
+- overview 混入目录治理或未稳定结构研究时，主线理解与维护过程就会互相打架
 - backlog、candidates、roadmap、conflict 分不清，未稳定问题就会重新挤回正文或 README
 
 ## 3. Structure 的三个核心判断
@@ -87,12 +87,13 @@ Structure 的第一步，不是数文件多少，而是先看目录树本身是�
 
 因此，更稳的搜索体验通常不是在目录树之外另造一套方法，而是先守住一种混合顺序：**先用 README / index 缩小范围，再在候选支路内做定向搜索。** 这样做的重点不是追求一次命中最深文件，而是先保留结构感，再补速度与跨支路命中能力。
 
-## 6. overview 与 landscape 解决的是两类不同的结构压力
+## 6. overview 与结构研究辅助材料解决的是不同问题
 
-`overview.md` 与 `landscape.md` 经常被当成“都算总览”，但从 Structure 视角看，它们承受的是不同压力：
+`overview.md` 是独立的人类向研究成果；结构研究辅助材料是按 C 条件启用的过程材料，二者不是一组并列固定文件类型：
 
-- `overview.md` 承接的是人类向主线理解压力
-- `landscape.md` 承接的是结构切分、边界稳定与下钻协作压力
+- `overview.md` 承接人类向主线理解；
+- 稳定的目录定位、导航、路径、缺口、候选和冲突回到各自 owner；
+- 只有既有 owner 无法承接的未稳定结构判断，才进入 C；准入与 stop-line 见 [`research-artifacts.md §5.2`](../contributing/rules/research-artifacts.md)。
 
 所以，Structure 不是简单问“要不要有一篇总文”，而是先问：
 
@@ -100,7 +101,7 @@ Structure 的第一步，不是数文件多少，而是先看目录树本身是�
 - 一篇文档是否已经同时在讲“主题本身”和“本目录为什么这样组织”？
 - 如果继续混在一起，会不会同时损害可读性和结构判断？
 
-当这两个压力已经开始互相干扰时，Structure 的答案通常不是继续硬写一篇更长的文档，而是把 `overview.md` 与 `landscape.md` 拆开。
+当这两个问题开始互相干扰时，先把稳定部分回流既有 owner，再判断是否有 C 的独立材料需求；不要把 `overview.md` 自动拆成 `landscape.md`，也不要默认创建领域级 `notes/`。
 
 ## 7. 其余元信息文件是在保护结构，不是在补形式完整
 
@@ -122,7 +123,7 @@ Structure 的第一步，不是数文件多少，而是先看目录树本身是�
 ```text
 发现结构开始变重或变乱
   → 目录树本身的分类轴还稳不稳？
-  → 当前最先混掉的是目录边界、README/index，还是 overview/landscape？
+  → 当前最先混掉的是目录边界、README/index，还是 overview 与研究过程？
   → 这是说明问题、导航问题、理解问题、结构问题、缺口问题、对象问题、路径问题，还是冲突问题？
   → 哪个文件现在正在吞并不属于自己的职责？
   → 最小修复是补分工、补入口、补骨架 index，还是拆出新的元信息文件？
@@ -177,7 +178,7 @@ README 变详细，常常只是说明它已经开始吞并导航、结构或路�
 ### 10.3 与 `organization-principles.md` 的区别
 
 - `organization-principles.md`：回答什么样的目录结构才算长期合理
-- `structure.md`：回答这些长期原则如何在 README、index、overview、landscape 与其他元信息文件的分工上落地
+- `structure.md`：回答这些长期原则如何在 README、index、overview、研究辅助材料与其他元信息文件的分工上落地
 
 前者偏上位原则，后者偏运行中的结构能力。
 
@@ -193,7 +194,7 @@ README 变详细，常常只是说明它已经开始吞并导航、结构或路�
 按当前仓库状态，最值得优先警惕的通常是：
 
 - README 又开始代行目录树或查找导航
-- index 开始替代 overview、landscape 或 roadmap
+- index 开始替代 overview、研究辅助材料或 roadmap
 - 一篇 overview 同时在讲主题主线和目录切分逻辑
 - backlog、candidates、roadmap、conflict 的问题重新挤回 README 或正文
 

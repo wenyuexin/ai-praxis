@@ -34,7 +34,7 @@
 - 板块切分治理
 - 阅读顺序、学习阶段或推进路径
 
-这些问题分别继续留给 `README.md`、`overview.md`、`landscape.md`、`roadmap.md`。
+这些问题分别继续留给 `README.md`、`overview.md`、`roadmap.md` 或相应的研究辅助材料；结构研究辅助材料的准入见 [`research-artifacts.md §5.2`](./research-artifacts.md)。
 
 ## 3. 什么时候该创建 `index.md`
 

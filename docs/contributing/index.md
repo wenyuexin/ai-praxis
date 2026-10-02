@@ -33,7 +33,7 @@ docs/contributing/
 ## 按任务找入口
 
 - **我现在要处理新材料、外部调研、`temp/` 内容或正文回流**：读 [`documentation-workflow.md`](./rules/documentation-workflow.md)
-- **我现在要判断 `README.md` / `index.md` / `overview.md` / `landscape.md` / `backlog.md` / `candidates.md` 等元信息文件该怎么分工**：读 [`metadata-files.md`](./rules/metadata-files.md)
+- **我现在要判断 `README.md` / `index.md` / `overview.md` / `backlog.md` / `candidates.md` / `roadmap.md` 等元信息文件，或结构研究辅助材料该怎么分工**：读 [`metadata-files.md`](./rules/metadata-files.md) 和 [`research-artifacts.md`](./rules/research-artifacts.md)
 - **我现在要修改 README 本身的写法、出现条件、入口说明或导航边界**：读 [`readme-rules.md`](./rules/readme-rules.md)
 - **我现在要修改 `index.md` 本身的结构、粒度、父子层导航方式或 stop-line**：读 [`index-rules.md`](./rules/index-rules.md)
 - **我现在要修改目录树、查找导航，或判断结构展示是否应从 README 迁到 `index.md`**：先读 [`metadata-files.md`](./rules/metadata-files.md)；涉及 `index.md` 的专项细则时继续读 [`index-rules.md`](./rules/index-rules.md)；README 写法问题再回到 [`readme-rules.md`](./rules/readme-rules.md)
@@ -63,7 +63,7 @@ docs/contributing/
 
 - [`intent/metadata-files.md`](./intent/metadata-files.md)：元信息文件总模型，为什么按问题触发而不是按槽位补齐
 - [`intent/navigation-files.md`](./intent/navigation-files.md)：`README.md` / `index.md` / `roadmap.md` 的拆分原理与导航入口误读
-- [`intent/overview-landscape.md`](./intent/overview-landscape.md)：`overview.md` / `landscape.md` 的原意与常见误读
+- [`intent/overview-landscape.md`](./intent/overview-landscape.md)：`overview.md` 与结构研究辅助材料的原意、`landscape.md` 退役和常见误读
 - [`intent/meta-rules.md`](./intent/meta-rules.md)：规则修改原则、`intent/` 分工与解释层边界
 - [`intent/research-artifacts.md`](./intent/research-artifacts.md)：研究产物组织总原则与混合型研究单元
 - [`intent/deep-research.md`](./intent/deep-research.md)：研究方法簇中的深度研究脚手架专项
@@ -80,7 +80,7 @@ docs/contributing/
 - [`cases/pageindex-hybrid-study-unit.md`](./cases/pageindex-hybrid-study-unit.md)
 - [`cases/interdisciplinarity-readme-index-roadmap.md`](./cases/interdisciplinarity-readme-index-roadmap.md)
 - [`cases/learning-materials-readme-backlog.md`](./cases/learning-materials-readme-backlog.md)
-- [`cases/training-infra-landscape-before-overview.md`](./cases/training-infra-landscape-before-overview.md)
+- [`cases/training-infra-landscape-before-overview.md`](./cases/training-infra-landscape-before-overview.md)：历史案例，记录 B+C 生效前的 `landscape.md` 模型
 - [`cases/agent-system-modeling-readme-candidates.md`](./cases/agent-system-modeling-readme-candidates.md)
 - [`cases/capability-first-routing-placement.md`](./cases/capability-first-routing-placement.md)
 

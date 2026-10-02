@@ -26,7 +26,7 @@
 ## 3. 下潜触发器：动笔前必须先加载（否则大概率误判）
 
 - **改任何规则前**：先确认命中 `meta-rules.md` §1 的触发信号（复发 / 直接观察 / 高危维度）；命中高危维度要写具体场景并记入 `contributing/incidents/`，大改需 §3 维护者签核。**没命中触发信号就先别改。**
-- **要写 / 读 `overview.md` 或 `landscape.md`**：先读 [`contributing/intent/overview-landscape.md`](./contributing/intent/overview-landscape.md)——高频误读点（landscape 是文档体系视图，不是主题内容板块图）。
+- **要写 / 读 `overview.md`，或判断结构研究辅助材料是否需要出现**：先读 [`contributing/intent/overview-landscape.md`](./contributing/intent/overview-landscape.md)——当前 B+C 模型保留 overview 的独立性，结构研究不再默认对应 `landscape.md`。
 - **判断某个 Claim 的证据状态**：若它属于“指称对象本身模糊、定不死”的一类，读 [`contributing/rules/evidence-assessment-rules.md`](./contributing/rules/evidence-assessment-rules.md) §4.2，别硬塞进“等待补证”。
 
 ## 4. 止步线

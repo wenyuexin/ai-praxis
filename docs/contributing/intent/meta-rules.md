@@ -77,7 +77,7 @@
 
 例如：
 
-- 准备修改 `metadata-files.md` 中 `overview.md` / `landscape.md` / `candidates.md` 的职责或命名判断时，不应只读 `metadata-files.md`；还应补读 [`intent/metadata-files.md`](./metadata-files.md)。
+- 准备修改 `metadata-files.md` 中 `overview.md`、结构研究辅助材料或 `candidates.md` 的职责或命名判断时，不应只读 `metadata-files.md`；还应补读 [`intent/metadata-files.md`](./metadata-files.md) 和 [`intent/overview-landscape.md`](./overview-landscape.md)。
 - 准备修改版本链路、`Version Basis`、`Observed At` 等要求时，不应只读 `traceability-rules.md`；还应补读 [`intent/traceability-rules.md`](./traceability-rules.md)。
 
 否则很容易出现一种表面合规、实质偏离的情况：协作者已经读了 `meta-rules.md`，也读了主规则条文，但仍会把当前规则重新解释成自己更熟悉的一套抽象。

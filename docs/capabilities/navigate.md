@@ -176,7 +176,7 @@
 本文不负责：
 
 - 决定某条新材料最终该写成正文还是哪类元信息文件
-- 解释 README、index、overview、landscape 的全部规则边界
+- 解释 README、index、overview 和研究辅助材料的全部规则边界
 - 代替 `docs/contributing/` 下的维护流程与文档治理规则
 
 如果你已经找到目标区域，下一步需要决定“写什么文件”，应回到维护规则层：

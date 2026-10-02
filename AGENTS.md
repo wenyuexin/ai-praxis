@@ -22,7 +22,7 @@
 
 - 如果你在**研究论文、开源项目、产品、benchmark 或具体案例**：读 [`research-artifacts.md`](./docs/contributing/rules/research-artifacts.md)
 - 如果你在**新建/改名/迁移目录**：读 [`structure-refactoring-rules.md`](./docs/contributing/rules/structure-refactoring-rules.md)
-- 如果你在**判断 `README.md` / `index.md` / `overview.md` / `landscape.md` / `backlog.md` / `candidates.md` / `conflict.md` 该如何分工或落位**：读 [`metadata-files.md`](./docs/contributing/rules/metadata-files.md)
+- 如果你在**判断 `README.md` / `index.md` / `overview.md` / `backlog.md` / `candidates.md` / `roadmap.md` / `conflict.md`，或结构研究辅助材料该如何分工或落位**：读 [`metadata-files.md`](./docs/contributing/rules/metadata-files.md) 和 [`research-artifacts.md`](./docs/contributing/rules/research-artifacts.md)
 - 如果你在**修改 README 本身的写法、出现条件、入口说明或导航边界**：读 [`readme-rules.md`](./docs/contributing/rules/readme-rules.md)
 - 如果你在**修改 `index.md` 本身的结构、粒度、父子层导航方式或 stop-line**：读 [`index-rules.md`](./docs/contributing/rules/index-rules.md)
 - 如果你在**修改目录树、查找导航，或判断结构展示是否应从 README 迁到 `index.md`**：先读 [`metadata-files.md`](./docs/contributing/rules/metadata-files.md)；涉及 `index.md` 的专项细则时继续读 [`index-rules.md`](./docs/contributing/rules/index-rules.md)；README 写法问题再按需读 [`readme-rules.md`](./docs/contributing/rules/readme-rules.md)

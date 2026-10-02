@@ -15,9 +15,9 @@
 
 真正动手新增、迁移、修改文档前，至少先完成下面四个判断：
 
-1. **材料类型**：它是整体认知、主题缺口、待研究对象、冲突问题，还是正文专题材料？
+1. **材料类型**：它是整体认知、主题缺口、待研究对象、冲突问题、路径规划、对象研究过程，还是文档体系结构研究材料？
 2. **Evidence 状态**：它属于 `Verified`、`Observed`、`Inferred`、`Unverified`、`Conflicting` 还是 `Deprecated`？具体状态见 [`evidence-assessment-rules.md`](./evidence-assessment-rules.md)，标注位置和呈现方式见 [`evidence-recording-rules.md`](./evidence-recording-rules.md)，来源类型边界见 [`evidence-source-rules.md`](./evidence-source-rules.md)，内容链路记录见 [`traceability-rules.md`](./traceability-rules.md)。
-3. **目标落位**：它更适合进入 `overview.md`、`backlog.md`、`candidates.md`、`conflict.md`，还是某篇正文专题？
+3. **目标落位**：它更适合进入 `README.md`、`index.md`、`overview.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md`，某篇正文专题，还是研究辅助材料？
 4. **临时落点**：如果今天不写正文，最合适的暂存位置是什么？
 
 如果以上问题没有想清楚，默认不要直接新建正文专题。
@@ -152,7 +152,8 @@ AI 协作者在创建新文件、修改正文或迁移 `temp/` 内容前，必�
 对**已完成材料类型与 Evidence 判断、正在选择稳定落点**的材料，以下三腿去向的**相对顺序**以本节为唯一权威（不要求材料曾经过 `temp/`）。材料**是否已满足迁出 `temp/` 的门槛**不由本节裁决，见 §7 与 [`evidence-and-traceability.md §5`](./evidence-and-traceability.md)。各腿的准入条件、作用域属性与 stop-line 由对应 owner 承接；本节只给顺序与指针，不复述各腿条件。跨子目录共享辅助材料属独立窄例外（见 [`research-artifacts.md §5.1`](./research-artifacts.md)），不纳入本通用序。
 
 1. 缺口 / 候选 / 冲突 / 路径 → 对应元信息文件（`backlog.md` / `candidates.md` / `conflict.md` / `roadmap.md`）；作用域属性（含对象层级）见 [`metadata-files.md §2`](./metadata-files.md)。
-2. 对象归属稳定但正文不足 → 对象辅助材料；是否需要独立对象辅助层及其 `notes/` 形态见 [`research-artifacts.md §3.9、§5`](./research-artifacts.md)。
-3. 已成稳定叙述 → `overview.md` / 正文专题；其落位仍由 [`place.md`](../../capabilities/place.md) 的既有分支与各自 owner 负责，本节不改。
+2. 尚未稳定的结构判断 → 先回到 `README.md`、`index.md`、`roadmap.md`、`backlog.md`、`candidates.md`、`conflict.md` 或正文判断是否可直接承接；只有既有 owner 无法承接、且同时满足 [`research-artifacts.md §5.2`](./research-artifacts.md) 四项条件时，才进入 C 的结构研究辅助材料。
+3. 对象归属稳定但正文不足 → 对象辅助材料；是否需要独立对象辅助层及其 `notes/` 形态见 [`research-artifacts.md §3.9、§5`](./research-artifacts.md)。
+4. 已成稳定叙述 → `README.md` / `index.md` / `overview.md` / 正文专题；其落位仍由 [`place.md`](../../capabilities/place.md) 的既有分支与各自 owner 负责，本节不改。
 
-本节是通用序；外部材料场景的最短强制要求与 stop-line 见 §5、§6，不在此重复。
+本节是通用序；C 不是新的固定落位，也不是 `landscape.md` 或 `notes/landscape.md` 的替代名。外部材料场景的最短强制要求与 stop-line 见 §5、§6，不在此重复。

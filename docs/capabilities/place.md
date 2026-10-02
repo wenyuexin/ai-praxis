@@ -106,7 +106,7 @@ Place 的第一步，不是选文件名，而是先找当前内容的**最高稳
 - **结构导航问题**：`index.md`
 - **内容缺口问题**：`backlog.md`
 - **对象队列问题**：`candidates.md`
-- **结构边界问题**：`landscape.md`
+- **尚未稳定的结构研究问题**：先回到 `README.md`、`index.md`、`roadmap.md`、`backlog.md`、`candidates.md`、`conflict.md`；只有既有 owner 无法承接且满足 [`research-artifacts.md §5.2`](../contributing/rules/research-artifacts.md) 时，才进入非固定命名的结构研究辅助材料
 - **顺序路径问题**：`roadmap.md`
 - **冲突校验问题**：`conflict.md`
 - **整体理解已成熟**：`overview.md`
@@ -144,7 +144,6 @@ Place 的第一步，不是选文件名，而是先找当前内容的**最高稳
 
 - `backlog.md`
 - `candidates.md`
-- `landscape.md`
 - 或最终才轮到 `overview.md`
 
 关键不是顺序，而是**哪个问题先稳定出现**。
@@ -171,7 +170,7 @@ Place 的第一步，不是选文件名，而是先找当前内容的**最高稳
     → 已整理知识：正文
     → 缺口：backlog
     → 对象：candidates
-    → 结构：landscape
+    → 未稳定结构：按 C 条件评估研究辅助材料
     → 冲突：conflict
     → 顺序：roadmap
     → 目录说明 / 导航：README / index
