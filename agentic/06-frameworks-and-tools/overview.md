@@ -123,7 +123,7 @@ Agent 系统的很多关键差异，并不体现在抽象概念名词上，而�
 如果你已经知道自己要找什么：
 
 - 想按目录结构找入口：读 [`index.md`](./index.md)
-- 想理解这一层为什么按当前方式组织、与其他层级如何分工：先读 [`README.md`](./README.md) 和 [`index.md`](./index.md)；仍未稳定的结构判断按治理规则评估研究辅助材料。
+- 想理解这一层为什么按当前方式组织、与其他层级如何分工：读 [`landscape.md`](./landscape.md)
 - 想看当前还缺哪些关键问题：读 [`backlog.md`](./backlog.md)
 - 想直接进入横向比较：读 [`05-comparisons/index.md`](./05-comparisons/index.md)
 
