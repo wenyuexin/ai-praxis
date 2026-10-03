@@ -10,7 +10,7 @@
 
 ## 候选对象（记忆层框架 / 产品）
 
-- **Mem0** —— 框架无关的开源记忆层中间件（`add()` / `search()`）。品类基准参照；核验点：LOCOMO 基准之争、OSS 版过度提取噪音、遗忘仅按时间、无置信度追踪。
+- **Mem0** —— 框架无关的开源记忆层中间件（`add()` / `search()`）。品类基准参照；核验点：LOCOMO 基准口径、OSS 抽取质量与置信度、候选局部去重、可变事实共存，以及时序 / 衰减能力的版本与部署边界。2026-10-02 研究状态见[对象证据记录](./project-studies/mem0/notes/evidence.md)，不再沿用无版本限定的“遗忘仅按时间”概括。
 - **Letta（原 MemGPT）** —— 有状态智能体运行时，core / archival / recall 三层记忆（OS 虚拟内存类比）。记忆是一等公民、支持自我编辑。
 - **Zep** —— 企业级时序知识图谱记忆，双时序、支持时间点查询；擅长事实随时间演变。
 - **Cognee** —— 开源知识图谱记忆引擎，ECL 管道，向量 + 图，偏 GraphRAG / 多模态。
@@ -36,5 +36,5 @@
 ## 下一步
 
 - 逐个对象核验一手来源后，决定进入正文还是保留为对象研究。
-- **Mem0 vs Letta 的 LOCOMO 基准之争**是一处真实口径冲突，若要长期跟踪，考虑记入 `../conflict.md`。
+- **Mem0 相关 LOCOMO 争议**至少拆为 Zep 分数重算与 Letta baseline 可复现性两条；线索见[对象证据记录](./project-studies/mem0/notes/evidence.md)。若一手材料收齐且仍需长期维护，再考虑记入本层 `conflict.md`。
 - 分类法内容与 `memory-taxonomy-conflicts.md` 合流前，先核 CoALA 等一手来源。
