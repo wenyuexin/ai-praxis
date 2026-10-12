@@ -6,7 +6,7 @@
 > **Algorithm Basis**：官方 OSS `v2 → v3` migration 文档（机制代次）
 > **Package Basis**：本地 `main` 分支 `pyproject.toml` 为 `mem0ai 2.2.1`（`Observed`）
 > **Core Release / Commit**：`v2.2.1` → `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`（`Verified`）
-> **Observed At**：2026-10-01 初轮；2026-10-02 Python 增量；2026-10-03 TypeScript / Dream 回写与边界复核，其他网页未全量复查 · **Drift Risk**：`high`
+> **Observed At**：2026-10-01 初轮；2026-10-02 Python 增量；2026-10-03 TypeScript / Dream 回写与边界复核；2026-10-10 写入入口与后端覆盖补记，其他网页未全量复查 · **Drift Risk**：`high`
 > 同 commit 另有 `ts-v3.3.1` 标签；Python 结论不自动外推 TypeScript，已单独核对的 TS 范围见 M3e / `source.md` §1.3.7。
 
 ## 1. 对照总表
@@ -14,7 +14,7 @@
 | ID | Claim | Status | 来源 |
 |---|---|---|---|
 | M1 | 框架无关记忆层，`add()` / `search()` 两个主 API，跨会话记住用户 | `Verified` | README + 多篇二手一致 |
-| M2 | 固定 Python `v2.2.1` commit 的普通同步/异步 `infer=True` 自动抽取只生成 ADD history 事件；显式 update/delete API 仍存在，实体索引也会更新 | `Observed` | `source.md` §1.3、§1.3.5 |
+| M2 | 固定 Python `v2.2.1` commit 的普通同步/异步 `infer=True` 自动抽取对 **memory 记录**只生成 ADD history 事件，从不调用 `_update_memory` / `_delete_memory`；`update()` / `delete()` 等是独立显式 CRUD；实体索引仍会 UPDATE（Phase 7 扩展 `linked_memory_ids`）；`mem0/proxy` 的代理会在 daemon 线程后台 fire-and-forget 调用 `add()` | `Observed` | `source.md` §1.3、§1.3.5、§1.3.6 |
 | M2a | 普通自动抽取以原始文本 MD5 对本次最多 10 条召回记录的已有 hash 与当前 batch 去重，不是全库或语义去重 | `Observed` | `source.md` §1.3.5，事实 2 |
 | M2b | additive prompt 要求语义去重、保留变化语境和关联矛盾旧记忆；这些是指令，不是运行效果保证 | `Observed` | `source.md` §1.3.5，事实 1 |
 | M2c | 普通同步/异步 OSS 写入未消费 LLM 输出的 `linked_memory_ids`；entity store 的同名字段保存实体到记忆集合的关联，不是该 LLM 记忆间关系 | `Observed` | `source.md` §1.3.5，事实 3–4 |
@@ -25,9 +25,9 @@
 | M3b | 论文旧版 update 阶段先检索 top-*s* 语义相似记忆，再由 LLM function-calling / tool call 在 **ADD / UPDATE / DELETE / NOOP** 四值中选择；Appendix B Algorithm 1 交叉确认 | `Verified` | `arXiv:2504.19413v1` §2.1、Appendix B Algorithm 1 |
 | M3c | 论文旧版基础 Mem0 用 `DELETE` 移除被新信息矛盾的记忆；Mem0g 图 update 则将过时关系标为 `invalid` 而非物理删除 | `Verified` | `arXiv:2504.19413v1` §2.1–§2.2、Figure 3；这是论文设计描述 |
 | M3d | 当前 Python OSS 的 `infer=False` 与 procedural 是直接追加路径，vision 只是预处理；普通 `infer=True` 的 ADD-only 结论不能直接扩大到这些入口 | `Observed` | `source.md` §1.3.6；固定 commit `mem0/memory/main.py` |
-| M3e | 固定 commit 的 TypeScript OSS 普通 `infer=true` 在已核对机制上与 Python 普通路径相似：ADD-only、候选局部 MD5 去重、实体索引更新；TypeScript 没有观察到 Python procedural 入口 | `Observed` | `source.md` §1.3.7；固定 commit 的 TS memory、prompts、scoring 源码 |
+| M3e | 固定 commit 的 TypeScript OSS 普通 `infer=true` 在已核对机制上与 Python 普通路径相似：ADD-only、候选局部 MD5 去重、实体索引更新；TypeScript 没有观察到 Python procedural 入口；其 hybrid 同样是后端条件能力，`keywordSearch` 可选、缺失或返回 `null` 时静默退化为纯 semantic | `Observed` | `source.md` §1.3.7、§1.3.1.2；固定 commit 的 TS memory、prompts、scoring、vector_stores 源码 |
 | M3f | 不同 OSS 写入入口的操作集合和去重/实体索引行为不同，因此普通 `infer=True` 观察不能代表整个 Python OSS | `Inferred` | M3d；`source.md` §1.3.6 |
-| M4 | 固定 `v2.2.1` commit 同步检索依次获取语义、BM25、实体信号；仅以语义结果构造候选集，再融合打分，并非三路并行召回取并集 | `Observed` | `source.md` §1.3 固定源码核验 |
+| M4 | 固定 `v2.2.1` commit 同步检索依次获取语义、BM25、实体信号；仅以语义结果构造候选集，再融合打分，并非三路并行召回取并集。Python `keyword_search()` 是后端条件能力：未覆盖该方法的后端初始化时关闭 hybrid；已覆盖的后端也不都实现 BM25，Pinecone 可配置关闭，pgvector 是全文检索，Vertex 覆盖后仍返回 `None`。TypeScript 同样如此，且缺失/`null` 时静默降级 | `Observed` | `source.md` §1.3、§1.3.1–§1.3.1.2 固定源码核验 |
 | M4a | `v2.2.1` 的 threshold 在 hybrid 融合前门控 semantic score；BM25 / entity 不能把语义分数低于门槛的候选重新纳入 | `Observed` | `source.md` §1.3.2；`mem0/utils/scoring.py` |
 | M4b | `v2.2.1` `score_and_rank` 不读取 `created_at`；只交换候选时间字段不会改变排序；信号融合只作用于已进入 semantic 候选集的记录 | `Observed` | `source.md` §1.3.3 源码函数级受控验证 |
 | M5 | 图记忆已从 OSS **移除**，成为 Platform 内建常开特性；OSS 无替代、`relations` 字段不再返回 | `Verified` | OSS 迁移指南 |
@@ -38,15 +38,15 @@
 | M10 | 抽取与存储之间缺少 grounding 校验；条目以同等置信度存储 | `Observed` | `mem0ai/mem0#4573` |
 | M11 | 过度提取的主因在**写入阶段**而非检索 | `Observed` | `mem0ai/mem0` Discussion #4289 |
 | M12 | Node / TS SDK “同步阻塞 30–40s”说法未找到可信一手支持；已核源码显示 Platform v3 `add()` 是异步请求，服务端处理/索引可见性也按异步流程处理，但不能据此否定所有历史版本或自托管配置的延迟问题 | `Unverified` | `source.md` §3.6；固定 TS client 与 integration test |
-| M13 | LOCOMO 分数之争的主对手是 **Zep**；Zep 原博客已将其结果修正为 75.14% ± 0.17，Mem0 在 issue #5 中主张其复核为 58.44% ± 0.20，而 Mem0 论文报告的 Zep 数字为 65.99% ± 0.16；实现、计分和题类口径仍存在争议 | `Observed` | Zep 原博客；`getzep/zep-papers#5`；Mem0 论文/评测材料 |
+| M13 | LOCOMO 分数之争的对象都是 **Zep**：Zep 原博客报告 75.14% ± 0.17，Mem0 在 issue #5 中主张复核 Zep 为 58.44% ± 0.20，Mem0 论文报告的 Zep baseline 为 65.99% ± 0.16；三组数字不是 Zep 与 Mem0 自身成绩的三方比较，且实现、计分和题类口径仍存在争议 | `Observed`（数字和当事方主张存在）；`Conflicting`（不能视为同协议下可直接比较） | Zep 原博客；`getzep/zep-papers#5`；Mem0 论文/评测材料 |
 | M14 | Letta 的质疑是另一条独立争议：Mem0 论文中的 MemGPT baseline 难以原生复现；Letta 原博客报告其 Filesystem 方案在 GPT-4o mini、受限工具规则下取得 74.0% LoCoMo | `Observed` | Letta 原博客；Letta CEO 公开表态；不等于同配置复现或普遍优越 |
 | M15 | 5 月版新增 Temporal Reasoning 与 Memory Decay，temporal 类 +3.8、multi-session +1.5 | `Verified` | 官方博客 |
 | M16 | Mem0 的一致性机制必须按版本/部署形态分层：论文旧版是 update-time LLM mutation；固定 Python/TypeScript OSS 普通自动抽取是 ADD-only + 候选局部去重 + entity index；Platform Dream 公开契约包含 add-time supersede/merge 与 read-time `latest_only` / `include_merged` 过滤；不能概括为一致性责任单向转移到读取期 | `Inferred`（机制分层由多条证据支持，跨层因果仍未证实） | M2–M4b、M3a–M3f、M2d–M2e；`source.md` §1.3.5–§1.4 |
 | M17 | LOCOMO 原论文明确是长、多 session 对话上的离线 QA / summarization / multimodal benchmark：覆盖 single-hop、multi-hop、temporal、open-domain、adversarial；不提供事实覆盖、旧值复活、矛盾版本共存或持续写入污染的专门受控指标 | `Verified`（任务定义与数据结构）；`Inferred`（由缺少专门指标推出的适用边界） | `source.md` §3.1；`arXiv:2402.17753v1` §3–§4、§8 |
 | M18 | LongMemEval 原论文明确包含 knowledge-update、temporal-reasoning、multi-session 和 abstention；它比 LOCOMO 更直接测试更新到后来的用户状态，但其历史构造避免无关冲突，不能单独作为旧事实复活或长期矛盾共存基准 | `Verified`（任务定义与构造）；`Inferred`（适用边界） | `source.md` §3.2；`arXiv:2410.10813v2` §3、Appendix A |
-| M19 | 当前文档声明的 92.5 LoCoMo / 94.4 LongMemEval 属于 managed Platform；固定评测子模块快照另有可复核的 Platform 91.6 / 93.4 artifacts，二者不是简单四舍五入差异；固定快照的 OSS 公开结果只覆盖 LongMemEval，未形成与 Platform 92.5 LoCoMo 对等的同配置闭环 | `Verified`（结果归属、固定 artifact 与框架能力）；`Observed`（当前文档数字）；`Unverified`（92.5/94.4 的具体 run provenance）；`Inferred`（两组数字属于不同 run 或服务端版本） | `source.md` §3.3–§3.3.1；固定评测子模块 commit `4b61c5d…` 的 `results/platform/*`、`results/oss/*`、README 与评测文档 |
-| M20 | Zep ↔ Mem0 与 Letta ↔ Mem0 是两条独立的评测争议：前者围绕 LoCoMo 实现/计分与 58.44、65.99、75.14 等相互冲突数字，后者围绕 MemGPT baseline 可复现性与 Letta Filesystem 74.0 结果；一手材料支持“争议主张存在”，不支持合并成单一胜负结论 | `Observed` | `source.md` §3.4；`getzep/zep-papers#5`；Zep 原博客；Letta 原博客 |
-| M21 | `dial481/locomo-audit@9493fb4…` 固定快照包含原始数据 SHA 声明与校验脚本、逐题审计标注、审计报告、结果重算脚本及统计分析；审计者将 1,540 个非 adversarial 问题中的 156 项标为问题，其中 99 项归类为 score-corrupting、57 项为 citation-only。上述是仓库内容和审计者分类的观察，不是对数据集事实错误数的独立确认；审计者关于 judge 宽松性、调整后分数及“公开高分失效”的结论仍未独立抽查或复算 | `Observed`（固定材料、作者分类和脚本配置）；`Unverified`（分类正确性、统计结论与对具体系统分数的影响） | `source.md` §3.5；固定 commit 的 `AUDIT_REPORT.md`、`errors.json`、`scripts/verify_sha256.py`、`results-audit/audit_results.py` |
+| M19 | 当前文档声明的 92.5 LoCoMo / 94.4 LongMemEval 属于 managed Platform；固定评测子模块的 `edcd6f1` 快照另有可复核的 Platform 91.6 / 93.4 artifacts；后续 `4b61c5d…` 只修改 README，将当前结果描述为 v3 + temporal reasoning，未替换旧 Platform JSON。两组数字不是简单四舍五入差异；固定快照的 OSS 公开结果只覆盖 LongMemEval，未形成与 Platform 92.5 LoCoMo 对等的同配置闭环 | `Verified`（结果归属、固定 artifact、提交差异与框架能力）；`Observed`（当前文档及 v3 + temporal reasoning 声明）；`Unverified`（92.5/94.4 的具体 run provenance）；`Inferred`（新版结果来自不同于旧 JSON 的评测执行或配置） | `source.md` §3.3–§3.3.1；`mem0ai/memory-benchmarks@edcd6f1`、`@4b61c5d…` 的 `results/platform/*` 与 README；Mem0 README/评测文档 |
+| M20 | Zep ↔ Mem0 与 Letta ↔ Mem0 是两条独立的评测争议：前者围绕 **Zep 同一对象**的 58.44、65.99、75.14 等相互冲突数字、实现与计分口径，后者围绕 MemGPT baseline 可复现性与 Letta Filesystem 74.0 结果；一手材料支持“争议主张存在”，不支持合并成单一胜负结论 | `Observed` | `source.md` §3.4；`getzep/zep-papers#5`；Zep 原博客；Letta 原博客 |
+| M21 | `dial481/locomo-audit@9493fb4…` 固定快照包含原始数据 SHA 声明与校验脚本、逐题审计标注、审计报告、结果重算脚本及统计分析；审计者将 1,540 个非 adversarial 问题中的 156 项标为问题，其中 99 项归类为 score-corrupting、57 项为 citation-only。上述是仓库内容和审计者分类的观察，不是对数据集事实错误数的独立确认；本轮另做 6 条静态抽查，其中 4 条与所引对话存在审计者指出的不一致、2 条无法仅凭静态文本判定为计分级错误。审计者关于 judge 宽松性、调整后分数及“公开高分失效”的结论仍未独立复算 | `Observed`（固定材料、作者分类、脚本配置和 6 条抽查范围）；`Unverified`（99 项整体分类正确性、统计结论与对具体系统分数的影响） | `source.md` §3.5；固定 commit 的 `AUDIT_REPORT.md`、`errors.json`、`scripts/verify_sha256.py`、`results-audit/audit_results.py` |
 
 ## 2. 需要展开的条目
 
@@ -97,7 +97,7 @@ M15 的时间能力是相关线索，但不能仅凭发布时间或名称认定�
 
 - Zep 原博客（标题「Lies, Damn Lies, & Statistics」）曾报告 Zep 的 LOCOMO 分数及其与 Mem0 的比较
 - Mem0 方在 GitHub issue 中质疑 user model、timestamp、parallel search 与计分口径，并指出 Category 5 分母处理可能影响结果
-- **Zep CEO Daniel Chalef 后续承认原计算有误并修正文中的结果**，修正值为 `75.14% ± 0.17`
+- **Zep 后续博客以 “Updated” / “correct implementation” 口径报告** `75.14% ± 0.17`；页面文字不足以单独证明其明确承认早期计算错误
 - Mem0 侧在 issue 中给出对 Zep 的另一组复核数字 `58.44% ± 0.20`，论文中还存在 `65.99% ± 0.16` 的历史报告
 - 上述数字涉及实现、计分、题类、分母和时间字段等方法差异；当前尚未完成逐项核验和同条件复现
 
@@ -107,7 +107,7 @@ M15 的时间能力是相关线索，但不能仅凭发布时间或名称认定�
 - Letta 报告 Filesystem + 文件检索方案取得 `74.0%` LOCOMO 结果
 - 该争议的核心是**基线可复现性与配置可比性**，不能简化为“未公平跑对手”，也不能仅凭单方结果推出普遍优越
 
-**落位影响**：该冲突跨 Mem0 / Zep / Letta 三个对象，`mem0/` 层范围覆盖不了，按 [`metadata-files.md`](../../../../../../docs/contributing/rules/metadata-files.md) §6.1 可评估是否落 `memory/conflict.md`。当前已读取到双方争议主张层，但实现、计分、配置和同条件复现仍未闭合，因此本轮仍不创建 `conflict.md`。
+**落位影响**：Zep ↔ Mem0 的分数与协议口径冲突，以及第三方审计提出的协议冲突线索，由 Mem0 对象目录承接并登记在对象级 [`../conflict.md`](../conflict.md)。Letta ↔ Mem0 目前仍是单方 baseline 复现质疑，不作为已成立冲突登记。这些记录都不表示实现、计分、配置和同条件复现已经闭合。
 
 ### 2.6 M12 应从缺陷清单降为待溯源线索
 
@@ -121,7 +121,7 @@ M15 的时间能力是相关线索，但不能仅凭发布时间或名称认定�
 
 它可以支持“存在独立的 LoCoMo 数据与评测协议审计”，并提醒不能把不同模型、prompt、judge、Category 5 处理和分母口径下的分数直接横比。`audit_results.py` 的结果重算路径默认依赖外部 published eval results、三次 temperature=0 的 LLM judge 调用和 API key；本轮未执行脚本、下载被审计系统输出或复现 judge。
 
-但审计仓库中的“156/99/57 分类是否正确”“judge 接受含糊错误答案的比例”以及“公开高分因此失效”等结论仍属于审计者的主张；本轮未逐题抽查、未重算、未运行其脚本。因此不把它升级为 Mem0、Zep 或其他系统分数已被推翻的事实，也不据此创建 `conflict.md`。
+但审计仓库中的“156/99/57 分类是否正确”“judge 接受含糊错误答案的比例”以及“公开高分因此失效”等结论仍属于审计者的主张。本轮只做了 6 条静态抽查：4 条与所引对话存在审计者指出的不一致，2 条无法仅凭静态文本判定为计分级错误；未重算、未运行其脚本、未调用 LLM judge。因此不把它升级为 Mem0、Zep 或其他系统分数已被推翻的事实。协议层冲突已登记在对象级 [`../conflict.md`](../conflict.md)，后续仍需按独立核验条件推进。
 
 ## 3. 已回写与仍待回写的既有记录
 
@@ -136,7 +136,7 @@ M15 的时间能力是相关线索，但不能仅凭发布时间或名称认定�
 仍待回写或继续核验：
 
 - `general.md` 中的第一轮来源列表仍包含二手材料，保留为研究过程记录；不作为当前权威来源表。
-- M13 / M14 的 Zep issue、原博客与 Letta 原始材料已读取到争议主张层；若要创建 `memory/conflict.md`，还需继续核对实现、计分和同条件复现。
+- M13 的 Zep issue 与原博客已读取到争议主张层，三组分数及其协议口径冲突已登记在对象级 [`../conflict.md`](../conflict.md)。M14 的 Letta 材料目前仍是单方 baseline 复现质疑，未作为已成立冲突登记；两者都仍需继续核对实现、计分和同条件复现。
 - M12 的 Node / TS 同步阻塞说法仍为 `Unverified`；当前只保留为待溯源线索，若继续找不到一手来源应从缺陷清单移除。
-- M21 的第三方 LoCoMo 审计已固定 commit；156/99/57 是审计者的分类观察，逐题错误判断、judge 宽松性、调整后分数和统计结论尚未独立抽查或复算。
+- M21 的第三方 LoCoMo 审计已固定 commit；156/99/57 是审计者的分类观察。已完成 6 条代表性静态抽查，但 99 项整体分类、judge 宽松性、调整后分数和统计结论尚未独立复算。
 - 旧版论文已从“全文未读”更新为 M3a–M3c；未来若提炼正文，保留“论文设计”与“当前实现”两条版本边界。

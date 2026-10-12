@@ -6,7 +6,7 @@
 
 ## 0. 版本锚点（Version Basis / Observed At）
 
-> **Observed At**：2026-10-01（初轮）；2026-10-02 Python 增量；2026-10-03 TypeScript / Dream 回写与复核见 §1.3.7–§1.3.8，未重查全部网页
+> **Observed At**：2026-10-01（初轮）；2026-10-02 Python 增量；2026-10-03 TypeScript / Dream 回写与复核见 §1.3.7–§1.3.8；2026-10-10 写入入口与后端覆盖补记见 §1.3.1.2、§1.3.6，未重查全部网页
 > **Drift Risk**：`high`——2026 年 4 月与 5 月两次算法更新，OSS 有 v2→v3 破坏性变更
 
 | 项 | 值 | 状态 |
@@ -87,6 +87,32 @@
 
 因此“hybrid retrieval”在代码里是**条件能力**：新 collection + 可用 fastembed + 后端支持时才包含 BM25；否则仍是可工作的 semantic-only 或 semantic + entity 路径。不能仅根据 SDK 版本号假定所有部署都启用了三种信号。
 
+### 1.3.1.1 Python 后端覆盖面
+
+固定 commit `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd` 的 Python `VectorStoreBase.keyword_search()` 默认返回 `None`。`Memory` 初始化时如果发现后端没有覆盖该方法，会记录 warning，并说明 hybrid scoring 关闭、搜索退回 semantic similarity。搜索阶段若 `keyword_search()` 返回 `None`，就不会填充 `bm25_scores`；候选集仍只来自 semantic results。
+
+已覆盖该方法的后端包括 Qdrant、Milvus、Pinecone、Weaviate、Baidu、Redis、Elasticsearch、OpenSearch、MongoDB、pgvector、Azure MySQL、Azure AI Search、Databricks、Upstash Vector 和 Vertex AI Vector Search。未覆盖并因此走基类 `None` 的已观察后端包括 Chroma、FAISS、Cassandra、Supabase、LangChain、S3 Vectors、Turbopuffer、OracleDB、Neptune 和 Valkey。
+
+覆盖方法也不等于统一 BM25：
+
+- Weaviate 调用原生 `query.bm25`；
+- Qdrant 依赖 `bm25` sparse slot 和 fastembed；
+- Pinecone 只有 `hybrid_search=True` 且 sparse encoder 可用时才执行关键词检索，否则返回 `None`；
+- pgvector 使用 PostgreSQL `to_tsvector` / `ts_rank_cd` 全文检索，不是 BM25；
+- Vertex AI Vector Search 覆盖了方法，但固定源码直接返回 `None`，注释说明 sparse hybrid 尚未实现。
+
+因此，hybrid retrieval 是后端和配置条件，不是固定 Python SDK 的统一能力。调用方还会把不同后端返回的正分送进同一套 BM25 归一化，但本轮没有验证这些分数量纲是否等价。TypeScript 侧见 §1.3.1.2。
+
+### 1.3.1.2 TypeScript 后端覆盖面
+
+同一固定 commit 的 TypeScript OSS 中，`VectorStore.keywordSearch` 是可选方法，`Memory.search()` 在调用前用 `typeof` 检查：方法缺失、返回 `null` 或抛错时都归并为 `null`，`bm25Scores` 保持为空，`scoreAndRank` 的 `maxPossible` 相应缩小，最终退化为纯 semantic（+entity）排序，且不报错、不提示。
+
+- 有真实实现的后端中，真正 BM25 的是 Qdrant、Milvus、Baidu、Weaviate、OpenSearch 和 Azure AI Search；pgvector、Azure MySQL、MongoDB、Databricks 是普通全文检索；`memory.ts` 是进程内 BM25（k1=1.5、b=0.75）；Upstash Vector 走服务端 keyword 检索。
+- 其余后端返回 `null` 或未实现，包括 Pinecone、Vertex AI、Chroma、Redis、Valkey、Cassandra、Supabase、LangChain、S3 Vectors、Turbopuffer、Neptune、Vectorize；Elasticsearch 与 OracleDB 没有 `keywordSearch` 方法，由调用方的 `typeof` 检查跳过。
+- `utils/bm25.ts` 有一个独立 `BM25` 类，但在 `mem0-ts/src` 内无引用，是未使用的死代码。
+
+因此 TypeScript 的 hybrid 同样是后端条件能力，且与 Python 一样静默降级；哪些后端真正跑 BM25 必须逐个核对，不能按 SDK 版本号假定。
+
 ### 1.3.2 评分公式与研究含义
 
 `Observed`：`v2.2.1` 的 `mem0/utils/scoring.py:60` 中，先用原始 semantic score 与 threshold 比较，未通过即丢弃。通过后计算 `min((semantic + bm25 + entity_boost) / D, 1.0)`；`D = 1 + bool(bm25_scores) + 0.5 * bool(entity_boosts)`。分母由本次调用的两个分数字典是否非空决定，不是逐候选判断匹配信号，也不只是判断依赖是否安装。
@@ -122,7 +148,7 @@
 
 另称评测框架已开源，可复现。
 
-**标题与数值不一致（本轮发现）**：README 标题写 "April 2026"，但 92.5 / 94.4 两个数字来自 **5 月**更新后的算法（见 §1.5），不是 4 月版。
+**标题与数值存在版本标注滞后（本轮发现）**：README 标题写 "April 2026"，早期提交中的对应数字为 91.6 / 93.4；后续文档更新将当前结果写为 92.5 / 94.4，并与 v3 + temporal reasoning 的算法代际关联（见 §1.5、§3.3.1）。这能说明文档演进线索，不能把标题或同步时间直接当作新版评测运行时间。
 
 ### 1.3.5 写入去重、变化叙述与两种关联
 
@@ -153,6 +179,11 @@
 - `infer=False` 在 `_add_to_vector_store` 开头逐条处理非 system 消息，直接 embed → `_create_memory` → insert + `ADD` history；不执行普通分支的 top-10 召回、LLM additive extraction、局部 hash 检查或 entity linking。`_create_memory` 会计算并写入 hash，但写入 hash 不等于执行重复检查。
 - `agent_id + memory_type="procedural_memory"` 进入独立 procedural 路径：LLM 生成一条 procedural 总结后直接写入，带 `memory_type` metadata；不使用普通 additive prompt、top-10 既有记忆比较、局部 hash 去重或 Phase 7 entity linking。
 - vision 发生在普通写入前的消息预处理；之后仍由 `infer=True/False` 决定进入哪条写入路径，不是第三种持久化语义。
+- **写入入口全量盘点（2026-10-10 补充）**：`Memory.add` / `AsyncMemory.add` 及其 `_add_to_vector_store`、`_create_memory`、`_create_procedural_memory` 对 **memory 记录**只做 INSERT + ADD history，从不调用 `_update_memory` / `_delete_memory`；`update()` / `delete()` / `delete_all()` / `reset()` 是独立的显式 CRUD。三点补充：
+  - `add()` 并非完全不 UPDATE：Phase 7 会对已存在实体执行 `entity_store.update(...)` 扩展 `linked_memory_ids`。因此“add 只 INSERT”应限定为“对 memory 记录”。
+  - 存在一个后台/延迟写入路径：`mem0/proxy/main.py` 的 OpenAI 兼容代理在 `Completions.create()` 中把 `mem0_client.add(...)` 放进 daemon 线程 fire-and-forget（无 join、无重试）。写入仍是 ADD-only，但时序上延迟。
+  - SQLite `messages` 表在 `save_messages` 时会删除该 session_scope 下超过最近 10 条的历史消息；`infer=False` 不做去重，重复消息会重复 INSERT。
+- `Memory.add` 的 docstring 仍写着 infer 会让 LLM 决定 add/update/delete，与实现不符，属陈旧注释；`__init__` 创建的 `_telemetry_vector_store`（collection `mem0migrations`）全包无引用，疑似废弃残留（`Inferred`）。
 
 因此，普通同步/异步 `infer=True` 的 ADD-only、候选局部 hash 去重和实体索引三者应继续作为窄范围 `Observed`；不能写成“整个 Python OSS 都有同一套去重或实体关联”。`infer=False` 与 procedural 仍是 ADD 结果，但其 ADD 语义是直接追加，不应与普通自动抽取流水线混称。
 
@@ -296,17 +327,20 @@
 
 ### 3.3.1 benchmark provenance：固定 artifact 与当前文档数字不是同一证据层
 
-`evaluation/` 是独立 `mem0ai/memory-benchmarks` 子模块，固定 commit 为 `4b61c5d31b9c668a12b4f5e78064248a02c82d2b`；它不等同于外层 SDK `v2.2.1` / `ts-v3.3.1` 的发布版本。以下均为静态读取，未运行 benchmark。
+`evaluation/` 是独立 `mem0ai/memory-benchmarks` 子模块，固定 commit 为 `4b61c5d31b9c668a12b4f5e78064248a02c82d2b`；其中 Platform 结果文件由祖先提交 `edcd6f1` 首次加入，`4b61c5d` 后续只更新 README 数字。它不等同于外层 SDK `v2.2.1` / `ts-v3.3.1` 的发布版本。以下均为静态读取，未运行 benchmark。
 
 - **固定子模块的 Platform artifacts**：`results/platform/locomo_results.json` 记录 `1410/1540 = 91.5584…`，即文档中的 91.6；`results/platform/longmemeval_results.json` 记录 `467/500 = 93.4`。LoCoMo artifact 显式记录 `answerer_model=gpt-5`、`judge_model=gpt-5`、`provider=azure`、`top_200`；LongMemEval artifact 记录 `model=gpt-5`、`generation_model=gpt-5`、`top_200`，answerer/judge 的具体映射依赖当前 adapter，不能把 artifact 字段全部当作原生语义。
 - **当前文档的 Platform 声明**：`README` / `docs/core-concepts/memory-evaluation.mdx` 另行声明 LoCoMo 92.5（1425/1540）和 LongMemEval 94.4（472/500），同样使用 top_200、single-pass、无 agentic loops，并含 proprietary optimizations。当前固定子模块中没有能把 92.5/94.4 绑定到服务端 revision、数据 hash、完整模型 stack、随机性或逐题 output 的 run manifest。
-- **两组数字的关系**：91.6/93.4 与 92.5/94.4 不是简单四舍五入差异。较稳妥的状态是：前者为固定 commit 中可复核的旧一组 Platform artifacts（`Verified`）；后者为当前官方文档声明的 Platform 结果（`Observed`）；后者具体 run provenance 为 `Unverified`；“来自后续 Platform run 或服务端版本”只能作 `Inferred`，不能绑定到某个 commit。
+- **提交链提供的版本语义**：`mem0ai/memory-benchmarks@edcd6f1` 首次加入 `results/platform/locomo_results.json` 与 `results/platform/longmemeval_results.json` 等结果文件；其 metadata 分别记录 `20260406_170942` / `20260406_101243`。后续 `4b61c5d31b9c668a12b4f5e78064248a02c82d2b` 的提交说明为 “update Mem0 Platform benchmark results with v3 + temporal reasoning”，但 diff 只修改 `README.md`，没有替换上述 Platform JSON。该提交将 README 结果说明更新到 LoCoMo 92.5 / LongMemEval 94.4，并把它们描述为 v3 + temporal reasoning 的更新结果。
+- **Mem0 SDK 文档链**：`mem0ai/mem0@30469ae` 的 “New Memory Algorithm (April 2026)” 标题对应表格中的 91.6 / 93.4；之后的文档同步提交将当前算法说明更新到 92.5 / 94.4，但根 README 标题仍保留 April 标注。因此，标题滞后与数字更新可以解释为文档演进线索，不能单独证明新版数字的具体运行时间。
+- **两组数字的关系**：91.6/93.4 与 92.5/94.4 不是简单四舍五入差异。现在可以将“官方材料把两组结果放在不同算法/配置代际”记为 `Observed`；“新版结果来自不同于旧 JSON 的评测执行或配置”是有提交链支持的 `Inferred`；但新版具体 run provenance 仍为 `Unverified`，不能绑定到某个服务端 revision。
 - **固定快照的 OSS 结果**：`results/oss/` 只提供 LongMemEval 结果，公开标签为不同 memory extraction model 的 88.6–91.0；README 称这些 run 共用 Qwen 600M/SageMaker embedder、Qdrant、GPT-5 answerer/judge，部分 artifact 记录 `top_k=200`、`seed=42`。当前没有 OSS LoCoMo artifact，不能用这些结果计算 Platform/OSS 的 LoCoMo 差值。默认 OSS Docker 配置也不等于该对照实验配置。
 - **可比性缺口**：评测 runner 使用浮动的 `main` 数据 URL，artifact 未统一保存数据 commit/hash；Platform extraction、embedding、向量/图存储、服务端 revision、重试/温度等也未完整写入 manifest。因此“固定子模块可运行”不等于“92.5/94.4 已被复现”。
 
 ### 3.4 评测争议的一手材料状态
 
-- **Zep ↔ Mem0**：Zep 原博客已明确将其 LoCoMo 结果修正为 **75.14% ± 0.17**，并提出 Mem0 评测中的 user model、timestamp handling、sequential search 等方法问题；Mem0 在 `getzep/zep-papers#5` 主张其复核为 **58.44% ± 0.20**，相对 Mem0 论文中报告的 65.99%。这些是双方一手主张，不应合并成单一事实；实现是否忠实、题类/分母与时间字段如何处理仍需逐项核验。
+- **Zep ↔ Mem0**：三组数字 `75.14% ± 0.17`、`58.44% ± 0.20` 和 `65.99% ± 0.16` 都是在比较 **Zep** 的 LoCoMo 结果：前者是 Zep 博客对“correct implementation”的自报，第二个是 Mem0 方在 `getzep/zep-papers#5` 对 Zep 的复核主张，第三个是 Mem0 论文 Table 2 报告的 Zep baseline。它们不是 Zep 与 Mem0 自身成绩的三方对比。当前材料支持“数字和双方主张存在”，不支持把三者合并成同一协议下的可比事实；实现、题类/分母、时间字段、检索并发性和 judge 聚合仍需逐项核验。
+- **Zep 代码与博客的 C5 绑定缺口**：公开 Zep 代码提交曾将 Category 5 的 `adversarial_answer` fallback 移除，且修正路径使用 `category != 5` 与固定 `/1540` 分母；但部分代码快照仍可见 `gold_answer = qa.get("answer") or qa.get("adversarial_answer")`，并未提供与 `75.14% ± 0.17` 绑定的逐题 grades、运行次数或误差计算 artifact。因此只能确认代码演进和“排除 C5”的协议主张存在，不能由静态代码独立复算 75.14 或证明博客结果严格采用了该过滤。
 - **Letta ↔ Mem0**：Letta 原博客主张 Mem0 论文中的 MemGPT/Letta baseline 难以原生复现，且其 Filesystem 方案在 GPT-4o mini、受限工具规则下取得 74.0% LoCoMo；这证明争议存在，不等于已完成同配置复现或证明某方案普遍优越。
 
 ### 3.5 dial481/locomo-audit：第三方协议审计
@@ -322,10 +356,19 @@
 证据分层：
 
 - `Observed`：该审计仓库、固定 commit、源码/报告、数据 hash 和第三方复现入口确实存在；
-- `Unverified`：上述 99 项分类是否都构成 score-corrupting error、judge 宽松比例以及“公开高分因此无效”等实质结论，本轮未逐题抽查、未重算；
+- `Unverified`：上述 99 项分类是否都构成 score-corrupting error、judge 宽松比例以及“公开高分因此无效”等实质结论；本轮只完成 6 条静态抽查，未全量复核、未重算；
 - `Inferred`：若不同实现使用不同模型、prompt、judge、题类筛选和分母，跨报告分数存在显著可比性风险。
 
-因此它适合作为 benchmark protocol conflict 的研究入口，不足以单独推翻任何一方成绩，也不足以触发跨对象 `memory/conflict.md`。
+本轮只做了有限静态抽查，未运行重算脚本，也未调用 LLM judge：
+
+- `data/locomo10.json` 的 SHA256 与固定 commit 中 `scripts/verify_sha256.py` 声明的 `79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4` 一致；
+- 固定数据共 1,986 个 QA，其中 Category 1–4 合计 1,540，Category 5 为 446；
+- `errors.json` 共 156 条、156 个唯一 `question_id`，没有独立的 `score_corrupting` 字段；`99/57` 来自审计者把非 `WRONG_CITATION` 的 99 项归为 score-corrupting、把 57 项 `WRONG_CITATION` 归为 citation-only；
+- 抽查 6 条 score-corrupting 标注：`locomo_0_qa5`、`locomo_1_qa57`、`locomo_9_qa72`、`locomo_9_qa1` 与所引对话存在审计者指出的静态不一致；`locomo_0_qa2`、`locomo_0_qa32` 只能确认金标比原文更具体或可能偏窄，不能仅凭静态文本判定为计分级错误。
+
+因此，抽查支持“审计标注不是空泛计数，至少部分条目能在原始对话中定位”，但不支持把 99 项整体升级为已确认的数据集事实错误，也不支持由此宣布公开分数失效。
+
+因此它适合作为 benchmark protocol conflict 的研究入口，不足以单独推翻任何一方成绩；相关协议层冲突已登记在对象级 [`../conflict.md`](../conflict.md)。
 
 ### 3.6 Node / TS “同步阻塞 30–40s”说法
 
@@ -337,6 +380,6 @@
 
 1. **PyPI 发布对应关系**：版本与 release 时间已高度吻合；PyPI JSON 无 Git SHA，未下载工件，故“由该 commit 构建”仍保持高置信 `Inferred`。
 2. **评测配置可比性**：已恢复 Mem0 benchmark 框架的具体 commit、主要 Platform/OSS 结果分区和可见模型/embedding/judge/top-k 边界；后续只补缺失的 run manifest、数据版本与服务端 provenance，仍只读静态核验，不运行 benchmark。
-3. **`dial481/locomo-audit`**：已固定第三方审计 commit；下一轮只做逐题抽查或复算价值评估，不把审计主张直接写成事实。
+3. **`dial481/locomo-audit`**：已固定第三方审计 commit，并完成数据 hash 与 6 条代表性 score-corrupting 标注的静态抽查；下一轮只补 judge 输入输出和统计重算，不把 6 条抽查推广到其余标注。
 4. **Node 同步阻塞 30–40s**：未找到一手支持，已降为待溯源线索；若无新证据，从缺陷清单移除。
 5. **Platform 版本链**：公开 Dream / supersede、`latest_only` 与 `delete_linked` 契约已核验；服务端建链字段、latest 判定、递归范围以及 `replaced_by` / `linked_memory_ids` 映射仍未核验。

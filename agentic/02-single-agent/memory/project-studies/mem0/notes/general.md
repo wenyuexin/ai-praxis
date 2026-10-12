@@ -37,9 +37,9 @@
 
 ## 待确认 / 下一步
 
-- Zep 与 Letta 一手主张已读；仍需逐项核对实现/计分细节与同配置可复现性，再判断是否需要 `memory/conflict.md`。
+- Zep 与 Letta 一手主张已读；Zep 的分数与协议口径冲突已登记在对象级 [`../conflict.md`](../conflict.md)，Letta 仍是单方 baseline 复现质疑，二者都需逐项核对实现、计分细节与同配置可复现性。
 - 已有 #4573 / #4289 的报告线索；继续核适用版本与前提。Node / TS “同步阻塞 30–40s”未找到一手支持，暂只保留为待溯源线索。
 - 普通自动抽取的 ADD-only 相对旧版更新阶段的取舍，是否带来新的膨胀 / 污染问题；不外推到显式删除 API。
-- `dial481/locomo-audit@9493fb4…` 的固定快照已确认含逐题标注、数据 SHA 声明、校验/重算脚本与统计报告；它是评测协议争议入口。156 项问题、其中 99 项 score-corrupting 与 57 项 citation-only 是审计者分类，逐题判断、judge 宽松性和对具体系统分数的影响仍未独立抽查或复算，见 `evidence.md` M21。
+- `dial481/locomo-audit@9493fb4…` 的固定快照已确认含逐题标注、数据 SHA 声明、校验/重算脚本与统计报告；它是评测协议争议入口。156 项问题、其中 99 项 score-corrupting 与 57 项 citation-only 是审计者分类。本轮抽查 6 条 score-corrupting 标注，4 条与所引对话存在审计者指出的静态不一致、2 条无法仅凭静态文本判定；judge 宽松性和对具体系统分数的影响仍未复算，见 `evidence.md` M21。
 - benchmark provenance 仍不完整：固定子模块可复核 91.6 / 93.4 Platform artifacts，当前文档声明 92.5 / 94.4 的对应 run manifest、数据 hash、服务端 revision 与完整模型配置未公开闭合。
 - 分类法（CoALA 等）合流回 [`../../../memory-taxonomy-conflicts.md`](../../../memory-taxonomy-conflicts.md) 前，先核一手（CoALA 原论文）。
