@@ -40,6 +40,7 @@
 │   └── backlog.md / candidates.md / roadmap.md / conflict.md
 ├── 研究辅助文档
 │   ├── 结构研究辅助材料（按 C 条件启用，非固定文件名）
+│   ├── notes/papers/                # 按条件启用的主题局部论文辅助分析
 │   └── notes/                       # 对象级独立辅助材料目录
 │       ├── source.md / evidence.md
 │       └── reflections.md 等（按需）
@@ -121,6 +122,7 @@
 典型位置与形态：
 
 - 对象级独立辅助材料：对象目录下的 `notes/`
+- 主题局部论文辅助分析：符合 `research-artifacts.md §5.3` 的主题 `notes/papers/`；局部逻辑完整，不要求覆盖整篇论文
 - `notes/source.md`、`notes/evidence.md`、`notes/reflections.md` 等按需文件
 - 其他以过程、摘录、对照、暂存分析为主的 `notes/` 内辅助文件
 - 跨子目录共享证据的窄例外，见 `research-artifacts.md §5.1`
@@ -178,7 +180,7 @@
               治理文档提供规则、能力与设计约束
 ```
 
-这不是严格流水线，而是一个帮助理解的最小模型。
+这不是严格流水线。辅助材料可以持续保留，向正文回流的是正文所需的稳定结果，不要求整份辅助分析升格。
 
 如果更关心“读者阅读时怎么在不同文档之间跳转”，可以再看成下面这张关系图：
 

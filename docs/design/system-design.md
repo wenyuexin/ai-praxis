@@ -60,6 +60,7 @@ repo/
     │   │   ├── document-linking-rules.md # 文档引用与关联规则
     │   │   ├── organization-principles.md # 知识树组织原则
     │   │   ├── structure-refactoring-rules.md # 结构重构规则
+    │   │   ├── research-method.md    # 研究推进、理解交付与完成判断
     │   │   ├── research-artifacts.md # 研究产物组织规则
     │   │   ├── evidence-and-traceability.md # Evidence + Trace 组合入口
     │   │   ├── evidence-assessment-rules.md # Evidence 判断规则
@@ -151,6 +152,7 @@ repo/
 - 元信息文件职责
 - README 规则
 - 材料处理流程
+- 研究推进、理解交付与完成判断
 
 因此，`docs/contributing/` 更像是这套 agent system 的 rules / methods layer，而不只是普通意义上的贡献规范目录。关于为什么这一层还要继续拆成主规则、`intent/`、`cases/`，以及它与 capability layer、design layer 的更细边界，另见 [`contributing-design.md`](./contributing-design.md)。
 
@@ -176,7 +178,7 @@ AI 协作者不是系统外部的使用者，而是系统的一部分。
 
 ### 3.1 Ingest：输入与吸收
 
-回答：拿到新材料后，先怎么分流、暂存与吸收，并在条件成熟后回流到元信息文件、对象目录 `notes/` 或正文，而不是直接写正文。
+回答：拿到新材料后，先怎么分流、暂存与吸收，并在条件成熟后回流到元信息文件、按作用域的研究辅助层或正文。
 
 典型问题：
 
@@ -184,7 +186,7 @@ AI 协作者不是系统外部的使用者，而是系统的一部分。
 - Evidence 状态如何
 - 是正文候选、缺口、对象、冲突，还是临时输入
 - 今天不写正文时先放哪里
-- 什么时候应继续留在 `temp/`，什么时候应先进入元信息文件或对象目录 `notes/`
+- 什么时候应继续留在 `temp/`，什么时候应进入元信息文件或按作用域的研究辅助层
 
 当前主要由以下文档承接：
 
@@ -194,6 +196,7 @@ AI 协作者不是系统外部的使用者，而是系统的一部分。
 - `docs/contributing/rules/evidence-recording-rules.md`
 - `docs/contributing/rules/evidence-source-rules.md`
 - `docs/contributing/rules/traceability-rules.md`
+- `docs/contributing/rules/research-artifacts.md`
 
 ### 3.2 Place：定位后的落位决策
 
@@ -203,8 +206,8 @@ AI 协作者不是系统外部的使用者，而是系统的一部分。
 
 - 在几个候选目录之间，哪个才是最高稳定归属
 - 应该停在当前层，还是继续下沉到更细的子目录
-- 找到位置后，应该写正文、`backlog.md`、`candidates.md`、结构研究辅助材料还是其他元信息文件
-- 是先保留在元信息文件中，还是已经适合进入正文
+- 找到位置后，应该写正文、元信息文件，还是按作用域保存研究辅助分析
+- 哪些结果应提炼进正文，哪些分析仍有独立辅助用途
 
 Place 与 Navigate 会共享“沿着 `README.md` / `index.md` 缩小范围”的前置动作，但两者的输出不同：Navigate 的输出是最可能的目标位置，Place 的输出是具体的落位决策。
 

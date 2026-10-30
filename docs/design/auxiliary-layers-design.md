@@ -26,7 +26,7 @@
 成员之间真正稳定的区别是**治理角色**，不是内容形态：
 
 - **临时输入暂存** → `temp/`
-- **持久研究辅助**（按作用域承接研究**过程**材料） → 对象 `notes/`、C 的结构研究辅助材料（及 `research-artifacts.md §5.1` 极窄的跨子目录辅助材料）
+- **持久研究辅助**（按作用域承接过程与支撑分析） → 对象 `notes/`、条件性主题 `notes/papers/`、C 的结构研究辅助材料（及 §5.1 的共享证据窄例外）
 - **持久认知 / 规划元信息**（缺口 / 候选 / 冲突 / 路径） → `backlog` / `candidates` / `conflict` / `roadmap`
 
 角色是**治理功能**，作用域是**独立的描述属性**：元信息角色可出现在任意层级——对象目录也有 `backlog` / `conflict`，所以“单对象”并不把材料推向 `notes/`（见 §6）。
@@ -43,7 +43,7 @@
 本节只给三个角色**装什么、不装什么**，以及**判据由谁裁决**；具体准入条件、门槛与 stop-line 一律回到对应 owner，本稿不复述。
 
 - **`temp/`** — 临时输入暂存。装外部调研稿、网页抓取、arXiv 包、聊天 / handoff、未归属输入。它是**输入层**：材料的对象归属或证据状态尚未定型时停在这里。**是否已可迁出**见 [`documentation-workflow.md §7`](../contributing/rules/documentation-workflow.md) 与 [`evidence-and-traceability.md §5`](../contributing/rules/evidence-and-traceability.md)；**其路径不作为正式 Sources / Trace 端点**由 [`traceability-rules.md`](../contributing/rules/traceability-rules.md) 承接；**不提交**由 `.gitignore` 承接。这三件事分属不同 owner，拆分见 §5.3。
-- **研究辅助材料** — 承接研究**过程**材料。对象研究时特化为 `notes/`；文档体系结构研究时，仅在 C 条件满足时形成独立材料；缺口 / 冲突等治理语义不进这里，走元信息文件，见 §6。对象 `notes/` 的二态、首文件命名与内部组织以 [`research-artifacts.md §3.9、§5`](../contributing/rules/research-artifacts.md) 为准；C 的准入与 stop-line 以 [`research-artifacts.md §5.2`](../contributing/rules/research-artifacts.md) 为准。本稿不复述运行规则。
+- **研究辅助材料** — 承接过程与支撑分析。对象研究特化为 `notes/`；主题局部论文分析按 §5.3 进入 `notes/papers/`；文档结构判断按 C 条件判断。各分支准入统一见 [`research-artifacts.md`](../contributing/rules/research-artifacts.md) §3.9、§5–§5.3，本稿不复述。分析完成可保留辅助身份，正文所需结果提炼回流；缺口/冲突本身仍走元信息。
 - **`backlog` / `candidates` / `conflict` / `roadmap`** — 持久认知 / 规划元信息（缺口 / 待研究对象 / 口径冲突 / 有先后的路径）。它们承接**规划 · 认知**信息而非研究过程材料，这是与 `notes/` 的家族分界；**各自的出现条件与作用域属性以 [`metadata-files.md §2`](../contributing/rules/metadata-files.md) 为准**。本稿只借它们的一个 Observed 事实说明作用域不是落位判据：它们在多个层级递归存在（对象目录如 `codex/` 也有 `backlog` / `conflict`，子领域、根层亦然），所以“单对象”并不把材料推向 `notes/`（见 §3、§6）。
 
 ## 5. 关键设计决定
@@ -52,8 +52,8 @@
 - **5.2 按作用域递归**：三个角色都可多层存在，每层管子树；跨层材料上移到更靠近根的层。多层 `temp/` 不是碎片化，是这条的自然结果。
 - **5.3 `temp/` 的“可撤销”是对共享知识可撤销，不等于本地随手可删、也不等于自动清理**：三件事分属不同 owner——① `.gitignore` 让未跟踪的 `temp/` 默认不进常规 Git 提交；② Traceability 保证正式 Sources / Trace 不以 `temp/` 路径为端点；③ 删除前仍须按 `AGENTS.md` 确认内容已迁移或不再需要。所以清理 `temp/` 不破坏已提交 / 共享的知识，但它可能仍含尚未回流的本地工作，**不是随手即删**；gitignore 也**不**保证 inbox 被清空（本地滞留会发生）。离开 `temp/` 的门槛与回退见 `research-ingestion-design.md`，本稿不重复生命周期。
 - **5.4 位置不携带 committed 语义**：`temp/` 的层级只表达本地作用域；"原始 → 知识"的链由回流 **Trace** 承载（指向真实上游，不留 `temp/` 路径）。
-- **5.5 归属边界**：`temp/`（归属前 / 跨对象）与 `notes/`（归属后 / 对象内）以"对象归属判断"为界。
-- **5.6 聚拢靠概念，不靠物理嵌套**：跨对象 / 根层的未归属草稿没有对象 `notes/` 可挂；要让 `notes/` 上移到根 / 子领域又会撞上已占该位的元信息文件（`research-artifacts.md §5.1` 已把"notes 上移"卡到极严）。所以"辅助层是一族"靠**概念归类**表达，不靠把临时塞进持久。
+- **5.5 归属边界**：对象 `notes/` 以对象归属判断为前提，不能泛化为所有辅助材料的唯一条件；主题局部论文分析有 §5.3 的独立准入。
+- **5.6 聚拢靠概念，不靠物理嵌套**：未归属草稿不因“辅助层是一族”进入持久 notes。主题 `notes/papers/` 是专门的条件性分支，不是对象 notes 无条件上移，也不替代元信息任务。
 - **5.7 对象级物理靠拢只用平级 temp**：真想靠拢，对象级原始材料放 `<obj>/temp/`（与 `<obj>/notes/` **平级**）；**不要** `<obj>/notes/temp/`——那把可删 / 被忽略的原始层塞进"持久"的 notes 树，与 `notes/` 持久定义及 `research-artifacts.md §3.9`"notes 不是 temp 镜像"都打架。根层保留一个不挂靠任何对象的 `temp/` 接未归属材料。
 
 ## 6. 落位分工的 why（非吸收执行协议）
@@ -63,7 +63,7 @@
 为什么这些层要按治理角色（临时暂存 / 对象内研究过程材料 / 缺口·候选·冲突·路径元信息）分工，而不是按内容形态或“单对象 / 跨对象”来分：
 
 - **角色是治理功能，作用域是独立的描述属性**：元信息角色可出现在任意层级——对象目录也有 `backlog` / `conflict`，所以“单对象”并不把材料推向 `notes/`（这条作用域属性的 owner 是 [`metadata-files.md §2`](../contributing/rules/metadata-files.md)）。
-- **`temp/` 与 `notes/` 的边界由“对象归属判断”划开**：归属前 / 跨对象留在 `temp/`，归属后 / 对象内才进对象辅助材料；因此 `notes/` 不是 `temp/` 的镜像或备份。
+- **对象 `notes/` 以对象归属为前提**：不能由此推出跨对象材料一律只能留 temp；主题局部论文分析按专门准入判断，各类 notes 都不是 temp 的镜像或备份。
 - **跨子目录共享的证据边界是极窄例外**：只在没有更轻量替代手段时使用，细则见 [`research-artifacts.md §5.1`](../contributing/rules/research-artifacts.md)。
 - **聚拢靠概念，不靠物理嵌套**：把临时层塞进持久层会同时破坏两边的定义。
 
@@ -82,6 +82,6 @@
 ## 9. 与现有文档的关系
 
 - `research-ingestion-design.md`：讲输入的分流 / 暂存 / 回流**过程**；本稿讲这些层的**分类与落位**。
-- `research-artifacts.md`（§3.3–3.9、§5、§5.1、§5.2、§7）：定义一般研究辅助层、对象 `notes/`、结构研究辅助材料与跨子目录例外；本稿把它们放进更大的家族视角。
+- `research-artifacts.md`（§3.3–3.9、§5–§5.3、§7）：定义对象辅助层、主题局部论文分析、结构判断与共享证据例外；本稿解释家族关系，不承接准入。
 - `metadata-files.md`：定义 `backlog/candidates/conflict/roadmap`；本稿指出它们是家族"跨层 · 持久"角色。
 - `repo-map.md`：现有五类功能分类；本稿是其上的横切视角，不替代它（见 §2）。

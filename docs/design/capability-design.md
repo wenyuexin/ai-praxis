@@ -49,42 +49,44 @@
 
 ### 3.2 Place
 
-回答：在已经找到稳定区域之后，这个内容应停在哪一层、应写成正文还是哪类元信息文件。
+回答：在已经找到稳定区域之后，这个内容应停在哪一层、应承担正文、元信息还是研究辅助职责。
 
 典型问题：
 
 - 应停在当前层，还是继续下沉到更细子目录
-- 应写正文、`backlog.md`、`candidates.md`、结构研究辅助材料还是 `conflict.md`
-- 是先保留在元信息文件里，还是已经适合进入正文
+- 应写正文、元信息，还是按作用域保存研究辅助分析
+- 哪些结果应提炼进正文，哪些分析仍有独立辅助用途
 
 当前承接：
 
 - [`../contributing/rules/documentation-workflow.md`](../contributing/rules/documentation-workflow.md)
 - [`../contributing/rules/metadata-files.md`](../contributing/rules/metadata-files.md)
+- [`../contributing/rules/research-artifacts.md`](../contributing/rules/research-artifacts.md)
 - [`../capabilities/place.md`](../capabilities/place.md)
 
 当前状态：已有规则承接，并已补出首份独立能力文档；后续仍可继续补强示例、边界案例与用户侧说明。
 
 ### 3.3 Ingest
 
-回答：新材料进入系统后，如何先判断类型、Evidence 状态与临时落点，并在条件成熟后继续吸收到元信息文件、对象 `notes/` 或正文，而不是直接抢写正文。
+回答：新材料进入系统后，如何先判断类型、Evidence 状态与临时落点，并在条件成熟后继续吸收到元信息文件、按作用域的研究辅助层或正文。
 
 典型问题：
 
 - 新材料是什么类型
 - Evidence 状态如何
 - 今天不写正文时先放哪里
-- 什么时候该先留在 `temp/`、缺口、对象队列、冲突记录，或先进入对象目录 `notes/`
+- 什么时候该先留在 `temp/`，什么时候应由缺口、对象队列、冲突记录或按作用域的研究辅助层承接
 
 当前承接：
 
 - [`../contributing/rules/documentation-workflow.md`](../contributing/rules/documentation-workflow.md)
 - [`../contributing/rules/evidence-and-traceability.md`](../contributing/rules/evidence-and-traceability.md)
+- [`../contributing/rules/research-artifacts.md`](../contributing/rules/research-artifacts.md)
 - [`../contributing/rules/evidence-assessment-rules.md`](../contributing/rules/evidence-assessment-rules.md), [`../contributing/rules/evidence-recording-rules.md`](../contributing/rules/evidence-recording-rules.md), [`../contributing/rules/evidence-source-rules.md`](../contributing/rules/evidence-source-rules.md)
 - [`../contributing/rules/traceability-rules.md`](../contributing/rules/traceability-rules.md)
 - [`../capabilities/ingest.md`](../capabilities/ingest.md)
 
-当前状态：规则层现已收缩为较薄的执行护栏，`Ingest` 已开始承接更完整的分流、吸收与回流能力；后续仍可继续补强输入类型样式、对象目录 `notes/` 作为中间稳定层的判断，以及回流正文前的能力链说明。
+当前状态：规则层现已收缩为较薄的执行护栏，`Ingest` 已开始承接更完整的分流、吸收与回流能力；后续仍可继续补强输入类型样式、按作用域选择辅助层的判断，以及结果回流正文的能力链说明。
 
 ### 3.4 Structure
 
@@ -160,8 +162,8 @@
 | 能力域 | 当前主要承接 | 当前状态 |
 |---|---|---|
 | Navigate | `README.md` / `index.md` + `docs/capabilities/navigate.md` | 已有首份公共能力文档 |
-| Place | `documentation-workflow.md` + `metadata-files.md` + `docs/capabilities/place.md` | 已有规则承接，并已补出首份能力文档 |
-| Ingest | `documentation-workflow.md`（薄规则入口）+ Evidence / Traceability 规则 + `docs/capabilities/ingest.md` | 规则层已收缩为执行护栏，能力层开始承接更完整的分流、吸收与回流说明 |
+| Place | `documentation-workflow.md` + `metadata-files.md` + `research-artifacts.md` + `docs/capabilities/place.md` | 已有规则承接，并已补出首份能力文档 |
+| Ingest | `documentation-workflow.md`（薄规则入口）+ Evidence / Traceability 规则 + `research-artifacts.md` + `docs/capabilities/ingest.md` | 规则层已收缩为执行护栏，能力层开始承接更完整的分流、吸收与回流说明 |
 | Structure | README / 元信息 / 组织原则 / 结构重构规则 + `docs/capabilities/structure.md` | 已有较完整规则承接，并已补出首份能力文档 |
 | Answer | AI 协作者行为 + Evidence 约束 + `docs/capabilities/answer.md` | 已有行为约束，并已补出首份独立能力文档 |
 | Maintain | meta-rules + structure-refactoring + incidents + cases + `docs/capabilities/maintain.md` | 已有首份能力文档，后续仍可继续补强 |
@@ -171,7 +173,8 @@
 能力层不是只能单篇使用。常见使用链路可以先这样理解：
 
 - **普通读者问答**：`Navigate -> Answer`
-- **文档贡献或材料入库**：`Navigate -> Place -> Ingest`
+- **新材料入库**：先由 `Ingest` 识别处理路径，具备稳定落位前提后进入 `Place`；位置不明时按需借助 `Navigate`
+- **已明确的研究或产物组织**：按根入口直接进入专项规则，能力文档按定位、吸收或落位疑问选读
 - **结构优化或导航修复**：`Structure -> Maintain`，必要时回到规则层执行
 - **AI 基于仓库回答问题**：`Navigate -> Answer`，同时受 Evidence / Traceability 与 AI 入口规则约束
 - **规则或能力体系维护**：先判断问题属于 capability layer、rules layer 还是 design layer，再进入对应 meta 文档

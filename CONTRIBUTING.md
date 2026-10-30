@@ -15,7 +15,8 @@
 | 处理外部 AI 调研、网页搜索或临时笔记 | [文档增改流程](./docs/contributing/rules/documentation-workflow.md) 第 2、3、5、6 节；统一流程见 [Evidence 与 Traceability 工作流](./docs/contributing/rules/evidence-and-traceability.md) | 先做证据分级和材料分流，不直接写正文 |
 | 记录主题缺口或待研究对象 | 第四章 L4/L5 + [文档增改流程](./docs/contributing/rules/documentation-workflow.md) 第 2、4、7 节；文件职责见 [元信息文件模型](./docs/contributing/rules/metadata-files.md) | 区分问题缺口与研究对象 |
 | 处理术语、事实或结论冲突 | 第四章 L7 + [文档增改流程](./docs/contributing/rules/documentation-workflow.md) 第 2、3、4 节；冲突文件职责见 [元信息文件模型](./docs/contributing/rules/metadata-files.md) | 先记录冲突，再决定是否修改正文 |
-| 组织项目 / 论文 / 产品案例研究 | [研究产物组织规则](./docs/contributing/rules/research-artifacts.md) | 区分子领域研究与具体案例研究，管理案例正文、机制专题和辅助材料 |
+| 开展或继续论文 / 实现 / 概念等研究，判断研究是否完成 | [研究方法](./docs/contributing/rules/research-method.md) | 从目标与缺口选择行动，检查事实与理解，判断完成或暂停 |
+| 组织项目 / 论文 / 产品案例研究的产物 | [研究产物组织规则](./docs/contributing/rules/research-artifacts.md) | 区分研究单元，管理正文、机制专题、论文集合和辅助材料 |
 | 查某个元信息文件的职责 | 第四章；细则见 [元信息文件模型](./docs/contributing/rules/metadata-files.md) | 理解 `README.md`、`index.md`、`overview.md`、`backlog.md` 等文件边界 |
 | 修改 README 本身的写法、出现条件、入口说明或导航边界 | 第三章；细则见 [README 规则](./docs/contributing/rules/readme-rules.md) | 调整 README 自身，而不是重写元信息文件分工 |
 | 修改 `index.md` 本身的结构、粒度、父子层导航方式或 stop-line | 第四章 L2；细则见 [Index 规则](./docs/contributing/rules/index-rules.md) | 调整 `index.md` 自身的专项执行细则 |
@@ -95,7 +96,7 @@ README 的详细规则见 [`docs/contributing/rules/readme-rules.md`](./docs/con
 以下为推荐做法，不强制：
 
 - 知识性笔记：可包含数学公式（LaTeX）、代码块、表格等
-- 论文笔记：建议包含核心贡献、方法描述、关键结果，不必逐段翻译
+- 论文相关写作：不必逐段翻译；完整论文研究与局部辅助分析的内容责任见 [研究产物规则 §2.6](./docs/contributing/rules/research-artifacts.md#26-论文研究与论文辅助分析)
 - README 中如有流程或阶段关系，可用代码块/ASCII 图展示
 
 ## 六、材料处理与文档增改流程

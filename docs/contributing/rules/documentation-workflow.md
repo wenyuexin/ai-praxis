@@ -149,11 +149,11 @@ AI 协作者在创建新文件、修改正文或迁移 `temp/` 内容前，必�
 
 ## 9. 通用落位序
 
-对**已完成材料类型与 Evidence 判断、正在选择稳定落点**的材料，以下三腿去向的**相对顺序**以本节为唯一权威（不要求材料曾经过 `temp/`）。材料**是否已满足迁出 `temp/` 的门槛**不由本节裁决，见 §7 与 [`evidence-and-traceability.md §5`](./evidence-and-traceability.md)。各腿的准入条件、作用域属性与 stop-line 由对应 owner 承接；本节只给顺序与指针，不复述各腿条件。跨子目录共享辅助材料属独立窄例外（见 [`research-artifacts.md §5.1`](./research-artifacts.md)），不纳入本通用序。
+对**已完成材料类型与 Evidence 判断、正在选择稳定落点**的材料，以下去向的**相对顺序**以本节为唯一权威（不要求材料曾经过 `temp/`）。材料**是否已满足迁出 `temp/` 的门槛**不由本节裁决，见 §7 与 [`evidence-and-traceability.md §5`](./evidence-and-traceability.md)。各分支的准入条件、作用域属性与 stop-line 由对应 owner 承接；本节只给顺序与指针，不复述条件。跨子目录共享辅助材料属独立窄例外（见 [`research-artifacts.md §5.1`](./research-artifacts.md)），不纳入本通用序。
 
 1. 缺口 / 候选 / 冲突 / 路径 → 对应元信息文件（`backlog.md` / `candidates.md` / `conflict.md` / `roadmap.md`）；作用域属性（含对象层级）见 [`metadata-files.md §2`](./metadata-files.md)。
 2. 尚未稳定的结构判断 → 先回到 `README.md`、`index.md`、`roadmap.md`、`backlog.md`、`candidates.md`、`conflict.md` 或正文判断是否可直接承接；只有既有 owner 无法承接、且同时满足 [`research-artifacts.md §5.2`](./research-artifacts.md) 四项条件时，才进入 C 的结构研究辅助材料。
-3. 对象归属稳定但正文不足 → 对象辅助材料；是否需要独立对象辅助层及其 `notes/` 形态见 [`research-artifacts.md §3.9、§5`](./research-artifacts.md)。
-4. 已成稳定叙述 → `README.md` / `index.md` / `overview.md` / 正文专题；其落位仍由 [`place.md`](../../capabilities/place.md) 的既有分支与各自 owner 负责，本节不改。
+3. 承担研究辅助职责 → 按作用域判断：对象辅助材料及其 `notes/` 形态见 [`research-artifacts.md §3.9、§5`](./research-artifacts.md)；主题局部论文分析见该规则 §5.3。分析稳定不自动升格正文。
+4. 已能承担稳定的读者向解释、说明或导航 → 对应正文专题、`overview.md`、`README.md` / `index.md`；其落位由 [`place.md`](../../capabilities/place.md) 的分支与各自 owner 负责，辅助分析所需结果提炼回流，不要求整份迁移。
 
 本节是通用序；C 不是新的固定落位，也不是 `landscape.md` 或 `notes/landscape.md` 的替代名。外部材料场景的最短强制要求与 stop-line 见 §5、§6，不在此重复。

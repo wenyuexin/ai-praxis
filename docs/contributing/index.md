@@ -13,6 +13,7 @@ docs/contributing/
 ├── rules/    # 规则文档
 │   ├── meta-rules.md
 │   ├── documentation-workflow.md
+│   ├── research-method.md
 │   ├── research-artifacts.md
 │   ├── metadata-files.md
 │   ├── document-linking-rules.md
@@ -33,6 +34,7 @@ docs/contributing/
 ## 按任务找入口
 
 - **我现在要处理新材料、外部调研、`temp/` 内容或正文回流**：读 [`documentation-workflow.md`](./rules/documentation-workflow.md)
+- **我现在要开展或继续研究，选择下一步动作、检查理解交付或判断完成**：读 [`research-method.md`](./rules/research-method.md)
 - **我现在要判断 `README.md` / `index.md` / `overview.md` / `backlog.md` / `candidates.md` / `roadmap.md` 等元信息文件，或结构研究辅助材料该怎么分工**：读 [`metadata-files.md`](./rules/metadata-files.md) 和 [`research-artifacts.md`](./rules/research-artifacts.md)
 - **我现在要修改 README 本身的写法、出现条件、入口说明或导航边界**：读 [`readme-rules.md`](./rules/readme-rules.md)
 - **我现在要修改 `index.md` 本身的结构、粒度、父子层导航方式或 stop-line**：读 [`index-rules.md`](./rules/index-rules.md)
@@ -66,6 +68,7 @@ docs/contributing/
 - [`intent/overview-landscape.md`](./intent/overview-landscape.md)：`overview.md` 与结构研究辅助材料的原意、`landscape.md` 退役和常见误读
 - [`intent/meta-rules.md`](./intent/meta-rules.md)：规则修改原则、`intent/` 分工与解释层边界
 - [`intent/research-artifacts.md`](./intent/research-artifacts.md)：研究产物组织总原则与混合型研究单元
+- [`intent/research-method.md`](./intent/research-method.md)：认识、可信度与交付的区分，以及对象适配和任务裁剪的理由
 - [`intent/deep-research.md`](./intent/deep-research.md)：研究方法簇中的深度研究脚手架专项
 - [`intent/reflections.md`](./intent/reflections.md)：研究方法簇中的反思层专项
 - [`intent/evidence-governance.md`](./intent/evidence-governance.md)：Evidence 判断、记录和来源模块的设计分工
@@ -89,6 +92,7 @@ docs/contributing/
 - [`meta-rules.md`](./rules/meta-rules.md)：规则如何修改
 - [`documentation-workflow.md`](./rules/documentation-workflow.md)：材料处理、分流、落位与回流流程
 - [`research-artifacts.md`](./rules/research-artifacts.md)：研究产物组织方式
+- [`research-method.md`](./rules/research-method.md)：研究推进、事实与理解检查、完成与暂停判断
 - [`metadata-files.md`](./rules/metadata-files.md)：元信息文件职责边界
 - [`document-linking-rules.md`](./rules/document-linking-rules.md)：文档引用、链接、回写与边界规则
 - [`readme-rules.md`](./rules/readme-rules.md)：README 出现条件、展开深度与导航边界

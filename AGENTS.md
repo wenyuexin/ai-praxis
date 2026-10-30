@@ -18,9 +18,10 @@
 - 如果你在**已经找到大致区域后，想判断应停在哪一层、应写正文还是哪类元信息文件**：先读 [`docs/capabilities/place.md`](./docs/capabilities/place.md)
 - 如果你在**处理新材料、外部调研、博客摘录、网页搜索结果或临时笔记，想判断今天先落到哪里、能否进入正文**：先读 [`docs/capabilities/ingest.md`](./docs/capabilities/ingest.md)
 
-能力文档负责回答“这套系统怎么找、怎么放、怎么吸收”；具体 stop-line、文件职责与执行细则仍回到 `docs/contributing/`。如果你不确定该先走哪条路由，默认先走本节的能力路由，再回到下面的规则路由。
+能力文档负责回答“这套系统怎么找、怎么放、怎么吸收”；具体 stop-line、文件职责与执行细则仍回到 `docs/contributing/`。已明确是开展研究或组织产物时，直接按下面的专项路由；目录定位、落位或输入吸收不明确时，再走对应能力路由。
 
-- 如果你在**研究论文、开源项目、产品、benchmark 或具体案例**：读 [`research-artifacts.md`](./docs/contributing/rules/research-artifacts.md)
+- 如果你在**开展或继续研究论文、实现、概念、产品、benchmark，或判断研究是否完成**：读 [`research-method.md`](./docs/contributing/rules/research-method.md)
+- 如果你在**组织研究单元、论文集合、正文、机制专题或辅助材料**：读 [`research-artifacts.md`](./docs/contributing/rules/research-artifacts.md)
 - 如果你在**新建/改名/迁移目录**：读 [`structure-refactoring-rules.md`](./docs/contributing/rules/structure-refactoring-rules.md)
 - 如果你在**判断 `README.md` / `index.md` / `overview.md` / `backlog.md` / `candidates.md` / `roadmap.md` / `conflict.md`，或结构研究辅助材料该如何分工或落位**：读 [`metadata-files.md`](./docs/contributing/rules/metadata-files.md) 和 [`research-artifacts.md`](./docs/contributing/rules/research-artifacts.md)
 - 如果你在**修改 README 本身的写法、出现条件、入口说明或导航边界**：读 [`readme-rules.md`](./docs/contributing/rules/readme-rules.md)
@@ -55,5 +56,5 @@
 - 没有来源的断言，读起来像教科书定论，但实际只是模型综合判断
 - overview.md 中出现"目前暂无内容"或"当前内容较少"这类用空内容证明结构合理的表述
 - 把 AI 搜索结果、博客摘录或 issue 讨论直接写成了主线结论
-- README 目录树中 images/、papers/、notes/ 与知识主题并列展示
+- README 目录树把 images/、notes/ 或辅助 papers/ 提升为知识主题，或把完整论文研究集合伪装成问题域分类（集合职责见 research-artifacts）
 - 空目录下唯一的文件是 README，且没有写出"什么应放这里、什么不放这里"
