@@ -47,7 +47,7 @@
 
 ## 二、目录与文件命名
 
-- 层级称呼：仓库根目录不计入编号层级；`agentic/`、`llm/`、`rag/` 这类仓库根目录下的直接子目录称为一级目录，也可称顶层领域目录；`agentic/01-foundations/`、`agentic/06-frameworks-and-tools/` 这类一级目录下的子目录称为二级目录；`agentic/06-frameworks-and-tools/02-coding-tools/` 这类二级目录下的子目录称为三级目录，依此类推。
+- 层级称呼：仓库根目录不计入编号层级；`agentic/`、`llm/`、`rag/` 这类仓库根目录下的直接子目录称为一级目录，也可称顶层领域目录；`agentic/01-foundations/`、`agentic/06-frameworks-and-tools/` 这类一级目录下的子目录称为二级目录；`agentic/06-frameworks-and-tools/02-coding-agents-and-tools/` 这类二级目录下的子目录称为三级目录，依此类推。
 - 一级目录（顶层领域目录）：英文短名，语义自解释，不使用数字前缀；一级目录表达领域分区，不表达线性阅读顺序。
 - 二级及以下目录：只有当同一组目录存在明确阅读顺序、阶段顺序、流程顺序或稳定分类顺序时，才使用 `编号-英文短名` 格式（如 `01-foundations/`）；数字前缀只表达稳定顺序，不表达临时优先级或任务进度。
 - 不需要编号的目录：并列领域、具体对象、产品、框架、论文、项目、工具名称目录原则上不使用数字前缀，例如 `autogen/`、`codex/`、`claude-code/`。

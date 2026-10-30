@@ -16,6 +16,7 @@
 - `evolution-design.md`：知识与方法论协同进化的专项设计文档，解释为什么积累知识与沉淀方法论是一对协同进化过程，以及其节奏、评价尺度与实践/理论两种来源。
 - `runtime-development-design.md`：运行态 / 开发态双模式的专项设计文档，解释两态为何必须显式分离、与控制面 / 数据面的关系，以及为什么开发态应在 `docs/` 层有独立入口。
 - `auxiliary-layers-design.md`（初稿）：构造辅助层家族的**视角与设计理由**——把 `temp/`、对象 `notes/` 与 `backlog/candidates/conflict/roadmap` 元信息放到一层横切视角下，解释它们为何相关、为何不物理嵌套。**运行态落位序**见 [`../contributing/rules/documentation-workflow.md`](../contributing/rules/documentation-workflow.md) §9「通用落位序」，**能力侧分流**见 [`../capabilities/place.md`](../capabilities/place.md)。
+- `cross-cutting-concerns-design.md`（初稿）：**知识正文层面**的横切维度设计——判断 frameworks-and-tools、evaluation、memory 这类"同时具有领域归属和类型归属"的内容该不该从领域目录中抽取、怎样与领域主轴共存，给出四步判断流程与三个具体案例的交叉分析。
 
 以上为**系统架构文档**（描述系统怎么运作）。一次性**设计决策**（某时点的具体选择 + 备选 + 理由）单独收在子目录：
 
@@ -33,6 +34,7 @@
 - 想理解为什么积累知识与沉淀方法论是一对协同进化过程、以及这个循环怎么跑：读 [`evolution-design.md`](./evolution-design.md)
 - 想理解运行态与开发态为何要分开、以及开发态为什么需要 `docs/DEVELOPING.md` 这样的独立入口：读 [`runtime-development-design.md`](./runtime-development-design.md)
 - 想理解 `temp/` / `notes/` / 元信息文件作为『构造辅助层』为何相关、为何不物理嵌套：读 [`auxiliary-layers-design.md`](./auxiliary-layers-design.md)（初稿）；运行态落位序见 [`../contributing/rules/documentation-workflow.md`](../contributing/rules/documentation-workflow.md) §9「通用落位序」
+- 想判断 frameworks-and-tools / evaluation / memory 这类横切内容该不该集中到独立目录、该怎么和领域主轴共存：读 [`cross-cutting-concerns-design.md`](./cross-cutting-concerns-design.md)（初稿）
 
 ## 边界说明
 

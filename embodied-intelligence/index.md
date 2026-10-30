@@ -37,7 +37,7 @@ embodied-intelligence/
 │   ├── foundation-models-for-robotics/ # 机器人基础模型
 │   └── language-conditioned-policies/  # 语言条件策略
 │
-└── 07-evaluation-and-benchmarks/      # 评估与基准
+└── 07-evaluation-and-benchmarks/      # 当前实际承载训练数据与综述资源，目录待重组
     ├── standardized-tasks/            # 标准化任务
     └── robust-evaluation/             # 鲁棒评估
 ```
@@ -57,7 +57,7 @@ embodied-intelligence/
 - `06-foundation-models/` — VLA 模型、基础模型
 
 **评估与实践**
-- `07-evaluation-and-benchmarks/` — 标准化任务、鲁棒评估
+- `07-evaluation-and-benchmarks/` — 当前实际承载训练数据与综述资源；评估与基准入口待补齐
 
 ## 按子目录定位
 
@@ -67,7 +67,7 @@ embodied-intelligence/
 - `04-planning-and-navigation/`：路径规划、任务与运动规划、LLM 驱动规划
 - `05-manipulation/`：抓取、灵巧操作、人机交互
 - `06-foundation-models/`：VLA 模型、机器人基础模型、语言条件策略
-- `07-evaluation-and-benchmarks/`：标准化任务、鲁棒评估
+- `07-evaluation-and-benchmarks/`：当前实际承载训练数据与综述资源；不要将现有内容直接理解为评估正文
 
 ## 按阅读目标找入口
 

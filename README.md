@@ -228,9 +228,9 @@ ai-praxis/
 │   │   ├── planning/                           # 规划
 │   │   ├── memory/                             # 记忆
 │   │   ├── tool-use/                           # 工具使用
-│   │   ├── reasoning-and-acting/               # 推理与行动
+│   │   ├── reasoning-and-acting-loop/          # 推理与行动循环
 │   │   ├── self-reflection/                    # 自我反思
-│   │   └── patterns/                           # 架构模式（ReAct、AutoGPT等）
+│   │   └── architectural-patterns/             # 架构模式（ReAct、AutoGPT等）
 │   ├── 03-multi-agent/                         # 多智能体
 │   │   ├── collaboration/                      # 协作
 │   │   ├── competition/                        # 竞争
@@ -251,7 +251,7 @@ ai-praxis/
 │   │   └── benchmarking-frameworks/            # 基准环境
 │   ├── 06-frameworks-and-tools/                # 框架与工具
 │   │   ├── 01-frameworks/                      # 通用框架与SDK
-│   │   ├── 02-coding-tools/                    # 编码Agent工具
+│   │   ├── 02-coding-agents-and-tools/         # 编码Agent工具
 │   │   ├── 03-project-studies/                 # 项目案例研究
 │   │   ├── 04-skill-and-tool-systems/          # 技能与工具系统
 │   │   └── 05-comparisons/                     # 对比与选型
@@ -281,7 +281,7 @@ ai-praxis/
 │   ├── 04-planning-and-navigation/             # 规划与导航
 │   ├── 05-manipulation/                        # 操作与交互
 │   ├── 06-foundation-models/                   # 大模型驱动具身
-│   └── 07-evaluation-and-benchmarks/           # 评估与基准
+│   └── 07-evaluation-and-benchmarks/           # 当前实际承载训练数据与综述资源，目录待重组
 │
 ├── world-models/                               # 世界模型
 │   ├── 01-foundations/                         # 基础
