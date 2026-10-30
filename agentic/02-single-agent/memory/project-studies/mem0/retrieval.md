@@ -13,7 +13,7 @@
 
 ## 融合评分
 
-过滤过期 payload 后调用 `score_and_rank`。评分先做门控：原始 semantic score 低于 threshold 的候选在融合前就被丢弃，BM25 或 entity 不能把它拉回。通过的候选按 `min((semantic + bm25 + entity_boost) / D, 1.0)` 融合，其中 `D` 由本次调用的 BM25 / entity 分数字典是否非空决定。
+过滤过期 payload 后调用 `score_and_rank`。评分先做门控：原始 semantic score 低于 threshold 的候选在融合前就被丢弃，BM25 或 entity 不能把它拉回。通过的候选按 `min((semantic + bm25 + entity_boost) / D, 1.0)` 融合，其中 `D = 1 + bool(bm25_scores) + 0.5 * bool(entity_boosts)`，由本次调用的两个分数字典是否非空决定。
 
 评分函数不读取 `created_at` / `updatedAt`：只交换候选的时间字段不会改变排序和分数。因此“更相关”不能推成“当前事实正确”。
 

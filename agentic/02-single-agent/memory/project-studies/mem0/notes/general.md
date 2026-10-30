@@ -1,7 +1,9 @@
 # Mem0 — 研究笔记（对象研究 · 第一轮一手核对）
 
+> **历史记录（2026-10-30）**：本文是 2026-10-01 第一轮研究笔记，保留来源线索与研究过程；当前状态、结论与版本边界以 [`../overview.md`](../overview.md)、机制正文和 [`evidence.md`](./evidence.md) 为准。
+
 > 研究单元：**对象**（`research-artifacts.md` §2.2；"记忆层"这一想法有众多同类对象，故不按混合型处理）。
-> 阶段：notes（研究过程 + claim-source 对照），**非正文**；结论压实后按 §3.6 提炼 overview / 版本对象正文。
+> 阶段：notes（研究过程 + claim-source 对照），**非正文**；结论已按 §3.6 提炼为 overview / 机制正文（[`../overview.md`](../overview.md)、[`../consistency-model.md`](../consistency-model.md)、[`../retrieval.md`](../retrieval.md)、[`../evaluation.md`](../evaluation.md)）。
 > 目的：拉一手来源，逐条核对 [`../../../candidates.md`](../../../candidates.md) 中来自 DeepSeek 综述、默认 `Inferred` 的 Mem0 核验点。
 > 更新说明（2026-10-03）：保留第一轮来源线索，校准后的 Claim 与待办如下；当前权威状态表见 [`evidence.md`](./evidence.md)。写入机制与部署边界见 [`source.md`](./source.md) §1.3.5–§1.3.8：Python `v2.2.1`、TypeScript `ts-v3.3.1`，commit `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`；各轮 Observed At 见对应小节，Drift Risk `high`。不能把实体索引或 prompt 关联要求当作已实现的矛盾消解；Platform Dream 公开契约不等于已验证的服务端实现。
 
@@ -21,8 +23,8 @@
 | README 分数来自托管平台；论文 91% 延迟优势的比较对象为 full-context | **Verified** | evidence.md M6 / M7；不支持“在 LOCOMO 击败所有对手”的无条件概括 |
 | LOCOMO 之争（Zep 重算与 Letta baseline 可复现性） | **Observed** | 已读 Zep issue / 原博客与 Letta 原博客；只确认双方主张，未做同配置复现，见 M20 |
 | "遗忘仅按时间" | **Deprecated** | 该概括未区分版本、自动抽取、显式 CRUD 与衰减；不以“所有版本均无时间遗忘”替代它，见 M8 |
-| 抽取质量、grounding 与置信度问题的社区报告 | **Observed** | #4573 / Discussion #4289；见 M10 / M11，质量数字须保留 gemma2:2b 等报告条件，不是所有部署结论 |
-| Node / TS 同步阻塞 30–40s | **Unverified** | M12 仍未找到对应一手 issue；不能当作已确认缺陷 |
+| 抽取质量、grounding 与置信度问题的社区报告 | **Observed** | #4573（2026-06-05 已 completed 关闭）/ Discussion #4289；见 M10 / M11，质量数字须保留 gemma2:2b 等报告条件，不是所有部署结论 |
+| Node / TS 同步阻塞 30–40s | **Deprecated** | M12 未找到对应一手 issue，2026-10-30 已退役；见 evidence.md M12 |
 
 ## 关键发现：Mem0 版本敏感（`research-artifacts.md` §3.1.1）
 
@@ -38,7 +40,7 @@
 ## 待确认 / 下一步
 
 - Zep 与 Letta 一手主张已读；Zep 的分数与协议口径冲突已登记在对象级 [`../conflict.md`](../conflict.md)，Letta 仍是单方 baseline 复现质疑，二者都需逐项核对实现、计分细节与同配置可复现性。
-- 已有 #4573 / #4289 的报告线索；继续核适用版本与前提。Node / TS “同步阻塞 30–40s”未找到一手支持，暂只保留为待溯源线索。
+- 已有 #4573 / #4289 的报告线索；继续核适用版本与前提。Node / TS “同步阻塞 30–40s”未找到一手支持，2026-10-30 已退役为 `Deprecated`（见 `evidence.md` M12）。
 - 普通自动抽取的 ADD-only 相对旧版更新阶段的取舍，是否带来新的膨胀 / 污染问题；不外推到显式删除 API。
 - `dial481/locomo-audit@9493fb4…` 的固定快照已确认含逐题标注、数据 SHA 声明、校验/重算脚本与统计报告；它是评测协议争议入口。156 项问题、其中 99 项 score-corrupting 与 57 项 citation-only 是审计者分类。本轮抽查 6 条 score-corrupting 标注，4 条与所引对话存在审计者指出的静态不一致、2 条无法仅凭静态文本判定；judge 宽松性和对具体系统分数的影响仍未复算，见 `evidence.md` M21。
 - benchmark provenance 仍不完整：固定子模块可复核 91.6 / 93.4 Platform artifacts，当前文档声明 92.5 / 94.4 的对应 run manifest、数据 hash、服务端 revision 与完整模型配置未公开闭合。

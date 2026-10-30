@@ -16,6 +16,8 @@
 - **本对象已有 [`overview.md`](../overview.md)、[`consistency-model.md`](../consistency-model.md) 与 [`retrieval.md`](../retrieval.md)**：overview 承接目录级总览与版本关系，后两者承接已压实的写入/状态一致性与检索机制主线；本问题树继续负责机制级递进、未闭环问题与后续推进，不重复承担正文。
 - **暂无 `roadmap.md`**：推进顺序按"最能改变后续结构的问题优先"，写在各节的「下一步研究动作」里，不单独建 `roadmap.md`（[`metadata-files.md`](../../../../../../docs/contributing/rules/metadata-files.md) §5.3：仅在存在稳定阅读或建设顺序时创建）。
 
+> **收口说明（2026-10-30）**：本文件已完成当前可执行的静态核验。各节「下一步研究动作」中未完成项，除受控实验外均转为 park；只有出现新版本、新公开材料或实验条件时才重开。当前结论见 [`evaluation.md`](../evaluation.md) 与 [`evidence.md`](./evidence.md)。
+
 核验纪律：
 
 - **版本锚点已部分闭合**：官方 OSS `v2 → v3` migration 文档作为算法代次、本地核心库 `v2.2.1` → `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd` 作为源码锚点、`pyproject.toml` 的 `mem0ai 2.2.1` 作为包字段观察；PyPI 同版本工件的上传时间与 release commit 高度吻合，但没有工件级 Git SHA 闭环，保持高置信 `Inferred`。按 [`traceability-rules.md`](../../../../../../docs/contributing/rules/traceability-rules.md) §3.5，源码观察可恢复到具体 commit；包构建对应关系不升级为 `Verified`。Mem0 迭代快，继续标 `Drift Risk: high`。
@@ -71,14 +73,14 @@
 
 #### 待确认
 
-- 旧版论文与当前实现之间的版本对应关系；OSS 普通 Python / TypeScript 路径已观察，其他入口、后台路径与 Platform 服务端仍分开核验。
+- 旧版论文与当前实现之间的版本对应关系；OSS 普通 Python / TypeScript 路径已观察，其他 SDK 入口、Platform 服务端与 provider 自身后台行为仍分开核验。
 - 候选外事实、后台路径、Platform 状态判定与实际 LLM 抽取效果；Python procedural、vision 和 `infer=False` 的路径边界已观察，但不外推为全系统语义。
 - OSS 抽取阶段与旧版 update 阶段的变化是否存在因果关系；不能从同一 release 的并列说明推出。
 
 #### 下一步研究动作
 
-- 继续补未覆盖后台入口与 Platform 服务端边界；TypeScript 普通路径已核对，但不能把它扩大到所有 SDK 入口。
-- 继续对照论文旧版设计与当前版本实现，不把论文四值操作外推到当前 OSS 或 Platform Dream。
+- （parked，需服务端观测或上游新材料）继续补未覆盖后台入口与 Platform 服务端边界；TypeScript 普通路径已核对，但不能把它扩大到所有 SDK 入口。
+- （已由 M3a–M3c / M22 覆盖；只在版本变化时重开）对照论文旧版设计与当前版本实现，不把论文四值操作外推到当前 OSS 或 Platform Dream。
 
 ---
 
@@ -102,7 +104,7 @@
 
 #### 下一步研究动作
 
-- 继续读其他写入入口与 Platform 服务端边界；图后端单独核验，不要用普通向量侧结论外推；不要把 Platform 公开契约写成已知的内部实现。
+- （parked，同上）继续读其他写入入口与 Platform 服务端边界；图后端单独核验，不要用普通向量侧结论外推；不要把 Platform 公开契约写成已知的内部实现。
 
 ---
 
@@ -124,7 +126,7 @@
 
 #### 下一步研究动作
 
-- 读 `search()` 路径；重点找“同一实体存在多个矛盾值”时的返回与排序行为——这是判断读取侧是否会暴露或隐藏冲突的关键样本，不能预设它是在“补偿”写入期机制。
+- 静态 `search()` 路径已完成（M4–M4b，见 [`retrieval.md`](../retrieval.md)）；“同一实体多个矛盾值”的实际返回需要受控样本，转 §4.2 / park。
 
 ---
 
@@ -145,7 +147,7 @@
 #### 下一步研究动作
 
 - 三条缺陷已完成一轮收口（2026-10-30）；后续只在出现新版本证据或维护者回应时重开，不重复核验已有 issue 状态。
-- 若上游已有关于累积污染的 issue 讨论，优先作为本层一手证据。
+- （parked，出现新 issue / 材料时重开）若上游已有关于累积污染的 issue 讨论，优先作为本层一手证据。
 
 ### 4.2 受控实验设计（未执行）
 
@@ -218,10 +220,10 @@
 
 #### 下一步研究动作
 
-- 已恢复 benchmark 子模块的 artifact 提交链、主要结果分区和 v3 + temporal reasoning 的 README 更新；下一步只补读新版 run manifest / artifact 缺口，不运行 benchmark，不把“文档更新”写成“完整复现”。
-- 第三方审计已完成数据 hash 与 6 条代表性 score-corrupting 标注的静态抽查；若要升级结论，下一步只补 judge 输入输出和统计重算，不把 6 条抽查推广到其余 93 条。
-- 对照 LongMemEval 的 knowledge-update 与 Mem0 OSS ADD-only / Platform Dream supersede 机制，明确 benchmark 能测到哪一层、测不到哪一层。
-- Zep 与 Letta 的一手材料已拉齐到争议主张层；Zep 同一对象的三组分数与协议口径冲突已登记在对象级 [`../conflict.md`](../conflict.md)，Letta 目前仅保留为单方 baseline 复现质疑，不把任一争议直接改写成胜负结论。
+- 2026-10-30 复查：benchmark 远端仍为 `4b61c5d`，没有新增 run manifest；补读动作转为 park（M25），只在出现新 artifact 时重开。
+- 第三方审计的静态抽查已完成；2026-10-30 复查 audit 远端仍为 `9493fb4`，没有新增结果；judge 输入输出与统计重算转为 park（M25）。
+- 该对照已由 [`evaluation.md`](../evaluation.md) 的能力矩阵与 M24 完成；后续只在设计受控实验时推进。
+- Zep 与 Letta 的一手材料已拉齐到争议主张层；Zep 同一对象的三组分数与协议口径冲突已登记在对象级 [`../conflict.md`](../conflict.md)，Letta 目前仅保留为单方 baseline 复现质疑，不把任一争议直接改写成胜负结论。2026-10-30 复查：`zep-papers#5` 未见新的裁决或同协议复现材料。
 
 ---
 
@@ -242,13 +244,13 @@
 
 #### 下一步研究动作
 
-- 对照官方文档的 OSS / Platform 功能矩阵；差异若落在写入或检索机制，回写 §1、§3。
+- （parked）对照官方文档的 OSS / Platform 功能矩阵；差异若落在写入或检索机制，回写 §1、§3。需要官方矩阵或服务端观测，当前只读范围不继续。
 
 ### 6.2 版本演进如何影响正文结构
 
 #### 当前已知
 
-- Mem0 属版本敏感对象：版本差异会改变能力边界与实现判断（`Status: Observed`），故按 `research-artifacts.md` §3.1.1，未来形态是目录级 `overview.md` + 带版本标识的对象正文，不是一篇静态 Mem0。
+- Mem0 属版本敏感对象：版本差异会改变能力边界与实现判断（`Status: Observed`），故按 `research-artifacts.md` §3.1.1，当前已落地为目录级 `overview.md` + 机制正文（`consistency-model.md`、`retrieval.md`、`evaluation.md`），不再写成一篇静态 Mem0。
 
 #### 待确认
 
@@ -256,11 +258,13 @@
 
 #### 下一步研究动作
 
-- 版本锚点补齐后建版本谱系。主线压实一层就提炼一层正文，不等全树闭合。
+- 版本谱系已建立（M22）；后续只在版本分叉或发布锚点变化时更新。
 
 ---
 
 ## 7. 当前研究状态面板
+
+> **收口状态（2026-10-30）**：可写正文的结论已并入 `overview.md`、`consistency-model.md`、`retrieval.md` 与 `evaluation.md`；仍模糊项已转为“需要外部材料或受控实验才能关闭”的 park 项。本节不再新增研究动作，除非出现新版本、新公开材料或受控实验条件。
 
 ### 已相对清楚
 
@@ -281,9 +285,9 @@
 
 - 旧版论文设计与当前未覆盖写入入口之间的版本对应关系；Platform Dream 公开契约与服务端实现之间的落差。
 - 普通路径实际抽取哪些矛盾事实，以及 Platform 如何构建 superseded / merged 版本关系。
-- 各 provider 自身的后台 / compaction 行为（非 SDK 源码可确认）；semantic threshold 对实际冲突样本的影响；Platform 时间机制和 Dream 状态链的服务端介入点；固定同步路径融合公式已记录。
+- 各 provider 自身的后台 / compaction 行为（非 SDK 源码可确认，parked）；semantic threshold 对实际冲突样本的影响；Platform 时间机制和 Dream 状态链的服务端介入点。
 - 累积污染是否真实发生、以什么形式发生。
-- LOCOMO / LongMemEval 的具体运行配置、judge、模型、embedding、retrieval depth 和数据版本；争议双方的实现与计分口径仍未统一。
+- 公开分数仍缺完整 run manifest、embedding endpoint / 版本、数据版本与服务端 revision（parked）；已记录的模型、top-k、judge 边界见 `source.md` §3.3.1。
 - OSS 与托管平台在已知公开能力差异之外的实现差异及其效果。
 
 ### 缺口与关闭条件
@@ -297,10 +301,10 @@
 - **Platform Dream 服务端实现**：supersede / merge 判定、`replaced_by` / `linked_memory_ids` 建链、`delete_linked` 递归与失败语义均未公开。关闭条件：服务端实现或行为观测。
 - **OSS 旧事实复活 / 写入污染**：`#4956` 仍是报告者观察；固定源码只能证明普通路径不失效旧记录，不能证明端到端后果。关闭条件：受控端到端实验（当前只读范围外）。
 - **PyPI 与 release commit 的工件级闭环**：时间与版本高度吻合，但 PyPI JSON 无 Git SHA，未下载工件。关闭条件：下载工件并核对构建来源。
-- **其他 OSS 写入入口与后端退化**：Python 写入入口已全量盘点（含 proxy 后台线程、entity_store 的 UPDATE、SQLite 消息清理），Python / TypeScript 的 `keyword_search` / `keywordSearch` 覆盖已盘点；各向量库 provider 自身是否含定时任务或后台 compaction 属外部系统行为。关闭条件：各 provider 官方文档或部署观测。
-- **三条 OSS 缺陷候选的当前状态**：`#4573` 已于 2026-06-05 以 completed 关闭，固定 `v2.2.1` 仍未观察到写入期 grounding / confidence 校验（M10，`Unverified` 关闭是否覆盖该缺口）；Discussion #4289 仍为 `Observed`（M11）；Node 说法无一手支持，已退役（M12，`Deprecated`）。
+- **其他 SDK 写入入口 / 后端退化**：Python 写入入口已全量盘点（含 proxy 后台线程、entity_store 的 UPDATE、SQLite 消息清理），Python / TypeScript 的 `keyword_search` / `keywordSearch` 覆盖已盘点；仍待确认的是其他 SDK 入口是否遵循同一路径，以及各向量库 provider 自身是否含定时任务或后台 compaction。关闭条件：新公开写入入口 / 后端实现变更，或 provider 官方文档 / 部署观测。
+- **三条 OSS 缺陷候选的当前状态**：`#4573` 已于 2026-06-05 以 completed 关闭，固定 `v2.2.1` 仍未观察到写入期 grounding / confidence 校验（M10，`Unverified` 关闭是否覆盖该缺口）；Discussion #4289 仍为 `Observed`（M11）；Node 说法无一手支持，已退役（M12，`Deprecated`）。关闭条件：#4573 的 grounding 缺口若被新版本修复或维护者确认，或 #4289 出现适用版本证据；否则保持当前状态。
 
-### 下一轮研究动作
+### 已 park / 暂缓动作（不再主动推进）
 
 已完成的静态核验（写入入口全量盘点、Python / TypeScript 后端 `keyword_search` 覆盖、ADD-only 分叉点、过期过滤、缺陷状态收口）不再列入；剩余动作大多需要新增上游材料或受控实验：
 

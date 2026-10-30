@@ -245,6 +245,8 @@
 | LoCoMo | 91.6% | 92.5% | +0.9 |
 | LongMemEval | 93.4% | 94.4% | +1.0 |
 
+> Δ 为官方博客自报值；91.6/93.4 artifacts 可复核，92.5/94.4 的 run provenance 仍未闭合（M19）。
+
 - 5 月版新增两项能力：**Temporal Reasoning** 与 **Memory Decay**；官方文档和博客将二者限定为 Platform-only，不能外推到当前 OSS commit。
 - 写入时额外抽取时间元数据：事件何时发生、是否进行中或已完成、时间精度、记忆类型
 - 分类目标增益：temporal reasoning **+3.8**、multi-session reasoning **+1.5**
@@ -387,12 +389,12 @@
 
 本轮定向搜索未找到支持该具体时长或“同步阻塞”语义的一手 issue、release note、性能测量或官方文档。固定 TypeScript client 的 `add()` 是 `async` HTTP 请求；v3 integration test 以 `PENDING`/eventId 描述服务端异步处理，并通过轮询等待索引可见性。
 
-这些源码只能支持“该版本的请求与后处理是异步接口/流程”，不能证明所有历史版本、OSS 自托管或外部 provider 都没有延迟问题。因此该说法继续保持 `Unverified`，并应从已确认缺陷清单中移除。
+这些源码只能支持“该版本的请求与后处理是异步接口/流程”，不能证明所有历史版本、OSS 自托管或外部 provider 都没有延迟问题。因此该说法已于 2026-10-30 退役为 `Deprecated`，不再作为已确认缺陷或待溯源线索保留。
 
 ## 4. 下一轮建档目标
 
 1. **PyPI 发布对应关系**：版本与 release 时间已高度吻合；PyPI JSON 无 Git SHA，未下载工件，故“由该 commit 构建”仍保持高置信 `Inferred`。
 2. **评测配置可比性**：已恢复 Mem0 benchmark 框架的具体 commit、主要 Platform/OSS 结果分区和可见模型/embedding/judge/top-k 边界；后续只补缺失的 run manifest、数据版本与服务端 provenance，仍只读静态核验，不运行 benchmark。
 3. **`dial481/locomo-audit`**：已固定第三方审计 commit，并完成数据 hash 与 6 条代表性 score-corrupting 标注的静态抽查；下一轮只补 judge 输入输出和统计重算，不把 6 条抽查推广到其余标注。
-4. **Node 同步阻塞 30–40s**：未找到一手支持，已降为待溯源线索；若无新证据，从缺陷清单移除。
+4. **Node 同步阻塞 30–40s**：未找到一手支持，2026-10-30 已退役为 `Deprecated`，不再保留为线索。
 5. **Platform 版本链**：公开 Dream / supersede、`latest_only` 与 `delete_linked` 契约已核验；服务端建链字段、latest 判定、递归范围以及 `replaced_by` / `linked_memory_ids` 映射仍未核验。

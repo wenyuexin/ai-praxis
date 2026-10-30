@@ -37,7 +37,7 @@
 | M9 | `#4956` 报告 v3 OSS 可变事实共存、旧值可能排前，并归因于缺少 recency 信号；不是本研究的复现或所有版本结论。2026-10-30 复查仍为 open、label `bug`、23 条评论 | `Observed` | `mem0ai/mem0#4956`（2026-04-24 开启；2026-10-30 复查） |
 | M10 | 抽取与存储之间缺少 grounding 校验；条目以同等置信度存储。原 issue `#4573` 于 2026-06-05 以 completed 关闭，关闭说明称主要架构缺口已由已发布特性覆盖；2026-10-30 复查固定 `v2.2.1` 的 `_add_to_vector_store`，仍未观察到显式 grounding / confidence 校验。原报告的 97.8% junk rate 依赖 gemma2:2b 等抽取模型条件，不能无条件引用 | `Observed`（原报告与关闭状态）；`Unverified`（关闭是否覆盖该具体缺口） | `mem0ai/mem0#4573`（2026-03-27 开启，2026-06-05 关闭）；固定 commit `94c3fe9f…` 的 `mem0/memory/main.py` |
 | M11 | 过度提取的主因在**写入阶段**而非检索 | `Observed` | `mem0ai/mem0` Discussion #4289 |
-| M12 | Node / TS SDK「同步阻塞 30–40s」说法未找到可信一手支持；2026-10-30 的 GitHub issue 搜索也未命中对应一手 issue。已核源码显示 Platform v3 `add()` 是异步请求，但不能据此否定所有历史版本或自托管配置的延迟问题 | `Deprecated`（无一手支持，退役为待溯源线索） | `source.md` §3.6；固定 TS client 与 integration test；2026-10-30 issue 搜索 |
+| M12 | Node / TS SDK「同步阻塞 30–40s」说法未找到可信一手支持；2026-10-30 的 GitHub issue 搜索也未命中对应一手 issue。已核源码显示 Platform v3 `add()` 是异步请求，但不能据此否定所有历史版本或自托管配置的延迟问题 | `Deprecated`（无一手支持，不再保留为线索） | `source.md` §3.6；固定 TS client 与 integration test；2026-10-30 issue 搜索 |
 | M13 | LOCOMO 分数之争的对象都是 **Zep**：Zep 原博客报告 75.14% ± 0.17，Mem0 在 issue #5 中主张复核 Zep 为 58.44% ± 0.20，Mem0 论文报告的 Zep baseline 为 65.99% ± 0.16；三组数字不是 Zep 与 Mem0 自身成绩的三方比较，且实现、计分和题类口径仍存在争议 | `Observed`（数字和当事方主张存在）；`Conflicting`（不能视为同协议下可直接比较） | Zep 原博客；`getzep/zep-papers#5`；Mem0 论文/评测材料 |
 | M14 | Letta 的质疑是另一条独立争议：Mem0 论文中的 MemGPT baseline 难以原生复现；Letta 原博客报告其 Filesystem 方案在 GPT-4o mini、受限工具规则下取得 74.0% LoCoMo | `Observed` | Letta 原博客；Letta CEO 公开表态；不等于同配置复现或普遍优越 |
 | M15 | 5 月版新增 Temporal Reasoning 与 Memory Decay，temporal 类 +3.8、multi-session +1.5 | `Verified` | 官方博客 |
@@ -71,7 +71,7 @@ M16 仍保持 `Inferred`，但主线不再是“写入期责任单向转移到�
 
 ### 2.2 M9 是 §4「完备性层」的第一条一手证据
 
-`#4956` 的报告场景与问题树 §4.1 相符；label / Open 状态只记录到 2026-10-01，不能视为维护者已确认根因：
+`#4956` 的报告场景与问题树 §4.1 相符；label / Open 状态为 2026-10-30 复查结果（仍 open、label `bug`、23 条评论），不能视为维护者已确认根因：
 
 - 矛盾共存：3 个月前 "I work at Company A"、今天 "I now work at Company B"，两条都在
 - 旧事实复活：查 "Where does the user work?"，Company A 可能排前
@@ -113,11 +113,11 @@ M15 的时间能力是相关线索，但不能仅凭发布时间或名称认定�
 
 **落位影响**：Zep ↔ Mem0 的分数与协议口径冲突，以及第三方审计提出的协议冲突线索，由 Mem0 对象目录承接并登记在对象级 [`../conflict.md`](../conflict.md)。Letta ↔ Mem0 目前仍是单方 baseline 复现质疑，不作为已成立冲突登记。这些记录都不表示实现、计分、配置和同条件复现已经闭合。
 
-### 2.6 M12 应从缺陷清单降为待溯源线索
+### 2.6 M12 已从缺陷清单退役
 
 「Node 同步阻塞 30–40s」原出自二手转述，本轮仍未找到对应的一手 issue、release note 或性能测量。可核源码显示 Platform v3 TypeScript client 的 `add()` 是 `async` HTTP 请求，integration test 将服务端处理和索引可见性描述为异步，并采用轮询等待；这不足以否定历史版本或自托管配置可能存在延迟，但也不支持“同步阻塞 30–40s”的具体说法。
 
-处置：保持 `Unverified`，不再把它作为已确认 OSS 缺陷；若后续仍无一手来源，应从缺陷清单移除，仅保留为待溯源线索。
+处置（2026-10-30）：已退役为 `Deprecated`。GitHub issue 搜索未命中一手来源，不再作为待溯源线索保留；若未来出现一手 issue 或 release note，再按新证据重开。
 
 ### 2.7 M21：第三方 LoCoMo 审计可作为协议层争议入口
 
@@ -125,7 +125,7 @@ M15 的时间能力是相关线索，但不能仅凭发布时间或名称认定�
 
 它可以支持“存在独立的 LoCoMo 数据与评测协议审计”，并提醒不能把不同模型、prompt、judge、Category 5 处理和分母口径下的分数直接横比。`audit_results.py` 的结果重算路径默认依赖外部 published eval results、三次 temperature=0 的 LLM judge 调用和 API key；本轮未执行脚本、下载被审计系统输出或复现 judge。
 
-但审计仓库中的“156/99/57 分类是否正确”“judge 接受含糊错误答案的比例”以及“公开高分因此失效”等结论仍属于审计者的主张。本轮只做了 6 条静态抽查：4 条与所引对话存在审计者指出的不一致，2 条无法仅凭静态文本判定为计分级错误；未重算、未运行其脚本、未调用 LLM judge。因此不把它升级为 Mem0、Zep 或其他系统分数已被推翻的事实。协议层冲突已登记在对象级 [`../conflict.md`](../conflict.md)，后续仍需按独立核验条件推进。
+但审计仓库中的“156/99/57 分类是否正确”“judge 接受含糊错误答案的比例”以及“公开高分因此失效”等结论仍属于审计者的主张。本轮只做了 6 条静态抽查：4 条与所引对话存在审计者指出的不一致，2 条无法仅凭静态文本判定为计分级错误；未重算、未运行其脚本、未调用 LLM judge。因此不把它升级为 Mem0、Zep 或其他系统分数已被推翻的事实。协议层冲突已登记在对象级 [`../conflict.md`](../conflict.md)，后续仍需按独立核验条件推进。2026-10-30 复查：`locomo-audit` 远端仍为 `9493fb4…`，没有新增审计或重算结果。
 
 ## 3. 已回写与仍待回写的既有记录
 
@@ -134,7 +134,7 @@ M15 的时间能力是相关线索，但不能仅凭发布时间或名称认定�
 - 两处非法状态词：「需重限定」→ 拆为 M6（`Verified`，官方免责声明）+ M7（`Verified`，比较对象是 full-context）；「疑为错 / 版本混淆」→ M8（`Deprecated`）
 - 争议对手修正：Letta → 以 Zep 为主争议，Letta 为独立第二条（M13 / M14）
 - 「向量 + 图混合后端」需加版本限定（M5）
-- 三条 OSS 缺陷拆分：过度提取 → M10 / M11（`Observed`）；置信度 → M10（`Observed`）；Node 阻塞 → M12（`Unverified`，候选移除）
+- 三条 OSS 缺陷拆分：过度提取 → M10 / M11（`Observed`）；置信度 → M10（`Observed`）；Node 阻塞 → M12（`Unverified`，候选移除；2026-10-30 改判 `Deprecated`）
 - 补 `Version Basis` / `Observed At` / `Drift Risk`（本文件与 `source.md` 已有；`general.md` 保留历史笔记性质，不重复伪造版本表）
 
 仍待回写或继续核验：

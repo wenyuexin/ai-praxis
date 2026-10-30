@@ -13,8 +13,8 @@
 
 OSS 的 ADD-only 不是从论文旧版逐步演化出来的默认路径，而是一次明确的算法代次切换：
 
-- `v1.0.11`（2026-04-06）及更早：普通自动抽取仍包含 UPDATE / DELETE / NOOP 分支，并调用 `_update_memory` / `_delete_memory`。
-- `a488e190`（2026-04-14，PR #4805）：移植 v3 pipeline，普通自动抽取改为单趟 ADD-only + hybrid retrieval + entity extraction；父提交仍保留旧分支。
+- `v1.0.11`（2026-04-06）与分叉前父提交 `57f944e1`：普通自动抽取仍包含 UPDATE / DELETE / NOOP 分支，并调用 `_update_memory` / `_delete_memory`。
+- `a488e190`（2026-04-14，PR #4805）：移植 v3 pipeline，普通自动抽取改为单趟 ADD-only + hybrid retrieval + entity extraction。
 - 首个包含它的发布：`v2.0.0b1`（2026-04-14），稳定版 `v2.0.0`（2026-04-16）；当前锚点 `v2.2.1`（2026-09-25）。
 - 包版本 2.x 与算法代次 v3 不是同一命名，不能把 `v2.2.1` 读成旧算法。
 
@@ -40,11 +40,9 @@ OSS 的 ADD-only 不是从论文旧版逐步演化出来的默认路径，而是
 
 ## OSS 读取：相关性重排，不是矛盾裁决
 
-OSS 检索先由语义搜索形成候选集，再在候选内融合 BM25 和实体信号。threshold 在融合前过滤语义分数，评分函数不读取 `created_at`。它提高的是相关性排序能力，不是矛盾事实裁决能力。
+OSS 读取以相关性重排为主，另含 payload 级过期过滤：候选由语义召回构造，BM25 / entity 在候选内参与打分，threshold 在融合前门控，评分函数不读取时间字段；hybrid 还是后端条件能力。机制细节见 [`retrieval.md`](./retrieval.md) §"融合评分" 与 §"hybrid 是后端条件能力"。
 
-hybrid 还是后端条件能力：`keyword_search()` 在基类默认返回 `None`，未覆盖它的后端会关闭 BM25，退回 semantic-only；覆盖它的后端也不都实现 BM25（pgvector 是全文检索，Pinecone 需显式开启，Vertex AI Vector Search 覆盖后仍返回 `None`）。TypeScript 侧同样是可选方法、缺失或返回 `null` 时静默降级。因此不能假定所有部署都启用了三种信号。
-
-读取还会按 payload 的 `expiration_date` 过滤过期记录：`search()` / `get_all()` 默认隐藏过期项，`show_expired=True` 才返回。该字段由调用方写入，不是 vector store 的 TTL，也没有默认过期时间；它不会自动判断哪条事实更新。
+读取还会按 payload 的 `expiration_date` 隐藏过期项；这是调用方写入的读取期过滤，不是 store TTL，也不裁决新旧。细节见 [`retrieval.md`](./retrieval.md) §"这一层能做什么、不能做什么"。
 
 ## Platform：写入期状态标记 + 读取期过滤
 
@@ -56,7 +54,7 @@ Platform 公开 Dream 契约把状态标记前移到新增阶段：矛盾的新�
 
 可以把以下当作稳定理解：
 
-- 一致性机制必须按论文、OSS、Platform 分层，不存在单一答案；
+- 一致性机制必须按论文、OSS、Platform 分层，不存在单一答案（`Inferred`，M16）；
 - 固定 OSS 的普通自动抽取减少了写入期显式变更，但仍保留 prompt 筛选、局部去重和实体索引；
 - Platform 公开契约把状态标记前移到新增阶段，并用读取参数控制可见性；
 - 读取期过滤还包含调用方设置的 `expiration_date`；它不是 store TTL，也不做新旧事实裁决；
@@ -66,7 +64,7 @@ Platform 公开 Dream 契约把状态标记前移到新增阶段：矛盾的新�
 
 ## Evidence
 
-- **Status**：论文机制、Platform 公开契约为 `Verified`；固定源码路径、客户端行为与 hybrid 后端覆盖为 `Observed`；跨层因果与 Platform 服务端实现为 `Unverified` 或有边界的 `Inferred`。
+- **Status**：论文机制、Platform 公开契约为 `Verified`；固定源码路径、客户端行为与 hybrid 条件性为 `Observed`（后端覆盖明细见 [`retrieval.md`](./retrieval.md)）；跨层因果与 Platform 服务端实现为 `Unverified` 或有边界的 `Inferred`。
 - **Sources**：`arXiv:2504.19413v1`；固定 Mem0 commit `94c3fe9f…` 的 Python/TypeScript 源码、Dream 与评测文档。
 - **Trace**：Claim 级来源、版本锚点和未闭合项见 [`notes/evidence.md`](./notes/evidence.md)；源码与契约摘录见 [`notes/source.md`](./notes/source.md)。
 - **Needs**：Platform 服务端建链与失败语义、OSS 端到端冲突行为仍未闭合。

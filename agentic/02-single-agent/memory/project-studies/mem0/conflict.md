@@ -135,7 +135,7 @@
 
 不把 `156/99/57` 写成已由本研究确认的数据集错误数，不据此宣布 Mem0、Zep 或其他系统的公开分数已经被推翻。
 
-## 4. 2026-10-30 复查记录
+## 4. 2026-10-30 复查记录（`Observed`，M25）
 
 - **Platform 92.5 / 94.4**：`mem0ai/memory-benchmarks` 远端 `main` 仍为 `4b61c5d…`，没有新增 run manifest 或 artifact；本条继续 park，关闭条件不变。
 - **Zep 三组数字**：`getzep/zep-papers#5` 未见新的裁决或同协议复现材料；三组数字仍停在主张层。
