@@ -97,7 +97,7 @@
 
 - 其他写入入口与 Platform 如何表示事实版本；普通 OSS 已观察到新 UUID 独立插入，但“同一事实”的语义判定与实际抽取结果未验证。
 - 论文 / 旧版图方案与 Platform 图关系是否承担冲突处理；不能与已读 OSS 的实体索引混为一种机制。
-- 是否存在全库语义去重、TTL、容量上限，或对同实体不同值的时间/冲突裁决；当前只观察到候选局部 hash 去重。
+- 全库语义去重与容量上限仍未观察到；当前只有 payload 级 `expiration_date`（调用方写入、读取期过滤），不是 store TTL，也不裁决同实体不同值（M23）。
 - Platform 的 `replaced_by` 是否与 SDK / changelog 所称 `linked_memory_ids` 一一对应；`delete_linked` 的递归范围、环检测、原子性与失败语义；OSS prompt 输出的 `linked_memory_ids` 是否与 Platform 链接使用同一字段。
 
 #### 下一步研究动作
@@ -140,12 +140,55 @@
 
 - 记忆膨胀：只累积在长会话下的增长曲线，以及对检索精度的影响。
 - 污染与旧事实复活：过期事实是否会因语义相似度更高而被召回。
-- 三条候选问题是否正落在本层：grounding / confidence（`Status: Observed`，#4573）、写入阶段过度提取（`Status: Observed`，Discussion #4289）、Node 同步阻塞 30–40s（`Status: Unverified`，尚无一手 issue）。
+- 三条候选问题的当前状态：#4573 已于 2026-06-05 以 completed 关闭，但固定 `v2.2.1` 写入路径仍未观察到显式 grounding / confidence 校验（M10）；Discussion #4289 仍是 `Observed`（M11）；Node 同步阻塞说法无一手支持，已退役（M12，`Deprecated`）。
 
 #### 下一步研究动作
 
-- 核三条缺陷的原始 GitHub issue 与各自适用版本。按 `metadata-files.md` §6.2，它们目前属"尚未验证"，是缺口而非冲突，收口在本文件 §7「缺口与关闭条件」，**不进** `conflict.md`。
+- 三条缺陷已完成一轮收口（2026-10-30）；后续只在出现新版本证据或维护者回应时重开，不重复核验已有 issue 状态。
 - 若上游已有关于累积污染的 issue 讨论，优先作为本层一手证据。
+
+### 4.2 受控实验设计（未执行）
+
+目标：在固定 OSS 版本下，区分“写入期没有失效”“读取期过滤了”“检索恰好没召回”三种情况，测量旧事实复活与矛盾共存。
+
+**最小矩阵**
+
+| 场景 | 写入 | 查询 | 预期区分点 |
+|---|---|---|---|
+| S1 直接矛盾 | A → B | “当前是什么” | B 是否正确排序；A 是否仍在 top-k |
+| S2 重复 / 近重复 | A → A' | “A 是什么” | 局部 MD5 去重是否生效 |
+| S3 时间变化 | A@t1 → B@t2 | “现在是什么” | 是否使用较新记录 |
+| S4 同实体多值 | A、B 同实体 | 实体查询 | 两条是否同时返回 |
+| S5 长会话累积 | N 轮混合事实 | 代表性查询 | 写入增长与 stale recall |
+
+**对照**
+
+- `infer=True`：普通自动抽取（ADD-only）。
+- `infer=False`：直接写入，隔离抽取与检索。
+- `expiration_date`：给旧记录设置过期日，测试读取期过滤。
+- 显式 `delete()`：基线，验证删除后旧记录不再出现。
+
+**指标**
+
+- `stale_recall@k`：旧事实进入 top-k 的比例。
+- `current_fact_rank`：当前事实的排名 / MRR。
+- `coexistence_rate`：新旧事实同时进入 top-k 的比例。
+- `answer_accuracy`：固定 answerer / judge 下的问答正确率。
+- `write_growth`：每轮写入记录数。
+- `latency`：检索延迟。
+
+**控制与判定**
+
+- 固定 commit、embedding、抽取模型、`top_k`、`threshold`、answerer / judge；至少重复 3 次并保存 manifest。
+- 若 `infer=True` 与 `infer=False` 的 `stale_recall` 接近，差异主要不在抽取；若两者差异大，则把抽取质量作为主因。
+- 若 top-k 同时包含新旧事实，且当前事实排名没有稳定优势，则确认“读取侧未解决冲突”。
+- 若设置 `expiration_date` 或显式 delete 后 stale recall 明显下降，则说明控制手段有效，但不等于 ADD-only 自动解决了冲突。
+- 阈值先按相对改善定义，不预设绝对分数；单次结果不外推到所有部署。
+
+**边界**
+
+- 当前只读范围只做设计，不执行；执行需要真实 embedding / LLM 或本地模型，且在独立环境进行。
+- 不调用 Platform API，不把 OSS 结果外推到 Platform 服务端。
 
 ---
 
@@ -163,6 +206,7 @@
 - 固定 benchmark 子模块 `edcd6f1` 内可复核的是 Platform 91.6 / 93.4 artifacts；后续 `4b61c5d…` 只更新 README，并将 92.5 / 94.4 描述为 v3 + temporal reasoning 的当前结果，没有替换旧 JSON。新版数字仍没有匹配的公开 run manifest，不能把两组数字当作同一轮结果或简单修订（`source.md` §3.3.1）。
 - LOCOMO 争议已拆成 Zep ↔ Mem0 与 Letta ↔ Mem0 两条独立争议；Zep 条目中的 58.44、65.99、75.14 都是 Zep 结果的不同报告，不是三套系统成绩；一手材料支持争议主张存在，但没有形成统一胜负结论（M20）。
 - 固定审计快照可确认逐题标注、SHA 声明、重算脚本和统计材料存在；本轮抽查 6 条 score-corrupting 标注，4 条与所引对话存在静态不一致、2 条无法仅凭静态文本判定。审计者的 156/99/57 整体分类与分数影响论证仍未独立复算（M21）。
+- 两套 benchmark 的能力边界与受控协议缺口已整理到 [`evaluation.md`](../evaluation.md)（M24）。
 
 #### 待确认
 
@@ -208,7 +252,7 @@
 
 #### 待确认
 
-- 新旧版之间是否还有中间版本；ADD-only 的分叉点对应哪个 release。
+- 版本谱系已定位到 `a488e190` / `v2.0.0`（M22）；剩余问题是 2.0.x 系列是否出现过回退或分叉，当前未观察到。
 
 #### 下一步研究动作
 
@@ -222,7 +266,7 @@
 
 - 对象定位与 `add()` / `search()` API 面（`Verified`）。
 - 论文 / v2 语境的 scope 与向量 / 图方案线索，以及 OSS / Platform 图能力迁移声明（M5）；不合并为当前 OSS 的统一后端结论。
-- 版本分叉的存在与大致形态（`Observed`；算法代次、本地核心 `v2.2.1` commit 与包字段已有锚点，PyPI 对应为高置信 `Inferred`，仍无工件级 SHA 闭环）。
+- 版本分叉的存在与具体节点（M22，`Observed`）：`a488e190` / `v2.0.0` 起切换 ADD-only；本地核心 `v2.2.1` commit 与包字段已有锚点，PyPI 对应为高置信 `Inferred`，仍无工件级 SHA 闭环。
 - 论文旧版的 extraction + update、四值操作与基础冲突处理设计（M3a–M3c，`Verified`）。
 - 普通 Python / TypeScript OSS 同步写入的 prompt 指令、局部 hash 去重、新记录追加与实体索引边界（M2–M2c、M3e，`Observed`）。
 - `infer=False`、Python procedural 和 vision 的入口边界（M3d，`Observed`）；不同入口不能统一外推到整个 Python OSS（M3f，`Inferred`）。
@@ -230,6 +274,8 @@
 - 未区分版本和操作的「遗忘仅按时间」概括已退役（M8，`Deprecated`）。
 - 普通 OSS 写入入口全量边界：memory 记录层只 ADD，实体索引仍会 UPDATE，`mem0/proxy` 存在后台延迟写入（M2，`source.md` §1.3.6）。
 - Python / TypeScript 的 hybrid 都是后端条件能力，未覆盖 `keyword_search` / `keywordSearch` 或返回 `null` 时静默降级（M4，`source.md` §1.3.1.1–§1.3.1.2）。
+- 读取期过期过滤是 payload 级 `expiration_date`，调用方写入、默认隐藏过期项；不是 store TTL（M23，`source.md` §1.3）。
+- 评测能力边界：LoCoMo / LongMemEval 只能观测端到端问答，不能观测写入期变更、状态过滤或旧事实复活（M24，[`evaluation.md`](../evaluation.md)）。
 
 ### 仍然模糊
 
@@ -247,20 +293,21 @@
 - **Platform `92.5 / 94.4` 的 run provenance**：固定子模块只有 `91.6 / 93.4` artifacts，新版数字缺独立 JSON、run ID、数据 hash 与服务端 revision。关闭条件：Mem0 公开对应 run manifest 或 artifact。
 - **Zep 三组 LoCoMo 数字的对齐**：`75.14 / 58.44 / 65.99` 都指向 Zep，但 Category 5 过滤、答案 fallback、计分脚本 commit、`±` 运行次数与逐题 grades 未绑定。关闭条件：同协议 harness 与逐题输出。
 - **LoCoMo 第三方审计的实质结论**：已完成数据 hash 与 6 条 score-corrupting 标注的静态抽查；99 项整体分类、judge 宽松性与统计重算未复算。关闭条件：judge 输入输出与统计重算。
+- **2026-10-30 复查**：上述三项的远端固定点均未前进（`memory-benchmarks@4b61c5d`、`locomo-audit@9493fb4`、`zep-papers#5` 无新裁决），因此都继续 park（M25）。
 - **Platform Dream 服务端实现**：supersede / merge 判定、`replaced_by` / `linked_memory_ids` 建链、`delete_linked` 递归与失败语义均未公开。关闭条件：服务端实现或行为观测。
 - **OSS 旧事实复活 / 写入污染**：`#4956` 仍是报告者观察；固定源码只能证明普通路径不失效旧记录，不能证明端到端后果。关闭条件：受控端到端实验（当前只读范围外）。
 - **PyPI 与 release commit 的工件级闭环**：时间与版本高度吻合，但 PyPI JSON 无 Git SHA，未下载工件。关闭条件：下载工件并核对构建来源。
 - **其他 OSS 写入入口与后端退化**：Python 写入入口已全量盘点（含 proxy 后台线程、entity_store 的 UPDATE、SQLite 消息清理），Python / TypeScript 的 `keyword_search` / `keywordSearch` 覆盖已盘点；各向量库 provider 自身是否含定时任务或后台 compaction 属外部系统行为。关闭条件：各 provider 官方文档或部署观测。
-- **三条 OSS 缺陷候选的适用版本与普遍性**：#4573（抽取/存储间缺 grounding 校验、同置信度存储）与 Discussion #4289（过度提取主因在写入阶段）为 `Observed`；Node / TS「同步阻塞 30–40s」无一手支持，为 `Unverified`。关闭条件：#4573 / #4289 需维护者确认或适用版本证据；Node 说法若无新证据则从缺陷清单移除。
+- **三条 OSS 缺陷候选的当前状态**：`#4573` 已于 2026-06-05 以 completed 关闭，固定 `v2.2.1` 仍未观察到写入期 grounding / confidence 校验（M10，`Unverified` 关闭是否覆盖该缺口）；Discussion #4289 仍为 `Observed`（M11）；Node 说法无一手支持，已退役（M12，`Deprecated`）。
 
 ### 下一轮研究动作
 
-已完成的静态核验（写入入口全量盘点、Python / TypeScript 后端 `keyword_search` 覆盖）不再列入；剩余动作大多需要新增上游材料或受控实验：
+已完成的静态核验（写入入口全量盘点、Python / TypeScript 后端 `keyword_search` 覆盖、ADD-only 分叉点、过期过滤、缺陷状态收口）不再列入；剩余动作大多需要新增上游材料或受控实验：
 
 1. 保持 Platform 公开契约与服务端实现的边界；不调用真实 API，不把客户端参数当作服务端实现。
 2. 对已登记的评测冲突，只在拿到同协议 harness、逐题输出或 run manifest 时继续；否则停在当前主张层。
 3. 各向量库 provider 自身的后台 / compaction 行为需要外部文档或部署观测，非本 checkout 可确认。
-4. （暂缓，当前只读范围不执行）设计包含真实 embedding / 本地 vector store 的新旧事实实验，验证 semantic candidate、threshold 和 boost 的端到端关系。
+4. （暂缓，当前只读范围不执行）按 §4.2 的受控协议验证 semantic candidate、threshold、boost 与旧事实复活的关系。
 
 ---
 
@@ -271,4 +318,4 @@
 - [`evidence.md`](./evidence.md)：Claim-Source 对照层，每轮核验结论先沉淀于此。
 - [`../../../candidates.md`](../../../candidates.md)：Mem0 作为候选对象的队列条目与研究理由；本文件压实的结论应回写其状态。
 - [`../../../memory-taxonomy-conflicts.md`](../../../memory-taxonomy-conflicts.md)：分类体系冲突专题。本文件不承接 taxonomy 议题（`general.md` 末尾的 CoALA 合流仍走该文件）。
-- 已有的 [`overview.md`](../overview.md) 承接目录级总览与版本关系，[`consistency-model.md`](../consistency-model.md) 与 [`retrieval.md`](../retrieval.md) 分别承接写入/状态一致性与检索两条已压实机制主线；本文件继续负责未闭环问题与后续推进。
+- 已有的 [`overview.md`](../overview.md) 承接目录级总览与版本关系，[`consistency-model.md`](../consistency-model.md) 与 [`retrieval.md`](../retrieval.md) 分别承接写入/状态一致性与检索两条已压实机制主线；[`evaluation.md`](../evaluation.md) 承接评测能力边界与协议缺口；本文件继续负责未闭环问题与后续推进。

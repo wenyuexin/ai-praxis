@@ -1,6 +1,6 @@
 # Mem0
 
-> 最后更新：2026-10-10
+> 最后更新：2026-10-30
 > 版本锚点：论文 `arXiv:2504.19413v1`；Python `v2.2.1`、TypeScript `ts-v3.3.1`，commit `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`
 
 Mem0 是一个跨会话记忆层，核心接口是 `add()` 与 `search()`。它值得单独研究，不是因为名字统一代表一套固定算法，而是因为论文、开源 SDK 和托管 Platform 对“新事实如何处理旧事实”给出了不同答案。
@@ -10,13 +10,14 @@ Mem0 是一个跨会话记忆层，核心接口是 `add()` 与 `search()`。它�
 Mem0 是版本敏感对象：不同代次和部署形态会改变能力边界与实现判断，因此本目录按“目录级总览 + 机制专题正文 + 研究辅助材料”组织，而不是压成一篇静态对象文。
 
 - **论文旧版**：`arXiv:2504.19413v1`，正式管线为 extraction + update，LLM 在 ADD / UPDATE / DELETE / NOOP 中选择。
-- **固定 OSS**：Python `v2.2.1` 与同 commit 的 TypeScript `ts-v3.3.1`；普通自动抽取为 ADD-only，另有 `infer=False`、procedural 等直接追加入口；检索为后端条件性 hybrid。
+- **固定 OSS**：Python `v2.2.1` 与同 commit 的 TypeScript `ts-v3.3.1`；自 `v2.0.0`（2026-04）起普通自动抽取为 ADD-only，另有 `infer=False`、procedural 等直接追加入口；检索为后端条件性 hybrid；过期记忆由调用方设置的 `expiration_date` 在读取期过滤。
 - **Platform**：托管平台，公开 Dream 契约包含 add-time supersede / merge 与 read-time `latest_only` / `include_merged`；含 OSS 不具备的专有优化与 Platform-only 时间能力。
 
 ## 本目录的正文
 
 - [`consistency-model.md`](./consistency-model.md)：机制专题正文，回答论文、OSS、Platform 三层一致性机制如何分层，以及各自处理到哪里为止。
 - [`retrieval.md`](./retrieval.md)：机制专题正文，回答一次 `search()` 如何构造候选、融合打分，以及 hybrid 为何是后端条件能力。
+- [`evaluation.md`](./evaluation.md)：评测边界正文，回答 LoCoMo / LongMemEval 能观测什么、不能观测什么，以及验证旧事实复活还缺什么协议。
 
 ## 研究边界
 

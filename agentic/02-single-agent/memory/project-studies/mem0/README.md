@@ -11,6 +11,7 @@
 
 - 想先建立整体理解：读 [`overview.md`](./overview.md)。
 - 想看机制细节：读 [`consistency-model.md`](./consistency-model.md)（论文、OSS、Platform 三层一致性如何分层）与 [`retrieval.md`](./retrieval.md)（一次 `search()` 如何构造候选、融合打分，以及 hybrid 为何是后端条件能力）。
+- 想判断评测分数能说明什么：读 [`evaluation.md`](./evaluation.md)（LoCoMo / LongMemEval 的能力边界与受控协议缺口）。
 - 需要来源、证据对照或研究过程：进 [`notes/`](./notes/)；这些是研究辅助材料，服务于 traceability 与后续维护，不是给普通读者的正文。
 
 ## 边界说明

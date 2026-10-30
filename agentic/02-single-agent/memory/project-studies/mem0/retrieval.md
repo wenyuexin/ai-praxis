@@ -1,6 +1,6 @@
 # Mem0 检索机制
 
-> 最后更新：2026-10-10
+> 最后更新：2026-10-30
 > 版本锚点：固定 Python `v2.2.1`、TypeScript `ts-v3.3.1`，commit `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`
 
 本文回答 Mem0 研究的第二条机制主线：一次 `search()` 如何把查询变成排好序的记忆，这一层实际做了什么、没做什么。它讲的是固定 OSS 的读取路径，与 [`consistency-model.md`](./consistency-model.md) 的写入/状态一致性是两条不同的线。
@@ -33,6 +33,7 @@
 可以把以下当作稳定理解：
 
 - 它负责“进入 semantic 候选后的相关性重排”；
+- 它按调用方设置的 `expiration_date` 隐藏过期记录（默认 `show_expired=False`），但不自动判断哪条事实更新；
 - 它不负责把语义分数低于 threshold、或不在候选池内的记录找回；
 - 它不按时间判断新旧，也不执行矛盾裁决。
 

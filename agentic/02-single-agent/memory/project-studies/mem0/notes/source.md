@@ -6,7 +6,7 @@
 
 ## 0. 版本锚点（Version Basis / Observed At）
 
-> **Observed At**：2026-10-01（初轮）；2026-10-02 Python 增量；2026-10-03 TypeScript / Dream 回写与复核见 §1.3.7–§1.3.8；2026-10-10 写入入口与后端覆盖补记见 §1.3.1.2、§1.3.6，未重查全部网页
+> **Observed At**：2026-10-01（初轮）；2026-10-02 Python 增量；2026-10-03 TypeScript / Dream 回写与复核见 §1.3.7–§1.3.8；2026-10-10 写入入口与后端覆盖补记见 §1.3.1.2、§1.3.6；2026-10-30 Wave 1 复核版本谱系与过期过滤，未重查全部网页
 > **Drift Risk**：`high`——2026 年 4 月与 5 月两次算法更新，OSS 有 v2→v3 破坏性变更
 
 | 项 | 值 | 状态 |
@@ -27,8 +27,19 @@
 - 此前远程 `main` 快照的 `pyproject.toml` 为 `2.1.0`；当前本地 `main` 已前进到 `2.2.1`。两者都只能说明源码快照的包版本字段，不能单独证明 v3 算法代次或某个 PyPI 文件的全部行为。
 - 官方 GitHub tags / commit API 已将核心库 `v2.1.0` 对应到 commit `19f713408273fb1d657daa38d7b82ccf496d36d5`；该 commit 的 release bump 将 `pyproject.toml` 从 `2.0.20` 改为 `2.1.0`。这闭合了核心源码锚点，但不等于已经闭合 PyPI 文件与该 commit 的发布对应关系。
 - 本地 Git 仓库当前为 `v2.2.1` / `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`，与 `v2.1.0` 的核心机制 diff 主要是：部分写入失败时只把实际持久化记录写入 history、实体链接和返回结果；另有上下文管理器与 procedural-memory 注释。未发现自动抽取或 hybrid scoring 机制改写。
+- 2026-10-30 复查：远端 `main` 为 `26cdefb4`（2026-10-26），领先固定 `94c3fe9f` 9 个提交；`mem0/memory/main.py`、`configs/prompts.py`、`utils/scoring.py` 未变，仅 `vertex_ai_vector_search.py` 与文档 / 安全检查变动。机制结论继续按 `v2.2.1` 锚点。
 - 初轮外部索引曾把 `2.2.1` 与 `3.1.0` 分别声称为最新；后续已核对 PyPI `2.2.1` JSON 的版本与上传时间，支持该指定版本的高置信关联，但不由此断言所有渠道的“最新版本”，也未完成工件级构建核验。
 - 因此当前采用分层锚点：机制先锚到官方迁移文档的 `v2 → v3` 代次；当前核心源码行为锚到本地 `v2.2.1` commit；包安装行为仍需补可还原的 PyPI release。`v2.1.0` 仅作为前一轮远程源码对照点保留。
+
+### 0.2 版本谱系：ADD-only 的分叉点（2026-10-30 核对）
+
+- 旧算法：`v1.0.11`（2026-04-06，`144627c4`）的 `Memory._add_to_vector_store` 仍包含 `UPDATE` / `DELETE` / `NOOP` 分支，并调用 `_update_memory` / `_delete_memory`。
+- 分叉提交：`a488e190`（2026-04-14，PR #4805 "port v3 pipeline with hybrid search, entity extraction, and additive scoring"）移除自动抽取中的这些分支；其父提交 `57f944e1` 仍保留旧分支。
+- 首个包含该提交的 tag：`v2.0.0b1` / `ts-v3.0.0-beta.1`（2026-04-14）；首个稳定版 `v2.0.0` / `ts-v3.0.0`（2026-04-16）。
+- 当前研究锚点 `v2.2.1` / `94c3fe9f`（2026-09-25）沿用 ADD-only；显式 `update()` / `delete()` API 仍在，但不在普通自动抽取路径内。
+- 包版本 2.x 与算法代次 v3 不是同一套命名：迁移文档的 `v2 → v3` 指算法代次，不能读成 Python 包从 2.2.1 升到 3.x。
+
+**Status**：`Observed`（本地 git 历史、tag containment 与源码分支核对）；官方迁移文档对机制变化的描述为 `Verified`。
 
 ## 1. 一手来源
 
@@ -251,7 +262,7 @@
 
 ### 1.7 仓库 issue：ADD-only 的过期事实问题
 
-`mem0ai/mem0#4956` · opened 2026-04-24 · label `bug` · **状态 Open** · `Status: Observed`
+`mem0ai/mem0#4956` · opened 2026-04-24 · label `bug` · **状态 Open**（2026-10-30 复查仍 Open，23 条评论）· `Status: Observed`
 
 标题："ADD-only extraction in v3 may surface stale/contradictory facts for time-sensitive attributes"
 
@@ -262,11 +273,13 @@
 - 场景：3 个月前 "I work at Company A" → 今天 "I now work at Company B" → **两条共存**
 - 查询 "Where does the user work?" 时，检索（semantic + BM25 + entity matching）**可能把 Company A 排在前列，因为打分信号不含 recency**
 
-这是报告者关于「旧事实复活」的一手报告，不是本研究的复现或维护者确认。上述 label / Open 是 2026-10-01 抓取状态；2026-10-02 未重新查询，也不能由 issue 状态推断固定 `v2.2.1` 或 Platform 是否已修复。
+这是报告者关于「旧事实复活」的一手报告，不是本研究的复现或维护者确认。上述 label / Open 是 2026-10-30 复查状态（仍为 open、label `bug`、23 条评论）；不能由 issue 状态推断固定 `v2.2.1` 或 Platform 是否已修复。
 
 ### 1.8 仓库 issue：条目质量审计
 
-`mem0ai/mem0#4573` · `Status: Observed`
+`mem0ai/mem0#4573` · opened 2026-03-27 · **2026-06-05 以 completed 关闭** · `Status: Observed`
+
+2026-10-30 复查：关闭说明称主要架构缺口已由已发布特性覆盖；固定 `v2.2.1` 的 `_add_to_vector_store` 仍未观察到显式 grounding / confidence 校验。关闭是否覆盖该具体缺口保持 `Unverified`，见 `evidence.md` M10。
 
 标题："What we found after auditing 10,134 mem0 entries: 97.8% were junk"
 
@@ -280,7 +293,7 @@
 
 ### 1.9 仓库讨论与其他 issue
 
-- `mem0ai/mem0` Discussion **#4289**「mem0 memory storage working too indiscriminately in OpenClaw」· `Status: Observed`
+- `mem0ai/mem0` Discussion **#4289**「mem0 memory storage working too indiscriminately in OpenClaw」· `Status: Observed`（2026-10-30 复查仍可访问，未见维护者结论）
   参与者定位："the main problem is **at the write stage, not retrieval**. A retrieval budget could limit the damage, but it would not stop low-value memories from entering"；提出写入门控应默认保守（估计复用价值、低置信候选不进热集、保留时附理由或 TTL）。作者补充："there is no real distinction between information that has re-use value and information that can be forgotten immediately."
 - `mem0ai/mem0#4926`「Type-Aware Memory Retrieval with Support for Deterministic (Persistent) Memory」· **Closed** · `Status: Observed`
   另一类问题：persona / policy 类记忆因 embedding 相似度不够而检索不到（"Policy may not be retrieved → incorrect responses possible"），诉求是脱离纯相似度的确定性检索。

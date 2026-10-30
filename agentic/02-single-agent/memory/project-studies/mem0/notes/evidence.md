@@ -6,7 +6,7 @@
 > **Algorithm Basis**：官方 OSS `v2 → v3` migration 文档（机制代次）
 > **Package Basis**：本地 `main` 分支 `pyproject.toml` 为 `mem0ai 2.2.1`（`Observed`）
 > **Core Release / Commit**：`v2.2.1` → `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`（`Verified`）
-> **Observed At**：2026-10-01 初轮；2026-10-02 Python 增量；2026-10-03 TypeScript / Dream 回写与边界复核；2026-10-10 写入入口与后端覆盖补记，其他网页未全量复查 · **Drift Risk**：`high`
+> **Observed At**：2026-10-01 初轮；2026-10-02 Python 增量；2026-10-03 TypeScript / Dream 回写与边界复核；2026-10-10 写入入口与后端覆盖补记；2026-10-30 Wave 1 复核缺陷状态、版本谱系与过期过滤，其他网页未全量复查 · **Drift Risk**：`high`
 > 同 commit 另有 `ts-v3.3.1` 标签；Python 结论不自动外推 TypeScript，已单独核对的 TS 范围见 M3e / `source.md` §1.3.7。
 
 ## 1. 对照总表
@@ -34,10 +34,10 @@
 | M6 | README 的 LoCoMo 92.5 等分数来自**托管平台**，含 OSS 不可用的专有优化 | `Verified` | README 逐字免责声明 |
 | M7 | 论文 "91% lower p95 latency" / ">90% token 节省" 的比较对象是 **full-context**，非同类记忆系统 | `Verified` | arXiv:2504.19413 摘要 |
 | M8 | 退役未区分版本、自动抽取、显式删除与衰减的「Mem0 遗忘仅按时间」概括 | `Deprecated` | M2 的显式 CRUD 边界、M3a 的旧版变更操作、M15 的后续能力声明；不作所有版本穷举结论 |
-| M9 | `#4956` 报告 v3 OSS 可变事实共存、旧值可能排前，并归因于缺少 recency 信号；不是本研究的复现或所有版本结论 | `Observed` | `mem0ai/mem0#4956`（2026-10-01 抓取为 label `bug`、Open） |
-| M10 | 抽取与存储之间缺少 grounding 校验；条目以同等置信度存储 | `Observed` | `mem0ai/mem0#4573` |
+| M9 | `#4956` 报告 v3 OSS 可变事实共存、旧值可能排前，并归因于缺少 recency 信号；不是本研究的复现或所有版本结论。2026-10-30 复查仍为 open、label `bug`、23 条评论 | `Observed` | `mem0ai/mem0#4956`（2026-04-24 开启；2026-10-30 复查） |
+| M10 | 抽取与存储之间缺少 grounding 校验；条目以同等置信度存储。原 issue `#4573` 于 2026-06-05 以 completed 关闭，关闭说明称主要架构缺口已由已发布特性覆盖；2026-10-30 复查固定 `v2.2.1` 的 `_add_to_vector_store`，仍未观察到显式 grounding / confidence 校验。原报告的 97.8% junk rate 依赖 gemma2:2b 等抽取模型条件，不能无条件引用 | `Observed`（原报告与关闭状态）；`Unverified`（关闭是否覆盖该具体缺口） | `mem0ai/mem0#4573`（2026-03-27 开启，2026-06-05 关闭）；固定 commit `94c3fe9f…` 的 `mem0/memory/main.py` |
 | M11 | 过度提取的主因在**写入阶段**而非检索 | `Observed` | `mem0ai/mem0` Discussion #4289 |
-| M12 | Node / TS SDK “同步阻塞 30–40s”说法未找到可信一手支持；已核源码显示 Platform v3 `add()` 是异步请求，服务端处理/索引可见性也按异步流程处理，但不能据此否定所有历史版本或自托管配置的延迟问题 | `Unverified` | `source.md` §3.6；固定 TS client 与 integration test |
+| M12 | Node / TS SDK「同步阻塞 30–40s」说法未找到可信一手支持；2026-10-30 的 GitHub issue 搜索也未命中对应一手 issue。已核源码显示 Platform v3 `add()` 是异步请求，但不能据此否定所有历史版本或自托管配置的延迟问题 | `Deprecated`（无一手支持，退役为待溯源线索） | `source.md` §3.6；固定 TS client 与 integration test；2026-10-30 issue 搜索 |
 | M13 | LOCOMO 分数之争的对象都是 **Zep**：Zep 原博客报告 75.14% ± 0.17，Mem0 在 issue #5 中主张复核 Zep 为 58.44% ± 0.20，Mem0 论文报告的 Zep baseline 为 65.99% ± 0.16；三组数字不是 Zep 与 Mem0 自身成绩的三方比较，且实现、计分和题类口径仍存在争议 | `Observed`（数字和当事方主张存在）；`Conflicting`（不能视为同协议下可直接比较） | Zep 原博客；`getzep/zep-papers#5`；Mem0 论文/评测材料 |
 | M14 | Letta 的质疑是另一条独立争议：Mem0 论文中的 MemGPT baseline 难以原生复现；Letta 原博客报告其 Filesystem 方案在 GPT-4o mini、受限工具规则下取得 74.0% LoCoMo | `Observed` | Letta 原博客；Letta CEO 公开表态；不等于同配置复现或普遍优越 |
 | M15 | 5 月版新增 Temporal Reasoning 与 Memory Decay，temporal 类 +3.8、multi-session +1.5 | `Verified` | 官方博客 |
@@ -47,6 +47,10 @@
 | M19 | 当前文档声明的 92.5 LoCoMo / 94.4 LongMemEval 属于 managed Platform；固定评测子模块的 `edcd6f1` 快照另有可复核的 Platform 91.6 / 93.4 artifacts；后续 `4b61c5d…` 只修改 README，将当前结果描述为 v3 + temporal reasoning，未替换旧 Platform JSON。两组数字不是简单四舍五入差异；固定快照的 OSS 公开结果只覆盖 LongMemEval，未形成与 Platform 92.5 LoCoMo 对等的同配置闭环 | `Verified`（结果归属、固定 artifact、提交差异与框架能力）；`Observed`（当前文档及 v3 + temporal reasoning 声明）；`Unverified`（92.5/94.4 的具体 run provenance）；`Inferred`（新版结果来自不同于旧 JSON 的评测执行或配置） | `source.md` §3.3–§3.3.1；`mem0ai/memory-benchmarks@edcd6f1`、`@4b61c5d…` 的 `results/platform/*` 与 README；Mem0 README/评测文档 |
 | M20 | Zep ↔ Mem0 与 Letta ↔ Mem0 是两条独立的评测争议：前者围绕 **Zep 同一对象**的 58.44、65.99、75.14 等相互冲突数字、实现与计分口径，后者围绕 MemGPT baseline 可复现性与 Letta Filesystem 74.0 结果；一手材料支持“争议主张存在”，不支持合并成单一胜负结论 | `Observed` | `source.md` §3.4；`getzep/zep-papers#5`；Zep 原博客；Letta 原博客 |
 | M21 | `dial481/locomo-audit@9493fb4…` 固定快照包含原始数据 SHA 声明与校验脚本、逐题审计标注、审计报告、结果重算脚本及统计分析；审计者将 1,540 个非 adversarial 问题中的 156 项标为问题，其中 99 项归类为 score-corrupting、57 项为 citation-only。上述是仓库内容和审计者分类的观察，不是对数据集事实错误数的独立确认；本轮另做 6 条静态抽查，其中 4 条与所引对话存在审计者指出的不一致、2 条无法仅凭静态文本判定为计分级错误。审计者关于 judge 宽松性、调整后分数及“公开高分失效”的结论仍未独立复算 | `Observed`（固定材料、作者分类、脚本配置和 6 条抽查范围）；`Unverified`（99 项整体分类正确性、统计结论与对具体系统分数的影响） | `source.md` §3.5；固定 commit 的 `AUDIT_REPORT.md`、`errors.json`、`scripts/verify_sha256.py`、`results-audit/audit_results.py` |
+| M22 | OSS ADD-only 的分叉提交是 `a488e190`（2026-04-14，PR #4805）；父提交 `57f944e1` 仍有 UPDATE / DELETE / NOOP 分支。首个包含它的发布为 `v2.0.0b1` / `ts-v3.0.0-beta.1`（2026-04-14），稳定版 `v2.0.0` / `ts-v3.0.0`（2026-04-16）。包版本 2.x 与算法代次 v3 不是同一命名 | `Observed` | 本地 `mem0ai/mem0` git 历史与 tag containment；`a488e190` 及父提交源码；`docs/migration/oss-v2-to-v3.mdx` |
+| M23 | 固定 `v2.2.1` 支持 payload 级 `expiration_date`：`add()` 可由调用方写入，`search()` / `get_all()` 默认隐藏过期记录，`show_expired=True` 才返回；这是读取期过滤，不是 vector store 的 TTL，也没有默认过期时间 | `Observed` | 固定 commit `94c3fe9f…` 的 `mem0/memory/main.py`（`_normalize_expiration_date`、`_payload_is_expired`、`show_expired`） |
+| M24 | LoCoMo 与 LongMemEval 只能观测固定历史上的端到端问答：两者都不能观测写入期 UPDATE / DELETE、add-time state marking、read-time state / expiration filtering，也不能观测持续写入后的旧事实复活或矛盾共存；LongMemEval 的 knowledge-update 只覆盖“使用后来状态”，不覆盖“新旧状态共存” | `Inferred`（由 M17 / M18 的任务定义与 M2d / M4 的机制边界推出） | M17、M18、M2d、M4；`evaluation.md` |
+| M25 | 2026-10-30 复查：`mem0ai/mem0` 远端 `main` 为 `26cdefb4`（2026-10-26），领先固定 `94c3fe9f` 9 个提交；`mem0/memory/main.py`、`configs/prompts.py`、`utils/scoring.py` 未变，仅 `vertex_ai_vector_search.py` 与文档 / 安全检查变动。`memory-benchmarks` 与 `locomo-audit` 远端仍分别固定在 `4b61c5d` / `9493fb4`；`zep-papers#5` 无新裁决 | `Observed` | `git ls-remote` / `git log` / `git diff`（2026-10-30）；`getzep/zep-papers#5` |
 
 ## 2. 需要展开的条目
 
@@ -137,6 +141,7 @@ M15 的时间能力是相关线索，但不能仅凭发布时间或名称认定�
 
 - `general.md` 中的第一轮来源列表仍包含二手材料，保留为研究过程记录；不作为当前权威来源表。
 - M13 的 Zep issue 与原博客已读取到争议主张层，三组分数及其协议口径冲突已登记在对象级 [`../conflict.md`](../conflict.md)。M14 的 Letta 材料目前仍是单方 baseline 复现质疑，未作为已成立冲突登记；两者都仍需继续核对实现、计分和同条件复现。
-- M12 的 Node / TS 同步阻塞说法仍为 `Unverified`；当前只保留为待溯源线索，若继续找不到一手来源应从缺陷清单移除。
+- M12 的 Node / TS 同步阻塞说法已退役为 `Deprecated`：2026-10-30 的 GitHub issue 搜索未命中一手来源，不再作为待补证线索保留。
+- M10 的 `#4573` 已于 2026-06-05 以 completed 关闭；2026-10-30 复查固定 `v2.2.1` 仍未观察到写入期 grounding / confidence 校验，关闭是否覆盖该具体缺口保持 `Unverified`。
 - M21 的第三方 LoCoMo 审计已固定 commit；156/99/57 是审计者的分类观察。已完成 6 条代表性静态抽查，但 99 项整体分类、judge 宽松性、调整后分数和统计结论尚未独立复算。
 - 旧版论文已从“全文未读”更新为 M3a–M3c；未来若提炼正文，保留“论文设计”与“当前实现”两条版本边界。
