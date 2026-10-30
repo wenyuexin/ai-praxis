@@ -6,7 +6,7 @@
 
 ## 0. 版本锚点（Version Basis / Observed At）
 
-> **Observed At**：2026-10-01（初轮）；2026-10-02 Python 增量；2026-10-03 TypeScript / Dream 回写与复核见 §1.3.7–§1.3.8；2026-10-10 写入入口与后端覆盖补记见 §1.3.1.2、§1.3.6；2026-10-30 Wave 1 复核版本谱系与过期过滤，未重查全部网页
+> **Observed At**：2026-10-01（初轮）；2026-10-02 Python 增量；2026-10-03 TypeScript / Dream 回写与复核见 §1.3.7–§1.3.8；2026-10-10 写入入口与后端覆盖补记见 §1.3.1.2、§1.3.6；2026-10-30 Wave 1 复核版本谱系与过期过滤，另补整体关系、作用域与检索解释见 §5，未重查全部网页
 > **Drift Risk**：`high`——2026 年 4 月与 5 月两次算法更新，OSS 有 v2→v3 破坏性变更
 
 | 项 | 值 | 状态 |
@@ -398,3 +398,44 @@
 3. **`dial481/locomo-audit`**：已固定第三方审计 commit，并完成数据 hash 与 6 条代表性 score-corrupting 标注的静态抽查；下一轮只补 judge 输入输出和统计重算，不把 6 条抽查推广到其余标注。
 4. **Node 同步阻塞 30–40s**：未找到一手支持，2026-10-30 已退役为 `Deprecated`，不再保留为线索。
 5. **Platform 版本链**：公开 Dream / supersede、`latest_only` 与 `delete_linked` 契约已核验；服务端建链字段、latest 判定、递归范围以及 `replaced_by` / `linked_memory_ids` 映射仍未核验。
+
+## 5. 整体解释与检索补查（2026-10-30）
+
+以下均恢复到 `mem0ai/mem0@94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`，不改上游、不调用真实 API、不执行 benchmark。Platform 文档也是该 commit 的快照，不表示线上当前版本的实现或效果。新增观察支持整体解释与检索正文，不重开已有评测争议。
+
+### 5.1 应用闭环、组件与数据
+
+- [固定 README](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/README.md#L202) 的 `chat_with_memories`（202–236）展示先 `search(..., filters={"user_id": ...}, top_k=3)`，取 `results[].memory` 拼入 system prompt，调用回答模型，再将本轮 user/assistant 消息送入 `add()`。检索结果进入上下文由应用显式编排，不能把 Mem0 描述成自动改变回答模型。
+- `mem0/memory/main.py:488–605` 创建 LLM、embedder、vector store、SQLite history 和派生 entity collection；`920–1047` 抽取、embedding 并准备 memory payload；`1015–1047` 为每条记录保留文本、hash、时间和 scope。此路径是外部记录与推理调用，没有模型权重训练步骤（`Observed`；不推论外部模型服务自己的数据政策）。
+- `mem0/memory/storage.py:102–150,257` 区分 memory 变更 history 与 messages 表；后者按 session_scope 保留最近 10 条经过管线处理的消息字段，不是完整原始会话归档。实体索引保存实体文本及关联 memory IDs，不替代主记录。
+- `main.py:920–955` 普通抽取读取同 scope 最近 10 条短消息，召回最多 10 条旧记忆，与本次消息一起构造抽取输入；`configs/prompts.py:1016–1062` 拼入相应上下文。它们参与抽取，不是回答模型自动获得的历史。
+- `main.py:1393–1518` 的公开检索数量参数为 `top_k`，内部才赋值 `limit = top_k`。不能将内部变量名当作该固定 API 的公开参数。`add/search` 主要返回 `{"results": [...]}`；搜索结果包装见 `1704–1745`。
+- [Platform Add API](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/api-reference/memory/add-memories.mdx#L15)（15、63–84）声明异步处理，响应为 `event_id` / `PENDING`，可查询事件直到 `SUCCEEDED` / `FAILED`；`mem0/client/main.py:336–341` 发出请求并返回响应 JSON。此公开契约不提供请求返回即检索可见的保证，也未在本研究中实测可见性延迟。
+
+### 5.2 作用域：OSS 与 Platform 不能合并
+
+- [固定 OSS metadata/filter helper](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/mem0/memory/main.py#L314)（314–410）要求 `user_id/agent_id/run_id` 至少一个有效 ID；add 将提供的 IDs 同时放进 metadata。普通抽取逐条构造记录时 `deepcopy(metadata)`（1008–1047），`attributed_to` 只增加归因字段，不删除另一个 scope ID；异步对应循环同样如此（2696 起）。
+- OSS search（1393–1477）要求 ID 放入 `filters`，拒绝 API 顶层 ID，且没有自动补出的默认用户范围；未提供的维度不主动增加条件。`1457–1475` 仅要求 filters 顶层存在 user/agent/run 中至少一个键：仅在 AND/OR 内嵌套有效 ID 不满足此门禁。`179–210` 的 helper 规范化非字符串、去除首尾空白并拒绝空串或内部空白，但 `None` 原样返回，所以顶层 `{"user_id": None}` 仍可通过该门禁；不据此断言后端最终选择哪些数据。默认 Qdrant 在 `mem0/vector_stores/qdrant.py:368–413` 将平铺字段放入 `must`，多 ID 是 AND；其他 provider 的过滤能力需分别核对。
+- [Platform Entity-Scoped Memory](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/platform/features/entity-scoped-memory.mdx#L34)（34–46、80–84）另有契约：默认抽取按说话方使记录带 user 或 agent，而非同时带两者；`app_id/run_id` 随记录保留。未指定维度不受限；AND user+agent 会漏掉按此规则产生的记录。Direct Import 是例外，不能将这一归属拆分外推到 OSS。
+- 三种 OSS IDs 是 metadata/query filter，不能从这些路径证明是授权机制；Platform 客户端转发和服务端 ACL 也应区分。实际应用需要自行确认调用者身份与查询范围一致。scope IDs 与文本中抽取的图实体是两种概念。
+
+### 5.3 检索信号、过滤与最终重排
+
+- [固定 `_search_vector_store`](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/mem0/memory/main.py#L1642)（1642–1701）先预处理查询和实体、embedding 原查询，semantic 与 keyword 搜索各请求 `max(limit*4,60)`，都收到完整 filters；entity boost 的索引检索只取平铺的非空 user/agent/run 字段（1770 起），不复制其余 metadata 条件。最终记录资格仍来自 semantic 候选；不能据此声称三路过滤实现完全相同。
+- keyword 正分数经 `mem0/utils/scoring.py:16–54` sigmoid 变换：`1/(1+exp(-k*(raw-m)))`；m/k 随词形还原后查询长度分档，短查询（≤3 terms）为 5.0/0.7。非正 hit 不写入分数字典，缺失 ID 在融合时贡献 0。
+- `main.py:1747–1827` 对查询前 8 个实体再按规范化文本去重，embedding 后查 entity store；相似度低于 0.5 的匹配跳过，boost 为 `similarity*0.5/(1+0.001*(linked_count-1)^2)`。同一 memory 多次命中取最大值，不累加；不将 0.5 写成独立硬 clamp。可选 spaCy full model 缺失时 `mem0/utils/entity_extraction.py:751` 返回空实体；lemmatization 缺模型时则回退原 query（`lemmatization.py:22–30`）。
+- `main.py:1680–1701` 在构造 semantic candidates 时先排除过期 payload；`442–452` 的过期判定是 `expiration_date` 严格早于 UTC 当天日期，到期日当天仍可见。`scoring.py:94–139` 再进行原 semantic threshold、字典决定分母、加法融合、降序与 top-k。`explain=True` 只给最终返回项附三项贡献与分母，不提供未返回项的淘汰明细；创建/更新时间不参与此函数。
+- `main.py:1715–1720` 在 hybrid top-k 后包装结果时另跳过 `data` 为空的 payload，不补位。`1508–1518` 的可选 reranker 接收截断并包装后保留的至多 k 条，再重排；外层失败回退原结果。它不能补回原 semantic 池外、threshold 以下或已被首轮 top-k 截掉的记录。标准 provider 可附 `rerank_score`，因此不能假设启用后顺序仍严格按原 hybrid score。
+
+### 5.4 Platform 能力的概念与契约
+
+- [Graph Memory](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/platform/features/graph-memory.mdx#L25)（25–55）是实体与提及它的记忆相连，查询匹配实体参与排序；不是预定义 `manages` 等有类型关系边，也不单独返回可解析图 payload。旧外部图方案、当前 OSS entity index 和 Platform 原生图需分开。
+- [Dream](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/platform/features/dream.mdx#L19)（19–88、114–158）将 add-time supersede/merge 与 scheduled Synthesis 分开。Synthesis 新增带来源链接的 pattern memory，保留原记录；项目 opt-in、Pro+、只纳入开启后新增且仅带 user_id 的记录，不含 agent/app/run scope，至少 20 条后按套餐周期运行，非实时。默认读仍含 superseded，不因功能名“清理”就推成 active-only。
+- [Temporal Reasoning](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/platform/features/temporal-reasoning.mdx#L7)（7–71）按记忆事件日期与查询时间表达的匹配加排序 boost；`timestamp` 保留导入对话的原时间，`reference_date` 指定查询参考“现在”。它不是单纯按创建时间取最新，不能移植为固定 OSS 功能。
+- [Memory Decay](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/platform/features/memory-decay.mdx#L23)（19–46、138–146）项目 opt-in、默认关闭；依据检索访问历史给分数乘 0.3–1.5，异步强化返回记录，是软排序而非删除/过滤；无访问历史时有 event_date/updated_at 回退。公开文档的候选池和乘法公式属于 Platform，不能与 OSS 加法融合公式混用。个别“不会丢结果”文案只宜理解为不额外硬过滤，top-k 截断仍可能改变返回集合。
+
+### 5.5 独立能力扫描与覆盖选择
+
+以固定 `docs/docs.json`、`docs/platform/platform-vs-oss.mdx` 及能力页扫查，除原有主线外，影响整体认识的内容包括：filters/作用域、custom instructions、直接导入、过期、可选 reranker 和输入模态。`docs/platform/features/custom-instructions.mdx` 与 OSS 同名页分别定义项目/调用设置和 `MemoryConfig.custom_instructions`，它们控制抽取内容而非事后查询过滤。Platform multimodal 页与 OSS 页说明图片等输入需适用的抽取模型；不据此宣称独立的多模态向量检索。
+
+`docs/platform/features/user-profiles.mdx` 的 Profiles 是 beta、按 JSON Schema 生成每用户结构化摘要，与 Dream pattern memory 不同。总览保留其旁支定位；各集成、管理面、部署调优和遗留 procedural 路径不作首轮机制级研究。Platform Direct Import 的精确去重契约也不外推到已有 M3d 所记 OSS 逐条追加。

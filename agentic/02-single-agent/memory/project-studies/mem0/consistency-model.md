@@ -40,9 +40,9 @@ OSS 的 ADD-only 不是从论文旧版逐步演化出来的默认路径，而是
 
 ## OSS 读取：相关性重排，不是矛盾裁决
 
-OSS 读取以相关性重排为主，另含 payload 级过期过滤：候选由语义召回构造，BM25 / entity 在候选内参与打分，threshold 在融合前门控，评分函数不读取时间字段；hybrid 还是后端条件能力。机制细节见 [`retrieval.md`](./retrieval.md) §"融合评分" 与 §"hybrid 是后端条件能力"。
+OSS 读取以相关性重排为主，另含 payload 级过期过滤：候选由语义召回构造，BM25 / entity 在候选内参与打分，threshold 在融合前门控，评分函数不读取创建／更新时间；hybrid 还是后端条件能力。机制细节见检索正文的[融合公式与分数尺度](./retrieval.md#融合公式与分数尺度)和[后端与额外重排会改变什么](./retrieval.md#后端与额外重排会改变什么)。
 
-读取还会按 payload 的 `expiration_date` 隐藏过期项；这是调用方写入的读取期过滤，不是 store TTL，也不裁决新旧。细节见 [`retrieval.md`](./retrieval.md) §"这一层能做什么、不能做什么"。
+读取还会按 payload 的 `expiration_date` 隐藏过期项；这是调用方写入的读取期过滤，不是 store TTL，也不裁决新旧。日期边界与返回行为见检索正文的[构造例子](./retrieval.md#一个完整的构造例子)。
 
 ## Platform：写入期状态标记 + 读取期过滤
 
