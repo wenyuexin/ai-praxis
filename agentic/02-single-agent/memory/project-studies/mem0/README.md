@@ -10,7 +10,11 @@
 ## 快速入口
 
 - 想先建立整体理解：读 [`overview.md`](./overview.md)。
+- 想知道消息怎样变成记忆：读 [`write-pipeline.md`](./write-pipeline.md)（抽取上下文、解析、局部去重、分层持久化及部分失败）。
+- 想区分个体记忆、模式和用户画像：读 [`derived-memory.md`](./derived-memory.md)（Synthesis／Profiles 的生成、消费、新鲜度与删除传播边界）。
+- 想理解搜索怎样影响后续排序：读 [`memory-decay.md`](./memory-decay.md)（异步访问强化、Temporal、过期与状态的区别）。
 - 想看机制细节：读 [`consistency-model.md`](./consistency-model.md)（论文、OSS、Platform 三层一致性如何分层）与 [`retrieval.md`](./retrieval.md)（一次 `search()` 如何构造候选、融合打分，以及 hybrid 为何是后端条件能力）。
+- 想理解应用显式修改既有记忆：读 [`direct-update.md`](./direct-update.md)（同 ID 更正、history、实体维护与检索可见性）和 [`deletion-lifecycle.md`](./deletion-lifecycle.md)（单条／按 scope 删除、reset 的清理范围与失败边界）。
 - 想判断评测分数能说明什么：读 [`evaluation.md`](./evaluation.md)（LoCoMo / LongMemEval 的能力边界与受控协议缺口）。
 - 需要来源、证据对照或研究过程：进 [`notes/`](./notes/)；这些是研究辅助材料，服务于 traceability 与后续维护，不是给普通读者的正文。
 

@@ -1,6 +1,6 @@
 # Mem0 冲突记录
 
-> 最后更新：2026-10-30
+> 最后更新：2026-11-02
 > 作用域：Mem0 对象研究目录内，以及该对象直接关联的评测、协议和对比材料。
 > 文件职责：记录已经出现的口径冲突，作为后续核验和正文修订输入；不把未裁决主张写成最终结论。
 
@@ -141,3 +141,24 @@
 - **Zep 三组数字**：`getzep/zep-papers#5` 未见新的裁决或同协议复现材料；三组数字仍停在主张层。
 - **第三方审计**：`dial481/locomo-audit` 远端 `main` 仍为 `9493fb4…`，没有新增审计或重算结果；6 条静态抽查仍是当前上限。
 - **版本漂移**：`mem0ai/mem0` 远端 `main` 已到 `26cdefb4`（2026-10-26），领先固定 `94c3fe9f` 9 个提交；核心写入 / 检索文件未变，本条不构成对上述冲突结论的修订。
+
+## 5. 固定自定义指令示例与抽取解析格式不一致
+
+2026-11-02 核查固定 `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`：`docs/open-source/features/custom-instructions.mdx:31–70` 的示例要求 `facts` 数组，`mem0/memory/main.py:973–990` 的JSON解析却只读取 `memory` 数组。自定义指令追加到原有抽取提示，不更换该解析器；原提示要求的memory项还是含text等字段的对象。精确公开来源见 [`notes/source.md §6`](./notes/source.md#6-普通写入机制补查2026-11-02)、M45。
+
+这是已观察到的文档示例与实现格式冲突（`Observed` / `Conflicting`）。若模型只返回示例所要求的facts，解析将得到空memory列表，并尝试保存messages后空返回（条件推断）；非空memory字符串数组则会在后续.get处失败，解析层没有完整schema容错。本轮没有模型输出或API运行，不能宣称指令必然导致漏写。当前解释以固定解析器消费memory为准，不将旧示例直接当作该版本可用的输出契约。完整分支见[普通写入机制](./write-pipeline.md)；验证模型在冲突指令下实际返回什么，仍需受控行为证据。该新增条目不表示§1–§4的外部评测材料已重新复查。
+
+## 6. Profiles 主文档与示例 notebook 的行为表述不一致
+
+2026-11-02 核查固定 `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd` 的 [Profiles主文档](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/platform/features/user-profiles.mdx) 与 [示例notebook](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/examples/notebooks/user-profiles.ipynb)，存在以下差异：
+
+| 事项 | 主文档 | notebook |
+|---|---|---|
+| 关闭后读取已有画像 | L296：turned off时读取返回not_enabled | L659–662：已有profile仍succeeded并返回内容，只有尚无画像才not_enabled |
+| insufficient_data含义 | L155：没有足够memories | L734–735：也涵盖queued，不是终态判决 |
+
+**Status / 当前裁决**：相对材料存在为 `Observed`，关闭读取等行为口径为 `Conflicting`；实际服务端行为为 `Unverified`。共同支持自动／按需、异步生成，不据此定义可靠状态机。
+
+附带澄清两组易误判的机制差异：主文档L247的无schedule针对约10 messages触发，notebook L157–158、729–730补充低于阈值时有小时级flush，二者可以兼容，不登记为直接冲突；L253“incremental, not a full rebuild each time”与notebook L375–376“rewrites the whole thing”可能描述输入增量与JSON对象重写的不同层次，不能据此判定算法矛盾或还原内部流程。
+
+**Trace / 下一步**：M49、[`notes/source.md §7`](./notes/source.md#7-派生记忆与-profiles-补查2026-11-02)、[派生产物正文](./derived-memory.md)。需要上游明确文档适用版本和状态／刷新契约，或对绑定服务端版本的受控行为做观测。本轮未执行notebook或真实API，不宣布任一材料已推翻另一材料；尤其不把关闭功能当作删除／隐藏已有画像的保证。

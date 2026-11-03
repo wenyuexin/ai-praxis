@@ -1,6 +1,6 @@
 # Mem0 一致性模型
 
-> 最后更新：2026-10-30
+> 最后更新：2026-11-02
 > 版本锚点：论文 `arXiv:2504.19413v1`；固定 Python `v2.2.1`、TypeScript `ts-v3.3.1`，commit `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`
 
 本文回答 Mem0 研究的机制主线：当新事实与旧事实冲突、重复或只是随时间变化时，论文旧版、开源 SDK 和托管 Platform 分别在哪一层处理，哪些责任落在写入期、哪些落在读取期，哪些仍无法从公开材料确认。
@@ -36,6 +36,10 @@ OSS 的 ADD-only 不是从论文旧版逐步演化出来的默认路径，而是
 
 普通路径也没有消费 LLM 返回的 `linked_memory_ids` 来建立 supersession 链。显式 `update()` / `delete()` API 仍然存在。
 
+其中固定 Python 的直接 `update(memory_id, text)` 需要应用先选定 ID，覆盖该主记录及检索表示，再追加 history 并尝试修复实体关联；不会自动扫描或更正其他 ID。主记录与history／实体维护不在统一事务中，搜索是否返回该项又是另一层选择。完整过程和失败边界见[直接更新](./direct-update.md)（M32–M34），不把它与普通自动抽取或 Platform Dream 合成同一种“更新”。
+
+显式删除也是独立生命周期操作：固定 Python `delete()` 与按 scope 的 `delete_all()` 移除主记录，同时留下 DELETE history，不清理 SQLite messages；`reset()` 则清理 SQLite history/messages 表、重置向量存储和已初始化的实体存储。批量同步与异步路径的部分失败处理不同，reset 的跨存储顺序也不构成统一事务。固定实现和边界见[删除与重置](./deletion-lifecycle.md)（M36–M38）。
+
 入口差异不能忽略：Python 的 `infer=False` 和 procedural memory 是直接追加，vision 只是写入前预处理；TypeScript 普通路径与 Python 相似，但未观察到 procedural 入口。因此“普通自动抽取是 ADD-only”不代表整个 SDK。写入也可能被延迟：`mem0/proxy` 的 OpenAI 兼容代理会在 daemon 线程后台 fire-and-forget 调用 `add()`，写入内容仍是 ADD。
 
 ## OSS 读取：相关性重排，不是矛盾裁决
@@ -67,4 +71,4 @@ Platform 公开 Dream 契约把状态标记前移到新增阶段：矛盾的新�
 - **Status**：论文机制、Platform 公开契约为 `Verified`；固定源码路径、客户端行为与 hybrid 条件性为 `Observed`（后端覆盖明细见 [`retrieval.md`](./retrieval.md)）；跨层因果与 Platform 服务端实现为 `Unverified` 或有边界的 `Inferred`。
 - **Sources**：`arXiv:2504.19413v1`；固定 Mem0 commit `94c3fe9f…` 的 Python/TypeScript 源码、Dream 与评测文档。
 - **Trace**：Claim 级来源、版本锚点和未闭合项见 [`notes/evidence.md`](./notes/evidence.md)；源码与契约摘录见 [`notes/source.md`](./notes/source.md)。
-- **Needs**：Platform 服务端建链与失败语义、OSS 端到端冲突行为仍未闭合。
+- **Needs**：Platform 服务端建链、`delete_linked` 与失败语义，具体 backend 的写后读／删除可见性，以及 OSS 端到端冲突行为仍未闭合。

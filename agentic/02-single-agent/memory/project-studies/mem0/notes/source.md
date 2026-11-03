@@ -6,7 +6,7 @@
 
 ## 0. 版本锚点（Version Basis / Observed At）
 
-> **Observed At**：2026-10-01（初轮）；2026-10-02 Python 增量；2026-10-03 TypeScript / Dream 回写与复核见 §1.3.7–§1.3.8；2026-10-10 写入入口与后端覆盖补记见 §1.3.1.2、§1.3.6；2026-10-30 Wave 1 复核版本谱系与过期过滤，另补整体关系、作用域与检索解释见 §5，未重查全部网页
+> **Observed At**：2026-10-01（初轮）；2026-10-02 Python 增量；2026-10-03 TypeScript / Dream 回写与复核见 §1.3.7–§1.3.8；2026-10-10 写入入口与后端覆盖补记见 §1.3.1.2、§1.3.6；2026-10-30 Wave 1 复核版本谱系与过期过滤，未重查全部网页
 > **Drift Risk**：`high`——2026 年 4 月与 5 月两次算法更新，OSS 有 v2→v3 破坏性变更
 
 | 项 | 值 | 状态 |
@@ -408,14 +408,12 @@
 - [固定 README](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/README.md#L202) 的 `chat_with_memories`（202–236）展示先 `search(..., filters={"user_id": ...}, top_k=3)`，取 `results[].memory` 拼入 system prompt，调用回答模型，再将本轮 user/assistant 消息送入 `add()`。检索结果进入上下文由应用显式编排，不能把 Mem0 描述成自动改变回答模型。
 - `mem0/memory/main.py:488–605` 创建 LLM、embedder、vector store、SQLite history 和派生 entity collection；`920–1047` 抽取、embedding 并准备 memory payload；`1015–1047` 为每条记录保留文本、hash、时间和 scope。此路径是外部记录与推理调用，没有模型权重训练步骤（`Observed`；不推论外部模型服务自己的数据政策）。
 - `mem0/memory/storage.py:102–150,257` 区分 memory 变更 history 与 messages 表；后者按 session_scope 保留最近 10 条经过管线处理的消息字段，不是完整原始会话归档。实体索引保存实体文本及关联 memory IDs，不替代主记录。
-- `main.py:920–955` 普通抽取读取同 scope 最近 10 条短消息，召回最多 10 条旧记忆，与本次消息一起构造抽取输入；`configs/prompts.py:1016–1062` 拼入相应上下文。它们参与抽取，不是回答模型自动获得的历史。
 - `main.py:1393–1518` 的公开检索数量参数为 `top_k`，内部才赋值 `limit = top_k`。不能将内部变量名当作该固定 API 的公开参数。`add/search` 主要返回 `{"results": [...]}`；搜索结果包装见 `1704–1745`。
-- [Platform Add API](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/api-reference/memory/add-memories.mdx#L15)（15、63–84）声明异步处理，响应为 `event_id` / `PENDING`，可查询事件直到 `SUCCEEDED` / `FAILED`；`mem0/client/main.py:336–341` 发出请求并返回响应 JSON。此公开契约不提供请求返回即检索可见的保证，也未在本研究中实测可见性延迟。
 
 ### 5.2 作用域：OSS 与 Platform 不能合并
 
 - [固定 OSS metadata/filter helper](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/mem0/memory/main.py#L314)（314–410）要求 `user_id/agent_id/run_id` 至少一个有效 ID；add 将提供的 IDs 同时放进 metadata。普通抽取逐条构造记录时 `deepcopy(metadata)`（1008–1047），`attributed_to` 只增加归因字段，不删除另一个 scope ID；异步对应循环同样如此（2696 起）。
-- OSS search（1393–1477）要求 ID 放入 `filters`，拒绝 API 顶层 ID，且没有自动补出的默认用户范围；未提供的维度不主动增加条件。`1457–1475` 仅要求 filters 顶层存在 user/agent/run 中至少一个键：仅在 AND/OR 内嵌套有效 ID 不满足此门禁。`179–210` 的 helper 规范化非字符串、去除首尾空白并拒绝空串或内部空白，但 `None` 原样返回，所以顶层 `{"user_id": None}` 仍可通过该门禁；不据此断言后端最终选择哪些数据。默认 Qdrant 在 `mem0/vector_stores/qdrant.py:368–413` 将平铺字段放入 `must`，多 ID 是 AND；其他 provider 的过滤能力需分别核对。
+- OSS search（1393–1477）要求 ID 放入 `filters`，拒绝顶层 ID，且没有自动补出的默认用户范围；未提供的维度不主动增加条件。默认 Qdrant 在 `mem0/vector_stores/qdrant.py:368–386` 将平铺字段放入 `must`，多 ID 是 AND；其他 provider 的过滤能力需分别核对。
 - [Platform Entity-Scoped Memory](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/platform/features/entity-scoped-memory.mdx#L34)（34–46、80–84）另有契约：默认抽取按说话方使记录带 user 或 agent，而非同时带两者；`app_id/run_id` 随记录保留。未指定维度不受限；AND user+agent 会漏掉按此规则产生的记录。Direct Import 是例外，不能将这一归属拆分外推到 OSS。
 - 三种 OSS IDs 是 metadata/query filter，不能从这些路径证明是授权机制；Platform 客户端转发和服务端 ACL 也应区分。实际应用需要自行确认调用者身份与查询范围一致。scope IDs 与文本中抽取的图实体是两种概念。
 
@@ -424,8 +422,8 @@
 - [固定 `_search_vector_store`](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/mem0/memory/main.py#L1642)（1642–1701）先预处理查询和实体、embedding 原查询，semantic 与 keyword 搜索各请求 `max(limit*4,60)`，都收到完整 filters；entity boost 的索引检索只取平铺的非空 user/agent/run 字段（1770 起），不复制其余 metadata 条件。最终记录资格仍来自 semantic 候选；不能据此声称三路过滤实现完全相同。
 - keyword 正分数经 `mem0/utils/scoring.py:16–54` sigmoid 变换：`1/(1+exp(-k*(raw-m)))`；m/k 随词形还原后查询长度分档，短查询（≤3 terms）为 5.0/0.7。非正 hit 不写入分数字典，缺失 ID 在融合时贡献 0。
 - `main.py:1747–1827` 对查询前 8 个实体再按规范化文本去重，embedding 后查 entity store；相似度低于 0.5 的匹配跳过，boost 为 `similarity*0.5/(1+0.001*(linked_count-1)^2)`。同一 memory 多次命中取最大值，不累加；不将 0.5 写成独立硬 clamp。可选 spaCy full model 缺失时 `mem0/utils/entity_extraction.py:751` 返回空实体；lemmatization 缺模型时则回退原 query（`lemmatization.py:22–30`）。
-- `main.py:1680–1701` 在构造 semantic candidates 时先排除过期 payload；`442–452` 的过期判定是 `expiration_date` 严格早于 UTC 当天日期，到期日当天仍可见。`scoring.py:94–139` 再进行原 semantic threshold、字典决定分母、加法融合、降序与 top-k。`explain=True` 只给最终返回项附三项贡献与分母，不提供未返回项的淘汰明细；创建/更新时间不参与此函数。
-- `main.py:1715–1720` 在 hybrid top-k 后包装结果时另跳过 `data` 为空的 payload，不补位。`1508–1518` 的可选 reranker 接收截断并包装后保留的至多 k 条，再重排；外层失败回退原结果。它不能补回原 semantic 池外、threshold 以下或已被首轮 top-k 截掉的记录。标准 provider 可附 `rerank_score`，因此不能假设启用后顺序仍严格按原 hybrid score。
+- `main.py:1680–1701` 在构造 semantic candidates 时先排除过期 payload，`scoring.py:94–139` 再进行原 semantic threshold、字典决定分母、加法融合、降序与 top-k。`explain=True` 可返回三项贡献与分母；创建/更新时间不参与此函数。
+- `main.py:1508–1518` 的可选 reranker 接收已经 hybrid top-k 截断的结果，再重排；外层失败回退原结果。它不能补回原 semantic 池外、threshold 以下或已被首轮 top-k 截掉的记录。标准 provider 可附 `rerank_score`，因此不能假设启用后顺序仍严格按原 hybrid score。
 
 ### 5.4 Platform 能力的概念与契约
 
@@ -439,3 +437,109 @@
 以固定 `docs/docs.json`、`docs/platform/platform-vs-oss.mdx` 及能力页扫查，除原有主线外，影响整体认识的内容包括：filters/作用域、custom instructions、直接导入、过期、可选 reranker 和输入模态。`docs/platform/features/custom-instructions.mdx` 与 OSS 同名页分别定义项目/调用设置和 `MemoryConfig.custom_instructions`，它们控制抽取内容而非事后查询过滤。Platform multimodal 页与 OSS 页说明图片等输入需适用的抽取模型；不据此宣称独立的多模态向量检索。
 
 `docs/platform/features/user-profiles.mdx` 的 Profiles 是 beta、按 JSON Schema 生成每用户结构化摘要，与 Dream pattern memory 不同。总览保留其旁支定位；各集成、管理面、部署调优和遗留 procedural 路径不作首轮机制级研究。Platform Direct Import 的精确去重契约也不外推到已有 M3d 所记 OSS 逐条追加。
+
+## 6. 普通写入机制补查（2026-11-02）
+
+**Version Basis**：Python OSS `v2.2.1`，`mem0ai/mem0@94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`。两路只读核查确认所读上游 origin、HEAD 与干净工作区。**Observed At**：2026-11-02；**Drift Risk**：high。未运行 API、模型、benchmark 或故障注入。
+
+公开固定来源及复核定位：
+
+- [main.py](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/mem0/memory/main.py#L760)：scope helper L360–419；add L760–879；infer=False L882–916；普通路径 L920–1220；`_create_memory` L1975–2005；async 对照 L2564–2901。
+- [utils.py](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/mem0/memory/utils.py#L61)：消息渲染 L61–76，代码块处理 L115–158，vision L186–232。
+- [prompts.py](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/mem0/configs/prompts.py#L468)：additive 提示 L468–701，上下文格式与截断 L918–991、L1016–1062。
+- [storage.py](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/mem0/memory/storage.py#L150)：history 单条／批量各自事务，messages L257–324 另有事务与 scope 裁剪。
+- [OSS 自定义指令示例](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/open-source/features/custom-instructions.mdx#L31)：facts 格式与 main.py 的 memory 消费结构不一致。
+
+**M41–M42**：全部有效 user/agent/run 组合决定 session key 和旧记忆召回 filters；只取最近十条短消息与后端 top10 旧候选。新消息渲染忽略其他角色；旧消息 content 最多300源字符另加省略号，提示限定只辅助新消息理解。`custom_instr = prompt or self.custom_instructions`。一次 JSON object LLM 调用后取 `.get("memory", [])`。归因 truthy 原样复制，不作值域校验；id/event/linked_memory_ids 不被用于生成操作或事实替代链。
+
+**M43**：所有 truthy text 先 batch embedding，异常逐条 fallback，失败文本跳过；`dict(zip(...))` 不校验批结果长度，短结果可能漏文本。去重仅召回旧 hash 与本批 hash。每条生成 UUID4、复制 metadata、写 data、词形归一文本和 hash；created_at 可来自已有 metadata，updated_at 初始相同。batch insert 不抛错即认定全批 persisted；失败以原 ID 逐条重试，不读回验证、也不检查 insert 返回值。
+
+**M44**：全部主 insert 调用失败，先 save_messages 再抛 VectorStoreError；messages 失败可覆盖预期异常。部分主 insert 未抛错，仅该子集进入 history／entity／results。history 批量失败逐条重试，单条再失败记日志继续；普通 history 不传 updated_at/actor_id/role，不是完整 payload。实体按 normalized text 合并 IDs；批量查询覆盖全部有效实体，选结果时 exact 优先，否则向量 top1、相似度至少0.95，不能将结果优先级读成按需执行向量查询。batch entity search/insert 没有逐条 fallback，相关错误被捕获。最后 save_messages 失败向外传播，其事务不回滚主存储、history 或实体。消息同批共用时间，按时间排序没有额外 tie-break，不能承诺同批稳定顺序。Async 主要阶段与失败边界相应，to_thread 不提供全局回滚。
+
+infer=False 的 `_create_memory` 为逐条 embedding→vector insert→history；history 错误传播，无普通 recall、去重、实体、messages 保存；vision 预处理仍先于该分支。不能把普通路径的 history 容错或 Platform 导入去重契约套用到这里。
+
+**M45**：合法 JSON 只含 facts 时，缺少 memory 得到 []，尝试 save_messages 后空返回；解析错误被捕获不等于结构完整校验，`{"memory":["fact"]}` 会在后续 m.get 失败。上述是指定输入下的静态分支推演，未观测真实模型按冲突指令会输出什么。
+
+**Decision / Placement / Gap**：稳定机制提炼到 [`../write-pipeline.md`](../write-pipeline.md)，入口联动 README／overview；新增 Claim M41–M45。源码分支为 `Observed`，重试和残留后果为条件性 `Inferred`；模型效果、故障现场、并发及服务端实现保持 `Unverified`。
+
+## 7. 派生记忆与 Profiles 补查（2026-11-02）
+
+**Version Basis**：`mem0ai/mem0@94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`；本轮两路只读核对确认 origin／HEAD 与干净上游工作区。**Observed At**：2026-11-02；**Drift Risk**：high。固定文档代表公开契约，SDK只代表客户端行为，不把同commit当作托管服务端revision。
+
+公开固定来源：
+
+- [Dream](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/platform/features/dream.mdx)：L29–55 模式追加、来源、evidence幂等与纯user范围；L76–99读取／关闭；L103–164资格、20 memories、cadence与约24h延迟。
+- [OpenAPI Dream](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/openapi.json#L7211)：config L7211起（含最近开启时间reflection_enabled_at）；stats L7443；activity L7528；runs L7659；run memories L7808；sources L7918；preview L8007。配置修改要求organization owner及套餐资格，preview为capped sample/count而非LLM生成。
+- [Profiles](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/platform/features/user-profiles.mdx)：L19–34 beta/schema；L105–175读取及按需触发；L177–253 sample、schema延后生效、自动约10 messages、异步增量；L283–348预算、资格、关闭读取和字段裁剪。
+- [Profiles OpenAPI](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/openapi.json#L8074)：profile read L8074、settings L8160、jobs L8336、job status L8467；实体删除另见L483–524，200仅表已排队。
+- [Profiles notebook](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/examples/notebooks/user-profiles.ipynb)：L20 Pro+，L158与729–730 flush window，L375–376 whole rewrite，L659–662关闭后已有内容可读，L692 entity级联profile row，L734–735 insufficient_data涵盖queued。仅阅读notebook文件，未执行其中代码。
+- [Python客户端](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/mem0/client/main.py)：Profiles L807–952（及async对应）；设置辅助L51–78，delete_linked注释L503–527；[TS客户端](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/mem0-ts/src/client/mem0.ts)及其[utils](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/mem0-ts/src/client/utils.ts)：设置嵌套、幂等键、envelope转换并保留用户schema键。
+
+**M46–M47**：Dream模式加入普通记忆集合；synthesized与lifecycle_state分属来源与状态，replaced_by不是sources。来源接口返回source ID/text/lifecycle_state；runs列表next_cursor与运行内has_more/mem_cursor分层分页，run顶层sources仅对应内联第一页去重，runs及run-memories的source text明确truncated，翻页不保证取得完整来源文本。stats水位为项目级，非用户输入版本；activity不含合成。固定v3 get-all schema有synthesized，search schema未声明；Python kwargs可透传include_merged、TS类型未全面覆盖，不升级为服务端已验证。没有找到受支持的synthesized服务端过滤契约，故不据此编写调用示例。
+
+**M48**：Profiles固定user与项目边界；REST需entities.user嵌套，客户端平铺入参由helper转换。schema/null可清配置，不能反推已有内容同步清除。主文档约10 messages阈值，具体计数未知；sample最多10真实实体、保存并计费，非Dream preview。作业幂等键8–128字符，同键重放同一请求返回同job，异请求同键或已有job运行可409、cooldown可429，客户端省略时新生键。作业状态与画像状态不同；updated_at/generation_count不是源memory水位或逐字段证据。notebook L404–414警示应先确认add event成功，否则generate可能只用旧memories；示例固定等待不是服务保证。全量rebuild/backfill未开放；schema移除字段在下次生成时裁剪。
+
+**M49**：主文档L296与notebook L659–662对关闭后已有画像读取相反；主文档L247的无schedule描述约10 messages触发，notebook L157–158明确Below that等flush，可兼容而非直接冲突；L253增量与notebook L375–376整体重写可能分属输入与JSON输出层，不据此裁决算法；L155的insufficient_data与notebook L734–735涵盖queued有口径差异。另有主文档要求description与notebook不强制校验的差异，不将生成建议误写成服务端强校验。对象conflict §6登记并区分直接冲突和可兼容差异，不以notebook自动覆盖主文档。
+
+**M50 / 搜索边界**：交叉检索固定docs、OpenAPI、Python/TS客户端及测试、server、cli、skills与integrations的Dream/Synthesis/reflection/Profiles/source/delete/update相关项，未找到托管worker实现，或源memory原地更新／单条和批量删除后向模式／画像传播的明确契约。通用delete_linked说明涉及superseded旧链，不能扩成合成来源边或profile删除；notebook称删entity级联profile，实体删除API仅排队，二者不等于delete_all memories。插件旧Dream consolidation也不能移植为当前Platform契约。此处“未找到”限定所查公开快照，不表示服务端不做传播。
+
+**Decision / Placement / Gap**：公开机制与使用边界提炼到 [`../derived-memory.md`](../derived-memory.md)，联动README、overview、conflict与问题树；M46–M50区分契约、客户端观察、条件推演及冲突。未调用API、执行notebook、安装依赖或测生成质量；服务端传播、输入快照、重试／原子性、资格与刷新差异继续等待明确材料或获授权后的受控行为证据。
+
+## 8. 访问强化与时间排序补查（2026-11-02）
+
+**Version Basis**：`mem0ai/mem0@94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`；两路调查先核HEAD和干净上游工作区。**Observed At**：2026-11-02；**Drift Risk**：high。文档契约不等于托管revision或实测效果。
+
+- [Decay](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/platform/features/memory-decay.mdx)：L20项目默认关闭且只v3；L25–46乘数0.3–1.5、候选扩展、未clamp排序、最终返回项异步touch、最近20次及回退；L63/88配置；L109/129关闭可逆及历史保留；L146 threshold先于Decay；L157/173未来事件约1.0；L179细节不公开；L182 rerank先于Decay。
+- [Temporal](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/platform/features/temporal-reasoning.mdx)：L7–15 Platform v3自动事件匹配、通常数秒生效，L47–71 reference_date与timestamp。异步时间元数据另见[评测概念页](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/core-concepts/memory-evaluation.mdx#L31)；L47–54描述并行信号、融合及temporal additive，不能补齐完整顺序。
+- [Expiration](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/platform/features/memory-expiration.mdx)：L11–20 UTC日期包含当天、列表式读过滤、get仍读、坏日期fail open；L78–98 show_expired及候选不足；L138–149与Decay/delete区别。
+- [OpenAPI](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/openapi.json)：L2862–2864 timestamp回填created_at；L3016 threshold语义、L3023–3036 reference_date；L3101起多信号score及score_breakdown（semantic/BM25/entity，不含Decay）；L5707、5832项目decay。
+- [Python客户端](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/mem0/client/main.py)：get/get_all/search分离L343–460，async search L1527–1539只等待HTTP；配置在[project.py](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/mem0/client/project.py#L395)。反馈另见[feedback机制](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/platform/features/feedback-mechanism.mdx#L44)。
+- [OSS scoring](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/mem0/utils/scoring.py#L94)：L94–139仅semantic/keyword/entity；[main.py](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/mem0/memory/main.py#L1642) search L1642–1701候选/过期/评分，可另rerank；get L1222–1267、get_all L1324–1391；history经[storage.py](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/mem0/memory/storage.py#L227)按ID，无过期过滤。
+
+**M51–M52**：明确threshold→Decay、rerank→Decay→截断及最终返回项异步touch，未公开完整融合/Temporal/threshold/reranker顺序及强化函数。0.3是倍率非score地板，公开clamp不能反推内部乘积。软调整不清零不等于top-k集合不变；Decay L135的exact top_k需与过期页承认短结果并读，不能保证必足条数。
+
+**M53**：无历史回退event_date，再updated_at，非created_at；timestamp不直接等于event_date。Decay L46未来事件fresh/full activation与L157/173近1.0有措辞张力，不直接将fresh解释成1.5或断言数值矛盾。reference_date未据此控制其他状态时钟。
+
+**M54**：强化最终search返回而非仅候选，不需点击／回答采用／反馈；get/get_all是否记访问未找到明确契约。客户端再筛选不撤回已发起touch，updated_at不是强化完成标志。score_breakdown无Decay项，不能把single-score概述扩成所有细分都不存在。重复query幂等、并发原子追加、失败重试、可见延迟和恰好一次未查到保证。
+
+**M55 / 搜索边界**：检查固定decay/Temporal/expiration/feedback/Dream文档、OpenAPI、Python/TS客户端及配置/测试、Python OSS scoring/main/storage。未找到托管Decay实现；已核OSS无访问乘数，不外推到自定义provider/reranker。show_expired只撤过期排除，不取消其他过滤；Dream组合开关优先级未知。
+
+**Decision / Placement / Gap**：稳定解释提炼到 [`../memory-decay.md`](../memory-decay.md)，联动README/overview/retrieval与问题树，M51–M55登记。连续查询和乘法例为条件推演；未运行API、模型或排名实验，实际偏置／效益、服务端时序和并发仍缺证据。
+
+## 9. 直接更新来源重建（2026-11-03）
+
+**Version Basis**：`mem0ai/mem0@94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`，Python OSS `v2.2.1`；**Observed At**：2026-11-03；**Drift Risk**：high。整体验收发现旧更新来源锚点失效、M32–M35登记缺失，本节为重新核对后的来源重建，不是恢复历史原文。下列相对路径均相对于[固定上游根目录](https://github.com/mem0ai/mem0/tree/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd)。
+
+| Claim | 固定路径与定位 | 核对结果及边界 |
+|---|---|---|
+| M32 | `mem0/memory/main.py:143–162,1829–1881,2052–2112`；async `3507–3560,3770–3832` | 公共入口与内部函数连读；同ID主写，metadata-only仍embedding，身份键过滤，expiration独立参数优先。scope处理不是调用者授权证明 |
+| M33 | `mem0/memory/storage.py:102–125,150–191`；`main.py:652–728,2361–2430` | history表及插入事务只保存部分字段；主写先于history，实体维护尽力、扫描最多10000。部分失败状态为控制流推演 |
+| M34 | `main.py:1222,1393,1960–1973`；`mem0/vector_stores/qdrant.py:500–520`；`pyproject.toml:17` | get/search/history不同数据路径；同ID upsert，dense新值、sparse有条件重算；依赖只限定qdrant-client>=1.12.0 |
+| M35 | `mem0/client/main.py:463–501,566–587`；`docs/openapi.json:3553,3852` | Platform单条更新PUT和历史GET；不能观察服务端事务、索引刷新或Dream联动 |
+
+外部依赖另固定到 [qdrant/qdrant-client@v1.12.0 的 qdrant_client.py](https://github.com/qdrant/qdrant-client/blob/v1.12.0/qdrant_client/qdrant_client.py#L1472)。本轮重新获取原始源码确认 `upsert(..., wait: bool = True, ...)`，说明等待变更应用；不把省略wait说成只入队。实际安装版本、注入client、服务端和读一致性配置未知，不能承诺任意部署即时search命中。
+
+**Decision / Placement / Gap**：为 [`../direct-update.md`](../direct-update.md) 修复来源终点与M32–M35登记；固定控制流为Observed，失败及读取后果为Inferred，部署行为和服务端实现仍Unverified。未运行API或故障注入。
+
+## 10. 删除与重置来源重建（2026-11-03）
+
+**Version Basis / Observed At / Drift Risk**：同§9。旧删除来源锚点失效、M36–M39登记缺失，本节按固定源码重新核对并重建，不声称找回原始登记。路径均相对于§9固定上游根目录。
+
+| Claim | 固定路径与定位 | 核对结果及边界 |
+|---|---|---|
+| M36 | `mem0/memory/main.py:1883–1902,2114–2142`；async `3562–3581,3834–3863` | 先get，再vector→DELETE history→entity；不清messages，history失败无vector回滚 |
+| M37 | `main.py:136,1904–1958,2339–2359,3583–3654`；`mem0/vector_stores/qdrant.py:401–410` | 每批1000，重复批次正常break；sync异常中止，async gather return_exceptions继续、批后实体最多10000；固定Qdrant平铺scope为AND |
+| M38 | `main.py:2144–2174,3865–3896`；`mem0/memory/storage.py:326–339`；`docs/openapi.json:3761–3784`；`docs/changelog/sdk.mdx:330` | reset的SQLite表范围及sync/async顺序不同；Platform delete_linked、cascade_count和旧链说明仅支持公开契约／客户端说明，不能确认内部遍历原子性 |
+| M39 | `main.py:920–954,2604,2636`；`mem0/configs/prompts.py:511,519–521` | 后续普通抽取读取同scope最近消息；提示词限定旧消息仅作理解上下文、新消息才是抽取来源。缓存影响有条件，不是旧事实复活实测 |
+
+**Decision / Placement / Gap**：来源供 [`../deletion-lifecycle.md`](../deletion-lifecycle.md) 与M36–M39引用，普通写入另见§6。主链、清理对象和异常处理为Observed，残留与缓存风险为Inferred；真实provider、并发／故障及Platform级联执行仍Unverified。未执行删除、reset或其他真实API。
+
+## 11. 对象整体验收补查（2026-11-03）
+
+**Version Basis**：同一Mem0固定commit及§3已列论文版本；**Observed At**：2026-11-03。这里只登记本轮补查与纠偏，不表示重新访问全部外部网页。
+
+- **M56，Platform新增受理与完成**：[固定 add-memories.mdx](https://github.com/mem0ai/mem0/blob/94c3fe9f238f3dbf29c9ce98643bd71eb13077cd/docs/api-reference/memory/add-memories.mdx#L63) L15、63–84声明异步新增返回 `event_id`、`status="PENDING"`，并要求用 `GET /v1/event/{event_id}/` 查询至 `SUCCEEDED` 或 `FAILED`。这是公开契约（Verified）；受理不等于完成，不由成功终态推导任意search命中、Synthesis／Profiles均已刷新，也不外推到OSS async或Platform update。
+- **M24，评测可观测性纠偏**：§3.1–§3.2支持任务定义与缺少专门机制指标的边界，不支持“数据没有新旧状态”的排除断言。LongMemEval避免无关session冲突，不是排除knowledge-update中的状态变化。问答分数不能直接区分内部覆盖、共存、过滤或恰好未召回，是Inferred的指标边界；可在扩展协议增加逐轮快照与检索日志。
+- **范围精度**：总览将payload过期过滤限定为已核Python路径；检索例子使用 `expiration_date < 查询时UTC日期`，日期当天不按此条件隐藏。Dream重复直接保留canonical与已有独立旧项标merged的区别，沿用§1.3.8及现有一致性正文，不新增服务端机制断言。
+
+**Decision / Placement / Gap**：修改总览、评测与检索的对应解释，补齐Claim和来源断链；实际异步延迟、运行效果和未公开服务端实现仍需对应证据。

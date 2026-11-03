@@ -1,6 +1,6 @@
 # Mem0 评测边界
 
-> 最后更新：2026-10-30
+> 最后更新：2026-11-03
 > 版本锚点：固定 Python `v2.2.1`、TypeScript `ts-v3.3.1`，commit `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`；公开分数归属于 managed Platform
 
 本文回答：LoCoMo、LongMemEval 与公开评测材料能证明 Mem0 的哪些一致性机制，不能证明哪些；要验证“旧事实复活 / 矛盾共存”还需要什么协议。
@@ -11,7 +11,7 @@
 
 ## 能力矩阵
 
-“可观测”指任务定义本身包含能区分该行为的信号；“部分”指只有间接或弱信号；“不可观测”指任务构造移除了该行为，或没有相应指标。
+“可观测”指任务定义本身包含能区分该行为的信号；“部分”指只有间接或弱信号；“不可观测”指默认任务与指标不能直接识别该内部行为，不表示历史中绝不存在相关事实场景。若给评测增加逐轮记忆快照、检索日志等观测，便是扩展后的协议。
 
 | 观测点 | LoCoMo | LongMemEval | 受控协议 |
 |---|---|---|---|
@@ -25,10 +25,10 @@
 | 旧事实复活率 | 不可观测 | 不可观测 | 可观测 |
 | 端到端问答质量 | 可观测 | 可观测 | 可观测（成本高） |
 
-## 为什么两套 benchmark 都测不到“旧事实复活”
+## 为什么不能单凭问答分数确认“旧事实复活”
 
-- LoCoMo 是长、多 session 对话上的离线 QA / summarization / multimodal benchmark，覆盖 single-hop、multi-hop、temporal、open-domain 和 adversarial；历史由 persona 与 temporal event graph 预先构造，不包含“同一可变属性在持续交互中被改写”的写入序列（M17）。
-- LongMemEval 明确包含 knowledge-update、temporal-reasoning、multi-session 和 abstention，能测“系统是否使用后来的状态回答”；但其历史构造避免无关冲突，不包含“新旧事实同时存在、旧事实仍可能被召回”的场景（M18）。
+- LoCoMo 是长、多 session 对话上的离线 QA / summarization / multimodal benchmark，覆盖 single-hop、multi-hop、temporal、open-domain 和 adversarial；历史由 persona 与 temporal event graph 预先构造，但默认指标不专门测量逐轮写入后的事实共存与旧值复活（M17）。
+- LongMemEval 明确包含 knowledge-update、temporal-reasoning、multi-session 和 abstention，能测“系统是否使用后来的状态回答”。其构造避免无关 session 引入使问题失效的冲突，不意味着更新题中没有新旧状态；答案正确仍不能区分旧值被覆盖、保留但过滤，还是此次恰好未被召回（M18）。
 - 两者都不暴露 `superseded` / `merged` / `expiration_date` 这类状态或过滤字段，也不记录逐轮写入后的记忆集合变化，因此无法区分“写入期没有失效”“读取期过滤了”“检索恰好没召回”这三种情况。
 
 ## 公开数字的归属

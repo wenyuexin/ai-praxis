@@ -6,7 +6,7 @@
 > **Algorithm Basis**：官方 OSS `v2 → v3` migration 文档（机制代次）
 > **Package Basis**：本地 `main` 分支 `pyproject.toml` 为 `mem0ai 2.2.1`（`Observed`）
 > **Core Release / Commit**：`v2.2.1` → `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`（`Verified`）
-> **Observed At**：2026-10-01 初轮；2026-10-02 Python 增量；2026-10-03 TypeScript / Dream 回写与边界复核；2026-10-10 写入入口与后端覆盖补记；2026-10-30 Wave 1 复核缺陷状态、版本谱系与过期过滤，另补整体关系、作用域与检索解释（M26–M31），其他网页未全量复查 · **Drift Risk**：`high`
+> **Observed At**：2026-10-01 初轮；2026-10-02 Python 增量；2026-10-03 TypeScript / Dream 回写与边界复核；2026-10-10 写入入口与后端覆盖补记；2026-10-30 Wave 1 复核缺陷状态、版本谱系与过期过滤，其他网页未全量复查 · **Drift Risk**：`high`
 > 同 commit 另有 `ts-v3.3.1` 标签；Python 结论不自动外推 TypeScript，已单独核对的 TS 范围见 M3e / `source.md` §1.3.7。
 
 ## 1. 对照总表
@@ -48,15 +48,70 @@
 | M20 | Zep ↔ Mem0 与 Letta ↔ Mem0 是两条独立的评测争议：前者围绕 **Zep 同一对象**的 58.44、65.99、75.14 等相互冲突数字、实现与计分口径，后者围绕 MemGPT baseline 可复现性与 Letta Filesystem 74.0 结果；一手材料支持“争议主张存在”，不支持合并成单一胜负结论 | `Observed` | `source.md` §3.4；`getzep/zep-papers#5`；Zep 原博客；Letta 原博客 |
 | M21 | `dial481/locomo-audit@9493fb4…` 固定快照包含原始数据 SHA 声明与校验脚本、逐题审计标注、审计报告、结果重算脚本及统计分析；审计者将 1,540 个非 adversarial 问题中的 156 项标为问题，其中 99 项归类为 score-corrupting、57 项为 citation-only。上述是仓库内容和审计者分类的观察，不是对数据集事实错误数的独立确认；本轮另做 6 条静态抽查，其中 4 条与所引对话存在审计者指出的不一致、2 条无法仅凭静态文本判定为计分级错误。审计者关于 judge 宽松性、调整后分数及“公开高分失效”的结论仍未独立复算 | `Observed`（固定材料、作者分类、脚本配置和 6 条抽查范围）；`Unverified`（99 项整体分类正确性、统计结论与对具体系统分数的影响） | `source.md` §3.5；固定 commit 的 `AUDIT_REPORT.md`、`errors.json`、`scripts/verify_sha256.py`、`results-audit/audit_results.py` |
 | M22 | OSS ADD-only 的分叉提交是 `a488e190`（2026-04-14，PR #4805）；父提交 `57f944e1` 仍有 UPDATE / DELETE / NOOP 分支。首个包含它的发布为 `v2.0.0b1` / `ts-v3.0.0-beta.1`（2026-04-14），稳定版 `v2.0.0` / `ts-v3.0.0`（2026-04-16）。包版本 2.x 与算法代次 v3 不是同一命名 | `Observed` | 本地 `mem0ai/mem0` git 历史与 tag containment；`a488e190` 及父提交源码；`docs/migration/oss-v2-to-v3.mdx` |
-| M23 | 固定 `v2.2.1` 支持 payload 级 `expiration_date`：`add()` 可由调用方写入，`search()` / `get_all()` 默认隐藏日期严格早于 UTC 当天的记录，到期日当天仍可见，`show_expired=True` 可纳入过期项；这是读取期过滤，不是 vector store 的 TTL，也没有默认过期时间 | `Observed` | 固定 commit `94c3fe9f…` 的 `mem0/memory/main.py`（`_normalize_expiration_date`、`_payload_is_expired`、`show_expired`）；`source.md` §5.3 |
-| M24 | LoCoMo 与 LongMemEval 只能观测固定历史上的端到端问答：两者都不能观测写入期 UPDATE / DELETE、add-time state marking、read-time state / expiration filtering，也不能观测持续写入后的旧事实复活或矛盾共存；LongMemEval 的 knowledge-update 只覆盖“使用后来状态”，不覆盖“新旧状态共存” | `Inferred`（由 M17 / M18 的任务定义与 M2d / M4 的机制边界推出） | M17、M18、M2d、M4；`evaluation.md` |
+| M23 | 固定 `v2.2.1` 支持 payload 级 `expiration_date`：`add()` 可由调用方写入，`search()` / `get_all()` 默认隐藏过期记录，`show_expired=True` 才返回；这是读取期过滤，不是 vector store 的 TTL，也没有默认过期时间 | `Observed` | 固定 commit `94c3fe9f…` 的 `mem0/memory/main.py`（`_normalize_expiration_date`、`_payload_is_expired`、`show_expired`） |
+| M24 | LoCoMo 与 LongMemEval 的默认问答任务与分数不能直接识别写入变更、状态标记、读取过滤，或记忆内部的新旧事实共存；没有专门的逐轮旧值复活指标。LongMemEval knowledge-update能测使用后来状态，但答案正确不足以区分旧值覆盖、过滤或恰好未召回；这不排除历史包含新旧状态，可增加日志与受控协议另测 | `Inferred`（由任务与指标的可观测性推出） | M17、M18、M2d、M4；`evaluation.md`；`source.md` §11 |
 | M25 | 2026-10-30 复查：`mem0ai/mem0` 远端 `main` 为 `26cdefb4`（2026-10-26），领先固定 `94c3fe9f` 9 个提交；`mem0/memory/main.py`、`configs/prompts.py`、`utils/scoring.py` 未变，仅 `vertex_ai_vector_search.py` 与文档 / 安全检查变动。`memory-benchmarks` 与 `locomo-audit` 远端仍分别固定在 `4b61c5d` / `9493fb4`；`zep-papers#5` 无新裁决 | `Observed` | `git ls-remote` / `git log` / `git diff`（2026-10-30）；`getzep/zep-papers#5` |
-| M26 | 应用检索 memory 文本并显式放入回答上下文，回答后可回写会话；固定 OSS 的普通抽取结合本次消息、短消息缓存和旧记忆候选，memory 记录、messages、变更 history 职责不同；Platform add 返回 event_id/PENDING，处理异步，不保证请求返回即检索可见 | `Verified`（官方编排与异步契约）；`Observed`（固定组件与路径）；`Inferred`（职责模型） | `source.md` §5.1；固定 README、`memory/main.py`、`memory/storage.py`、Platform Add API |
-| M27 | 固定 Python OSS add 继承全部已提供 scope IDs；search 要求 filters 顶层存在 ID 键，该门禁不排除 None；默认 Qdrant 平铺多条件为 AND。Platform 默认抽取契约则按说话方拆分 user/agent，app/run 随记录；不能外推同一组合语义，也不能将 scope filter 当作已验证授权 | `Observed`（OSS）；`Verified`（Platform 文档）；`Inferred`（隔离责任边界） | `source.md` §5.2；固定 `main.py:179–210,314–410,1008–1047,1393–1477`、Qdrant 与 Entity-Scoped Memory 文档 |
-| M28 | 固定 Python 同步路径的 keyword 正分数经按查询长度选参的 sigmoid 归一化；entity boost 按匹配相似度与关联记忆数折减，多命中取最大值。hybrid top-k 后丢弃空正文且不补位，再可选 rerank；explain 只解释返回项；entity 索引仅抽取平铺 scope filters，最终资格仍来自 semantic 候选 | `Observed` | `source.md` §5.3；固定 `utils/scoring.py`、`memory/main.py:1508–1518,1642–1827`、entity extraction / lemmatization |
+| M26 | 应用检索 memory 文本并显式放入回答上下文，回答后可回写会话；固定 OSS 的 LLM/embedding/vector store/entity store/SQLite 承担不同职责，memory 记录与短消息缓存、变更 history 不是同一数据 | `Verified`（官方编排示例）；`Observed`（固定组件与路径）；`Inferred`（职责模型） | `source.md` §5.1；固定 README、`memory/main.py`、`memory/storage.py` |
+| M27 | 固定 Python OSS add 继承全部已提供 scope IDs，search 要求 IDs 放入 filters；默认 Qdrant 平铺多条件为 AND。Platform 默认抽取契约则按说话方拆分 user/agent，app/run 随记录；不能外推同一组合语义，也不能将 scope filter 当作已验证授权 | `Observed`（OSS）；`Verified`（Platform 文档）；`Inferred`（隔离责任边界） | `source.md` §5.2；固定 `main.py:314–410,1008–1047,1393–1477`、Qdrant 与 Entity-Scoped Memory 文档 |
+| M28 | 固定 Python 同步路径的 keyword 正分数经按查询长度选参的 sigmoid 归一化；entity boost 按匹配相似度与关联记忆数折减，多命中取最大值。可选 reranker 在 hybrid top-k 后执行；entity 索引仅抽取平铺 scope filters，最终资格仍来自 semantic 候选 | `Observed` | `source.md` §5.3；固定 `utils/scoring.py`、`memory/main.py:1508–1518,1642–1827`、entity extraction / lemmatization |
 | M29 | Platform 原生图契约是实体—记忆连接并参与排序，不承诺有类型关系边；Temporal 按事件日期与查询时间匹配增强排序，Decay 按访问历史软重排、项目默认关闭；三者不能与固定 OSS 实现或 expiration 硬隐藏混为同一机制 | `Verified`（公开概念与配置）；`Unverified`（运行效果/服务端实现） | `source.md` §5.4；固定 graph-memory / temporal-reasoning / memory-decay 文档 |
 | M30 | Platform Synthesis 按计划新增带来源链接的 pattern memories，保留原记录；项目 opt-in、Pro+、只考虑开启后且仅 user_id scope 的新增记忆，排除附带 app/agent/run 的项；与 add-time supersede/merge 不同 | `Verified`（文档契约）；`Unverified`（运行效果） | `source.md` §5.4；固定 `docs/platform/features/dream.mdx:19–55,114–158` |
 | M31 | 固定官方能力入口还覆盖抽取指令、直接导入、过期、可选 rerank、多模态输入及 beta Profiles；指令控制写入选择，输入模态不等于检索模态，Profiles 结构化用户摘要不等于 Dream pattern memory | `Verified`（能力文档）；`Observed`（对应 OSS 配置/入口）；`Inferred`（总览覆盖选择） | `source.md` §5.5；固定 docs 能力索引与对应 feature 页 |
+
+### 更新与删除证据重建（2026-11-03）
+
+整体验收发现当前登记缺少已被正文引用的 M32–M39，原 source 章节锚点也已失效。本表按固定上游重新核对并重建登记，不声称找回了历史原文或原始 Claim 定义；Observed At 为本次复核日。版本均为 `mem0ai/mem0@94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`，外部依赖另列。
+
+| ID | Claim | Status | 来源 |
+|---|---|---|---|
+| M32 | Python直接update按应用选定ID覆盖文本／向量／payload，保留created_at、刷新updated_at；metadata-only仍重算embedding；身份字段过滤不代表授权校验；独立expiration参数优先且显式None清值，async主链对应 | `Observed` | `source.md` §9；main.py:143–162、1829–1881、2052–2112、3507–3560、3770–3832 |
+| M33 | update先主写、再SQLite UPDATE history、再文本变化时尽力维护实体；history不含完整payload／向量快照；实体扫描有10000上限，跨存储无统一回滚 | `Observed`（路径）；`Inferred`（部分失败状态） | `source.md` §9；storage.py:102–125、150–191；main.py:652–728、2361–2430 |
+| M34 | get读主记录、search选择候选、history读SQLite；Qdrant用同ID upsert新dense与有条件sparse；依赖下界qdrant-client v1.12.0默认wait=True，不保证任意部署或查询即时返回 | `Observed`（实现及依赖默认值）；`Inferred`（可见性边界） | `source.md` §9；main.py:1222、1393、1960–1973；qdrant.py:500–520；外部client v1.12.0 |
+| M35 | Platform update为单条memory PUT、history另有GET；公开接口与客户端不足以确认服务端Dream联动、事务或失败语义，也不能直接套用add事件契约 | `Verified`（公开接口）；`Observed`（客户端）；`Unverified`（服务端） | `source.md` §9；client/main.py:463–501、566–587；OpenAPI |
+| M36 | Python delete先get，再vector删除→DELETE history→尽力entity清理，不清messages；history失败可传播且无vector回滚 | `Observed`（路径）；`Inferred`（失败残留） | `source.md` §10；main.py:1883–1902、2114–2142、3562–3581、3834–3863 |
+| M37 | scoped delete_all按1000条循环；重复批次保护正常break仍可成功返回；sync逐条异常中止，async gather记录异常继续并在批后最多清10000条实体；两者不清messages | `Observed`（路径）；`Inferred`（不完整清理风险） | `source.md` §10；main.py:136、1904–1958、2339–2359、3583–3654；qdrant.py:401–410 |
+| M38 | reset清SQLite history/messages表而非数据库文件；sync先SQLite、async先vector，实体reset尽力，无统一事务；Platform delete_linked/cascade_count仅公开契约，内部遍历未知 | `Observed`（OSS）；`Verified`（公开契约）；`Inferred`（失败状态）；`Unverified`（服务端） | `source.md` §10；main.py:2144–2174、3865–3896；storage.py:326–339；OpenAPI、SDK changelog |
+| M39 | 删除保留的同scope最近消息可进入后续普通add上下文；提示词要求只从新消息抽取，故只能推导潜在上下文影响，不能据此认定已删事实必复活 | `Observed`（读取与提示词）；`Inferred`（风险）；`Unverified`（实际输出） | `source.md` §10；main.py:920–954、2604、2636；prompts.py:511、519–521 |
+
+M40 的原定义未在本轮当前文件及历史搜索中找回，编号保留、不复用。当前 `facts`／`memory` 格式冲突以已重新核对的 M45 为准。
+
+### 普通写入补查（2026-11-02）
+
+以下延用 M32–M40 之后的编号，不重用历史标识；本表只登记该轮实际核对的普通写入范围。M32–M39 的缺失登记已于上节重建，M40 处理也见上节。
+
+| ID | Claim | Status | 来源 |
+|---|---|---|---|
+| M41 | 固定 Python 普通 add 使用全部有效 scope IDs；短消息按精确 scope 组合取最近十条，旧记忆由后端向量 search top10 提供，不走公开融合检索 | `Observed` | `source.md` §6；main.py scope helper、add、普通写入入口 |
+| M42 | 普通写入一次 LLM 调用，解析 memory 对象数组；truthy attributed_to 直接写 payload，不改变 scope；LLM id/event/linked_memory_ids 不分派 CRUD 或建事实链 | `Observed` | `source.md` §6；main.py:920–1048、prompts.py |
+| M43 | 普通写入先 embedding 后对召回候选及当前 batch 做 MD5 去重；新 UUID 与 payload 在插入前生成，批量主 insert 异常后用相同 ID 逐条重试，仅调用未抛错子集进入后续流程 | `Observed` | `source.md` §6；main.py:994–1089 |
+| M44 | 普通主 insert→history→实体→messages→返回；history／实体失败可被吞掉，messages 保存失败传播；全主 insert 失败先存 messages 再抛错；infer=False 逐条主存储→history，不做普通去重／实体／messages；async 主要语义相应 | `Observed`（控制流）；`Inferred`（残留及重试风险） | `source.md` §6；main.py:881–1220、1975–2005、2564–2901；storage.py |
+| M45 | 固定自定义指令示例要求 facts，普通解析器消费 memory；只含 facts 的合法 JSON 走空抽取并尝试保存 messages；非空 memory 字符串数组在后续 .get 失败，不属于解析层完整容错 | `Observed`（格式冲突与分支）；`Inferred`（给定输出的结果）；`Unverified`（模型实际输出） | `source.md` §6；固定 custom-instructions.mdx 与 main.py:973–994；对象 conflict §5 |
+
+### 派生记忆与 Profiles 补查（2026-11-02）
+
+| ID | Claim | Status | 来源 |
+|---|---|---|---|
+| M46 | Synthesis 追加带来源的模式，与具体记忆并存；仅开启后纯 user scope 记录合格，至少20条 memories、按套餐周期运行；关闭保留已有模式，幂等针对相同 evidence 的公开承诺不等于已知实现 | `Verified`（文档契约）；`Unverified`（实现／效果） | `source.md` §7；固定 Dream L29–55、90–164 |
+| M47 | Dream sources/runs 可追溯模式；stats 是项目水位，activity 不含合成；synthesized 是来源属性，不是生命周期状态。普通search字段及SDK选项与契约未完全对齐 | `Verified`（接口契约）；`Observed`（schema／客户端覆盖） | `source.md` §7；固定 OpenAPI L7211–8069、v3 reads；客户端 |
+| M48 | Profiles 为申请制beta、按项目schema生成user结构化对象；自动约10 messages或按需异步生成，读取带status/updated_at/generation_count；schema更改下次生效，sample真实保存计费，jobs支持幂等键 | `Verified`（公开契约）；`Observed`（SDK嵌套与键处理） | `source.md` §7；固定 Profiles、OpenAPI L8074–8543、Python/TS客户端 |
+| M49 | Profiles关闭后已有内容的读取存在直接冲突，insufficient_data涵盖queued有口径差异；阈值下flush可与主文档兼容，增量与JSON重写可能属不同层次，不直接判为矛盾 | `Observed`（相对材料）；`Conflicting`（关闭读取等口径）；`Unverified`（实际行为与内部机制） | `source.md` §7；对象 conflict §6 的固定原句定位 |
+| M50 | 已查公开契约和客户端未说明源memory修改／删除向Synthesis或Profiles传播；来源链接、latest_only、生成次数均不能证明已撤回旧贡献；删实体级联profile仅notebook声明且实体删除为排队 | `Observed`（搜索边界与文档声明）；`Inferred`（保证不足）；`Unverified`（服务端传播） | `source.md` §7；固定CRUD/Profiles/Dream/OpenAPI/客户端；对象 derived-memory |
+
+### 访问强化与时间排序补查（2026-11-02）
+
+| ID | Claim | Status | 来源 |
+|---|---|---|---|
+| M51 | Platform Decay默认关闭、项目decay布尔开关、仅v3 search；关闭移除偏置，开启期间历史保留，未公开关闭期间计数及在途处理 | `Verified`（契约）；`Unverified`（服务端细节） | `source.md` §8；decay L20、63–129 |
+| M52 | Decay候选max(top_k×3,50)，threshold和rerank先于Decay，未clamp乘积排序再top-k；score clamp到[0,1]可低于请求threshold；最终返回项异步touch，最多20次 | `Verified`（局部顺序）；`Inferred`（算例） | `source.md` §8；decay L25–46、146、159、182；OpenAPI |
+| M53 | 无访问历史回退event_date→updated_at；reference_date仅明确查询参考时刻，不保证回拨Decay/expiration/Dream；Temporal与created_at／访问热度不同 | `Verified`（已声明边界）；`Unverified`（完整时钟映射） | `source.md` §8；Temporal、timestamp、decay及OpenAPI |
+| M54 | 自动返回强化不同于显式feedback，仅候选非已声明touch条件；重复测试可能影响后续排序，曝光反馈不等于正确性；无强化完成公开字段或并发/重试保证 | `Verified`（访问契约）；`Observed`（schema／客户端）；`Inferred`（风险） | `source.md` §8；decay、feedback、client/OpenAPI |
+| M55 | 固定已核Python OSS混合评分无时间/访问项，不扩大到所有provider/reranker；过期过滤限search/get_all，get/history不据此隐藏，show_expired不取消其他资格 | `Observed`（源码）；`Verified`（Platform过期契约）；`Inferred`（边界） | `source.md` §8；scoring/main/storage、expiration |
+
+### 对象整体验收补查（2026-11-03）
+
+| ID | Claim | Status | 来源 |
+|---|---|---|---|
+| M56 | Platform普通add返回PENDING/event_id表示已排队，需查事件至SUCCEEDED或FAILED；受理不是完成，成功也不保证任意search命中或派生产物均刷新；不外推OSS async或update | `Verified`（事件契约）；`Inferred`（保证边界） | `source.md` §11；固定docs/api-reference/memory/add-memories.mdx:15、63–84 |
 
 ## 2. 需要展开的条目
 
