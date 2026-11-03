@@ -23,7 +23,7 @@
 
 所以，Place 的起点不是“什么都不知道”，而是你已经大致知道内容应该落在仓库的哪一片区域里。
 
-在不少实际任务里，Place 也不是最前面的第一步。一份材料还在 `temp/` 时，“今天是否适合离开临时层”更接近 [`Ingest`](./ingest.md)。对象 `notes/` 或主题 `notes/papers/` 已是研究辅助层，后续是否提炼结果进入正文，应按其实际职责判断。
+在不少实际任务里，Place 也不是最前面的第一步。一份材料还在 `temp/` 时，“今天是否适合离开临时层”更接近 [`Ingest`](./ingest.md)。对象 `notes/` 等已归属的研究辅助材料，后续是否提炼结果进入正文，应按其实际职责判断。
 
 当 `Ingest` 已经把问题推进到“它不该继续停在临时层了，但稳定归属和文件类型还没定”时，Place 再接手回答后半段问题：最高稳定归属、是否继续下沉、以及正文、元信息或研究辅助材料的职责。
 
@@ -116,7 +116,7 @@ Place 的第一步，不是选文件名，而是先找当前内容的**最高稳
 
 ### 6.1 辅助材料的落位去向（指针）
 
-当材料服务正文构建与维护时，落位顺序见 [`documentation-workflow.md §9`](../contributing/rules/documentation-workflow.md)，作用域属性见 [`metadata-files.md §2`](../contributing/rules/metadata-files.md)。对象辅助层、主题局部论文辅助分析、共享证据例外与结构判断，分别由 [`research-artifacts.md`](../contributing/rules/research-artifacts.md) §3.9/§5、§5.3、§5.1、§5.2 承接。本页不复述准入；辅助文可持续保留，正文所需结果再提炼回流。
+当材料服务正文构建与维护时，落位顺序见 [`documentation-workflow.md §9`](../contributing/rules/documentation-workflow.md)，作用域属性见 [`metadata-files.md §2`](../contributing/rules/metadata-files.md)。研究辅助材料的一般分工与对象特化、外部材料的对象内准入、共享证据例外与结构判断，分别由 [`research-artifacts.md`](../contributing/rules/research-artifacts.md) §3.3/§5、§3.9、§5.1、§5.2 承接。本页不复述准入；辅助文可持续保留，正文所需结果再提炼回流。
 
 这层辅助材料的分工与“端到端吸收过程”是两件事：`research-ingestion-design.md` 讲输入如何分流、暂存与回流，本页与上述 owner 只处理进入稳定落位后的去向，不复制完整的 `Ingest` 协议。
 
@@ -169,7 +169,7 @@ Place 的第一步，不是选文件名，而是先找当前内容的**最高稳
     → 否：停在当前层
   → 当前最先稳定的是哪类问题？
     → 面向读者的稳定解释：正文
-    → 独立辅助分析：按 research-artifacts 的对象辅助或主题论文分析分支
+    → 独立辅助分析：按 research-artifacts 判断作用域、职责与准入
     → 缺口：backlog
     → 对象：candidates
     → 未稳定结构：按 C 条件评估研究辅助材料

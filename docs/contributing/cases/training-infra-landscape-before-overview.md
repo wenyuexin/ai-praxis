@@ -112,7 +112,7 @@ README 只需要让读者先判断这个目录是否相关；`landscape.md` 则�
 
 ## 8. 这个案例对规则系统的直接启发
 
-本案例的核心价值，不是重复主规则或 `intent/` 中已经给出的时机模型，而是提供一个可观察的真实样本，说明“结构支架先成熟”在仓库里曾长成什么样。当前相关结论应回到 `docs/contributing/rules/metadata-files.md` §2 / §4.4、`docs/contributing/rules/research-artifacts.md` §5.2，以及 `docs/contributing/intent/metadata-files.md` §10 / §12 统一理解。
+本案例的核心价值，不是重复主规则或 `intent/` 中已经给出的时机模型，而是提供一个可观察的真实样本，说明“结构支架先成熟”在仓库里曾长成什么样。当前相关结论应回到 `docs/contributing/rules/metadata-files.md` §2 / §4.4、`docs/contributing/rules/research-artifacts.md` §5.2，以及 [`../intent/metadata-files.md`](../intent/metadata-files.md) §3–§4 及其指向的专项设计意图统一理解。
 
 它对应的是一种很典型的研究建设流程：
 

@@ -126,7 +126,7 @@
 最常见的中间层有两类：
 
 - **元信息文件层**：`backlog.md`、`candidates.md`、`conflict.md`
-- **按作用域的研究辅助材料层**：对象目录 `notes/`，以及按研究产物规则准入的主题局部论文分析 `notes/papers/`
+- **按作用域的研究辅助材料层**：如对象目录 `notes/`；一般分工与其他辅助材料的适用条件见 [`research-artifacts.md §3.3、§5`](../contributing/rules/research-artifacts.md)，不按主题或领域作用域机械创建根 `notes/`
 
 最小判断的**落位顺序与优先级，以 [`documentation-workflow.md §9 通用落位序`](../contributing/rules/documentation-workflow.md) 为准**；本节只解释“为什么要先进中间层、有哪两类中间层”，不复述顺序与各腿准入条件。
 
@@ -170,7 +170,7 @@
   → 这是什么类型的输入？
   → 现在最多能标成哪种 Evidence 状态？
   → 当前更像整体认知、缺口、对象、冲突，还是正文候选？
-  → 今天不写正文时，先留在 temp、元信息文件，还是符合准入的对象辅助/主题局部论文分析？
+  → 今天不写正文时，先留在 temp、元信息文件，还是符合准入的研究辅助材料？
   → 如果后续回流正文，还缺什么验证、来源或落位判断？
 ```
 

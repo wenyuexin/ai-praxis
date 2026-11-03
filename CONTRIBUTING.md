@@ -16,7 +16,7 @@
 | 记录主题缺口或待研究对象 | 第四章 L4/L5 + [文档增改流程](./docs/contributing/rules/documentation-workflow.md) 第 2、4、7 节；文件职责见 [元信息文件模型](./docs/contributing/rules/metadata-files.md) | 区分问题缺口与研究对象 |
 | 处理术语、事实或结论冲突 | 第四章 L7 + [文档增改流程](./docs/contributing/rules/documentation-workflow.md) 第 2、3、4 节；冲突文件职责见 [元信息文件模型](./docs/contributing/rules/metadata-files.md) | 先记录冲突，再决定是否修改正文 |
 | 开展或继续论文 / 实现 / 概念等研究，判断研究是否完成 | [研究方法](./docs/contributing/rules/research-method.md) | 从目标与缺口选择行动，检查事实与理解，判断完成或暂停 |
-| 组织项目 / 论文 / 产品案例研究的产物 | [研究产物组织规则](./docs/contributing/rules/research-artifacts.md) | 区分研究单元，管理正文、机制专题、论文集合和辅助材料 |
+| 组织项目 / 论文 / 产品案例研究的产物 | [研究产物组织规则](./docs/contributing/rules/research-artifacts.md) | 区分研究单元，管理正文、机制专题和辅助材料 |
 | 查某个元信息文件的职责 | 第四章；细则见 [元信息文件模型](./docs/contributing/rules/metadata-files.md) | 理解 `README.md`、`index.md`、`overview.md`、`backlog.md` 等文件边界 |
 | 修改 README 本身的写法、出现条件、入口说明或导航边界 | 第三章；细则见 [README 规则](./docs/contributing/rules/readme-rules.md) | 调整 README 自身，而不是重写元信息文件分工 |
 | 修改 `index.md` 本身的结构、粒度、父子层导航方式或 stop-line | 第四章 L2；细则见 [Index 规则](./docs/contributing/rules/index-rules.md) | 调整 `index.md` 自身的专项执行细则 |
@@ -63,7 +63,7 @@
 README 的详细规则见 [`docs/contributing/rules/readme-rules.md`](./docs/contributing/rules/readme-rules.md)。本文件只保留仓库级强约束：
 
 - 每个一级目录（顶层领域目录）下必须有 `README.md`。
-- 二级及更深层目录仅在存在或未来可能容纳子目录时必须写 README；纯文件目录不需要。
+- 二级及更深层目录按入口定向需要判断是否写 README；存在或未来可能容纳子目录时优先考虑，过渡态容器或纯论文笔记集可暂不写，纯文件目录不需要。具体条件见 [README 规则 §2](./docs/contributing/rules/readme-rules.md#2-出现条件)。
 - README 负责目录说明与最小入口分流，不再默认承担目录结构展示。
 - 目录结构与查找导航默认由 `index.md` 承接；目录下已有两个及以上语义稳定、预期会持续保留的子目录时，就应优先考虑创建骨架型 `index.md`，不要先让 README 代行目录树。
 - README 不主动把 `overview.md`、`backlog.md`、`candidates.md`、`roadmap.md`、`conflict.md` 等元信息文件列为常规导航项；仅在入口说明或边界说明确有必要时，才可用一句方向性说明提及已稳定存在的上位文件。结构研究辅助材料也不作为 README 的常规导航项。
@@ -96,7 +96,7 @@ README 的详细规则见 [`docs/contributing/rules/readme-rules.md`](./docs/con
 以下为推荐做法，不强制：
 
 - 知识性笔记：可包含数学公式（LaTeX）、代码块、表格等
-- 论文相关写作：不必逐段翻译；完整论文研究与局部辅助分析的内容责任见 [研究产物规则 §2.6](./docs/contributing/rules/research-artifacts.md#26-论文研究与论文辅助分析)
+- 论文相关写作：不必逐段翻译；研究动作与交付判断见 [研究方法](./docs/contributing/rules/research-method.md)，正文、机制专题与辅助材料的分工见 [研究产物规则 §3](./docs/contributing/rules/research-artifacts.md#3-案例研究的三类产物)
 - README 中如有流程或阶段关系，可用代码块/ASCII 图展示
 
 ## 六、材料处理与文档增改流程

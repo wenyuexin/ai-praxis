@@ -59,7 +59,7 @@
 
 - `docs/capabilities/ingest.md`：回答“系统如何识别并吸收新输入”
 - `docs/contributing/rules/documentation-workflow.md`：回答“真正执行时，哪些判断顺序、门槛和 stop-line 不能跳过”
-- `docs/contributing/rules/research-artifacts.md`：回答“对象辅助层、主题局部论文分析与正文/机制专题怎样分工”
+- `docs/contributing/rules/research-artifacts.md`：回答“研究辅助材料、对象辅助层与正文/机制专题怎样分工”
 - `docs/contributing/rules/evidence-and-traceability.md`：回答“Evidence 与 Trace 如何组合执行”
 
 因此，这条链不是取代这些文档，而是解释它们为什么必须共同存在。
@@ -145,7 +145,7 @@
 
 ## 9. 为什么对象目录 `notes/` 很关键
 
-对象目录 `notes/` 是临时输入与正文之间的对象内稳定辅助层。它不穷尽全部辅助落点；主题局部论文分析另按 research-artifacts §5.3 判断。
+对象目录 `notes/` 是临时输入与正文之间的对象内稳定辅助层。它不穷尽全部辅助落点；一般研究辅助材料及共享证据、结构判断的适用条件见 research-artifacts §3.3、§5。
 
 如果没有这层，协作者的默认动作常常只剩两个极端：
 
