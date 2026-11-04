@@ -3,7 +3,7 @@
 > 最后更新：2026-11-03
 > Version Basis：`mem0ai/mem0@94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`，Python OSS `v2.2.1`；Qdrant client 默认值另固定到 `v1.12.0`。
 > Observed At：2026-10-30；2026-11-03 固定来源复核与证据登记重建
-> Scope：以 Python 同步 `Memory.update()` 为主，对照 `AsyncMemory`；Qdrant 是已核对的后端实例。Platform 限于固定公开契约和客户端转发，TypeScript 直接更新未由本文覆盖。
+> Scope：以 Python 同步 `Memory.update()` 为主，对照 `AsyncMemory`；Qdrant 是已核对的后端实例，各后端的过滤与更新差异见[后端可移植性](./vector-store-portability.md)。Platform 限于固定公开契约和客户端转发；TypeScript 见文末对照节。
 > 阅读基础：了解基本向量检索、记录 ID 和 metadata；Drift Risk：high。
 
 固定 Python OSS 的 `update(memory_id, text)` 接受应用选定的记忆 ID，覆盖该 ID 的主记录及检索表示，再追加一条变更 history。它不会自动找出全库哪些记忆需要更正，也不会因为保存了旧文本就让普通搜索从 history 中恢复旧值。
@@ -113,9 +113,21 @@ Qdrant 适配器在新 vector 与 payload 都存在时，以同 ID `PointStruct`
 
 因此不能把 OSS 的 SQLite 顺序和部分失败状态外推到托管服务，也不能把 Platform **add** 的 `PENDING/event_id` 契约直接套给 update。线上索引刷新、supersede／merge 联动和失败语义仍需服务端材料或行为证据。
 
+## TypeScript 对照
+
+固定 `ts-v3.3.1` 的 OSS `Memory.update(memoryId, options)` 与 Python 同构，但契约面不同：`options` 为 `{ text?, data?, metadata?, expirationDate? }`，也接受字符串简写为 `text`；`data` 是弃用别名，二者都没有时以已存文本回退。至少需提供 `text`／`metadata`／`expirationDate` 之一，否则抛错（`mem0-ts/src/oss/src/memory/index.ts:1651–1697`）。`expirationDate: null` 表示清除该字段，其余值先按 `YYYY-MM-DD` 归一化（`index.ts:1681–1685`；`utils/expiration.ts:15–36`）。
+
+控制流与 Python 对齐：读现有记录 → embedding → 写回全量 payload（合并旧 payload、刷新 `updatedAt`）→ 写一条 `UPDATE` history → **文本变化时**才清理并重建实体关联（入口 `index.ts:1688`；内部 `index.ts:1951–2012`）。embedding 不是“文本变化才算”：提供 `text` 时按新文本计算，metadata-only 时对回退得到的旧文本计算，文本未变也照算。因此 metadata-only 更正同样有 embedding 调用与失败点，不是轻量字段更新。但有三处可见差别：
+
+- **history 字段**：TS 的 `addHistory` 只写 memory id、旧／新文本、事件与时间（`storage/SQLiteManager.ts:50–62`），没有 Python 那样的 `actor_id` / `role`；两边都保留旧文本，都不是回滚快照。
+- **字段命名**：TS 写 `textLemmatized` / `createdAt` / `updatedAt`，Python 写 snake_case；共享同一 collection 时，这些派生字段互不认识，但 `data` 与 scope 键仍共享，属部分字段契约不兼容，见[后端可移植性 §5](./vector-store-portability.md#5-同一-collection-混用-python-与-typescript)。
+- **实体维护失败**：TS 用 `try/catch` 记录 warning 后继续（`index.ts:2002–2011`）；Python 的同类错误也在 helper 内吞掉，因此两者对外都表现为“接口成功但实体关联可能缺失”。
+
+Platform 侧两个客户端都只是转发：Python `MemoryClient.update()` 与 TS `MemoryClient.update()` 都把 `expiration_date` 放进 PUT payload（TS 另接受 `timestamp`），history 走独立 GET（`mem0-ts/src/client/mem0.ts:415–458`、`:558–566`）；服务端如何把更新与 Dream 状态链联动仍未公开。
+
 ## Evidence
 
-- **Status**：固定 Python 同步／异步路径、字段处理、history、Qdrant 适配器与依赖默认值为 `Observed`；失败状态和教学例子为 `Inferred`；Platform 接口说明限于公开契约为 `Verified`，客户端转发为 `Observed`；具体部署的可见性、并发与故障行为为 `Unverified`。
-- **Sources**：上述固定上游锚点及 [`notes/source.md §9`](./notes/source.md#9-直接更新来源重建2026-11-03)，按入口、存储、读取、后端和公开契约分组；Claim 对照见 [`notes/evidence.md`](./notes/evidence.md) M32–M35（本轮重新核对后的重建登记）。
+- **Status**：固定 Python 同步／异步路径、字段处理、history、Qdrant 适配器与依赖默认值为 `Observed`；TypeScript OSS 的入口、字段与历史写入为 `Observed`；失败状态和教学例子为 `Inferred`；Platform 接口说明限于公开契约为 `Verified`，客户端转发为 `Observed`；具体部署的可见性、并发与故障行为为 `Unverified`。
+- **Sources**：上述固定上游锚点及 [`notes/source.md §9`](./notes/source.md#9-直接更新来源重建2026-11-03)、[`§12`](./notes/source.md#12-后端可移植性与-typescript-补查2026-11-03)，按入口、存储、读取、后端和公开契约分组；Claim 对照见 [`notes/evidence.md`](./notes/evidence.md) M32–M35、M57（本轮重新核对后的重建登记）。
 - **Trace**：从已核对的固定源码研究提炼为直接更新专题；试用过程记录留作历史，不作为正式来源终点。本页保留更新与读取的连接，完整检索算法仍由检索正文承接。
-- **Needs**：实际部署下写后读、并发更新、故障残留与旧值再写入的行为证据；其他后端／SDK 直接更新的差异；Platform 服务端状态链与事务材料。固定 Python 显式删除及批量清理已另见[删除与重置](./deletion-lifecycle.md)，其范围来自独立路径核查，不能由本页的更新顺序推出。
+- **Needs**：实际部署下写后读、并发更新、故障残留与旧值再写入的行为证据；其他后端适配器的更新语义；Platform 服务端状态链与事务材料；Python 与 TS 共享 collection 的实测。固定 Python 显式删除及批量清理已另见[删除与重置](./deletion-lifecycle.md)，其范围来自独立路径核查，不能由本页的更新顺序推出。

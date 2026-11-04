@@ -543,3 +543,18 @@ infer=False 的 `_create_memory` 为逐条 embedding→vector insert→history�
 - **范围精度**：总览将payload过期过滤限定为已核Python路径；检索例子使用 `expiration_date < 查询时UTC日期`，日期当天不按此条件隐藏。Dream重复直接保留canonical与已有独立旧项标merged的区别，沿用§1.3.8及现有一致性正文，不新增服务端机制断言。
 
 **Decision / Placement / Gap**：修改总览、评测与检索的对应解释，补齐Claim和来源断链；实际异步延迟、运行效果和未公开服务端实现仍需对应证据。
+
+## 12. 后端可移植性与 TypeScript 补查（2026-11-03）
+
+**Version Basis**：同一固定 commit `94c3fe9f…`；Python `v2.2.1`（`pyproject.toml`）、TypeScript `ts-v3.3.1`（`mem0-ts/package.json`）。**Observed At**：2026-11-03。本节登记的是本地固定 checkout 的静态阅读，未连接任何向量库、未运行 TS 客户端或混用测试。
+
+| Claim | 固定路径与定位 | 核对结果及边界 |
+|---|---|---|
+| M57 | `mem0-ts/src/oss/src/memory/index.ts:1651–1697,1951–2012`；`mem0-ts/src/oss/src/utils/expiration.ts:15–43`；`mem0-ts/src/oss/src/storage/SQLiteManager.ts:50–62` | TS update 的选项、`expirationDate: null` 清除、至少一项校验、全量 payload 合并与 UPDATE history；history 无 actor/role；实体维护失败吞掉后继续 |
+| M58 | `index.ts:1699–1786,1790–1840,2016–2044`；`SQLiteManager.ts:170`；`mem0-ts/src/client/mem0.ts:523–556`；`mem0-ts/src/client/mem0.types.ts:51–57` | delete 无 options；deleteAll 1000 条分页与重复批次保护；reset 删 history/messages，langchain 跳过集合删除、deleteCol 失败只记录；Platform `deleteLinked` 序列化为 `delete_linked` |
+| M59 | `mem0/memory/main.py:442–449,1324,1684`；`index.ts:1552,1881`；`utils/expiration.ts:39–43` | 过期过滤在 Memory 层，Python 与 TS OSS 同构（超额取回 + `showExpired`）；把已核范围从 Python 扩到两套 OSS，不据此认为旧文断言 TS 缺失 |
+| M60 | `main.py:1269–1339,1481–1493,1538–1613,3166–3180` | `search()` 对高级操作符做归一化与白名单校验（`OR/NOT`→`$or/$not`，白名单外 `raise`）；`get_all()` 不做；纯未知操作符字典绕过检测直达适配器 |
+| M61 | `mem0/vector_stores/base.py:68–89`；`qdrant.py:278–336`；`pgvector.py:38–115`；`chroma.py:259–350`；`milvus.py:149–183`；`weaviate.py:181–196,357–368`；`redis.py:148–155,324–330` | 六个适配器的等值／范围／集合／子串／通配支持与失败方式（报错／降级／丢弃）；`keyword_search` 15/25 实现；Python 未覆写时初始化 warning，已覆写但返回 `None` 时无额外提示且实体增强仍可能参与；TS 侧方法缺失或返回 `null` 时静默 |
+| M62 | `main.py:1033–1037,2084–2090`；`index.ts:1024–1033,1982–1993` | payload 键 Python 用 snake_case、TS 用 camelCase；同一 collection 混用的后果为静态推断 |
+
+**Decision / Placement / Gap**：稳定解释提炼到 [`../vector-store-portability.md`](../vector-store-portability.md)，并在[直接更新](../direct-update.md)、[删除与重置](../deletion-lifecycle.md)、[检索](../retrieval.md)与[总览](../overview.md)补对照和修正；其中把 2026-11-03 总览“本文已核对的 payload 过期过滤限 Python 路径”从已核范围扩展为两套 OSS 各自实现，不据此认为旧文断言 TS 缺失。未核对其余 19 个 provider、各 TypeScript 适配器与真实后端行为；未运行后端查询、TS 客户端或混用测试，因此降级／强转的实际结果保持 `Inferred`，运行行为为 `Unverified`。

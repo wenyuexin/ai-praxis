@@ -301,6 +301,8 @@
 - 读取期过期过滤是 payload 级 `expiration_date`，调用方写入、默认隐藏过期项；不是 store TTL（M23，`source.md` §1.3）。
 - Python显式直接更新的同ID改写、history与尽力实体维护已提炼正文，源码与推演状态分开；scope／expiration和Qdrant依赖边界见M32–M35、`source.md` §9（2026-11-03重核登记）。
 - 固定Python删除／重置路径的主记录、history、实体与messages清理差异已提炼正文（M36–M39、`source.md` §10，2026-11-03重核登记）；不覆盖任意provider或Platform服务端。
+- TypeScript OSS 的 update／delete／deleteAll／reset 主链与 history 写入已对照 Python 核对，差别在参数面、history 字段与 reset 吞错策略（M57–M58、`source.md` §12）；两套实现不构成跨语言契约。
+- filters 的处理分路径：`search()` 对高级操作符先归一化并拒绝白名单外操作符，`get_all()` 不做；通过校验后仍由适配器决定支持与执行，六个已核适配器会报错、降级或丢弃。hybrid 覆盖 15/25（未覆写时初始化 warning；返回 `None` 时实体增强仍可能参与）；过期过滤由 Python 与 TS 的 Memory 层各自实现（M59–M61、`source.md` §12）。
 - 评测能力边界：LoCoMo / LongMemEval默认问答分数不能直接识别内部写入变更、共存、状态过滤或逐轮旧值复活；不据此排除历史中的新旧状态场景（M24，[`evaluation.md`](../evaluation.md)）。
 
 ### 仍然模糊
@@ -308,6 +310,7 @@
 - 旧版论文设计与当前未覆盖写入入口之间的版本对应关系；Platform Dream 公开契约与服务端实现之间的落差。
 - 普通路径实际抽取哪些矛盾事实，以及 Platform 如何构建 superseded / merged 版本关系。
 - 各 provider 自身的后台 / compaction 行为（非 SDK 源码可确认，parked）；semantic threshold 对实际冲突样本的影响；Platform 时间机制和 Dream 状态链的服务端介入点。
+- 其余 19 个 provider 与各 TypeScript 适配器的 filters／hybrid 行为未逐一核对；同一 filters 在各后端的运行结果未实测，降级与数值强转的后果属静态推断。
 - 累积污染是否真实发生、以什么形式发生。
 - 公开分数仍缺完整 run manifest、embedding endpoint / 版本、数据版本与服务端 revision（parked）；已记录的模型、top-k、judge 边界见 `source.md` §3.3.1。
 - OSS 与托管平台在已知公开能力差异之外的实现差异及其效果。
@@ -324,7 +327,7 @@
 - **Platform Dream 服务端实现**：supersede / merge 判定、`replaced_by` / `linked_memory_ids` 建链、`delete_linked` 递归与失败语义均未公开。关闭条件：服务端实现或行为观测。
 - **OSS 旧事实复活 / 写入污染**：`#4956` 仍是报告者观察；固定源码只能证明普通路径不失效旧记录，不能证明端到端后果。关闭条件：受控端到端实验（当前只读范围外）。
 - **PyPI 与 release commit 的工件级闭环**：时间与版本高度吻合，但 PyPI JSON 无 Git SHA，未下载工件。关闭条件：下载工件并核对构建来源。
-- **其他 SDK 写入入口 / 后端退化**：Python 写入入口已全量盘点（含 proxy 后台线程、entity_store 的 UPDATE、SQLite 消息清理），Python / TypeScript 的 `keyword_search` / `keywordSearch` 覆盖已盘点；仍待确认的是其他 SDK 入口是否遵循同一路径，以及各向量库 provider 自身是否含定时任务或后台 compaction。关闭条件：新公开写入入口 / 后端实现变更，或 provider 官方文档 / 部署观测。
+- **其他 SDK 写入入口 / 后端退化**：Python 写入入口已全量盘点（含 proxy 后台线程、entity_store 的 UPDATE、SQLite 消息清理），Python / TypeScript 的 `keyword_search` / `keywordSearch` 覆盖已盘点；TypeScript 的 update／delete／deleteAll／reset 已静态对照（M57–M58）。仍待确认的是其余 19 个 provider 与各 TS 适配器的 filters／hybrid 行为，以及各向量库 provider 自身是否含定时任务或后台 compaction。关闭条件：新公开写入入口 / 后端实现变更，或 provider 官方文档 / 部署观测。
 - **三条 OSS 缺陷候选的当前状态**：`#4573` 已于 2026-06-05 以 completed 关闭，固定 `v2.2.1` 仍未观察到写入期 grounding / confidence 校验（M10，`Unverified` 关闭是否覆盖该缺口）；Discussion #4289 仍为 `Observed`（M11）；Node 说法无一手支持，已退役（M12，`Deprecated`）。关闭条件：#4573 的 grounding 缺口若被新版本修复或维护者确认，或 #4289 出现适用版本证据；否则保持当前状态。
 
 ### 已 park / 暂缓动作（不再主动推进）
@@ -368,7 +371,16 @@
 
 修正后，原覆盖验收者与证据审计者分别定向复核通过，未发现本阶段目标内的剩余阻断项；这是原验收者复核，不称为全新盲读。证据审计覆盖15份Markdown、131处本地链接及16处fragment，目标均有效；68个唯一Claim ID无重复，显式引用均有登记（M40明确保留除外），九篇正式正文均具Evidence字段。LF／末尾换行／空白检查及工作区 `git diff --check` 通过。链接检查不证明远端可达，证据链检查也不代替实际运行。
 
-**完成判断**：固定版本下，帮助读者快速了解Mem0、充分理解主要设计与关键公开机制的对象研究阶段已达到目标。总览连接应用编排、组件、scope与版本选择；专题交付普通写入、检索、一致性、显式更正、删除重置、派生产物、访问强化及评测边界。该判断结合覆盖调查与受限正文阅读诊断，不以专题数量或问题已登记作为完成依据。服务端状态判定与完整评分顺序、源记忆修改／删除向派生产物传播、实际污染／并发可靠性、成本收益及新版分数provenance仍未闭合；它们限定可作的结论，需要新增材料或另行受控观测，不自动启动下一阶段。未调用真实API、模型、benchmark或破坏性故障注入，未修改上游或治理文件，未提交或推送。
+**完成判断**：固定版本下，帮助读者快速了解Mem0、充分理解主要设计与关键公开机制的对象研究阶段已达到目标。总览连接应用编排、组件、scope与版本选择；专题交付普通写入、检索、一致性、显式更正、删除重置、派生产物、访问强化、评测边界及 TypeScript／后端适配差异。该判断结合覆盖调查与受限正文阅读诊断，不以专题数量或问题已登记作为完成依据。服务端状态判定与完整评分顺序、源记忆修改／删除向派生产物传播、实际污染／并发可靠性、成本收益及新版分数provenance仍未闭合；它们限定可作的结论，需要新增材料或另行受控观测，不自动启动下一阶段。未调用真实API、模型、benchmark或破坏性故障注入，未修改上游或治理文件，未提交或推送。
+
+### 可移植性补查（2026-11-03）
+
+本轮只做静态源码阅读，未连接任何后端、未运行 TS 客户端或混用测试。补查两项此前登记的覆盖口子：
+
+1. **TypeScript 变更与删除路径**：update／delete／deleteAll／reset 的入口、参数面、history 字段与 reset 分支，已提炼到 [`direct-update.md`](../direct-update.md) 与 [`deletion-lifecycle.md`](../deletion-lifecycle.md) 的对照节，依据 M57–M58、`source.md` §12。
+2. **后端可移植性**：六种 Python 适配器的 filters 行为、hybrid 覆盖与过期过滤所在层，已提炼到 [`vector-store-portability.md`](../vector-store-portability.md)；同时把总览“本文已核对的过期过滤限 Python 路径”从已核范围扩展为两套 OSS 各自实现（M59）。未核对其余 19 个 provider 与真实运行行为。
+
+这轮不改变对象完成判断，也不解除任何行为证据要求：降级、报错与混用的实际后果仍为 `Inferred`，真实后端与共享 collection 需要受控观测。
 
 ## 8. 与现有文档的关系
 

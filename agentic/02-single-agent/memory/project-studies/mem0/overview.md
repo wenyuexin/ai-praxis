@@ -97,7 +97,7 @@ Platform 的默认抽取另有公开契约：即使一轮调用同时传 user �
 | 形态 | 写入与状态的核心机制 | 读取时应怎样理解 |
 |---|---|---|
 | 论文旧版 `arXiv:2504.19413v1` | extraction + update；先抽取，再由 LLM 对旧记忆选择 ADD / UPDATE / DELETE / NOOP；Mem0g 图方案可将过时关系标为 invalid | 描述论文设计，不直接代表固定 OSS 或服务端 |
-| 固定 OSS Python `v2.2.1` / TS `ts-v3.3.1` | 普通自动抽取对 memory 记录 ADD-only，仍有 prompt 筛选、候选局部文本 hash 去重和实体索引维护；显式 update/delete 仍存在 | 检索以相关性排序为主，不自动裁决哪个矛盾值是当前事实；本文已核对的 payload 过期过滤限 Python 路径 |
+| 固定 OSS Python `v2.2.1` / TS `ts-v3.3.1` | 普通自动抽取对 memory 记录 ADD-only，仍有 prompt 筛选、候选局部文本 hash 去重和实体索引维护；显式 update/delete 仍存在 | 检索以相关性排序为主，不自动裁决哪个矛盾值是当前事实；payload 过期过滤由两套 OSS 的 Memory 层各自实现，但同一 filters 在不同向量库后端的结果不同，见[后端可移植性](./vector-store-portability.md) |
 | Platform 文档快照 | Dream 在新增时处理 supersede / merge，并有后台 Synthesis；还有原生图、时间与访问历史相关能力 | 公开状态与排序契约成立，不等于已知内部实现或已经验证效果 |
 
 例如用户从北京转到上海工作：论文有写入时变更旧事实的机制；固定 OSS 普通追加不因此自动删掉北京记录；Platform 可将旧项标为 `superseded`，但默认读取仍包含这种历史项，需用 `latest_only=true` 才按状态只取 active。判断“当前事实是什么”与判断“哪段文字更相关”是不同任务。
@@ -128,5 +128,5 @@ OSS 自 `v2.0.0` 起对应算法代次 v3，包版本 `2.x` 不能读成旧算�
 
 - **Status**：论文与官方能力契约为 `Verified`；固定 OSS 组件、数据、scope 与调用路径为 `Observed`；职责模型和设计后果为 `Inferred`。素食、工作城市及编排代码用于教学说明，未作为运行效果证据。
 - **Sources**：`arXiv:2504.19413v1`；固定 `mem0ai/mem0@94c3fe9f…` 的 README、`memory/main.py`、`memory/storage.py`、Qdrant 及 Platform 能力文档。
-- **Trace**：原有版本／一致性依据见 [`notes/evidence.md`](./notes/evidence.md) M1–M5、M16、M22–M23；整体与能力对应 M26–M31，精确路径和快照见 [`notes/source.md §5`](./notes/source.md#5-整体解释与检索补查2026-10-30)。普通写入补充对应 M41–M45 与 source §6；Platform 新增事件契约见 M56 与 source §11。
+- **Trace**：原有版本／一致性依据见 [`notes/evidence.md`](./notes/evidence.md) M1–M5、M16、M22–M23；整体与能力对应 M26–M31，精确路径和快照见 [`notes/source.md §5`](./notes/source.md#5-整体解释与检索补查2026-10-30)。普通写入补充对应 M41–M45 与 source §6；Platform 新增事件契约见 M56 与 source §11；TS 与后端可移植性补查见 M57–M62 与 source §12。
 - **Needs**：Platform 内部实现与真实效果、OSS 端到端可靠性仍未闭合；Synthesis／Profiles 补查见 M46–M50 与 source §7，派生内容的新鲜度和删除传播不作额外保证；访问强化补查见M51–M55与source §8，异步可见性和完整评分顺序未闭合；`92.5/94.4` 的完整运行配置和同条件复现另见评测正文，不由总览补写成定论。

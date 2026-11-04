@@ -1,9 +1,9 @@
 # Mem0 删除与重置：哪些状态会被清理
 
 > 最后更新：2026-11-03
-> Version Basis：`mem0ai/mem0@94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`，Python OSS `v2.2.1`
+> Version Basis：`mem0ai/mem0@94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`，Python OSS `v2.2.1`、TypeScript OSS `ts-v3.3.1`
 > Observed At：2026-11-02；2026-11-03 固定来源复核与证据登记重建
-> Scope：固定 Python 同步与 AsyncMemory 路径；Qdrant 仅作已核对的后端实例。Platform `delete_linked` 仅保留公开契约边界。未运行删除 API。
+> Scope：固定 Python 同步与 AsyncMemory 路径；Qdrant 仅作已核对的后端实例，后端过滤差异见[后端可移植性](./vector-store-portability.md)。Platform `delete_linked` 仅保留公开契约边界；TypeScript 对照见专节。未运行删除 API。
 > Drift Risk：high
 
 Mem0 的单条 `delete()`、按 scope 的 `delete_all()` 和 `reset()` 不是同一种清理操作。正常走完删除步骤时，前两者移除主记录并追加删除 history，但不清空 SQLite messages；批量路径若遇到错误或重复批次保护，可能只完成一部分。`reset()` 则尝试重置 SQLite 表、向量存储和已初始化的实体存储。同步与异步路径还存在批量失败处理和 reset 顺序差异，因此不能将接口成功或名称直接理解成跨存储原子清除。
@@ -62,13 +62,23 @@ SQLite `reset()` 在一个 SQLite 事务中删除 `history` 与 `messages` 两�
 
 矩阵描述固定 SDK 调用路径，不代表任意 provider、注入 client 或线上部署都具有相同底层删除和可见性语义。
 
+## TypeScript 对照
+
+固定 `ts-v3.3.1` 的 OSS 三个入口与 Python 同构，差别集中在参数面与 reset 的分支：
+
+- **`delete(memoryId)`** 没有 options，也不接受 scope。内部先读记录、再向量删除、写 `DELETE` history、尝试清理实体关联，异常同样被 catch 后继续（`mem0-ts/src/oss/src/memory/index.ts:1699–1716`、`:2016–2044`）。同样不清理 SQLite messages。
+- **`deleteAll({userId?, agentId?, runId?})`** 至少要求一个 scope；循环 `list(filters, 1000)` 逐条删除，并对“重复返回同一批 ID”做停止保护，与 Python 的 1,000 条分页和重复批次保护一致（`index.ts:1718–1785`；批量常量 `index.ts:131`）。
+- **`reset()`** 先 `db.reset()`（删除 `history`、`messages` 两张表，`storage/SQLiteManager.ts:170`）。与 Python 不同：`langchain` provider **跳过** collection 删除并打印警告；其他 provider 的 `deleteCol()` 失败只 `console.error`，不中断；随后重建 embedder／llm 并重新初始化 vector store（`index.ts:1790–1840`）。因此 TS 的 reset 比 Python 同步路径更“吞错”，失败后更容易留下半重置状态。
+
+Platform 侧 TS 客户端把 `deleteLinked` 序列化为 `delete_linked` 查询参数，`deleteAll` 直接带 scope 参数请求批量删除（`mem0-ts/src/client/mem0.ts:523–556`；类型见 `mem0-ts/src/client/mem0.types.ts:51–57`）。这与 Python 客户端转发同属公开契约层，仍不能证明服务端的遍历、原子性与失败语义。
+
 ## Platform 边界
 
 固定 Mem0 commit 中的 Platform OpenAPI 声明 `delete_linked=true` 可删除 linked memories，响应可包含 `cascade_count`；同一快照的 SDK changelog 描述沿 v3 `linked_memory_ids` 的旧 superseded 链传递删除。这是公开契约与客户端说明，不是服务端实现观察。本篇未确认 `replaced_by` 与 `linked_memory_ids` 的映射、遍历方向与范围、环处理、原子性、失败残留或索引刷新；OSS 的 delete/reset 路径不能用来补齐这些未知项。
 
 ## Evidence
 
-- **Status**：固定 Python 同步／异步调用顺序、SQLite 表操作及 Qdrant adapter 调用为 `Observed`；部分失败后可能出现的跨存储状态为 `Inferred`，未做故障复现；Platform `delete_linked` 为 `Verified`（公开契约）和 `Observed`（客户端说明），服务端执行为 `Unverified`。
-- **Sources**：固定源码锚点及范围见 [`notes/source.md §10`](./notes/source.md#10-删除与重置来源重建2026-11-03)；Claim 对照见 [`notes/evidence.md`](./notes/evidence.md) M36–M39（本轮重新核对后的重建登记）。后续抽取上下文与提示词限定见该节 M39 来源及普通写入 source §6。
-- **Trace**：从固定 commit 的 `Memory`、`AsyncMemory`、SQLite、vector adapter 与 entity helper 静态路径提炼。未运行真实 API、未注入故障、未删除任何外部数据。
-- **Needs**：具体 backend／client 的删除可见性和故障行为；Platform `delete_linked` 服务端遍历、事务与失败语义。
+- **Status**：固定 Python 同步／异步调用顺序、SQLite 表操作及 Qdrant adapter 调用为 `Observed`；TypeScript OSS 的入口、批量保护与 reset 分支为 `Observed`；部分失败后可能出现的跨存储状态为 `Inferred`，未做故障复现；Platform `delete_linked` 为 `Verified`（公开契约）和 `Observed`（客户端说明），服务端执行为 `Unverified`。
+- **Sources**：固定源码锚点及范围见 [`notes/source.md §10`](./notes/source.md#10-删除与重置来源重建2026-11-03) 与 [`§12`](./notes/source.md#12-后端可移植性与-typescript-补查2026-11-03)；Claim 对照见 [`notes/evidence.md`](./notes/evidence.md) M36–M39、M58（本轮重新核对后的重建登记）。后续抽取上下文与提示词限定见该节 M39 来源及普通写入 source §6。
+- **Trace**：从固定 commit 的 `Memory`、`AsyncMemory`、SQLite、vector adapter 与 entity helper 静态路径提炼；TypeScript 部分来自同一 commit 的 OSS `Memory` 与 `SQLiteManager`。未运行真实 API、未注入故障、未删除任何外部数据。
+- **Needs**：具体 backend／client 的删除可见性和故障行为；Platform `delete_linked` 服务端遍历、事务与失败语义；TS reset 在真实 provider 失败后的残留状态。

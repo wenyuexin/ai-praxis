@@ -113,6 +113,17 @@ M40 的原定义未在本轮当前文件及历史搜索中找回，编号保留�
 |---|---|---|---|
 | M56 | Platform普通add返回PENDING/event_id表示已排队，需查事件至SUCCEEDED或FAILED；受理不是完成，成功也不保证任意search命中或派生产物均刷新；不外推OSS async或update | `Verified`（事件契约）；`Inferred`（保证边界） | `source.md` §11；固定docs/api-reference/memory/add-memories.mdx:15、63–84 |
 
+### 后端可移植性与 TypeScript 补查（2026-11-03）
+
+| ID | Claim | Status | 来源 |
+|---|---|---|---|
+| M57 | TS OSS update 接受 text／data（弃用别名）／metadata／expirationDate，至少一项；`expirationDate:null` 清除；读现有记录后写全量 payload 再记 UPDATE history；history 无 actor/role；实体维护失败只告警 | `Observed`（源码） | `source.md` §12；`mem0-ts/src/oss/src/memory/index.ts:1651–1697,1951–2012`、`utils/expiration.ts:15–43`、`storage/SQLiteManager.ts:50–62` |
+| M58 | TS OSS delete 无 options；deleteAll 需 scope、1000 条分页并带重复批次保护；reset 删 history/messages，langchain 跳过集合删除、deleteCol 失败只记录；Platform TS 客户端把 deleteLinked 序列化为 delete_linked | `Observed`（源码与客户端）；`Unverified`（服务端语义） | `source.md` §12；`index.ts:1699–1786,1790–1840,2016–2044`、`SQLiteManager.ts:170`、`client/mem0.ts:523–556` |
+| M59 | payload 过期过滤由 Memory 层实现，Python 与 TS OSS 同构：默认隐藏严格早于查询日的记录，`showExpired` 放开，并超额取回再截断；这是已核范围从 Python 扩到两套 OSS，不据此认为旧文断言 TS 缺失该能力，也仍不涉及 Platform 服务端 | `Observed`（两套源码）；`Verified`（Platform 过期契约） | `source.md` §12；`main.py:442–449,1324,1684`、`index.ts:1552,1881`、`utils/expiration.ts:39–43` |
+| M60 | filters 的处理分路径：`search()` 检测到高级操作符（AND/OR/NOT、已知操作符、`*`）时归一化并拒绝白名单外操作符，`OR/NOT` 改写为 `$or/$not`；`get_all()` 不做该校验；纯未知操作符字典绕过检测直达适配器，后端仍决定支持与执行语义 | `Observed`（源码）；`Inferred`（后果） | `source.md` §12；`main.py:1269–1339,1481–1493,1538–1613,3166–3180` |
+| M61 | 六个已核适配器的 filters 语义不同：Qdrant 校验并支持日期区间、同字段混用报错；pgvector 全操作符但范围强制 ::numeric；Chroma 把 contains 与未知操作符降级为等值并跳过通配；Milvus 仅等值、操作符报错；Weaviate 只处理三个 scope 键等值、其余丢弃；Redis 一律按 Tag 等值。keyword_search 15/25；Python 未覆写时初始化 warning，已覆写但返回 None 时无额外提示且实体增强仍可能参与；TS 侧缺失/为 null 时静默 | `Observed`（源码）；`Inferred`（实际降级结果） | `source.md` §12；六个适配器与 `base.py:68–89` 的固定定位 |
+| M62 | payload 键不统一：Python 写 snake_case（text_lemmatized／created_at），TS 写 camelCase（textLemmatized／createdAt），scope 键两套一致；混用同一 collection 时派生字段互不兼容（共享 `data` 与 scope 仍可读） | `Observed`（键名）；`Inferred`（混用后果） | `source.md` §12；`main.py:1033–1037,2084–2090`、`index.ts:1024–1033,1982–1993` |
+
 ## 2. 需要展开的条目
 
 ### 2.1 M16 主线：改为版本/部署形态分层
