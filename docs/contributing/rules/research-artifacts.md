@@ -227,6 +227,8 @@
 
 本节判断**外部 / `temp/` 材料能否由对象内辅助材料承接**（本支准入条件的 owner）；**迁出 `temp/` 仍须满足回流门槛**，见 [`documentation-workflow.md §7`](./documentation-workflow.md) 与 [`evidence-and-traceability.md §5`](./evidence-and-traceability.md)，本节不代替该门槛。只要判断结果是“需要独立对象辅助材料”，首篇材料即进入对象目录的 `notes/`；不需要独立辅助材料时，不为迁移而创建 `notes/`。落位排序见 [`documentation-workflow.md §9 通用落位序`](./documentation-workflow.md)，本节不复述顺序。
 
+作为该过渡落点的准入 owner，本节也界定相邻规则的适用范围：[`documentation-workflow.md`](./documentation-workflow.md) §3 把 `Unverified` 限定为“线索”而非正文结论，不排除本节的过渡落点；但 [`evidence-source-rules.md`](./evidence-source-rules.md) §3.3 针对**版本信息不可恢复**的源码观察另有禁令，仍按其处理——该类线索不因对象归属明确而进入 `notes/`。进入 `notes/` 后仍须逐条标明状态，并按上文回流门槛与本文件 §5 提炼回流。
+
 适合先进入 `notes/` 的典型情形：
 
 - 材料已经和某个具体对象强绑定，但仍包含较多未压实的源码线索、长引用、对照表或待核验问题。

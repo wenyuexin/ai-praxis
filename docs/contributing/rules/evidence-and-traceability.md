@@ -85,7 +85,7 @@ Evidence 规则按任务拆成三个原子文件，Traceability 仍是并列的�
 `temp/` 内容默认只是输入材料，不是主线知识；`web_search` / `web_fetch` 等联网工具获取的结果也按外部输入处理。迁移出 `temp/` 或将联网结果写入正文前，至少满足：
 
 - 已判断材料类型：整体认知、主题缺口、待研究对象、冲突问题或正文专题材料。
-- 已判断 Evidence 状态：进入 `overview.md` 或正文专题的内容至少能标为 `Observed` 或 `Inferred`；只能标为 `Unverified` 时，只能继续留在 `temp/`，或作为待核验缺口进入 `backlog.md` / `candidates.md`，不得写成正文定论。
+- 已判断 Evidence 状态：进入 `overview.md` 或正文专题的内容至少能标为 `Observed` 或 `Inferred`；只能标为 `Unverified` 时，只能继续留在 `temp/`，或作为待核验缺口进入 `backlog.md` / `candidates.md`，不得写成正文定论。对象 `notes/` 承接的是过程材料而非正文结论：未核实线索可按 [`research-artifacts.md §3.9`](./research-artifacts.md) 先进入对象辅助材料（版本信息不可恢复的源码观察除外，见 [`evidence-source-rules.md`](./evidence-source-rules.md) §3.3），其中逐条判断仍须按 [`evidence-recording-rules.md`](./evidence-recording-rules.md) 标状态，稳定结论仍须回流正文或既有 owner。
 - 已判断目标落位：正文、元信息文件或符合 [`research-artifacts.md`](./research-artifacts.md) 准入的研究辅助材料；辅助落点不豁免本节的 Evidence、来源与 Trace 门槛。
 - 已记录 Trace：能说明 `Source / Decision / Placement / Gap` 或等价信息（链路简单时用 `Sources / Trace / Needs` 即可）。
 - 主线正文与正式元信息文件中的最终 `Sources` 不再停留在 `temp/` 路径；若内容原本来自 `temp/`，回流时应优先改写为论文原文、官方文档、上游公开仓库 URL，或摘要性 Trace。更细的回流硬约束、检查单与 stop-line 见 [`documentation-workflow.md`](./documentation-workflow.md) 第 5、6、8 节。
