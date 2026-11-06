@@ -286,6 +286,8 @@
 
 > **当前阶段状态（2026-11-03）**：对象整体解释与关键公开机制研究已完成本阶段交付，覆盖／正文阅读／证据链检查及修正后定向复核结论见本节末尾。以下面板继续管理事实／效果缺口，不把阶段完成写成服务端还原或生产效果验证。对象整体与检索见 M26–M31，更新／删除见 M32–M39，普通写入／派生产物／访问强化见 M41–M55，Platform摄取事件见M56；依赖外部材料或受控实验的项目仍按各自条件park。
 
+> **当前建议动作（2026-11-06，基于 2026-11-03 阶段判断）**：不启动新的机制专题。外部阻塞项按各自关闭条件等待材料；其余 provider／TS 适配器属可静态但低优先的覆盖项，暂不推进；需要运行后端或 API 的实验须单独授权。当前只做状态与归属整理，不扩写正文。
+
 ### 已相对清楚
 
 - 对象定位与 `add()` / `search()` API 面（`Verified`）。
@@ -297,7 +299,7 @@
 - Platform Dream 的 add-time supersede / merge 与 read-time `latest_only` / `include_merged` 公开契约（M2d，`Verified`）；Platform-only Temporal Reasoning / Memory Decay 的公开能力边界（M2e，`Verified`），其运行效果、执行阶段与服务端实现仍未闭合。
 - 未区分版本和操作的「遗忘仅按时间」概括已退役（M8，`Deprecated`）。
 - 普通 OSS 写入入口全量边界：memory 记录层只 ADD，实体索引仍会 UPDATE，`mem0/proxy` 存在后台延迟写入（M2，`source.md` §1.3.6）。
-- Python / TypeScript 的 hybrid 都是后端条件能力，未覆盖 `keyword_search` / `keywordSearch` 或返回 `null` 时静默降级（M4，`source.md` §1.3.1.1–§1.3.1.2）。
+- Python / TypeScript 的 hybrid 都是后端条件能力，但两种情形不同：Python 适配器未覆写 `keyword_search` 时初始化告警并关闭 hybrid；已覆写但本次返回 `None`，或 TS 的 `keywordSearch` 缺失／返回 `null` 时，本次没有关键词分数（TS 侧无额外提示），实体增强仍可能参与（M4，`source.md` §1.3.1.1–§1.3.1.2；后端细节见[后端可移植性](../vector-store-portability.md)）。
 - 读取期过期过滤是 payload 级 `expiration_date`，调用方写入、默认隐藏过期项；不是 store TTL（M23，`source.md` §1.3）。
 - Python显式直接更新的同ID改写、history与尽力实体维护已提炼正文，源码与推演状态分开；scope／expiration和Qdrant依赖边界见M32–M35、`source.md` §9（2026-11-03重核登记）。
 - 固定Python删除／重置路径的主记录、history、实体与messages清理差异已提炼正文（M36–M39、`source.md` §10，2026-11-03重核登记）；不覆盖任意provider或Platform服务端。
@@ -318,21 +320,19 @@
 
 ### 缺口与关闭条件
 
-本主线的事实／效果缺口在此收口，每条写明"缺哪份材料才能关闭"；不以这些条目替代对象整体覆盖判断。已成立的冲突见 [`../conflict.md`](../conflict.md)，不在此重复。
+本主线的事实／效果缺口在此收口，每条写明"缺哪份材料才能关闭"；不以这些条目替代对象整体覆盖判断。已成立的冲突见 [`../conflict.md`](../conflict.md)，不在此重复。条目末尾标注处理类型：**主线待办**仍随本对象推进；**需授权实验**在当前只读范围外；已脱离主线、只需跨轮维护的跨对象核验任务见 [`../backlog.md`](../backlog.md)，此处只留摘要。
 
-- **Platform `92.5 / 94.4` 的 run provenance**：固定子模块只有 `91.6 / 93.4` artifacts，新版数字缺独立 JSON、run ID、数据 hash 与服务端 revision。关闭条件：Mem0 公开对应 run manifest 或 artifact。
-- **Zep 三组 LoCoMo 数字的对齐**：`75.14 / 58.44 / 65.99` 都指向 Zep，但 Category 5 过滤、答案 fallback、计分脚本 commit、`±` 运行次数与逐题 grades 未绑定。关闭条件：同协议 harness 与逐题输出。
-- **LoCoMo 第三方审计的实质结论**：已完成数据 hash 与 6 条 score-corrupting 标注的静态抽查；99 项整体分类、judge 宽松性与统计重算未复算。关闭条件：judge 输入输出与统计重算。
+- **跨对象核验任务（3 项，已迁出）**：Platform `92.5 / 94.4` run provenance、Zep 三组 LoCoMo 数字对齐、LoCoMo 第三方审计重算。三者只影响外部数字与跨对象比较，不改变对象机制解释；关闭条件与关联冲突见 [`../backlog.md`](../backlog.md)。
 - **2026-10-30 复查**：上述三项的远端固定点均未前进（`memory-benchmarks@4b61c5d`、`locomo-audit@9493fb4`、`zep-papers#5` 无新裁决），因此都继续 park（M25）。
-- **Platform Dream 服务端实现**：supersede / merge 判定、`replaced_by` / `linked_memory_ids` 建链、`delete_linked` 递归与失败语义均未公开。关闭条件：服务端实现或行为观测。
-- **OSS 旧事实复活 / 写入污染**：`#4956` 仍是报告者观察；固定源码只能证明普通路径不失效旧记录，不能证明端到端后果。关闭条件：受控端到端实验（当前只读范围外）。
-- **PyPI 与 release commit 的工件级闭环**：时间与版本高度吻合，但 PyPI JSON 无 Git SHA，未下载工件。关闭条件：下载工件并核对构建来源。
-- **其他 SDK 写入入口 / 后端退化**：Python 写入入口已全量盘点（含 proxy 后台线程、entity_store 的 UPDATE、SQLite 消息清理），Python / TypeScript 的 `keyword_search` / `keywordSearch` 覆盖已盘点；TypeScript 的 update／delete／deleteAll／reset 已静态对照（M57–M58）。仍待确认的是其余 19 个 provider 与各 TS 适配器的 filters／hybrid 行为，以及各向量库 provider 自身是否含定时任务或后台 compaction。关闭条件：新公开写入入口 / 后端实现变更，或 provider 官方文档 / 部署观测。
+- **Platform Dream 服务端实现**：supersede / merge 判定、`replaced_by` / `linked_memory_ids` 建链、`delete_linked` 递归与失败语义均未公开。关闭条件：服务端实现或行为观测。（主线待办 · 外部阻塞）
+- **OSS 旧事实复活 / 写入污染**：`#4956` 仍是报告者观察；固定源码只能证明普通路径不失效旧记录，不能证明端到端后果。关闭条件：受控端到端实验（当前只读范围外）。（主线待办 · 需授权实验）
+- **PyPI 与 release commit 的工件级闭环**：时间与版本高度吻合，但 PyPI JSON 无 Git SHA，未下载工件。关闭条件：下载工件并核对构建来源。（主线待办 · 外部阻塞；影响版本边界锚点）
+- **其他 SDK 写入入口 / 后端退化**：Python 写入入口已全量盘点（含 proxy 后台线程、entity_store 的 UPDATE、SQLite 消息清理），Python / TypeScript 的 `keyword_search` / `keywordSearch` 覆盖已盘点；TypeScript 的 update／delete／deleteAll／reset 已静态对照（M57–M58）。仍待确认的是其余 19 个 provider 与各 TS 适配器的 filters／hybrid 行为，以及各向量库 provider 自身是否含定时任务或后台 compaction。关闭条件：新公开写入入口 / 后端实现变更，或 provider 官方文档 / 部署观测。（主线待办 · 低优先，部分可静态）
 - **三条 OSS 缺陷候选的当前状态**：`#4573` 已于 2026-06-05 以 completed 关闭，固定 `v2.2.1` 仍未观察到写入期 grounding / confidence 校验（M10，`Unverified` 关闭是否覆盖该缺口）；Discussion #4289 仍为 `Observed`（M11）；Node 说法无一手支持，已退役（M12，`Deprecated`）。关闭条件：#4573 的 grounding 缺口若被新版本修复或维护者确认，或 #4289 出现适用版本证据；否则保持当前状态。
 
 ### 已 park / 暂缓动作（不再主动推进）
 
-已完成的静态核验（写入入口全量盘点、Python / TypeScript 后端 `keyword_search` 覆盖、ADD-only 分叉点、过期过滤、缺陷状态收口）不再列入；剩余动作大多需要新增上游材料或受控实验：
+已完成的静态核验（写入入口全量盘点、Python / TypeScript 后端 `keyword_search` 覆盖、ADD-only 分叉点、过期过滤、缺陷状态收口）不再列入；剩余动作大多需要新增上游材料或受控实验。四条的类型不同：①是主线约束；②是跨对象核验任务（争议已在 `conflict.md`）；③是主线待办（外部文档或部署观测）；④是主线待办（需授权实验），不要合并成同一类暂缓项。
 
 1. 保持 Platform 公开契约与服务端实现的边界；不调用真实 API，不把客户端参数当作服务端实现。
 2. 对已登记的评测冲突，只在拿到同协议 harness、逐题输出或 run manifest 时继续；否则停在当前主张层。
@@ -340,6 +340,8 @@
 4. （暂缓，当前只读范围不执行）按 §4.2 的受控协议验证 semantic candidate、threshold、boost 与旧事实复活的关系。
 
 ---
+
+> 以下为历史验收记录（2026-11-02 起），保留原时点、不回写；当前状态与建议动作以上方面板为准。
 
 ### 对象整体覆盖诊断与后续顺序（2026-11-02）
 
@@ -388,5 +390,6 @@
 - [`source.md`](./source.md)：一手来源摘录、核验路径、版本语义。
 - [`evidence.md`](./evidence.md)：Claim-Source 对照层，每轮核验结论先沉淀于此。
 - [`../../../candidates.md`](../../../candidates.md)：Mem0 作为候选对象的队列条目与研究理由；本文件压实的结论应回写其状态。
+- [`../backlog.md`](../backlog.md)：脱离当前主线、仅需跨轮维护的跨对象核验任务；本文件只留摘要，不重复关闭条件。
 - [`../../../memory-taxonomy-conflicts.md`](../../../memory-taxonomy-conflicts.md)：分类体系冲突专题。本文件不承接 taxonomy 议题（`general.md` 末尾的 CoALA 合流仍走该文件）。
 - 已有的 [`overview.md`](../overview.md) 承接目录级总览与版本关系，[`consistency-model.md`](../consistency-model.md)、[`retrieval.md`](../retrieval.md)、[`direct-update.md`](../direct-update.md) 与 [`deletion-lifecycle.md`](../deletion-lifecycle.md) 分别承接写入/状态一致性、检索、显式更新和删除重置；[`evaluation.md`](../evaluation.md) 承接评测能力边界与协议缺口；本文件继续负责未闭环问题与后续推进。

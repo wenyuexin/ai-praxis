@@ -10,7 +10,7 @@
 
 ## 候选对象（记忆层框架 / 产品）
 
-- **Mem0** —— 框架无关的开源记忆层中间件（`add()` / `search()`）。品类基准参照；核验点：LOCOMO 基准口径、OSS 抽取质量与置信度、候选局部去重、可变事实共存，以及时序 / 衰减能力的版本与部署边界。研究状态（2026-11-03）：固定 Python OSS `v2.2.1` / `@94c3fe9` 下，「快速入门 + 主要公开机制」的对象研究阶段已判为达到目标，入口见[对象目录](./project-studies/mem0/README.md)，判断、剩余缺口与关闭条件见[对象问题树](./project-studies/mem0/notes/deep-research-question-tree.md)；服务端状态判定与完整评分顺序、源记忆修改／删除向派生产物的传播、实际污染／并发可靠性、成本收益及新版分数 provenance 仍未闭合，不据此宣称对象整体完成。证据状态见[对象证据记录](./project-studies/mem0/notes/evidence.md)，不再沿用无版本限定的“遗忘仅按时间”概括。
+- **Mem0** —— 框架无关的开源记忆层中间件（`add()` / `search()`）。品类基准参照；核验点：LOCOMO 基准口径、OSS 抽取质量与置信度、候选局部去重、可变事实共存，以及时序 / 衰减能力的版本与部署边界。研究状态（2026-11-03）：固定 Python OSS `v2.2.1` / `@94c3fe9` 下，「快速入门 + 主要公开机制」的对象研究阶段已判为达到目标，入口见[对象目录](./project-studies/mem0/README.md)，判断、剩余缺口与关闭条件见[对象问题树](./project-studies/mem0/notes/deep-research-question-tree.md)；服务端状态判定与完整评分顺序、源记忆修改／删除向派生产物的传播、实际污染／并发可靠性、成本收益及新版分数 provenance 仍未闭合，不据此宣称对象整体完成。证据状态见[对象证据记录](./project-studies/mem0/notes/evidence.md)，不再沿用无版本限定的“遗忘仅按时间”概括。完整未闭合清单、类型标注与关闭条件以[问题树 §7](./project-studies/mem0/notes/deep-research-question-tree.md#7-当前研究状态面板)与[对象 backlog](./project-studies/mem0/backlog.md)为准；本行只保留摘要，不重复维护完整状态。
 - **Letta（原 MemGPT）** —— 有状态智能体运行时，core / archival / recall 三层记忆（OS 虚拟内存类比）。记忆是一等公民、支持自我编辑。
 - **Zep** —— 企业级时序知识图谱记忆，双时序、支持时间点查询；擅长事实随时间演变。
 - **Cognee** —— 开源知识图谱记忆引擎，ECL 管道，向量 + 图，偏 GraphRAG / 多模态。

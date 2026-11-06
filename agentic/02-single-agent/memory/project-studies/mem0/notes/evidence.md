@@ -6,7 +6,7 @@
 > **Algorithm Basis**：官方 OSS `v2 → v3` migration 文档（机制代次）
 > **Package Basis**：本地 `main` 分支 `pyproject.toml` 为 `mem0ai 2.2.1`（`Observed`）
 > **Core Release / Commit**：`v2.2.1` → `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`（`Verified`）
-> **Observed At**：2026-10-01 初轮；2026-10-02 Python 增量；2026-10-03 TypeScript / Dream 回写与边界复核；2026-10-10 写入入口与后端覆盖补记；2026-10-30 Wave 1 复核缺陷状态、版本谱系与过期过滤，其他网页未全量复查 · **Drift Risk**：`high`
+> **Observed At**：2026-10-01 初轮；2026-10-02 Python 增量；2026-10-03 TypeScript / Dream 回写与边界复核；2026-10-10 写入入口与后端覆盖补记；2026-10-30 Wave 1 复核缺陷状态、版本谱系与过期过滤，其他网页未全量复查；2026-11-02 普通写入／派生产物／访问强化补查、2026-11-03 对象验收与后端可移植性补查见 §11–§12 · **Drift Risk**：`high`
 > 同 commit 另有 `ts-v3.3.1` 标签；Python 结论不自动外推 TypeScript，已单独核对的 TS 范围见 M3e / `source.md` §1.3.7。
 
 ## 1. 对照总表
