@@ -4,7 +4,7 @@
 
 相关入口：[`CONTRIBUTING.md`](../../../CONTRIBUTING.md) / [`docs/contributing/README.md`](../README.md) / [`README 规则`](./readme-rules.md) / [`Index 规则`](./index-rules.md) / [`Evidence 记录规则`](./evidence-recording-rules.md) / [`Traceability 规则`](./traceability-rules.md)。如需理解这些边界为什么这样设计、最容易被误读成什么，读 [`intent/metadata-files.md`](../intent/metadata-files.md)。
 
-元信息文件不是知识正文，而是帮助读者和维护者完成说明、导航、理解、结构、推进、选题、路径、校验等认知任务的辅助文件。
+本模型按目录认知任务定义文件职责，帮助读者和维护者完成说明、导航、理解、推进、选题、路径、校验等任务；其中 `overview.md` 承担可独立阅读的知识主文，其余文件主要承接目录说明与维护信息。不要把本模型中的所有文件都理解为非正文辅助材料。
 
 ## 快速判断
 
@@ -104,6 +104,7 @@
 - **适合内容**：已知空白、待填补主题、关联主题或已有材料、为何尚未覆盖、缺什么证据或研究对象。
 - **不解决的问题**：对象队列、责任分配、deadline、完成状态。
 - **边界提醒**：`backlog.md` 记录问题缺口，不记录候选研究对象。
+- **与问题树的边界**：当前研究主线的子问题与核验动作可留在研究辅助材料；脱离该主线仍需持续维护的缺口进入对应作用域的 `backlog.md`，问题树只摘要引用。具体分工见 [`research-artifacts.md §3.5`](./research-artifacts.md)；不因缺口出现在单个对象内就排除元信息落点。
 
 ### 5.2 `candidates.md`
 
